@@ -958,9 +958,14 @@ if not os.path.exists(base_path_b3):
 b3_parser = EliteB3Parser(base_path_b3)
 
 # --- CONTROLE DE SESSÃO DO PORTAL ---
+url_terminal = st.query_params.get("terminal", "hub")
+
 if "active_terminal" not in st.session_state:
-    url_terminal = st.query_params.get("terminal", "hub")
     st.session_state.active_terminal = url_terminal
+else:
+    # Se o terminal na URL mudou (ex: clique em card), sincroniza com o estado da sessao
+    if url_terminal != st.session_state.active_terminal:
+        st.session_state.active_terminal = url_terminal
 
 # Sempre manter a URL sincronizada com o estado atual da sessão
 st.query_params["terminal"] = st.session_state.active_terminal
