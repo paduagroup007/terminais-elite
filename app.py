@@ -2579,7 +2579,7 @@ Acesso direto às mesas de estruturação Private de grandes bancos suíços. O 
         st.markdown(render_ppa_cards(df_ppa), unsafe_allow_html=True)
         
         st.write("")
-        st.subheader("DESVIO PERCENTUAL DA TAXA DE CÂMBIO SOBERANA VS VALOR JUSTO PPA")
+        st.subheader("DESVIO PERCENTUAL DA TAXA DE CÂMBIO SOBERANA VS VALOR JUSTO PPA" if lang == "PT" else ("PERCENTAGE DEVIATION OF SOVEREIGN EXCHANGE RATE VS PPP FAIR VALUE" if lang == "EN" else "DESVIACIÓN PORCENTUAL DE LA TASA DE CAMBIO SOBERANA VS VALOR JUSTO PPA"))
         
         # Horizontal Chart comparing deviations
         fig_ppa = go.Figure(go.Bar(
@@ -2615,13 +2615,14 @@ Acesso direto às mesas de estruturação Private de grandes bancos suíços. O 
 
     # --- ABA 3: SENTIMENTO INSTITUCIONAL (COT INDEX) ---
     with t_cot:
-        st.subheader("CFTC COT INDEX - SATURAÇÃO INSTITUCIONAL CAMBIAL")
-        st.markdown("""<div style="background: linear-gradient(135deg, #161a23 0%, #0b0e14 100%) !important; border: 1px solid #bf953f44 !important; border-top: 4px solid #bf953f !important; border-radius: 8px !important; padding: 22px !important; margin-bottom: 25px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; font-family:'Inter'; text-align:left;">
+        st.subheader("CFTC COT INDEX - SATURAÇÃO INSTITUCIONAL CAMBIAL" if lang == "PT" else ("CFTC COT INDEX - INSTITUTIONAL EXCHANGE SATURATION" if lang == "EN" else "CFTC COT INDEX - SATURACIÓN INSTITUCIONAL CAMBIARIA"))
+        if lang == "PT":
+            st.markdown("""<div style="background: linear-gradient(135deg, #161a23 0%, #0b0e14 100%) !important; border: 1px solid #bf953f44 !important; border-top: 4px solid #bf953f !important; border-radius: 8px !important; padding: 22px !important; margin-bottom: 25px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; font-family:'Inter'; text-align:left;">
 <h3 style="margin:0 0 10px 0 !important; color:#bf953f !important; font-size:16px !important; text-transform:uppercase !important; letter-spacing:1px !important;"> CFTC COMMITMENT OF TRADERS (COT): O RASTREADOR DE POSIÇÕES DOS GIGANTES DO CÂMBIO</h3>
 <p style="font-size:13px; color:#ccc; line-height:1.6; margin:0 0 15px 0;">
 No ecossistema de alta renda e alocação global, o rastreamento das posições de grandes players corporativos e institucionais no mercado de câmbio é feito através de um banco de dados regulatório internacional público e extremamente robusto: o <b>CFTC COT (Commitment of Traders) Report</b>.
 <br><br>
-Assim como o formulário <i>13F da SEC</i> revela os portfólios de ações dos bilionários de Wall Street trimestralmente, a <b>CFTC (Commodity Futures Trading Commission)</b> dos EUA publica semanalmente a posição em tempo real de cada contrato futuro de moedas globais detido pelas maiores gestoras de recursos do mundo. O relatório segrega o mercado em duas classes cruciais de participantes:
+Assim como o formulário <i>13F da SEC</i> revela os portafolios de ações dos bilionários de Wall Street trimestralmente, a <b>CFTC (Commodity Futures Trading Commission)</b> dos EUA publica semanalmente a posição em tempo real de cada contrato futuro de moedas globais detido pelas maiores gestoras de recursos do mundo. O relatório segrega o mercado em duas classes cruciais de participantes:
 </p>
 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:15px;">
 <div style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 15px; border-radius: 6px;">
@@ -2641,7 +2642,59 @@ São os **Big Players especulativos** (Grandes Hedge Funds globais de arbitragem
 <b>O Co-piloto de Elite (Aba 3)</b> consolida estes dados históricos e calcula o <b>COT Index (%)</b> num horizonte móvel de 3 anos. Ele monitora a saturação institucional de cada moeda com atualizações sistemáticas (integradas ao cache do motor macro global). Quando o índice atinge patamares extremos (abaixo de 10% ou acima de 90%), ele dispara alertas automáticos de oportunidade assimétrica de trading para investidores de Private Wealth.
 </p>
 </div>""", unsafe_allow_html=True)
-        st.write("O Commitment of Traders (COT) Index calcula a posição líquida atual das tesourarias bancárias (Commercial Hedgers) e fundos alavancados (Non-Commercials) normalizada em um horizonte móvel de 3 anos (36 meses). Índices acima de 90% revelam que a compra institucional está saturada (risco de topo); Índices abaixo de 10% marcam exaustão de venda comercial e capitulação (gatilhos contrarianos de compra de elite):")
+        elif lang == "EN":
+            st.markdown("""<div style="background: linear-gradient(135deg, #161a23 0%, #0b0e14 100%) !important; border: 1px solid #bf953f44 !important; border-top: 4px solid #bf953f !important; border-radius: 8px !important; padding: 22px !important; margin-bottom: 25px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; font-family:'Inter'; text-align:left;">
+<h3 style="margin:0 0 10px 0 !important; color:#bf953f !important; font-size:16px !important; text-transform:uppercase !important; letter-spacing:1px !important;"> CFTC COMMITMENT OF TRADERS (COT): CURRENCY GIANTS POSITION TRACKER</h3>
+<p style="font-size:13px; color:#ccc; line-height:1.6; margin:0 0 15px 0;">
+In the high-net-worth and global asset allocation ecosystem, tracking the positions of large corporate and institutional players in the currency market is performed via an extremely robust, public international regulatory database: the <b>CFTC COT (Commitment of Traders) Report</b>.
+<br><br>
+Just as the SEC's <i>Form 13F</i> reveals the stock portfolios of Wall Street billionaires on a quarterly basis, the <b>CFTC (Commodity Futures Trading Commission)</b> publishes weekly the real-time position of every global currency futures contract held by the world's largest asset managers. The report segregates the market into two crucial classes of participants:
+</p>
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:15px;">
+<div style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 15px; border-radius: 6px;">
+<strong style="color: #00ffa5; font-size: 13.5px; display: block; margin-bottom: 8px; text-transform: uppercase;"> 1. Commercial Hedgers (Investment Banks and Corporate Treasuries)</strong>
+<p style="font-size: 12px; color: #bbb; margin: 0; line-height: 1.5;">
+These are the currency desks of major multinational banks (e.g., <i>JP Morgan, Goldman Sachs, Citi</i>) and large global corporations. Their positions reflect the act of <b>locking in currency prices (Hedge)</b> to align with actual real-world import/export flows. They are the most sophisticated experts on long-term currency fair value.
+</p>
+</div>
+<div style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 15px; border-radius: 6px;">
+<strong style="color: #ff4b4b; font-size: 13.5px; display: block; margin-bottom: 8px; text-transform: uppercase;"> 2. Non-Commercials (Leveraged Hedge Funds and Macro Funds)</strong>
+<p style="font-size: 12px; color: #bbb; margin: 0; line-height: 1.5;">
+These are speculative **Big Players** (massive global arbitrage hedge funds, quantitative CTAs, and Wall Street Macro Funds). Their positions are purely speculative, seeking to profit from price momentum and volatility. When they reach extreme buying or selling levels, they signal market exhaustion primed for counter-trend reversals.
+</p>
+</div>
+</div>
+<p style="font-size:12.5px; color:#aaa; line-height:1.5; margin:0; border-left: 3px solid #bf953f; padding-left: 10px;">
+<b>Elite Co-pilot (Tab 3)</b> consolidates these historical data feeds and calculates the <b>COT Index (%)</b> over a 3-year rolling horizon. It monitors the institutional saturation of each currency with systematic updates (integrated into the global macro engine cache). When the index reaches extreme levels (below 10% or above 90%), it fires automated alerts highlighting asymmetric trading opportunities for Private Wealth investors.
+</p>
+</div>""", unsafe_allow_html=True)
+        else:
+            st.markdown("""<div style="background: linear-gradient(135deg, #161a23 0%, #0b0e14 100%) !important; border: 1px solid #bf953f44 !important; border-top: 4px solid #bf953f !important; border-radius: 8px !important; padding: 22px !important; margin-bottom: 25px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; font-family:'Inter'; text-align:left;">
+<h3 style="margin:0 0 10px 0 !important; color:#bf953f !important; font-size:16px !important; text-transform:uppercase !important; letter-spacing:1px !important;"> CFTC COMMITMENT OF TRADERS (COT): EL RASTREADOR DE POSICIONES DE LOS GIGANTES DE CAMBIO</h3>
+<p style="font-size:13px; color:#ccc; line-height:1.6; margin:0 0 15px 0;">
+En el ecosistema de alto patrimonio y asignación global, el seguimiento de las posiciones de grandes actores corporativos e institucionales en el mercado de divisas se realiza a través de una base de datos regulatoria internacional pública y extremadamente sólida: el <b>Reporte CFTC COT (Commitment of Traders)</b>.
+<br><br>
+Así como el formulario <i>13F de la SEC</i> revela los portafolios de acciones de los multimillonarios de Wall Street trimestralmente, la <b>CFTC (Commodity Futures Trading Commission)</b> publica semanalmente la posición en tiempo real de cada contrato de futuros de monedas globales en poder de las mayores gestoras de fondos del mundo. El reporte segrega el mercado en dos clases cruciales de participantes:
+</p>
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:15px;">
+<div style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 15px; border-radius: 6px;">
+<strong style="color: #00ffa5; font-size: 13.5px; display: block; margin-bottom: 8px; text-transform: uppercase;"> 1. Commercial Hedgers (Bancos de Inversión y Tesorerías Corporativas)</strong>
+<p style="font-size: 12px; color: #bbb; margin: 0; line-height: 1.5;">
+Son las mesas de divisas de grandes bancos multinacionales (ej: <i>JP Morgan, Goldman Sachs, Citi</i>) y grandes corporaciones globales. Sus posiciones reflejan el acto de <b>congelar el precio de la moneda (Hedge)</b> en concordancia con los flujos comerciales de exportación/importación reales. Son los mayores conocedores del valor justo a largo plazo de las monedas.
+</p>
+</div>
+<div style="background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 15px; border-radius: 6px;">
+<strong style="color: #ff4b4b; font-size: 13.5px; display: block; margin-bottom: 8px; text-transform: uppercase;"> 2. Non-Commercials (Hedge Funds Apalancados y Fondos Macro)</strong>
+<p style="font-size: 12px; color: #bbb; margin: 0; line-height: 1.5;">
+Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje, CTAs cuantitativos y Fondos Macro de Wall Street). Sus posiciones son puramente especulativas, buscando lucrar con el impulso y la volatilidad. Cuando están extremadamente comprados o vendidos, marcan agotamientos de mercado listos para una reversión contraria.
+</p>
+</div>
+</div>
+<p style="font-size:12.5px; color:#aaa; line-height:1.5; margin:0; border-left: 3px solid #bf953f; padding-left: 10px;">
+<b>El Co-piloto de Élite (Aba 3)</b> consolida estos datos históricos y calcula el <b>COT Index (%)</b> en un horizonte móvil de 3 años. Monitorea la saturación institucional de cada moneda con actualizaciones sistemáticas (integradas al caché del motor macro global). Cuando el índice alcanza niveles extremos (por debajo del 10% o por encima del 90%), dispara alertas automáticas de oportunidad cambiaria asimétrica para inversores de Private Wealth.
+</p>
+</div>""", unsafe_allow_html=True)
+        st.write("O Commitment of Traders (COT) Index calcula a posição líquida atual das tesourarias bancárias (Commercial Hedgers) e fundos alavancados (Non-Commercials) normalizada em um horizonte móvel de 3 anos (36 meses). Índices acima de 90% revelam que a compra institucional está saturada (risco de topo); Índices abaixo de 10% marcam exaustão de venda comercial e capitulação (gatilhos contrarianos de compra de elite):" if lang == "PT" else ("The Commitment of Traders (COT) Index calculates the current net position of banking treasuries (Commercial Hedgers) and leveraged funds (Non-Commercials) normalized over a 3-year (36 months) rolling horizon. Indices above 90% reveal that institutional buying is saturated (top risk); Indices below 10% mark commercial selling exhaustion and capitulation (contrarian elite buying triggers):" if lang == "EN" else "El Commitment of Traders (COT) Index calcula la posición neta actual de las tesorerías bancarias (Commercial Hedgers) y fondos apalancados (Non-Commercials) normalizada en un horizonte móvil de 3 años (36 meses). Los índices superiores al 90% revelan que la compra institucional está saturada (riesgo de techo); los índices inferiores al 10% marcan la agitación de venta comercial y capitulación (gatilhos contrarios de compra de élite):"))
         
         # Render COT Index Cards
         def render_cot_cards(df):
@@ -2693,22 +2746,22 @@ São os **Big Players especulativos** (Grandes Hedge Funds globais de arbitragem
 
     # --- ABA 4: SIMULADOR DE BLINDAGEM PATRIMONIAL ---
     with t_hedge:
-        st.subheader("SIMULADOR FAMILY OFFICE DE BLINDAGEM E HEDGE PATRIMONIAL")
-        st.write("Investidores com patrimônio acima de R$ 20 milhões não mantêm 100% de seus ativos líquidos em Reais expostos ao risco-país. Este assistente privado permite que você desenhe uma cesta de distribuição internacional de moedas e calcule instantaneamente a taxa de proteção e o custo líquido para travar sua carteira internacional contra flutuações desfavoráveis:")
+        st.subheader("SIMULADOR FAMILY OFFICE DE BLINDAGEM E HEDGE PATRIMONIAL" if lang == "PT" else ("FAMILY OFFICE WEALTH SHIELD & HEDGE SIMULATOR" if lang == "EN" else "SIMULADOR FAMILY OFFICE DE BLINDACIÓN Y HEDGE PATRIMONIAL"))
+        st.write("Investidores com patrimônio acima de R$ 20 milhões não mantêm 100% de seus ativos líquidos em Reais expostos ao risco-país. Este assistente privado permite que você desenhe uma cesta de distribuição internacional de moedas e calcule instantaneamente a taxa de proteção e o custo líquido para travar sua carteira internacional contra flutuações desfavoráveis:" if lang == "PT" else ("Investors with assets exceeding BRL 20 million do not keep 100% of their liquid assets in BRL exposed to country-risk. This private advisor allows you to design an international currency distribution basket and instantly calculate the protection rate and net cost to lock your international portfolio against unfavorable fluctuations:" if lang == "EN" else "Los inversores con un patrimonio superior a BRL 20 millones no mantienen el 100% de sus activos líquidos en Reales expuestos al riesgo país. Este asistente privado le permite diseñar una cesta de distribución internacional de monedas y calcular instantáneamente la tasa de protección y el costo neto para asegurar su cartera internacional contra fluctuaciones desfavorables:"))
         
         col_h1, col_h2 = st.columns([1, 1])
         with col_h1:
-            patrimonio_h = st.number_input("Defina o Patrimônio Líquido Líquido Simulador (R$)", min_value=1000000.0, max_value=500000000.0, value=30000000.0, step=5000000.0)
+            patrimonio_h = st.number_input("Defina o Patrimônio Líquido Líquido Simulador (R$)" if lang == "PT" else ("Define Net Worth for Simulation (BRL)" if lang == "EN" else "Defina el Patrimonio Neto para Simulación (BRL)"), min_value=1000000.0, max_value=500000000.0, value=30000000.0, step=5000000.0)
             
             # Cesta de Alocação
             st.write("")
-            st.markdown("<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>Composição da Cesta Patrimonial</span>", unsafe_allow_html=True)
-            p_usd = st.slider("Alocação Dólar Americano (USD) (%)", min_value=0, max_value=100, value=40)
-            p_eur = st.slider("Alocação Euro (EUR) (%)", min_value=0, max_value=100 - p_usd, value=20)
-            p_chf = st.slider("Alocação Franco Suíço (CHF) (%)", min_value=0, max_value=100 - p_usd - p_eur, value=10)
+            st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'Composição da Cesta Patrimonial' if lang == 'PT' else ('Asset Basket Composition' if lang == 'EN' else 'Composición de la Cesta Patrimonial')}</span>", unsafe_allow_html=True)
+            p_usd = st.slider("Alocação Dólar Americano (USD) (%)" if lang == "PT" else ("USD Allocation (%)" if lang == "EN" else "Asignación Dólar Americano (USD) (%)"), min_value=0, max_value=100, value=40)
+            p_eur = st.slider("Alocação Euro (EUR) (%)" if lang == "PT" else ("EUR Allocation (%)" if lang == "EN" else "Asignación Euro (EUR) (%)"), min_value=0, max_value=100 - p_usd, value=20)
+            p_chf = st.slider("Alocação Franco Suíço (CHF) (%)" if lang == "PT" else ("Swiss Franc (CHF) Allocation (%)" if lang == "EN" else "Asignación Franco Suizo (CHF) (%)"), min_value=0, max_value=100 - p_usd - p_eur, value=10)
             p_brl = 100 - p_usd - p_eur - p_chf
             
-            st.info(f"Distribuição Final: BRL (Real): {p_brl}% | USD: {p_usd}% | EUR: {p_eur}% | CHF: {p_chf}%")
+            st.info(f"Distribuição Final: BRL (Real): {p_brl}% | USD: {p_usd}% | EUR: {p_eur}% | CHF: {p_chf}%" if lang == "PT" else (f"Final Distribution: BRL: {p_brl}% | USD: {p_usd}% | EUR: {p_eur}% | CHF: {p_chf}%" if lang == "EN" else f"Distribución Final: BRL: {p_brl}% | USD: {p_usd}% | EUR: {p_eur}% | CHF: {p_chf}%"))
             
         with col_h2:
             # Calcular alocação nominal
@@ -2724,8 +2777,9 @@ São os **Big Players especulativos** (Grandes Hedge Funds globais de arbitragem
             receita_liquida_hedge = cupom_anual - custo_bancario_trava
             
             # Gráfico de pizza Plotly mostrando distribuição da cesta
+            labels_pie = ["Real (BRL)", "Dólar (USD)", "Euro (EUR)", "Franco Suíço (CHF)"] if lang == "PT" else (["Real (BRL)", "Dollar (USD)", "Euro (EUR)", "Swiss Franc (CHF)"] if lang == "EN" else ["Real (BRL)", "Dólar (USD)", "Euro (EUR)", "Franco Suizo (CHF)"])
             fig_basket = go.Figure(data=[go.Pie(
-                labels=["Real (BRL)", "Dólar (USD)", "Euro (EUR)", "Franco Suíço (CHF)"],
+                labels=labels_pie,
                 values=[v_brl, v_usd, v_eur, v_chf],
                 hole=.4,
                 marker=dict(colors=['#bf953f', '#d4af37', '#888', '#555']),
@@ -2743,26 +2797,69 @@ São os **Big Players especulativos** (Grandes Hedge Funds globais de arbitragem
             st.plotly_chart(fig_basket, use_container_width=True)
             
         # Renders the operational Family Office result card
-        st.markdown(f"""
-        <div style="background: linear-gradient(180deg, #161a23 0%, #0b0e14 100%) !important; border: 1px solid #bf953f44 !important; border-top: 4px solid #bf953f !important; border-radius: 8px !important; padding: 22px !important; margin-top: 15px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; font-family:'Inter';">
-            <h4 style="margin:0 0 12px 0 !important; color:#fff !important; font-size:15px !important; text-transform:uppercase !important; font-weight:700 !important; letter-spacing:1px !important;">DIAGNÓSTICO DE BLINDAGEM PATRIMONIAL FAMILIAR</h4>
-            <div style="display:grid; grid-template-columns: 1fr 1.2fr; gap:20px; text-align:left;">
-                <div>
-                    <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Patrimônio Líquido Total: <strong style="color:#fff;">R$ {patrimonio_h:,.2f}</strong></p>
-                    <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Capital Dolarizado/Forte: <strong style="color:#fff;">R$ {v_intl:,.2f} ({p_usd+p_eur+p_chf}%)</strong></p>
-                    <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Capital Mantido em Reais: <strong style="color:#fff;">R$ {v_brl:,.2f} ({p_brl}%)</strong></p>
+        if lang == "PT":
+            st.markdown(f"""
+            <div style="background: linear-gradient(180deg, #161a23 0%, #0b0e14 100%) !important; border: 1px solid #bf953f44 !important; border-top: 4px solid #bf953f !important; border-radius: 8px !important; padding: 22px !important; margin-top: 15px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; font-family:'Inter';">
+                <h4 style="margin:0 0 12px 0 !important; color:#fff !important; font-size:15px !important; text-transform:uppercase !important; font-weight:700 !important; letter-spacing:1px !important;">DIAGNÓSTICO DE BLINDAGEM PATRIMONIAL FAMILIAR</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1.2fr; gap:20px; text-align:left;">
+                    <div>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Patrimônio Líquido Total: <strong style="color:#fff;">R$ {patrimonio_h:,.2f}</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Capital Dolarizado/Forte: <strong style="color:#fff;">R$ {v_intl:,.2f} ({p_usd+p_eur+p_chf}%)</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Capital Mantido em Reais: <strong style="color:#fff;">R$ {v_brl:,.2f} ({p_brl}%)</strong></p>
+                    </div>
+                    <div style="border-left:1px solid #333; padding-left:20px;">
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Cupom Cambial Gerado (Arbitragem de Juros): <strong style="color:#00ffa5;">+ R$ {cupom_anual:,.2f}/ano</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Custo Bancário de Trava / Swap Bancário: <strong style="color:#ff4b4b;">- R$ {custo_bancario_trava:,.2f}/ano</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888; border-top:1px solid #333; padding-top:5px; font-weight:700;">RENDIMENTO CAMBIAL LÍQUIDO DO HEDGE: <span style="color:#00ffa5; font-size:15px;">+ R$ {receita_liquida_hedge:,.2f} / ano</span></p>
+                    </div>
                 </div>
-                <div style="border-left:1px solid #333; padding-left:20px;">
-                    <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Cupom Cambial Gerado (Arbitragem de Juros): <strong style="color:#00ffa5;">+ R$ {cupom_anual:,.2f}/ano</strong></p>
-                    <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Custo Bancário de Trava / Swap Bancário: <strong style="color:#ff4b4b;">- R$ {custo_bancario_trava:,.2f}/ano</strong></p>
-                    <p style="margin:0 0 5px 0; font-size:12px; color:#888; border-top:1px solid #333; padding-top:5px; font-weight:700;">RENDIMENTO CAMBIAL LÍQUIDO DO HEDGE: <span style="color:#00ffa5; font-size:15px;">+ R$ {receita_liquida_hedge:,.2f} / ano</span></p>
-                </div>
+                <p style="font-size:10.5px; color:#aaa; margin:15px 0 0 0; line-height:1.5; border-left: 3px solid #00ffa5; padding-left:10px; text-align:left;">
+                    <b>Diagnóstico IA:</b> Devido ao elevadíssimo diferencial de juros entre o Real (BRL - 14.50%) e as moedas fortes, travar o seu capital em USD, EUR ou CHF gerando hedge para a moeda brasileira na verdade <b>GERA receita cambial líquida positiva de R$ {receita_liquida_hedge:,.2f} ao ano (cupom cambial líquido)</b>. Ou seja, além de blindar R$ {v_intl:,.2f} contra crises institucionais brasileiras, você recebe juros adicionais para manter essa trava!
+                </p>
             </div>
-            <p style="font-size:10.5px; color:#aaa; margin:15px 0 0 0; line-height:1.5; border-left: 3px solid #00ffa5; padding-left:10px; text-align:left;">
-                <b>Diagnóstico IA:</b> Devido ao elevadíssimo diferencial de juros entre o Real (BRL - 14.50%) e as moedas fortes, travar o seu capital em USD, EUR ou CHF gerando hedge para a moeda brasileira na verdade <b>GERA receita cambial líquida positiva de R$ {receita_liquida_hedge:,.2f} ao ano (cupom cambial líquido)</b>. Ou seja, além de blindar R$ {v_intl:,.2f} contra crises institucionais brasileiras, você recebe juros adicionais para manter essa trava!
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
+            """, unsafe_allow_html=True)
+        elif lang == "EN":
+            st.markdown(f"""
+            <div style="background: linear-gradient(180deg, #161a23 0%, #0b0e14 100%) !important; border: 1px solid #bf953f44 !important; border-top: 4px solid #bf953f !important; border-radius: 8px !important; padding: 22px !important; margin-top: 15px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; font-family:'Inter';">
+                <h4 style="margin:0 0 12px 0 !important; color:#fff !important; font-size:15px !important; text-transform:uppercase !important; font-weight:700 !important; letter-spacing:1px !important;">FAMILY WEALTH SHIELDING DIAGNOSTIC</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1.2fr; gap:20px; text-align:left;">
+                    <div>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Total Net Worth: <strong style="color:#fff;">R$ {patrimonio_h:,.2f}</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Hard Currency Capital: <strong style="color:#fff;">R$ {v_intl:,.2f} ({p_usd+p_eur+p_chf}%)</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Capital Held in BRL: <strong style="color:#fff;">R$ {v_brl:,.2f} ({p_brl}%)</strong></p>
+                    </div>
+                    <div style="border-left:1px solid #333; padding-left:20px;">
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Generated FX Coupon (Interest Arbitrage): <strong style="color:#00ffa5;">+ R$ {cupom_anual:,.2f}/year</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Bank Lock / FX Swap Cost: <strong style="color:#ff4b4b;">- R$ {custo_bancario_trava:,.2f}/year</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888; border-top:1px solid #333; padding-top:5px; font-weight:700;">NET SWAP/HEDGE YIELD: <span style="color:#00ffa5; font-size:15px;">+ R$ {receita_liquida_hedge:,.2f} / year</span></p>
+                    </div>
+                </div>
+                <p style="font-size:10.5px; color:#aaa; margin:15px 0 0 0; line-height:1.5; border-left: 3px solid #00ffa5; padding-left:10px; text-align:left;">
+                    <b>AI Diagnostic:</b> Due to the extremely high interest rate differential between the Real (BRL - 14.50%) and hard currencies, locking your capital in USD, EUR, or CHF while hedging back to the Brazilian currency actually <b>GENERATES positive net annual exchange income of R$ {receita_liquida_hedge:,.2f} (net FX coupon)</b>. This means that in addition to shielding R$ {v_intl:,.2f} against Brazilian country risk, you receive additional interest to hold this hedge!
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+            <div style="background: linear-gradient(180deg, #161a23 0%, #0b0e14 100%) !important; border: 1px solid #bf953f44 !important; border-top: 4px solid #bf953f !important; border-radius: 8px !important; padding: 22px !important; margin-top: 15px !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important; font-family:'Inter';">
+                <h4 style="margin:0 0 12px 0 !important; color:#fff !important; font-size:15px !important; text-transform:uppercase !important; font-weight:700 !important; letter-spacing:1px !important;">DIAGNÓSTICO DE BLINDACIÓN PATRIMONIAL FAMILIAR</h4>
+                <div style="display:grid; grid-template-columns: 1fr 1.2fr; gap:20px; text-align:left;">
+                    <div>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Patrimonio Neto Total: <strong style="color:#fff;">R$ {patrimonio_h:,.2f}</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Capital Dolarizado/Fuerte: <strong style="color:#fff;">R$ {v_intl:,.2f} ({p_usd+p_eur+p_chf}%)</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Capital Mantenido en Reales: <strong style="color:#fff;">R$ {v_brl:,.2f} ({p_brl}%)</strong></p>
+                    </div>
+                    <div style="border-left:1px solid #333; padding-left:20px;">
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Cupón Cambiario Generado (Arbitraje de Tasas): <strong style="color:#00ffa5;">+ R$ {cupom_anual:,.2f}/año</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888;">Costo Bancario de Cobertura / Swap Bancario: <strong style="color:#ff4b4b;">- R$ {custo_bancario_trava:,.2f}/año</strong></p>
+                        <p style="margin:0 0 5px 0; font-size:12px; color:#888; border-top:1px solid #333; padding-top:5px; font-weight:700;">RENDIMIENTO CAMBIARIO NETO DE LA COBERTURA: <span style="color:#00ffa5; font-size:15px;">+ R$ {receita_liquida_hedge:,.2f} / año</span></p>
+                    </div>
+                </div>
+                <p style="font-size:10.5px; color:#aaa; margin:15px 0 0 0; line-height:1.5; border-left: 3px solid #00ffa5; padding-left:10px; text-align:left;">
+                    <b>Diagnóstico IA:</b> Debido al altísimo diferencial de tasas de interés entre el Real (BRL - 14.50%) y las monedas fuertes, asegurar su capital en USD, EUR o CHF generando cobertura para la moneda brasileña en realidad <b>GENERA un ingreso cambiario neto positivo de R$ {receita_liquida_hedge:,.2f} al año (cupón cambiario neto)</b>. Es decir, además de blindar R$ {v_intl:,.2f} contra riesgos institucionales brasileños, ¡usted recibe intereses adicionales para mantener esta cobertura!
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
 
     st.write("")
 
@@ -3278,7 +3375,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                 ey = (lpa / price_now) * 100 if price_now > 0 else 0.0
                 
                 # Métricas Principais de Valuation (Garantindo o visual de cockpit de luxo)
-                st.markdown(f"<h3 style='font-size:18px; border:none; padding:0; margin-bottom:15px; color:#ffffff;'>Preço e Valuation</h3>", unsafe_allow_html=True)
+                st.markdown(f"<h3 style='font-size:18px; border:none; padding:0; margin-bottom:15px; color:#ffffff;'>{'Preço e Valuation' if lang == 'PT' else ('Price & Valuation' if lang == 'EN' else 'Precio y Valuación')}</h3>", unsafe_allow_html=True)
                 col_m1, col_m2, col_m3, col_m4 = st.columns(4)
                 with col_m1: st.metric(b3_t_active["price_now"], f"R$ {price_now:.2f}")
                 with col_m2: st.metric(b3_t_active["graham_price"], f"R$ {preco_justo:.2f}")
@@ -4674,61 +4771,159 @@ Esta estimativa calcula o reinvestimento automático total de todos os juros men
         )
         st.plotly_chart(fig_sim, use_container_width=True, theme=None)
 
-        # Explicações Didáticas para Leigos
         st.write("")
-        st.markdown("### CO-PILOTO EXPLICA: COMO CADA UMA DESSAS ESTRATÉGIAS GERA RIQUEZA NA PRÁTICA?")
+        st.markdown("### CO-PILOTO EXPLICA: COMO CADA UMA DESSAS ESTRATÉGIAS GERA RIQUEZA NA PRÁTICA?" if lang == "PT" else ("### CO-PILOT EXPLAINS: HOW DO THESE STRATEGIES GENERATE WEALTH IN PRACTICE?" if lang == "EN" else "### CO-PILOTO EXPLICA: ¿CÓMO CADA UNA DE ESTAS ESTRATEGIAS GENERA RIQUEZA EN LA PRÁCTICA?"))
         exp_col1, exp_col2, exp_col3 = st.columns(3)
         with exp_col1:
-            with st.expander(" Entender Delta-Neutral"):
-                st.markdown("""
-                **O que é em termos simples?**
-                É como comprar um carro no mercado físico e vendê-lo no mesmo segundo por um preço pré-acordado em um contrato futuro, ganhando uma taxa garantida sem risco do carro desvalorizar.
-                
-                **Como gera dinheiro?**
-                1. Compra a criptomoeda (BTC/ETH) no mercado à vista.
-                2. Vende a mesma proporção em contratos futuros de derivativos.
-                3. Como as corretoras cobram taxa de quem aposta na alta e pagam a quem está na baixa (*Funding Rate*), você embolsa essa taxa 3 vezes ao dia, livre de oscilações de preço.
-                
-                **Qual é o risco real?**
-                A integridade do código do protocolo emissor da stablecoin e o colateral que sustenta a paridade do dólar sintético (USDe).
-                
-                **Capital Mínimo Recomendado**:
-                A partir de **R$ 500.000,00 ($100k USD)** para cobrir os custos operacionais de hedge e swap cambial com eficiência.
-                """)
+            with st.expander(" Entender Delta-Neutral" if lang == "PT" else (" Understand Delta-Neutral" if lang == "EN" else " Entender Delta-Neutral")):
+                if lang == "PT":
+                    st.markdown("""
+                    **O que é em termos simples?**
+                    É como comprar um carro no mercado físico e vendê-lo no mesmo segundo por um preço pré-acordado em um contrato futuro, ganhando uma taxa garantida sem risco do carro desvalorizar.
+                    
+                    **Como gera dinheiro?**
+                    1. Compra a criptomoeda (BTC/ETH) no mercado à vista.
+                    2. Vende a mesma proporção em contratos futuros de derivativos.
+                    3. Como as corretoras cobram taxa de quem aposta na alta e pagam a quem está na baixa (*Funding Rate*), você embolsa essa taxa 3 vezes ao dia, livre de oscilações de preço.
+                    
+                    **Qual é o risco real?**
+                    A integridade do código do protocolo emissor da stablecoin e o colateral que sustenta a paridade do dólar sintético (USDe).
+                    
+                    **Capital Mínimo Recomendado**:
+                    A partir de **R$ 500.000,00 ($100k USD)** para cobrir os custos operacionais de hedge e swap cambial com eficiência.
+                    """)
+                elif lang == "EN":
+                    st.markdown("""
+                    **What is it in simple terms?**
+                    It's like buying a car in the physical market and selling it in the same second for a pre-agreed price in a futures contract, earning a guaranteed rate without the risk of the car depreciating.
+                    
+                    **How does it generate money?**
+                    1. Buy the cryptocurrency (BTC/ETH) in the spot market.
+                    2. Sell the exact same proportion in derivative futures contracts.
+                    3. Since exchanges charge funding fees to those betting on price increases and pay those who are short (*Funding Rate*), you pocket this fee 3 times a day, completely isolated from price fluctuations.
+                    
+                    **What is the real risk?**
+                    The code integrity of the stablecoin issuer protocol and the collateral supporting the peg of the synthetic dollar (USDe).
+                    
+                    **Recommended Minimum Capital**:
+                    Starting from **BRL 500,000.00 ($100k USD)** to cover operational costs of hedging and currency swaps efficiently.
+                    """)
+                else:
+                    st.markdown("""
+                    **¿Qué es en términos simples?**
+                    Es como comprar un coche en el mercado físico y venderlo en el mismo segundo por un precio preacordado en un contrato de futuros, ganando una tasa garantizada sin riesgo de que el coche se devalúe.
+                    
+                    **¿Cómo genera dinero?**
+                    1. Compra la criptomoneda (BTC/ETH) en el mercado al contado.
+                    2. Vende la misma proporción en contratos de futuros de derivados.
+                    3. Dado que los exchanges cobran comisiones de financiación a quienes apuestan por la subida y pagan a quienes están a la baja (*Funding Rate*), usted se embolsa esta tasa 3 veces al día, libre de oscilaciones de precio.
+                    
+                    **¿Cuál es el riesgo real?**
+                    La integridad del código del protocolo emisor de la stablecoin y el colateral que sustenta la paridad del dólar sintético (USDe).
+                    
+                    **Capital Mínimo Recomendado**:
+                    A partir de **BRL 500.000,00 ($100k USD)** para cubrir los costos operativos de cobertura y swap de divisas con eficiencia.
+                    """)
         with exp_col2:
-            with st.expander(" Entender Liquid Restaking"):
-                st.markdown("""
-                **O que é em termos simples?**
-                É como colocar seu dinheiro em um CDB de banco que paga juros (Staking), e o banco lhe entregar um "título/recibo" (eETH) que você pode usar para ganhar ainda mais juros em outros investimentos ao mesmo tempo.
-                
-                **Como gera dinheiro?**
-                1. Você bloqueia Ethereum para validar a rede central e ganha juros da própria blockchain.
-                2. O sistema re-empenha (restake) esse Ethereum em serviços de validação adicionais (AVSs).
-                3. Você acumula rendimentos extras e ganha "pontos" de campanhas de marketing de novos projetos que são convertidos em valiosos tokens grátis (*Airdrops*).
-                
-                **Qual é o risco real?**
-                *Slashing* (penalização se os computadores validadores falharem de forma crítica) ou bugs nos contratos inteligentes do protocolo.
-                
-                **Capital Mínimo Recomendado**:
-                Acessível de forma imediata a partir de **R$ 200.000,00** para ter escala relevante nos airdrops.
-                """)
+            with st.expander(" Entender Liquid Restaking" if lang == "PT" else (" Understand Liquid Restaking" if lang == "EN" else " Entender Liquid Restaking")):
+                if lang == "PT":
+                    st.markdown("""
+                    **O que é em termos simples?**
+                    É como colocar seu dinheiro em um CDB de banco que paga juros (Staking), e o banco lhe entregar um "título/recibo" (eETH) que você pode usar para ganhar ainda mais juros em outros investimentos ao mesmo tempo.
+                    
+                    **Como gera dinheiro?**
+                    1. Você bloqueia Ethereum para validar a rede central e ganha juros da própria blockchain.
+                    2. O sistema re-empenha (restake) esse Ethereum em serviços de validação adicionais (AVSs).
+                    3. Você acumula rendimentos extras e ganha "pontos" de campanhas de marketing de novos projetos que são convertidos em valiosos tokens grátis (*Airdrops*).
+                    
+                    **Qual é o risco real?**
+                    *Slashing* (penalização se os computadores validadores falharem de forma crítica) ou bugs nos contratos inteligentes do protocolo.
+                    
+                    **Capital Mínimo Recomendado**:
+                    Acessível de forma imediata a partir de **R$ 200.000,00** para ter escala relevante nos airdrops.
+                    """)
+                elif lang == "EN":
+                    st.markdown("""
+                    **What is it in simple terms?**
+                    It's like placing your money in a bank CD that pays interest (Staking), and the bank handing you a "receipt/token" (eETH) that you can use to earn even more interest in other investments at the same time.
+                    
+                    **How does it generate money?**
+                    1. You lock Ethereum to validate the core network and earn interest from the blockchain itself.
+                    2. The system re-stakes this Ethereum into additional validation services (AVSs).
+                    3. You accumulate extra yields and earn "points" from marketing campaigns of new projects, which are later converted into valuable free tokens (*Airdrops*).
+                    
+                    **What is the real risk?**
+                    *Slashing* (penalization if validator computers fail critically) or smart contract bugs in the protocol.
+                    
+                    **Recommended Minimum Capital**:
+                    Accessible starting from **BRL 200,000.00** to have relevant scale in airdrops.
+                    """)
+                else:
+                    st.markdown("""
+                    **¿Qué es en términos simples?**
+                    Es como colocar su dinero en un depósito bancario que paga intereses (Staking), y el banco le entrega un "recibo/token" (eETH) que puede usar para ganar aún más intereses en otras inversiones al mismo tiempo.
+                    
+                    **¿Cómo genera dinero?**
+                    1. Bloquea Ethereum para validar la red central y gana intereses de la propia blockchain.
+                    2. El sistema vuelve a empeñar (restake) este Ethereum en servicios de validación adicionales (AVSs).
+                    3. Acumula rendimientos adicionales y gana "puntos" de campañas de marketing de nuevos proyectos que se convierten en valiosos tokens gratuitos (*Airdrops*).
+                    
+                    **¿Cuál es el riesgo real?**
+                    *Slashing* (penalización si las computadoras validadoras fallan de manera crítica) o errores en los contratos inteligentes del protocolo.
+                    
+                    **Capital Mínimo Recomendado**:
+                    Accesible de forma inmediata a partir de **BRL 200.000,00** para tener una escala relevante en los airdrops.
+                    """)
         with exp_col3:
-            with st.expander(" Entender MEV Staking"):
-                st.markdown("""
-                **O que é em termos simples?**
-                Pense em ser dono de um "pedágio expresso" em uma rodovia movimentada. Os carros normais pagam a tarifa padrão, mas robôs de fundos pagam fortunas extras para "passar na frente" de transações financeiras, e esse lucro de pedágio vai direto para você.
-                
-                **Como gera dinheiro?**
-                1. Delega moedas Solana para computadores validadores de alta performance da rede Jito.
-                2. Esses validadores leiloam a prioridade das ordens para robôs de arbitragem corporativa.
-                3. Todo esse lucro de processamento especial (MEV) é convertido em rendimentos diários e creditado à sua carteira.
-                
-                **Qual é o risco real?**
-                Risco cambial direcional da flutuação da moeda Solana no mercado e estabilidade operacional da blockchain.
-                
-                **Capital Mínimo Recomendado**:
-                Estratégia flexível e imediata, recomendada a partir de qualquer capital de **R$ 50.000,00**.
-                """)
+            with st.expander(" Entender MEV Staking" if lang == "PT" else (" Understand MEV Staking" if lang == "EN" else " Entender MEV Staking")):
+                if lang == "PT":
+                    st.markdown("""
+                    **O que é em termos simples?**
+                    Pense em ser dono de um "pedágio expresso" em uma rodovia movimentada. Os carros normais pagam a tarifa padrão, mas robôs de fundos pagam fortunas extras para "passar na frente" de transações financeiras, e esse lucro de pedágio vai direto para você.
+                    
+                    **Como gera dinheiro?**
+                    1. Delega moedas Solana para computadores validadores de alta performance da rede Jito.
+                    2. Esses validadores leiloam a prioridade das ordens para robôs de arbitragem corporativa.
+                    3. Todo esse lucro de processamento especial (MEV) é convertido em rendimentos diários e creditado à sua carteira.
+                    
+                    **Qual é o risco real?**
+                    Risco cambial direcional da flutuação da moeda Solana no mercado e estabilidade operacional da blockchain.
+                    
+                    **Capital Mínimo Recomendado**:
+                    Estratégia flexível e imediata, recomendada a partir de qualquer capital de **R$ 50.000,00**.
+                    """)
+                elif lang == "EN":
+                    st.markdown("""
+                    **What is it in simple terms?**
+                    Think of being the owner of an "express toll booth" on a busy highway. Normal cars pay the standard toll, but hedge fund bots pay extra fortunes to "jump the line" for financial transactions, and that toll profit goes straight to you.
+                    
+                    **How does it generate money?**
+                    1. Delegate Solana coins to high-performance validator computers on the Jito network.
+                    2. These validators auction transaction ordering priority to corporate arbitrage bots.
+                    3. All of this special processing profit (MEV) is converted into daily yields and credited to your wallet.
+                    
+                    **What is the real risk?**
+                    Directional currency risk from Solana price fluctuations in the market and blockchain operational stability.
+                    
+                    **Recommended Minimum Capital**:
+                    Flexible and immediate strategy, recommended starting from any capital of **BRL 50,000.00**.
+                    """)
+                else:
+                    st.markdown("""
+                    **¿Qué es en términos simples?**
+                    Piese en ser el propietario de un "peaje exprés" en una autopista muy transitada. Los coches normales pagan la tarifa estándar, pero los bots de fondos pagan fortunas adicionales para "adelantarse" a las transacciones financieras, y ese beneficio del peaje va directo a usted.
+                    
+                    **¿Cómo genera dinero?**
+                    1. Delega monedas Solana a computadoras validadoras de alto rendimiento de la red Jito.
+                    2. Estos validadores subastan la prioridad del orden de las transacciones a bots de arbitraje corporativo.
+                    3. Todo este beneficio de procesamiento especial (MEV) se convierte en rendimientos diarios y se acredita a su billetera.
+                    
+                    **¿Cuál es el riesgo real?**
+                    Riesgo cambiario direccional por la fluctuación de la moneda Solana en el mercado y estabilidad operativa de la blockchain.
+                    
+                    **Capital Mínimo Recomendado**:
+                    Estrategia flexible e inmediata, recomendada a partir de cualquier capital de **BRL 50.000,00**.
+                    """)
 
 
     # --- ABA 4: BLINDAGEM DIGITAL E CUSTÓDIA SEGURA ---
@@ -5282,7 +5477,8 @@ Aloque a moeda estável captada diretamente nas estratégias reguladas de **Delt
         
         fw_col1, fw_col2 = st.columns(2)
         with fw_col1:
-            st.markdown("""<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; height:100%; text-align:left;">
+            if lang == "PT":
+                st.markdown("""<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; height:100%; text-align:left;">
 <strong style="color: #bf953f; font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">️ PERFIL QUALIFICADO (De R$ 500k a R$ 5 Milhões)</strong>
 <p style="font-size: 12px; color: #ccc; line-height: 1.6; margin: 0;">
 1. **Custódia Própria**: Adquira duas carteiras físicas de alta segurança (Ledger/Trezor). Guarde suas sementes (seeds) gravadas em placas de metal.
@@ -5291,9 +5487,30 @@ Aloque a moeda estável captada diretamente nas estratégias reguladas de **Delt
 4. **Hedge e Reinvestimento**: Encaminhe o capital dolarizado para o portal regulado de DeFi estruturado e aloje nos cofres de Delta-Neutral. Reinvista os lucros mensalmente comprando mais colaterais (BTC/ETH).
 </p>
 </div>""", unsafe_allow_html=True)
+            elif lang == "EN":
+                st.markdown("""<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; height:100%; text-align:left;">
+<strong style="color: #bf953f; font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">️ QUALIFIED PROFILE (From BRL 500k to BRL 5 Million)</strong>
+<p style="font-size: 12px; color: #ccc; line-height: 1.6; margin: 0;">
+1. **Self-Custody**: Acquire two high-security hardware wallets (Ledger/Trezor). Store your seed phrases engraved on steel metal plates.
+2. **Prime Broker Loan**: Set up a corporate international account on *Interactive Brokers*. Deposit your core assets and activate the **Portfolio Margin** profile.
+3. **Lombard Credit Intake**: Use your collateralized margin to automatically borrow USD at low floating rates directly within the brokerage panel.
+4. **Hedge & Reinvestment**: Transfer the USD capital into the structured regulated DeFi portal and allocate it inside Delta-Neutral vaults. Reinvest profits monthly by acquiring more core collaterals (BTC/ETH).
+</p>
+</div>""", unsafe_allow_html=True)
+            else:
+                st.markdown("""<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; height:100%; text-align:left;">
+<strong style="color: #bf953f; font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">️ PERFIL CALIFICADO (De BRL 500k a BRL 5 Millones)</strong>
+<p style="font-size: 12px; color: #ccc; line-height: 1.6; margin: 0;">
+1. **Autocustodia**: Adquiera dos billeteras físicas de alta seguridad (Ledger/Trezor). Guarde sus frases semilla (seeds) grabadas en placas de metal.
+2. **Préstamo vía Prime Broker**: Cree una cuenta corporativa internacional en *Interactive Brokers*. Deposite sus activos principales y active el perfil de **Portfolio Margin**.
+3. **Toma de Crédito Lombard**: Utilice el margen colateralizado para obtener USD a tasas flotantes bajas de forma automática directamente en el panel del corredor.
+4. **Cobertura y Reinversión**: Transfiera el capital dolarizado al portal DeFi regulado y colóquelo en bóvedas Delta-Neutral. Reinvierta las ganancias mensualmente comprando más colaterales (BTC/ETH).
+</p>
+</div>""", unsafe_allow_html=True)
             
         with fw_col2:
-            st.markdown("""<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; height:100%; text-align:left;">
+            if lang == "PT":
+                st.markdown("""<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; height:100%; text-align:left;">
 <strong style="color: #bf953f; font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">️ PERFIL FAMILY OFFICE / PRIVATE (Acima de R$ 5 Milhões)</strong>
 <p style="font-size: 12px; color: #ccc; line-height: 1.6; margin: 0;">
 1. **Comitê Patrimonial**: Estruture chaves baseadas em governança multi-sig (Gnosis Safe `3 de 5` ou `5 de 7`), divididas e registradas oficialmente no testamento sucessório da Holding.
@@ -5302,11 +5519,31 @@ Aloque a moeda estável captada diretamente nas estratégias reguladas de **Delt
 4. **Acúmulo de Caixa Perpétuo**: Re-encaminhe o capital alavancado via mesa institucional direto para os cofres estruturados de DeFi. A renda gerada cobre o custo de juros e acumula fortunas líquidas intergeracionais.
 </p>
 </div>""", unsafe_allow_html=True)
+            elif lang == "EN":
+                st.markdown("""<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; height:100%; text-align:left;">
+<strong style="color: #bf953f; font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">️ FAMILY OFFICE / PRIVATE PROFILE (Above BRL 5 Million)</strong>
+<p style="font-size: 12px; color: #ccc; line-height: 1.6; margin: 0;">
+1. **Wealth Committee**: Structure cryptographic keys based on multi-sig governance (Gnosis Safe `3 of 5` or `5 of 7`), split and officially registered in the Holding's succession testament.
+2. **Global Private Banks**: Partner with Wealth Management desks at swiss private banks (e.g. *UBS, Julius Baer, Vontobel*). Use your custody bonds, offshore commercial real estate, and deposits as credit collateral.
+3. **Structured Swap Contract**: Negotiate fixed-rate Lombard Loans in currencies with historically low interest rates (such as the Japanese Yen JPY) and perform contractual currency parity hedging.
+4. **Perpetual Cash Accumulation**: Re-route leveraged capital via institutional desks directly into structured DeFi vaults. The income generated covers interest costs and builds liquid intergenerational wealth.
+</p>
+</div>""", unsafe_allow_html=True)
+            else:
+                st.markdown("""<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; height:100%; text-align:left;">
+<strong style="color: #bf953f; font-size: 13.5px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">️ PERFIL FAMILY OFFICE / PRIVATE (Más de BRL 5 Millones)</strong>
+<p style="font-size: 12px; color: #ccc; line-height: 1.6; margin: 0;">
+1. **Comité Patrimonial**: Estructure claves basadas en gobernanza multi-sig (Gnosis Safe `3 de 5` o `5 de 7`), divididas y registradas oficialmente en el testamento de sucesión de la Holding.
+2. **Bancos Privados Globales**: Colabore con las mesas de Wealth Management de bancos suizos socios (como *UBS, Julius Baer, Vontobel*). Use sus bonos en custodia, bienes raíces comerciales offshore y depósitos como colateral de crédito.
+3. **Contrato de Swap Estructurado**: Negocie tasas fijas de Lombard Loans en monedas con tasas de interés históricamente bajas (como el Yen Japonés JPY) y realice coberturas contractuales de paridad cambiaria.
+4. **Acumulación de Caja Perpetua**: Reenvíe el capital apalancado a través de la mesa institucional directamente a las bóvedas DeFi estructuradas. Los ingresos generados cubren los intereses y acumulan fortunas líquidas intergeneracionales.
+</p>
+</div>""", unsafe_allow_html=True)
 
         st.write("")
         st.write("")
-        st.markdown("### ️ MÉTODO 2: SHADOWING DE GIGANTES (CO-INVESTIMENTO COM VENTURE CAPITALS DE ELITE)")
-        st.write("Em vez de pagar as taxas salgadas de administração (2%) e performance (20%) de fundos de Venture Capital regulados, você pode replicar de forma automatizada e inteligente as carteiras públicas das maiores holdings de Web3 do mundo. Selecione um dos gigantes abaixo para visualizar a sua estrutura recomendada de co-investimento:" if lang == "PT" else ("Instead of paying steep management fees (2%) and performance fees (20%) to regulated Venture Capital funds, you can automatically and intelligently replicate the public portfolios of the world's largest Web3 holdings. Select one of the giants below to view its recommended co-investment structure:" if lang == "EN" else "En lugar de pagar altas comisiones de administración (2%) y rentabilidad (20%) a fondos de Venture Capital regulados, puede replicar de forma automática e inteligente las carteras públicas de los mayores holdings de Web3 del mundo. Seleccione uno de los gigantes a continuación para ver su estructura recomendada de co-inversión:"))
+        st.markdown("### ️ MÉTODO 2: SHADOWING DE GIGANTES (CO-INVESTIMENTO COM VENTURE CAPITALS DE ELITE)" if lang == "PT" else ("### ️ METHOD 2: SHADOWING OF GIANTS (CO-INVESTING WITH ELITE VENTURE CAPITALS)" if lang == "EN" else "### ️ MÉTODO 2: SHADOWING DE GIGANTES (CO-INVERSIÓN CON VENTURE CAPITALS DE ELITE)"))
+        st.write("Em verdade, em vez de pagar as taxas salgadas de administração (2%) e performance (20%) de fundos de Venture Capital regulados, você pode replicar de forma automatizada e inteligente as carteiras públicas das maiores holdings de Web3 do mundo. Selecione um dos gigantes abaixo para visualizar a sua estrutura recomendada de co-investimento:" if lang == "PT" else ("Instead of paying steep management fees (2%) and performance fees (20%) to regulated Venture Capital funds, you can automatically and intelligently replicate the public portfolios of the world's largest Web3 holdings. Select one of the giants below to view its recommended co-investment structure:" if lang == "EN" else "En lugar de pagar altas comisiones de administración (2%) y rentabilidad (20%) a fondos de Venture Capital regulados, puede replicar de forma automática e inteligente las carteras públicas de los mayores holdings de Web3 del mundo. Seleccione uno de los gigantes a continuación para ver su estructura recomendada de co-inversión:"))
         
         # Standalone portfolios dictionary for replication
         SHADOW_PORTFOLIOS = {
