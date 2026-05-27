@@ -1257,81 +1257,81 @@ if st.session_state.active_terminal == "hub":
     
     with row1_col1:
         st.markdown(f"""
-        <a href="{get_secure_link('whale_radar')}" target="_self" class="hub-card-link">
-            <div class="hub-card">
-                <div>
-                    <h4>{t['term_1_title']}</h4>
-                    <p>{t['term_1_desc']}</p>
-                </div>
-                <div class="badge">{t['btn_access']}</div>
+        <div class="hub-card" style="height: 245px !important; margin-bottom: 12px !important;">
+            <div>
+                <h4>{t['term_1_title']}</h4>
+                <p>{t['term_1_desc']}</p>
             </div>
-        </a>
+        </div>
         """, unsafe_allow_html=True)
+        if st.button(t['btn_access'], key="btn_whale_radar", use_container_width=True):
+            st.session_state.active_terminal = "whale_radar"
+            st.rerun()
             
     with row1_col2:
         st.markdown(f"""
-        <a href="{get_secure_link('forex_cot')}" target="_self" class="hub-card-link">
-            <div class="hub-card">
-                <div>
-                    <h4>{t['term_2_title']}</h4>
-                    <p>{t['term_2_desc']}</p>
-                </div>
-                <div class="badge">{t['btn_access']}</div>
+        <div class="hub-card" style="height: 245px !important; margin-bottom: 12px !important;">
+            <div>
+                <h4>{t['term_2_title']}</h4>
+                <p>{t['term_2_desc']}</p>
             </div>
-        </a>
+        </div>
         """, unsafe_allow_html=True)
+        if st.button(t['btn_access'], key="btn_forex_cot", use_container_width=True):
+            st.session_state.active_terminal = "forex_cot"
+            st.rerun()
             
     with row1_col3:
         st.markdown(f"""
-        <a href="{get_secure_link('balance_sheets')}" target="_self" class="hub-card-link">
-            <div class="hub-card">
-                <div>
-                    <h4>{t['term_3_title']}</h4>
-                    <p>{t['term_3_desc']}</p>
-                </div>
-                <div class="badge">{t['btn_access']}</div>
+        <div class="hub-card" style="height: 245px !important; margin-bottom: 12px !important;">
+            <div>
+                <h4>{t['term_3_title']}</h4>
+                <p>{t['term_3_desc']}</p>
             </div>
-        </a>
+        </div>
         """, unsafe_allow_html=True)
+        if st.button(t['btn_access'], key="btn_balance_sheets", use_container_width=True):
+            st.session_state.active_terminal = "balance_sheets"
+            st.rerun()
             
     with row2_col1:
         st.markdown(f"""
-        <a href="{get_secure_link('crypto_whales')}" target="_self" class="hub-card-link">
-            <div class="hub-card">
-                <div>
-                    <h4>{t['term_4_title']}</h4>
-                    <p>{t['term_4_desc']}</p>
-                </div>
-                <div class="badge">{t['btn_access']}</div>
+        <div class="hub-card" style="height: 245px !important; margin-bottom: 12px !important;">
+            <div>
+                <h4>{t['term_4_title']}</h4>
+                <p>{t['term_4_desc']}</p>
             </div>
-        </a>
+        </div>
         """, unsafe_allow_html=True)
- 
+        if st.button(t['btn_access'], key="btn_crypto_whales", use_container_width=True):
+            st.session_state.active_terminal = "crypto_whales"
+            st.rerun()
+  
     with row2_col2:
         st.markdown(f"""
-        <a href="{get_secure_link('global_macro')}" target="_self" class="hub-card-link">
-            <div class="hub-card">
-                <div>
-                    <h4>{t['term_5_title']}</h4>
-                    <p>{t['term_5_desc']}</p>
-                </div>
-                <div class="badge">{t['btn_access']}</div>
+        <div class="hub-card" style="height: 245px !important; margin-bottom: 12px !important;">
+            <div>
+                <h4>{t['term_5_title']}</h4>
+                <p>{t['term_5_desc']}</p>
             </div>
-        </a>
+        </div>
         """, unsafe_allow_html=True)
+        if st.button(t['btn_access'], key="btn_global_macro", use_container_width=True):
+            st.session_state.active_terminal = "global_macro"
+            st.rerun()
             
     with row2_col3:
         st.markdown(f"""
-        <a href="{get_secure_link('family_office_br')}" target="_self" class="hub-card-link">
-            <div class="hub-card">
-                <div>
-                    <h4>{t['term_6_title']}</h4>
-                    <p>{t['term_6_desc']}</p>
-                </div>
-                <div class="badge">{t['btn_access']}</div>
+        <div class="hub-card" style="height: 245px !important; margin-bottom: 12px !important;">
+            <div>
+                <h4>{t['term_6_title']}</h4>
+                <p>{t['term_6_desc']}</p>
             </div>
-        </a>
+        </div>
         """, unsafe_allow_html=True)
+        if st.button(t['btn_access'], key="btn_family_office_br", use_container_width=True):
+            st.session_state.active_terminal = "family_office_br"
+            st.rerun()
             
     st.sidebar.caption(t["user_level"])
     st.sidebar.caption(t["data_source"])
