@@ -967,8 +967,9 @@ else:
     if url_terminal != st.session_state.active_terminal:
         st.session_state.active_terminal = url_terminal
 
-# Sempre manter a URL sincronizada com o estado atual da sessão
-st.query_params["terminal"] = st.session_state.active_terminal
+# Apenas atualizar a URL se ela estiver diferente do estado atual da sessao (evita loops de redirecionamento)
+if st.query_params.get("terminal") != st.session_state.active_terminal:
+    st.query_params["terminal"] = st.session_state.active_terminal
 
 # Seletor de Idiomas na Barra Lateral
 lang_options = {"Português (PT)": "PT", "English (EN)": "EN", "Español (ES)": "ES"}
