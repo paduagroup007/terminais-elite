@@ -1235,9 +1235,16 @@ if st.session_state.active_terminal == "hub":
     row1_col1, row1_col2, row1_col3 = st.columns(3)
     row2_col1, row2_col2, row2_col3 = st.columns(3)
     
+    # Helper para construir links seguros e embutidos mantendo o token e embed=true do iframe
+    def get_secure_link(terminal_name):
+        import urllib.parse
+        params = dict(st.query_params)
+        params["terminal"] = terminal_name
+        return f"/?{urllib.parse.urlencode(params)}"
+    
     with row1_col1:
         st.markdown(f"""
-        <a href="/?terminal=whale_radar" target="_blank" class="hub-card-link">
+        <a href="{get_secure_link('whale_radar')}" target="_self" class="hub-card-link">
             <div class="hub-card">
                 <div>
                     <h4>{t['term_1_title']}</h4>
@@ -1250,7 +1257,7 @@ if st.session_state.active_terminal == "hub":
             
     with row1_col2:
         st.markdown(f"""
-        <a href="/?terminal=forex_cot" target="_blank" class="hub-card-link">
+        <a href="{get_secure_link('forex_cot')}" target="_self" class="hub-card-link">
             <div class="hub-card">
                 <div>
                     <h4>{t['term_2_title']}</h4>
@@ -1263,7 +1270,7 @@ if st.session_state.active_terminal == "hub":
             
     with row1_col3:
         st.markdown(f"""
-        <a href="/?terminal=balance_sheets" target="_blank" class="hub-card-link">
+        <a href="{get_secure_link('balance_sheets')}" target="_self" class="hub-card-link">
             <div class="hub-card">
                 <div>
                     <h4>{t['term_3_title']}</h4>
@@ -1276,7 +1283,7 @@ if st.session_state.active_terminal == "hub":
             
     with row2_col1:
         st.markdown(f"""
-        <a href="/?terminal=crypto_whales" target="_blank" class="hub-card-link">
+        <a href="{get_secure_link('crypto_whales')}" target="_self" class="hub-card-link">
             <div class="hub-card">
                 <div>
                     <h4>{t['term_4_title']}</h4>
@@ -1289,7 +1296,7 @@ if st.session_state.active_terminal == "hub":
  
     with row2_col2:
         st.markdown(f"""
-        <a href="/?terminal=global_macro" target="_blank" class="hub-card-link">
+        <a href="{get_secure_link('global_macro')}" target="_self" class="hub-card-link">
             <div class="hub-card">
                 <div>
                     <h4>{t['term_5_title']}</h4>
@@ -1302,7 +1309,7 @@ if st.session_state.active_terminal == "hub":
             
     with row2_col3:
         st.markdown(f"""
-        <a href="/?terminal=family_office_br" target="_blank" class="hub-card-link">
+        <a href="{get_secure_link('family_office_br')}" target="_self" class="hub-card-link">
             <div class="hub-card">
                 <div>
                     <h4>{t['term_6_title']}</h4>
