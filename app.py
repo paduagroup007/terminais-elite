@@ -1103,77 +1103,7 @@ if st.session_state.active_terminal == "balance_sheets":
 
 # --- CONTROLES DA SIDEBAR EXCLUSIVOS DO TERMINAL FAMILY OFFICE ---
 if st.session_state.active_terminal == "family_office_br":
-    st.sidebar.subheader("PARÂMETROS DE RIQUEZA" if lang == "PT" else ("WEALTH PARAMETERS" if lang == "EN" else "PARÁMETROS DE RIQUEZA"))
-    
-    # 1. Seletor de Perfil
-    profiles_list = {
-        "PT": ["Conservação e Liquidez", "Alocação Estratégica", "Sucessão Familiar"],
-        "EN": ["Capital Preservation", "Strategic Allocation", "Family Succession"],
-        "ES": ["Preservación y Liquidez", "Asignación Estratégica", "Sucesión Familiar"]
-    }
-    profile_map = {
-        "Conservação e Liquidez": "Conservação e Liquidez",
-        "Alocação Estratégica": "Alocação Estratégica",
-        "Sucessão Familiar": "Sucessão Familiar",
-        "Capital Preservation": "Conservação e Liquidez",
-        "Strategic Allocation": "Alocação Estratégica",
-        "Family Succession": "Sucessão Familiar",
-        "Preservación y Liquidez": "Conservação e Liquidez",
-        "Asignación Estratégica": "Alocação Estratégica",
-        "Sucesión Familiar": "Sucessão Familiar"
-    }
-    
-    active_profile = app_fo_state.get("profile", "Alocação Estratégica")
-    reverse_profile_map = {v: k for k, v in profile_map.items()}
-    default_profile_translated = reverse_profile_map.get(active_profile, profiles_list[lang][1])
-    
-    profile_idx = profiles_list[lang].index(default_profile_translated) if default_profile_translated in profiles_list[lang] else 1
-    selected_profile_translated = st.sidebar.selectbox(
-        "Diretriz de Riqueza" if lang == "PT" else ("Wealth Mandate" if lang == "EN" else "Directriz de Riqueza"),
-        profiles_list[lang],
-        index=profile_idx
-    )
-    fo_profile = profile_map.get(selected_profile_translated, "Alocação Estratégica")
-    
-    # 2. Simulador de Patrimônio Líquido
-    fo_net_worth = st.sidebar.number_input(
-        "Patrimônio Líquido (R$)" if lang == "PT" else ("Net Worth (BRL)" if lang == "EN" else "Patrimonio Neto (BRL)"),
-        min_value=10000.0,
-        value=float(app_fo_state.get("net_worth", 1000000.0)),
-        step=50000.0
-    )
-    
-    # 3. Estado para alíquota ITCMD
-    states_list = {
-        "PT": ["São Paulo (4%)", "Rio de Janeiro (8%)", "Minas Gerais (8%)", "Rio Grande do Sul (8%)", "Santa Catarina (8%)", "Outros Estados (Média 6%)"],
-        "EN": ["São Paulo (4%)", "Rio de Janeiro (8%)", "Minas Gerais (8%)", "Rio Grande do Sul (8%)", "Santa Catarina (8%)", "Other States (Avg 6%)"],
-        "ES": ["São Paulo (4%)", "Rio de Janeiro (8%)", "Minas Gerais (8%)", "Rio Grande do Sul (8%)", "Santa Catarina (8%)", "Otros Estados (Promedio 6%)"]
-    }
-    state_map = {
-        "São Paulo (4%)": "São Paulo (4%)",
-        "Rio de Janeiro (8%)": "Rio de Janeiro (8%)",
-        "Minas Gerais (8%)": "Minas Gerais (8%)",
-        "Rio Grande do Sul (8%)": "Rio Grande do Sul (8%)",
-        "Santa Catarina (8%)": "Santa Catarina (8%)",
-        "Outros Estados (Média 6%)": "Outros Estados (Média 6%)",
-        "Other States (Avg 6%)": "Outros Estados (Média 6%)",
-        "Otros Estados (Promedio 6%)": "Outros Estados (Média 6%)"
-    }
-    active_state = app_fo_state.get("state_itcmd", "São Paulo (4%)")
-    reverse_state_map = {v: k for k, v in state_map.items()}
-    default_state_translated = reverse_state_map.get(active_state, states_list[lang][0])
-    
-    state_idx = states_list[lang].index(default_state_translated) if default_state_translated in states_list[lang] else 0
-    selected_state_translated = st.sidebar.selectbox(
-        "Estado de Residência" if lang == "PT" else ("State of Residence" if lang == "EN" else "Estado de Residencia"),
-        states_list[lang],
-        index=state_idx
-    )
-    fo_state_itcmd = state_map.get(selected_state_translated, "São Paulo (4%)")
-    
-    st.sidebar.write("---")
-    
-    # 4. Módulos Temáticos (Aba Ativa)
+    # 1. Módulos Temáticos (Aba Ativa) - Colocados no topo para definir o contexto
     fo_modules_list = {
         "PT": ["Big Players Brasil", "Gestão Patrimonial & Holding"],
         "EN": ["Big Players Brazil", "Asset Management & Holding"],
@@ -1182,14 +1112,9 @@ if st.session_state.active_terminal == "family_office_br":
     fo_module_map = {
         "Big Players Brasil": "Big Players Brasil",
         "Gestão Patrimonial & Holding": "Gestão Patrimonial & Holding",
-        "Ativos Alternativos": "Ativos Alternativos",
-        "Estilo de Vida & Elite": "Estilo de Vida & Elite",
         "Big Players Brazil": "Big Players Brasil",
         "Asset Management & Holding": "Gestão Patrimonial & Holding",
-        "Alternative Assets": "Ativos Alternativos",
-        "Lifestyle & Elite": "Estilo de Vida & Elite",
-        "Gestión Patrimonial & Holding": "Gestão Patrimonial & Holding",
-        "Activos Alternativos": "Ativos Alternativos"
+        "Gestión Patrimonial & Holding": "Gestão Patrimonial & Holding"
     }
     
     active_fo_mod = app_fo_state.get("module", "Big Players Brasil")
@@ -1204,6 +1129,51 @@ if st.session_state.active_terminal == "family_office_br":
     )
     fo_module = fo_module_map.get(selected_fo_mod_translated, "Big Players Brasil")
     
+    # 2. Parâmetros de Riqueza - Exibidos SOMENTE se o módulo for Gestão Patrimonial & Holding
+    fo_profile = "Alocação Estratégica" # Padrão limpo interno
+    fo_net_worth = float(app_fo_state.get("net_worth", 1000000.0))
+    fo_state_itcmd = app_fo_state.get("state_itcmd", "São Paulo (4%)")
+    
+    if fo_module == "Gestão Patrimonial & Holding":
+        st.sidebar.write("---")
+        st.sidebar.subheader("PARÂMETROS DE RIQUEZA" if lang == "PT" else ("WEALTH PARAMETERS" if lang == "EN" else "PARÁMETROS DE RIQUEZA"))
+        
+        # Simulador de Patrimônio Líquido
+        fo_net_worth = st.sidebar.number_input(
+            "Patrimônio Líquido (R$)" if lang == "PT" else ("Net Worth (BRL)" if lang == "EN" else "Patrimonio Neto (BRL)"),
+            min_value=10000.0,
+            value=float(app_fo_state.get("net_worth", 1000000.0)),
+            step=50000.0
+        )
+        
+        # Estado para alíquota ITCMD
+        states_list = {
+            "PT": ["São Paulo (4%)", "Rio de Janeiro (8%)", "Minas Gerais (8%)", "Rio Grande do Sul (8%)", "Santa Catarina (8%)", "Outros Estados (Média 6%)"],
+            "EN": ["São Paulo (4%)", "Rio de Janeiro (8%)", "Minas Gerais (8%)", "Rio Grande do Sul (8%)", "Santa Catarina (8%)", "Other States (Avg 6%)"],
+            "ES": ["São Paulo (4%)", "Rio de Janeiro (8%)", "Minas Gerais (8%)", "Rio Grande do Sul (8%)", "Santa Catarina (8%)", "Otros Estados (Promedio 6%)"]
+        }
+        state_map = {
+            "São Paulo (4%)": "São Paulo (4%)",
+            "Rio de Janeiro (8%)": "Rio de Janeiro (8%)",
+            "Minas Gerais (8%)": "Minas Gerais (8%)",
+            "Rio Grande do Sul (8%)": "Rio Grande do Sul (8%)",
+            "Santa Catarina (8%)": "Santa Catarina (8%)",
+            "Outros Estados (Média 6%)": "Outros Estados (Média 6%)",
+            "Other States (Avg 6%)": "Outros Estados (Média 6%)",
+            "Otros Estados (Promedio 6%)": "Outros Estados (Média 6%)"
+        }
+        active_state = app_fo_state.get("state_itcmd", "São Paulo (4%)")
+        reverse_state_map = {v: k for k, v in state_map.items()}
+        default_state_translated = reverse_state_map.get(active_state, states_list[lang][0])
+        
+        state_idx = states_list[lang].index(default_state_translated) if default_state_translated in states_list[lang] else 0
+        selected_state_translated = st.sidebar.selectbox(
+            "Estado de Residência" if lang == "PT" else ("State of Residence" if lang == "EN" else "Estado de Residencia"),
+            states_list[lang],
+            index=state_idx
+        )
+        fo_state_itcmd = state_map.get(selected_state_translated, "São Paulo (4%)")
+        
     # Salvar estado atual se for diferente
     new_fo_state = {
         "profile": fo_profile,
