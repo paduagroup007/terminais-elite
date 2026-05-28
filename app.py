@@ -6945,6 +6945,131 @@ elif st.session_state.active_terminal == "family_office_br":
             """, unsafe_allow_html=True)
             
         st.write("")
+        st.subheader("PLAYBOOK EXECUTIVO: INFRAESTRUTURA DE HOLDING FAMILIAR" if lang == "PT" else "EXECUTIVE PLAYBOOK: FAMILY HOLDING INFRASTRUCTURE")
+        st.write("Um guia estratégico de altíssimo nível detalhando o funcionamento, custos, estruturação e alocação de ativos.")
+        
+        tab_holding = st.tabs([
+            "1. O Conceito e Funcionamento" if lang == "PT" else "1. Concept & Mechanics",
+            "2. Roadmap de Criação" if lang == "PT" else "2. Creation Roadmap",
+            "3. Quais Ativos Integrar?" if lang == "PT" else "3. Which Assets to Put?",
+            "4. Custos e Custos Ocultos" if lang == "PT" else "4. Costs & Hidden Fees"
+        ])
+        
+        with tab_holding[0]:
+            st.markdown("""
+            <div class="conviction-card" style="border-left-color: #bf953f; margin-bottom:15px;">
+                <h4 style="margin:0 0 10px 0; color:#fff; font-size:16px; border:none; padding:0;">O QUE É UMA HOLDING FAMILIAR?</h4>
+                <p style="font-size:13px; color:#ccc; line-height:1.6; margin-bottom:10px;">
+                    Uma <b>Holding Familiar</b> não é uma forma de sonegação fiscal, mas sim uma estrutura societária perfeitamente legal (geralmente uma Sociedade Limitada - LTDA ou S/A fechada) constituída com o propósito exclusivo de gerir e blindar o patrimônio de uma família (imóveis, participações societárias, caixa e investimentos).
+                </p>
+                <p style="font-size:13px; color:#ccc; line-height:1.6; margin-bottom:10px;">
+                    <b>Como funciona o mecanismo sucessório inteligente (Sem Inventário):</b>
+                </p>
+                <ol style="font-size:13px; color:#ccc; padding-left:15px; margin:0; line-height:1.6;">
+                    <li><b>Integralização de Capital:</b> O patriarca e a matriarca transferem os seus bens pessoais (imóveis, investimentos, etc.) para o capital social da Holding. Em troca, eles recebem 100% das quotas da empresa.</li>
+                    <li><b>Doação das Quotas com Usufruto Vitalício:</b> Os pais realizam a doação dessas quotas diretamente aos seus herdeiros (filhos), mas gravam a doação com uma cláusula de <b>Usufruto Vitalício</b> e reserva de poder administrativo absoluto.</li>
+                    <li><b>Controle Total Inalterado:</b> Na prática, os pais continuam com o controle político de 100% das decisões da empresa, dos direitos de voto, do direito de vender ou alugar os bens e de usufruir de 100% dos lucros e aluguéis gerados, até o falecimento.</li>
+                    <li><b>Transição Sucessória Instantânea:</b> No momento do falecimento dos instituidores, o usufruto se extingue de forma automática. Os herdeiros assumem a propriedade plena das quotas imediatamente no Cartório de Registro, <b>sem necessidade de iniciar um inventário judicial ou extrajudicial</b>, sem taxas judiciais pesadas e sem bloqueio de contas.</li>
+                </ol>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with tab_holding[1]:
+            st.markdown("""
+            <div class="conviction-card" style="border-left-color: #bf953f; margin-bottom:15px;">
+                <h4 style="margin:0 0 10px 0; color:#fff; font-size:16px; border:none; padding:0;">ROADMAP DE CRIAÇÃO PASSO A PASSO</h4>
+                <p style="font-size:13px; color:#ccc; line-height:1.6; margin-bottom:10px;">
+                    A estruturação correta exige o cumprimento de 5 fases essenciais para garantir segurança jurídica e evitar fiscalizações da Receita:
+                </p>
+                <ul style="font-size:13px; color:#ccc; padding-left:15px; margin:0; line-height:1.6;">
+                    <li style="margin-bottom:8px;"><b>Fase 1: Diagnóstico e Arquitetura Patrimonial</b><br>Mapeamento de todos os ativos da família, análise do valor de aquisição histórico na declaração de IRPF (Imposto de Renda) vs. o valor real de mercado, e mapeamento da árvore genealógica de herdeiros.</li>
+                    <li style="margin-bottom:8px;"><b>Fase 2: Elaboração do Acordo de Sócios e Contrato Social</b><br>Redação do contrato com cláusulas rígidas de proteção, como:
+                        <ul style="padding-left:15px; margin:5px 0;">
+                            <li><b>Incomunicabilidade:</b> As quotas doadas aos herdeiros não se comunicam com seus respectivos cônjuges (genros/noras), independente do regime de bens de casamento.</li>
+                            <li><b>Impenhorabilidade:</b> Protege as quotas contra penhoras e execuções de dívidas externas.</li>
+                            <li><b>Inalienabilidade:</b> Impede os herdeiros de venderem ou darem as quotas em garantia sem autorização prévia.</li>
+                        </ul>
+                    </li>
+                    <li style="margin-bottom:8px;"><b>Fase 3: Constituição e Registro na Junta Comercial</b><br>Abertura jurídica da empresa e emissão do CNPJ na Junta Comercial (ex: JUCESP/JUCERJA) sob a Classificação Nacional de Atividades Econômicas (CNAE) adequada.</li>
+                    <li style="margin-bottom:8px;"><b>Fase 4: Integralização dos Bens</b><br>Transferência física e documental dos bens da Pessoa Física para a Holding. No caso de imóveis, é feita a averbação da escritura no Cartório de Registro de Imóveis (CRI).</li>
+                    <li style="margin-bottom:8px;"><b>Fase 5: Planejamento Sucessório (Doação das Quotas)</b><br>Escrituração da doação de quotas com reserva de usufruto vitalício e pagamento do ITCMD otimizado sobre o valor patrimonial contábil das quotas.</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with tab_holding[2]:
+            st.markdown("""
+            <div class="conviction-card" style="border-left-color: #bf953f; margin-bottom:15px;">
+                <h4 style="margin:0 0 10px 0; color:#fff; font-size:16px; border:none; padding:0;">VALE A PENA COLOCAR TUDO DENTRO DA HOLDING? (ANÁLISE DE ATIVOS)</h4>
+                <p style="font-size:13px; color:#ccc; line-height:1.6; margin-bottom:10px;">
+                    <b>1. Imóveis Residenciais e Comerciais (Extremamente Recomendado):</b>
+                    <br>O aluguel na pessoa física é tributado pela tabela progressiva do Imposto de Renda a uma alíquota de até <b>27.5%</b>. Ao integralizar esses imóveis em uma Holding Patrimonial sob o regime tributário de <b>Lucro Presumido</b>, a carga tributária efetiva sobre os aluguéis despenca para uma faixa entre <b>11.33% e 14.53%</b>. Além disso, a venda de imóveis pela Holding configurada como administradora de bens próprios tem regras fiscais altamente vantajosas de diferimento de ganho de capital.
+                </p>
+                <p style="font-size:13px; color:#ccc; line-height:1.6; margin-bottom:10px;">
+                    <b>2. Veículos e Carros de Uso Pessoal (NÃO Recomendado):</b>
+                    <br>Veículos são bens que sofrem depreciação física acelerada (perda de valor) e carregam um **altíssimo risco de responsabilidade civil**. Se um carro registrado no nome da Holding se envolver em um acidente de trânsito grave com danos a terceiros, a Holding (proprietária do veículo) responderá legalmente. Isso significa que **todo o patrimônio imobiliário e financeiro blindado dentro da Holding poderá ser penhorado** para cobrir processos judiciais decorrentes do veículo. Carros pessoais devem permanecer no nome da pessoa física.
+                </p>
+                <p style="font-size:13px; color:#ccc; line-height:1.6; margin-bottom:10px;">
+                    <b>3. Dinheiro e Aplicações Financeiras (Recomendado com Ressalvas):</b>
+                    <br>Se o capital financeiro for inferior a R$ 10 Milhões, ele pode ser administrado dentro de uma Holding pura de participações (Holding Financeira). No entanto, se o patrimônio em caixa/ações/fundos for superior a R$ 10 Milhões, a estrutura ideal é acoplar a Holding a um **Fundo Exclusivo Fechado** ou a uma **Cayman Offshore**, o que elimina a barreira tributária de come-cotas e otimiza a alocação quantitativa.
+                </p>
+                <p style="font-size:13px; color:#ccc; line-height:1.6; margin:0;">
+                    <b>4. Imóvel de Residência Própria (Recomendado com Ressalvas):</b>
+                    <br>O imóvel que serve de moradia oficial para a família pode ser colocado na holding para fins de sucessão. No entanto, ele não gera renda de aluguel e não aproveita benefícios fiscais operacionais imediatos, servindo principalmente como proteção contra credores através da blindagem societária.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with tab_holding[3]:
+            st.markdown("""
+            <div class="conviction-card" style="border-left-color: #bf953f; margin-bottom:15px;">
+                <h4 style="margin:0 0 10px 0; color:#fff; font-size:16px; border:none; padding:0;">CUSTOS DE CRIAÇÃO E MANUTENÇÃO (E OS CUSTOS OCULTOS)</h4>
+                <p style="font-size:13px; color:#ccc; line-height:1.6; margin-bottom:10px;">
+                    Embora a economia sucessória a longo prazo seja astronômica, o investidor deve estar ciente de todos os custos envolvidos no ciclo de vida de uma Holding:
+                </p>
+                <table style="width:100%; border-collapse:collapse; font-size:12px; color:#ccc; margin-bottom:15px; border: 1px solid #444;">
+                    <thead>
+                        <tr style="background-color:#222; text-align:left;">
+                            <th style="padding:8px; border:1px solid #444; color:#bf953f;">Tipo de Custo</th>
+                            <th style="padding:8px; border:1px solid #444; color:#bf953f;">Descrição e Incidência</th>
+                            <th style="padding:8px; border:1px solid #444; color:#bf953f;">Estimativa de Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:8px; border:1px solid #444; font-weight:bold;">Honorários Jurídicos (Setup)</td>
+                            <td style="padding:8px; border:1px solid #444;">Engenharia societária, acordo de acionistas e redação de contratos sob medida.</td>
+                            <td style="padding:8px; border:1px solid #444;">R$ 15.000 a R$ 50.000 (depende da complexidade)</td>
+                        </tr>
+                        <tr style="background-color:#1a1a1a;">
+                            <td style="padding:8px; border:1px solid #444; font-weight:bold;">Taxas de Junta Comercial e Notário</td>
+                            <td style="padding:8px; border:1px solid #444;">Registro do Contrato Social, emissão de certidões e averbação das escrituras de imóveis nos CRI.</td>
+                            <td style="padding:8px; border:1px solid #444;">R$ 2.000 a R$ 10.000 (custas de cartório)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px; border:1px solid #444; font-weight:bold;">Imposto ITBI (Setup/Atenção)</td>
+                            <td style="padding:8px; border:1px solid #444;">A Constituição Federal garante <b>imunidade de ITBI</b> para integralização de bens ao capital de empresas. <i>Contudo</i>, se a holding tiver atividade imobiliária preponderante (aluguel/venda), o município cobrará ITBI (geralmente de 2% a 3% do valor de referência venal).</td>
+                            <td style="padding:8px; border:1px solid #444;">Isento (Se não preponderante) ou 2% a 3% do valor venal</td>
+                        </tr>
+                        <tr style="background-color:#1a1a1a;">
+                            <td style="padding:8px; border:1px solid #444; font-weight:bold;">Imposto ITCMD (Sucessão)</td>
+                            <td style="padding:8px; border:1px solid #444;">Imposto sucessório sobre a doação de quotas aos filhos. A grande vantagem é que ele incide sobre o **Valor Patrimonial Contábil** das quotas (de custo histórico), que é frequentemente muito menor do que o valor de avaliação de mercado.</td>
+                            <td style="padding:8px; border:1px solid #444;">4% a 8% do Valor Patrimonial Contábil (Otimizado)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:8px; border:1px solid #444; font-weight:bold;">Contabilidade Mensal (Manutenção)</td>
+                            <td style="padding:8px; border:1px solid #444;">Escrituração contábil obrigatória mensal, apuração de tributos de aluguel e envio de obrigações acessórias.</td>
+                            <td style="padding:8px; border:1px solid #444;">R$ 600 a R$ 1.500 por mês (honorários contábeis)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size:12px; color:#bf953f; font-style:italic; margin:0;">
+                    <b>Veredito Wealth Copilot:</b> Para famílias com patrimônios compostos por dois ou mais imóveis sob aluguel, ou bens somados acima de R$ 1.5 a R$ 2.0 Milhões, a economia tributária e o custo evitado de um inventário judicial cobrem integralmente as despesas de criação da Holding nos primeiros 12 a 24 meses de operação.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        st.write("")
         st.subheader("ESTRUTURAS AVANÇADAS PARA GRANDES PATRIMÔNIOS" if lang == "PT" else "ADVANCED STRUCTURES FOR LARGE ESTATES")
         
         st.markdown(f"""
