@@ -2285,7 +2285,7 @@ elif st.session_state.active_terminal == "whale_radar":
                 styles[3] = 'color: #ccc;'
                 
             # Probabilidade
-            prob = row['Probabilidade']
+            prob = row['Prob. Evento (%)']
             if prob >= 80.0:
                 styles[7] = 'background-color: rgba(0, 255, 165, 0.1); color: #00ffa5; font-weight: bold;'
             else:
@@ -7211,7 +7211,7 @@ elif st.session_state.active_terminal == "family_office_br":
                     styles[3] = 'color: #ccc;'
                     
                 # Probabilidade
-                prob = row['Probabilidade']
+                prob = row['Prob. Evento (%)']
                 if prob >= 80.0:
                     styles[7] = 'background-color: rgba(0, 255, 165, 0.1); color: #00ffa5; font-weight: bold;'
                 else:
