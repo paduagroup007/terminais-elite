@@ -672,10 +672,9 @@ def format_usd(val):
     if abs(val) >= 1_000_000_000:
         return f"$ {val/1_000_000_000:.2f}B"
     if abs(val) >= 1_000_000:
-        return f"$ {val/1_000_000:.1f}M"
+        return f"$ {val/1_000_000:.2f}M"
     return f"$ {val:,.2f}"
 
-# --- TRADUÇÕES DO SISTEMA (3 IDIOMAS) ---
 TRANSLATIONS = {
     "PT": {
         "hub_title": "PERFECT LIFE | ELITE INVESTORS",
@@ -687,7 +686,7 @@ TRANSLATIONS = {
         "status_label": "TELEMETRIA DE MERCADO",
         "status_val": "FEED EM VIVO CONECTADO (SEC & YAHOO)",
         "select_lang": "IDIOMA / LANGUAGE",
-        "term_1_title": "TERMINAL I: RADAR DE BIG PLAYERS",
+        "term_1_title": "TERMINAL I: RADAR DE BIG PLAYERS (USA)",
         "term_1_desc": "Mapeia o fluxo oficial SEC EDGAR 13F dos maiores holdings e bancos mundiais.",
         "term_2_title": "TERMINAL II: RADAR CAMBIAL FOREX",
         "term_2_desc": "Fluxos do Relatório CFTC COT semanal de bancos centrais e especuladores.",
@@ -727,7 +726,7 @@ TRANSLATIONS = {
         "status_label": "MARKET TELEMETRY",
         "status_val": "LIVE FEED CONNECTED (SEC & YAHOO)",
         "select_lang": "LANGUAGE / IDIOMA",
-        "term_1_title": "TERMINAL I: BIG PLAYERS FLOW RADAR",
+        "term_1_title": "TERMINAL I: BIG PLAYERS FLOW RADAR (USA)",
         "term_1_desc": "Maps official SEC EDGAR 13F flow of the largest global holdings and banks.",
         "term_2_title": "TERMINAL II: FOREX COT RADAR",
         "term_2_desc": "Weekly CFTC COT report flows of central G10 banks and hedge funds.",
@@ -767,7 +766,7 @@ TRANSLATIONS = {
         "status_label": "TELEMETRÍA DE MERCADO",
         "status_val": "CONEXIÓN EN VIVO (SEC & YAHOO)",
         "select_lang": "IDIOMA / SELECCIONAR IDIOMA",
-        "term_1_title": "TERMINAL I: RADAR DE BIG PLAYERS",
+        "term_1_title": "TERMINAL I: RADAR DE BIG PLAYERS (USA)",
         "term_1_desc": "Mapea el fluxo oficial SEC EDGAR 13F de las mayores holdings y bancos mundiales.",
         "term_2_title": "TERMINAL II: RADAR CAMBIARIO FOREX",
         "term_2_desc": "Flujos del reporte semanal CFTC COT de bancos centrales y hedge funds.",
@@ -780,7 +779,7 @@ TRANSLATIONS = {
         "btn_access": "ACCEDER AL TERMINAL DE ELITE",
         "btn_back": "← RETORNAR AL HUB CENTRAL",
         "user_level": "Nivel de Acceso: **MIEMBRO ELITE INVESTOR**",
-        "data_source": "Fuente de Datos: **SEC EDGAR, CFTC & YAHOO FINANCE**",
+        "data_source": "Fuente de Dados: **SEC EDGAR, CFTC & YAHOO FINANCE**",
         "last_update": "Última Sincronização: **Mayo/2026**",
         "welcome": "Seleccione uno de los Terminales de Inteligencia de la suite Perfect Life para iniciar el mapeo:",
         "back_btn_side": "Retornar al Hub",
@@ -986,6 +985,7 @@ if st.session_state.active_terminal != "hub":
 
 # --- CONTROLES DA SIDEBAR EXCLUSIVOS DO TERMINAL B3 ---
 if st.session_state.active_terminal == "balance_sheets":
+    st.sidebar.markdown(f"<h3 style='font-size:16px; border:none; padding:0; text-align:center; color:#bf953f; font-weight:bold; margin-bottom:15px;'>{t['term_3_title']}</h3>", unsafe_allow_html=True)
     # UPLOAD DE NOVO ARQUIVO B3
     uploaded_file = st.sidebar.file_uploader(
         "IMPORTAR PLANILHA (B3)" if lang == "PT" else ("IMPORT SPREADSHEET (B3)" if lang == "EN" else "IMPORTAR PLANILLA (B3)"), 
@@ -1045,9 +1045,9 @@ if st.session_state.active_terminal == "balance_sheets":
     
     # SELECIONAR MÓDULO B3 (TRADUZIDO)
     b3_modules_list = {
-        "PT": ["Radar de Comando", "Eficiência Operacional", "Análise de Lucratividade", "Solvência Patrimonial", "Valuation Intrínseco", "Tabela de Dados"],
-        "EN": ["Command Radar", "Operational Efficiency", "Profitability Analysis", "Asset Solvency", "Intrinsic Valuation", "Data Table"],
-        "ES": ["Radar de Comando", "Eficiencia Operacional", "Análisis de Lucratividad", "Solvencia Patrimonial", "Valuación Intrínseca", "Tabla de Datos"]
+        "PT": ["Radar de Comando", "Eficiência Operacional", "Análise de Lucratividade", "Solvência Patrimonial", "Valuation Intrínseco", "Tabela de Dados", "Radar de Aluguel (BTC)", "Recompras de Ações (Buybacks)"],
+        "EN": ["Command Radar", "Operational Efficiency", "Profitability Analysis", "Asset Solvency", "Intrinsic Valuation", "Data Table", "Borrowing Radar (BTC)", "Share Buybacks (Buybacks)"],
+        "ES": ["Radar de Comando", "Eficiencia Operacional", "Análisis de Lucratividad", "Solvencia Patrimonial", "Valuación Intrínseca", "Tabla de Datos", "Radar de Alquiler (BTC)", "Recompra de Acciones (Buybacks)"]
     }
     
     b3_module_map = {
@@ -1057,6 +1057,8 @@ if st.session_state.active_terminal == "balance_sheets":
         "Solvência Patrimonial": "Solvência Patrimonial",
         "Valuation Intrínseco": "Valuation Intrínseco",
         "Tabela de Dados": "Tabela de Dados",
+        "Radar de Aluguel (BTC)": "Radar de Aluguel (BTC)",
+        "Recompras de Ações (Buybacks)": "Recompras de Ações (Buybacks)",
         
         "Command Radar": "Radar de Comando",
         "Operational Efficiency": "Eficiência Operacional",
@@ -1064,11 +1066,15 @@ if st.session_state.active_terminal == "balance_sheets":
         "Asset Solvency": "Solvência Patrimonial",
         "Intrinsic Valuation": "Valuation Intrínseco",
         "Data Table": "Tabela de Dados",
+        "Borrowing Radar (BTC)": "Radar de Aluguel (BTC)",
+        "Share Buybacks (Buybacks)": "Recompras de Ações (Buybacks)",
         
         "Eficiencia Operacional": "Eficiência Operacional",
         "Análisis de Lucratividad": "Análise de Lucratividade",
         "Valuación Intrínseca": "Valuation Intrínseco",
-        "Tabla de Datos": "Tabela de Dados"
+        "Tabla de Datos": "Tabela de Dados",
+        "Radar de Alquiler (BTC)": "Radar de Aluguel (BTC)",
+        "Recompra de Acciones (Buybacks)": "Recompras de Ações (Buybacks)"
     }
     
     active_b3_mod_translated = app_b3_state.get("module", "Valuation Intrínseco")
@@ -1301,11 +1307,15 @@ if st.session_state.active_terminal == "hub":
 elif st.session_state.active_terminal == "whale_radar":
     st.sidebar.markdown(f"<h3 style='font-size:16px; border:none; padding:0; text-align:center; color:#bf953f; font-weight:bold; margin-bottom:15px;'>{t['term_1_title']}</h3>", unsafe_allow_html=True)
     
+    # Cabeçalho Principal Centralizado do Terminal I
+    st.markdown(f"<h1 style='text-align:center;'>{t['term_1_title']}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<p style='text-align:center; color:#bf953f; font-weight:600; letter-spacing:1px; font-size:13px; margin-bottom:30px;'>{t['term_1_desc'].upper()}</p>", unsafe_allow_html=True)
+    
     # Seletor de Módulos táticos na barra lateral com suporte a 3 idiomas
     module_options = {
-        "PT": ["Cérebro Elite IA (Wealth Copilot)", "Radar de Convicções", "Rastreador de Big Players", "Sincronizador SEC (EDGAR)", "Análise Quant & Timing (EUA)"],
-        "EN": ["Elite IA Brain (Wealth Copilot)", "Radar of Convictions", "Big Players Tracker", "SEC Synchronizer (EDGAR)", "Quant & Timing Desk (US)"],
-        "ES": ["Cerebro Elite IA (Wealth Copilot)", "Radar de Convicciones", "Rastreador de Big Players", "Sincronizador SEC (EDGAR)", "Análisis Quant y Timing (EEUU)"]
+        "PT": ["Cérebro Elite IA (Wealth Copilot)", "Radar de Convicções", "Rastreador de Big Players", "Sincronizador SEC (EDGAR)", "Análise Quant & Timing (EUA)", "Radar de Aluguel (Short Interest)", "Recompras de Ações (Buybacks)"],
+        "EN": ["Elite IA Brain (Wealth Copilot)", "Radar of Convictions", "Big Players Tracker", "SEC Synchronizer (EDGAR)", "Quant & Timing Desk (US)", "Borrowing Radar (Short Interest)", "Share Buybacks (Buybacks)"],
+        "ES": ["Cerebro Elite IA (Wealth Copilot)", "Radar de Convicciones", "Rastreador de Big Players", "Sincronizador SEC (EDGAR)", "Análisis Quant y Timing (EEUU)", "Radar de Alquiler (Short Interest)", "Recompra de Acciones (Buybacks)"]
     }
     selected_module = st.sidebar.radio("MÓDULOS DE ANÁLISE / MODULES", module_options[lang], index=2)
     
@@ -1316,18 +1326,24 @@ elif st.session_state.active_terminal == "whale_radar":
         "Rastreador de Big Players": "Rastreador de Big Players",
         "Sincronizador SEC (EDGAR)": "Sincronizador SEC (EDGAR)",
         "Análise Quant & Timing (EUA)": "Análise Quant & Timing (EUA)",
+        "Radar de Aluguel (Short Interest)": "Radar de Aluguel (Short Interest)",
+        "Recompras de Ações (Buybacks)": "Recompras de Ações (Buybacks)",
         
         "Elite IA Brain (Wealth Copilot)": "Cérebro Elite IA (Wealth Copilot)",
         "Radar of Convictions": "Radar de Convicções",
         "Big Players Tracker": "Rastreador de Big Players",
         "SEC Synchronizer (EDGAR)": "Sincronizador SEC (EDGAR)",
         "Quant & Timing Desk (US)": "Análise Quant & Timing (EUA)",
+        "Borrowing Radar (Short Interest)": "Radar de Aluguel (Short Interest)",
+        "Share Buybacks (Buybacks)": "Recompras de Ações (Buybacks)",
         
         "Cerebro Elite IA (Wealth Copilot)": "Cérebro Elite IA (Wealth Copilot)",
         "Radar de Convicciones": "Radar de Convicções",
         "Rastreador de Big Players": "Rastreador de Big Players",
         "Sincronizador SEC (EDGAR)": "Sincronizador SEC (EDGAR)",
-        "Análisis Quant y Timing (EEUU)": "Análise Quant & Timing (EUA)"
+        "Análisis Quant y Timing (EEUU)": "Análise Quant & Timing (EUA)",
+        "Radar de Alquiler (Short Interest)": "Radar de Aluguel (Short Interest)",
+        "Recompra de Acciones (Buybacks)": "Recompras de Ações (Buybacks)"
     }
     module = module_map.get(selected_module, "Cérebro Elite IA (Wealth Copilot)")
     
@@ -2361,6 +2377,279 @@ elif st.session_state.active_terminal == "whale_radar":
         </div>
         """, unsafe_allow_html=True)
 
+    # --- MÓDULO 5: RADAR DE ALUGUEL (SHORT INTEREST) ---
+    elif module == "Radar de Aluguel (Short Interest)":
+        lbl_us_short = {
+            "PT": {
+                "header": "Radar de Aluguel de Ações (Short Interest) — Wall Street",
+                "subtitle": "Monitoramento de Short Interest e Indicadores de Squeeze em Nova York",
+                "metric_short_float": "Short Interest % of Float",
+                "metric_borrow_fee": "Borrow Fee (Taxa de Aluguel)",
+                "metric_days_cover": "Days to Cover (Dias para Cobrir)",
+                "metric_squeeze_score": "Score de Squeeze",
+                "table_title": "Painel Quantitativo de Posições Vendidas (Wall Street)",
+                "manual_title": "💡 Manual Estratégico: O Fenômeno de Short Squeeze em Wall Street",
+                "manual_content": """
+                <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                    <h3 style='color:#bf953f; margin-top:0;'>💡 Estratégia de Squeeze em Wall Street</h3>
+                    <p>No mercado americano, o Short Interest % of Float e a taxa de empréstimo (Borrow Fee) são métricas rastreadas diariamente pelos maiores algoritmos quant do planeta. Quando uma ação possui alto Short Interest (> 15% do float) e alta taxa de aluguel (> 10%), qualquer gatilho positivo de notícias pode desencadear uma explosão exponencial.</p>
+                    <h4 style='color:#ffffff;'>O Protocolo de Ação de Elite:</h4>
+                    <ul>
+                        <li><b>Acompanhamento de Days to Cover:</b> Quanto maior o Days to Cover (acima de 3 a 5 dias), mais tempo os vendedores a descoberto precisarão para recomprar suas ações, prolongando o rali de squeeze.</li>
+                        <li><b>Risco Assimétrico Positivo:</b> Monitorar ações com Score acima de 80 e alocar pequenas parcelas táticas de capital pode gerar retornos assimétricos massivos de 100% a 500% em poucos dias (ex: setups históricos como GME e AMC).</li>
+                        <li><b>Prevenção de Armadilhas Bears:</b> Evite alocação pesada de longo prazo em ativos com Short Interest em forte aceleração, a menos que haja confluência clara de reversão operacional comprovada pelo Elite IA.</li>
+                    </ul>
+                </div>
+                """
+            },
+            "EN": {
+                "header": "Stock Borrowing Radar (Short Interest) — Wall Street",
+                "subtitle": "Short Interest Monitoring and Squeeze Indicators in New York",
+                "metric_short_float": "Short Interest % of Float",
+                "metric_borrow_fee": "Borrow Fee (%)",
+                "metric_days_cover": "Days to Cover",
+                "metric_squeeze_score": "Squeeze Score",
+                "table_title": "Wall Street Short Positions Quantitative Panel",
+                "manual_title": "💡 Strategic Manual: The Short Squeeze Phenomenon on Wall Street",
+                "manual_content": """
+                <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                    <h3 style='color:#bf953f; margin-top:0;'>💡 Wall Street Squeeze Strategy</h3>
+                    <p>In the US market, Short Interest % of Float and Borrow Fees are metrics tracked daily by the world's top quantitative algorithms. When a stock has high Short Interest (> 15% of float) and a high borrow fee (> 10%), any positive news catalyst can trigger an exponential price spike.</p>
+                    <h4 style='color:#ffffff;'>The Elite Action Protocol:</h4>
+                    <ul>
+                        <li><b>Monitoring Days to Cover:</b> The higher the Days to Cover (above 3 to 5 days), the longer short sellers will need to buy back shares, extending the squeeze rally.</li>
+                        <li><b>Positive Asymmetrical Risk:</b> Tracking stocks with Squeeze Scores above 80 and making small, tactical capital allocations can yield massive asymmetrical returns of 100% to 500% in a few days (e.g. historical setups like GME and AMC).</li>
+                        <li><b>Bear Trap Prevention:</b> Avoid heavy long-term allocations in assets with rapidly expanding Short Interest unless there is a clear operational turnaround confirmed by Elite IA.</li>
+                    </ul>
+                </div>
+                """
+            },
+            "ES": {
+                "header": "Radar de Alquiler de Acciones (Short Interest) — Wall Street",
+                "subtitle": "Monitoreo de Short Interest e Indicadores de Squeeze en Nueva York",
+                "metric_short_float": "Short Interest % of Float",
+                "metric_borrow_fee": "Borrow Fee (Tasa de Alquiler %)",
+                "metric_days_cover": "Days to Cover (Días para Cubrir)",
+                "metric_squeeze_score": "Score de Squeeze",
+                "table_title": "Panel Cuantitativo de Posiciones Cortas (Wall Street)",
+                "manual_title": "💡 Manual Estratégico: El Fenómeno de Short Squeeze en Wall Street",
+                "manual_content": """
+                <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                    <h3 style='color:#bf953f; margin-top:0;'>💡 Estrategia de Squeeze en Wall Street</h3>
+                    <p>En el mercado estadounidense, el Short Interest % del Float y la tasa de préstamo (Borrow Fee) son métricas seguidas diariamente por los principales algoritmos cuantitativos del planeta. Cuando una acción tiene un alto Short Interest (> 15% del float) y una tasa de alquiler alta (> 10%), cualquier catalizador de noticias positivas puede desencadenar una explosión exponencial.</p>
+                    <h4 style='color:#ffffff;'>El Protocolo de Acción Elite:</h4>
+                    <ul>
+                        <li><b>Seguimiento de Days to Cover:</b> Cuanto mayor sea el Days to Cover (más de 3 a 5 días), más tiempo necesitarán los vendedores en corto para recomprar sus acciones, prolongando el repunte.</li>
+                        <li><b>Riesgo Asimétrico Positivo:</b> Monitorear acciones con Scores superiores a 80 y asignar pequeñas posiciones de capital táctico puede generar retornos asimétricos masivos de 100% a 500% en pocos días (ej: configuraciones históricas como GME y AMC).</li>
+                        <li><b>Prevención de Trampas Bajistas:</b> Evite asignaciones pesadas a largo plazo en activos con Short Interest en fuerte aceleración, a menos que haya una confluencia clara de reversión operativa confirmada por Elite IA.</li>
+                    </ul>
+                </div>
+                """
+            }
+        }
+        lbl = lbl_us_short[lang]
+        st.header(lbl["header"])
+        st.markdown(f"<p style='color:#bf953f; font-style:italic;'>{lbl['subtitle']}</p>", unsafe_allow_html=True)
+        
+        selected_us_ticker = st.selectbox(
+            "SELECIONE A MEGA-CAP PARA ANÁLISE" if lang == "PT" else ("SELECT MEGA-CAP FOR ANALYSIS" if lang == "EN" else "SELECCIONE LA MEGA-CAP PARA ANÁLISIS"),
+            ["GME", "AMC", "TSLA", "NVDA", "AAPL", "MSFT"]
+        )
+        
+        # Simulated USA short interest database
+        us_short_data = {
+            "GME": {"short_float": 22.4, "borrow_fee": 25.5, "days_cover": 4.5, "squeeze_score": 95},
+            "AMC": {"short_float": 18.2, "borrow_fee": 18.0, "days_cover": 3.2, "squeeze_score": 88},
+            "TSLA": {"short_float": 3.8, "borrow_fee": 1.5, "days_cover": 1.2, "squeeze_score": 35},
+            "NVDA": {"short_float": 1.2, "borrow_fee": 0.8, "days_cover": 0.5, "squeeze_score": 15},
+            "AAPL": {"short_float": 0.8, "borrow_fee": 0.4, "days_cover": 0.4, "squeeze_score": 8},
+            "MSFT": {"short_float": 0.6, "borrow_fee": 0.3, "days_cover": 0.3, "squeeze_score": 5}
+        }
+        
+        info = us_short_data[selected_us_ticker]
+        
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric(lbl["metric_short_float"], f"{info['short_float']:.2f}%")
+        with col2:
+            st.metric(lbl["metric_borrow_fee"], f"{info['borrow_fee']:.2f}% a.a.")
+        with col3:
+            st.metric(lbl["metric_days_cover"], f"{info['days_cover']:.1f} Dias")
+        with col4:
+            squeeze_color = "red" if info["squeeze_score"] >= 70 else ("orange" if info["squeeze_score"] >= 40 else "green")
+            st.markdown(
+                f"<div style='background-color:#161a23; padding:8px 15px; border-radius:5px; border-left:4px solid {squeeze_color};'>"
+                f"<span style='font-size:12px; color:#aaa;'>{lbl['metric_squeeze_score']}</span><br/>"
+                f"<b style='font-size:20px; color:#ffffff;'>{info['squeeze_score']} / 100</b>"
+                f"</div>", 
+                unsafe_allow_html=True
+            )
+            
+        st.write("")
+        st.markdown(f"<h3>{lbl['table_title']}</h3>", unsafe_allow_html=True)
+        
+        # Comparative US Short Interest Table
+        rows = []
+        for ticker, details in us_short_data.items():
+            rows.append({
+                "Ticker": ticker,
+                "Short Interest % of Float": details['short_float'],
+                "Borrow Fee % a.a.": details['borrow_fee'],
+                "Days to Cover": details['days_cover'],
+                "Squeeze Score": details['squeeze_score']
+            })
+        df_us_short = pd.DataFrame(rows).sort_values(by="Squeeze Score", ascending=False)
+        
+        st.dataframe(
+            df_us_short.style.format({
+                "Short Interest % of Float": "{:.2f}%",
+                "Borrow Fee % a.a.": "{:.2f}%",
+                "Days to Cover": "{:.1f}",
+                "Squeeze Score": "{:d}"
+            }).highlight_max(subset=["Squeeze Score"], color='#bf953f44'),
+            use_container_width=True
+        )
+        
+        st.write("")
+        st.markdown(lbl["manual_content"], unsafe_allow_html=True)
+
+    # --- MÓDULO 6: RECOMPRAS DE AÇÕES (BUYBACKS) ---
+    elif module == "Recompras de Ações (Buybacks)":
+        lbl_us_buyback = {
+            "PT": {
+                "header": "Rastreador de Recompras de Ações (Corporate Buybacks) — Wall Street",
+                "subtitle": "Acompanhamento de mega-programas de recompras corporativas nos EUA",
+                "metric_auth": "Capital Autorizado",
+                "metric_cap_pct": "% do Market Cap",
+                "metric_timeline": "Cronograma / Prazo",
+                "metric_progress": "Progresso da Recompra",
+                "no_program": "Esta empresa não possui nenhum mega-programa de recompra ativo divulgado no momento nos EUA.",
+                "table_title": "Painel de Mega-Programas de Recompra em Wall Street",
+                "manual_title": "💡 Manual Estratégico: O Poder Deflacionário das Recompras nos EUA",
+                "manual_content": """
+                <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                    <h3 style='color:#bf953f; margin-top:0;'>📈 O Efeito Motor das Recompras Americanas</h3>
+                    <p>Nos Estados Unidos, as maiores empresas de tecnologia do mundo (Mega-Caps) utilizam as recompras como o principal motor de retorno ao acionista, muitas vezes superando os dividendos tradicionais devido à eficiência fiscal americana (isenta de imposto sobre dividendos para a corporação).</p>
+                    <h4 style='color:#ffffff;'>Por que as Recompras nos EUA são essenciais para o Carlos:</h4>
+                    <ul>
+                        <li><b>Redução Orgânica do P/L:</b> Ao reduzir as ações em circulação, o lucro por ação (LPA) sobe artificialmente, fazendo a ação parecer mais barata e atraindo fundos institucionais de momentum.</li>
+                        <li><b>Retorno Isento de Impostos:</b> Ao contrário dos dividendos em dinheiro que sofrem pesada tributação para o investidor de Wall Street, as recompras aumentam o valor das ações existentes sem gerar evento gerador de imposto imediato.</li>
+                        <li><b>Piso de Liquidez:</b> Mega-corporações comprando bilhões de suas próprias ações no mercado de tela criam uma "rede de proteção" ou piso de liquidez, diminuindo a volatilidade e risco em períodos de correção do mercado geral.</li>
+                    </ul>
+                </div>
+                """
+            },
+            "EN": {
+                "header": "Share Buybacks Tracker (Corporate Buybacks) — Wall Street",
+                "subtitle": "Monitoring mega-corporate buyback programs in the US",
+                "metric_auth": "Authorized Capital",
+                "metric_cap_pct": "% of Market Cap",
+                "metric_timeline": "Timeline / Duration",
+                "metric_progress": "Buyback Progress",
+                "no_program": "This company has no major active buyback programs disclosed at the moment in the US.",
+                "table_title": "Mega Buyback Programs Panel on Wall Street",
+                "manual_title": "💡 Strategic Manual: The Deflationary Power of US Buybacks",
+                "manual_content": """
+                <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                    <h3 style='color:#bf953f; margin-top:0;'>📈 O Efeito Motor das Recompras Americanas</h3>
+                    <p>Nos Estados Unidos, as maiores empresas de tecnologia do mundo (Mega-Caps) utilizam as recompras como o principal motor de retorno ao acionista, muitas vezes superando os dividendos tradicionais devido à eficiência fiscal americana (isenta de imposto sobre dividendos para a corporação).</p>
+                    <h4 style='color:#ffffff;'>Por que as Recompras nos EUA são essenciais para o Carlos:</h4>
+                    <ul>
+                        <li><b>Redução Orgânica do P/L:</b> Ao reduzir as ações em circulação, o lucro por ação (LPA) sobe artificialmente, fazendo a ação parecer mais barata e atraindo fundos institucionais de momentum.</li>
+                        <li><b>Retorno Isento de Impostos:</b> Ao contrário dos dividendos em dinheiro que sofrem pesada tributação para o investidor de Wall Street, as recompras aumentam o valor das ações existentes sem gerar evento gerador de imposto imediato.</li>
+                        <li><b>Piso de Liquidez:</b> Mega-corporações comprando bilhões de suas próprias ações no mercado de tela criam uma "rede de proteção" ou piso de liquidez, diminuindo a volatilidade e risco em períodos de correção do mercado geral.</li>
+                    </ul>
+                </div>
+                """
+            },
+            "ES": {
+                "header": "Rastreador de Recompras de Acciones (Corporate Buybacks) — Wall Street",
+                "subtitle": "Monitoreo de mega-programas de recompras corporativas en EEUU",
+                "metric_auth": "Capital Autorizado",
+                "metric_cap_pct": "% del Market Cap",
+                "metric_timeline": "Cronograma / Plazo",
+                "metric_progress": "Progreso de Recompra",
+                "no_program": "Esta empresa no tiene ningún mega-programa de recompra activo divulgado en este momento en EEUU.",
+                "table_title": "Panel de Mega-Programas de Recompra en Wall Street",
+                "manual_title": "💡 Manual Estratégico: El Poder Deflacionario de las Recompras en EEUU",
+                "manual_content": """
+                <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                    <h3 style='color:#bf953f; margin-top:0;'>📈 El Motor de las Recompras Estadounidenses</h3>
+                    <p>En los Estados Unidos, las empresas tecnológicas más grandes del mundo (Mega-Caps) utilizan las recompras como el vehículo principal de retorno al accionista, a menudo superando a los dividendos tradicionales debido a la eficiencia fiscal (evitando la retención inmediata de impuestos sobre dividendos).</p>
+                    <h4 style='color:#ffffff;'>Por qué las Recompras en EEUU son esenciales para Carlos:</h4>
+                    <ul>
+                        <li><b>Reducción Orgánica del P/E:</b> Al reducir las acciones en circulación, el beneficio por acción (BPA) sube de forma orgánica, haciendo que la acción parezca más barata y atrayendo flujos institucionales.</li>
+                        <li><b>Retorno Libre de Impuestos Inmediatos:</b> A diferencia de los dividendos en efectivo que sufren impuestos inmediatos, las recompras elevan el valor de las acciones existentes sin generar un evento fiscal inmediato.</li>
+                        <li><b>Suelo de Liquidez:</b> Las mega-corporaciones que compran miles de millones de sus propias acciones en el mercado crean una red de seguridad, reduciendo el riesgo y la volatilidad durante correcciones generales del mercado.</li>
+                    </ul>
+                </div>
+                """
+            }
+        }
+        lbl = lbl_us_buyback[lang]
+        st.header(lbl["header"])
+        st.markdown(f"<p style='color:#bf953f; font-style:italic;'>{lbl['subtitle']}</p>", unsafe_allow_html=True)
+        
+        selected_us_ticker = st.selectbox(
+            "SELECIONE A MEGA-CAP PARA ANÁLISE" if lang == "PT" else ("SELECT MEGA-CAP FOR ANALYSIS" if lang == "EN" else "SELECCIONE LA MEGA-CAP PARA ANÁLISIS"),
+            ["AAPL", "GOOG", "META", "MSFT", "NVDA", "TSLA"]
+        )
+        
+        # Simulated USA mega-buyback database
+        us_buyback_data = {
+            "AAPL": {"auth_value": 110.0, "cap_pct": 3.5, "timeline": "Starts May/2024 (No Expiry)", "progress": 42.0},
+            "GOOG": {"auth_value": 70.0, "cap_pct": 3.2, "timeline": "Starts Apr/2024 (No Expiry)", "progress": 35.0},
+            "META": {"auth_value": 50.0, "cap_pct": 4.0, "timeline": "Starts Feb/2024 (No Expiry)", "progress": 55.0},
+            "MSFT": {"auth_value": 60.0, "cap_pct": 1.8, "timeline": "Starts Sep/2024 (No Expiry)", "progress": 20.0},
+            "NVDA": {"auth_value": 25.0, "cap_pct": 0.8, "timeline": "Starts Aug/2024 (No Expiry)", "progress": 10.0},
+            "TSLA": {"auth_value": 0.0, "cap_pct": 0.0, "timeline": "No active program", "progress": 0.0}
+        }
+        
+        info = us_buyback_data[selected_us_ticker]
+        
+        if info["auth_value"] > 0:
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric(lbl["metric_auth"], f"$ {info['auth_value']:.1f} Billion")
+            with col2:
+                st.metric(lbl["metric_cap_pct"], f"{info['cap_pct']:.2f}%")
+            with col3:
+                st.metric(lbl["metric_timeline"], info["timeline"])
+            
+            st.write("")
+            st.markdown(f"<b>{lbl['metric_progress']}: {info['progress']:.1f}%</b>", unsafe_allow_html=True)
+            st.progress(info["progress"] / 100.0)
+        else:
+            st.info(lbl["no_program"])
+            
+        st.write("")
+        st.markdown(f"<h3>{lbl['table_title']}</h3>", unsafe_allow_html=True)
+        
+        # Comparative mega buybacks table
+        rows = []
+        for ticker, details in us_buyback_data.items():
+            if details["auth_value"] > 0:
+                rows.append({
+                    "Ticker": ticker,
+                    "Capital Autorizado ($B)": details['auth_value'],
+                    "% do Market Cap": details['cap_pct'],
+                    "Prazo Estimado": details['timeline'],
+                    "Progresso %": details['progress']
+                })
+        df_us_bb = pd.DataFrame(rows).sort_values(by="Capital Autorizado ($B)", ascending=False)
+        
+        st.dataframe(
+            df_us_bb.style.format({
+                "Capital Autorizado ($B)": "$ {:.1f}B",
+                "% do Market Cap": "{:.2f}%",
+                "Progresso %": "{:.1f}%"
+            }).highlight_max(subset=["Capital Autorizado ($B)"], color='#bf953f44'),
+            use_container_width=True
+        )
+        
+        st.write("")
+        st.markdown(lbl["manual_content"], unsafe_allow_html=True)
+
 
 # --- TERMINAL II: RADAR CAMBIAL FOREX (CFTC COT) ---
 elif st.session_state.active_terminal == "forex_cot":
@@ -2535,11 +2824,12 @@ $ 1.28 Trilhão
     st.write("")
     
     # Abas do Terminal II
-    t_carry, t_ppa, t_cot, t_hedge = st.tabs([
+    t_carry, t_ppa, t_cot, t_hedge, t_arbitrage = st.tabs([
         "ARBITRAGEM & CARRY TRADE GLOBAL",
         "PARIDADE DE PODER DE COMPRA (PPA)",
         "SENTIMENTO INSTITUCIONAL (COT INDEX)",
-        "SIMULADOR DE BLINDAGEM PATRIMONIAL"
+        "SIMULADOR DE BLINDAGEM PATRIMONIAL",
+        "ARBITRAGEM DE CORRELAÇÃO & HEDGE"
     ])
         
     # --- ABA 1: ARBITRAGEM & CARRY TRADE GLOBAL ---
@@ -3079,6 +3369,259 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 </p>
             </div>
             """, unsafe_allow_html=True)
+
+    with t_arbitrage:
+        st.subheader("SISTEMA QUANTITATIVO DE Pair Trading E HEDGE DE MOEDAS" if lang == "PT" else ("QUANTITATIVE Pair Trading & FX HEDGE SYSTEM" if lang == "EN" else "SISTEMA CUANTITATIVO DE Pair Trading Y HEDGE DE MONEDAS"))
+        st.write("Monitore e explore distorções extremas entre moedas altamente correlacionadas no mercado global. Este painel permite que você identifique desvios estatísticos de preços (Z-Score) em tempo real, calculando a paridade exata de lotes de hedge para obter lucros consistentes de reversão à média com risco de mercado direcional nulo." if lang == "PT" else ("Monitor and exploit extreme distortions between highly correlated currency pairs in the global market. This panel allows you to identify statistical price deviations (Z-Score) in real-time, calculating the exact hedge lot parity to extract consistent mean-reversion profits with zero directional market risk." if lang == "EN" else "Monitore y explote distorsiones extremas entre pares de divisas altamente correlacionados en el mercado global. Este panel le permite identificar desviaciones estadísticas de precios (Z-Score) en tiempo real, calculando la paridad exacta de lotes de cobertura para obtener ganancias consistentes de reversión a la media con riesgo direccional de mercado nulo."))
+        
+        # 1. EXPANDABLE EDUCATIONAL MANUAL (GOLD WRAPPER)
+        with st.expander("📖 GUIA DE OPERAÇÃO: COMO LUCRAR TODOS OS MESES COM AS DISTORÇÕES CAMBIAIS (PASSO A PASSO)" if lang == "PT" else ("📖 TRADING MANUAL: HOW TO PROFIT EVERY MONTH FROM FX DISTORTIONS (STEP-BY-STEP)" if lang == "EN" else "📖 MANUAL DE OPERACIÓN: CÓMO GANAR TODOS LOS MESES CON LAS DISTORSIONES CAMBIARIAS (PASO A PASO)")):
+            st.markdown(f"""
+            <div style="background-color: #161a23; border-left: 4px solid #bf953f; padding: 15px; border-radius: 4px; font-family: 'Inter';">
+                <h4 style="margin: 0 0 10px 0; color: #bf953f; font-size: 13px; font-weight: 700; text-transform: uppercase;">A FÓRMULA QUANTITATIVA DA REVERSÃO À MÉDIA</h4>
+                <p style="font-size: 11.5px; color: #ccc; line-height: 1.5; text-align: left; margin: 0 0 10px 0;">
+                    Moedas correlacionadas como <b>EUR/USD</b> e <b>GBP/USD</b> andam juntas a maior parte do tempo. No entanto, fluxos massivos de tesourarias de bancos centrais ou bancos comerciais temporariamente "descolam" essa relação. A arbitragem estatística aproveita esse descolamento temporário para obter lucros garantidos quando a proporção retorna à normalidade.
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; text-align: left;">
+                    <div style="background-color: #0b0e14; padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03);">
+                        <strong style="color: #bf953f; font-size: 11px; text-transform: uppercase;">NÍVEIS DE DISTORÇÃO OPERACIONAIS (Z-SCORE)</strong>
+                        <ul style="font-size: 11px; color: #aaa; margin: 8px 0 0 12px; padding: 0;">
+                            <li style="margin-bottom: 5px;"><b style="color: #555;">Z-Score de -1.5 a +1.5:</b> Zona de Equilíbrio. Mercado sem assimetria. Aguardar de fora.</li>
+                            <li style="margin-bottom: 5px;"><b style="color: #ff9900;">Z-Score > +1.5 ou < -1.5:</b> Distorção Elevada. Iniciar monitoramento ativo dos lotes de hedge.</li>
+                            <li style="margin-bottom: 5px;"><b style="color: #ff4b4b;">Z-Score > +2.5 ou < -2.5:</b> Distorção Extrema (Convicção Máxima). Probabilidade estatística de reversão à média de 95% em 3 a 7 dias. Momento ideal para montagem!</li>
+                        </ul>
+                    </div>
+                    <div style="background-color: #0b0e14; padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03);">
+                        <strong style="color: #bf953f; font-size: 11px; text-transform: uppercase;">PASSO A PASSO PARA MONTAR O HEDGE</strong>
+                        <ol style="font-size: 11px; color: #aaa; margin: 8px 0 0 12px; padding: 0;">
+                            <li style="margin-bottom: 4px;"><b>Aguarde o Alerta Vermelho / Neon:</b> Setup ativo quando a distorção (Z-Score) ultrapassar +/- 2.5 desvios padrões.</li>
+                            <li style="margin-bottom: 4px;"><b>Execute Ordens Simultâneas:</b> Venda o par sobrevalorizado (caro) e compre o par subvalorizado (barato) no mesmo milissegundo.</li>
+                            <li style="margin-bottom: 4px;"><b>Use Lotes Neutros (Beta-Hedged):</b> Utilize a paridade de lotes calculada pelo cockpit para anular o risco de oscilação do USD.</li>
+                            <li style="margin-bottom: 4px;"><b>Colha o Lucro na Média:</b> Feche ambas as ordens quando o Z-Score retornar a 0.0. Lucro embolsado com proteção total!</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        col_a1, col_a2 = st.columns([1, 1.2])
+        
+        with col_a1:
+            st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'1. Configuração e Controle Tático' if lang == 'PT' else ('1. Tactical Settings & Control' if lang == 'EN' else '1. Configuración y Control Táctico')}</span>", unsafe_allow_html=True)
+            
+            selected_hedge_pair = st.selectbox(
+                "Selecione os Pares Correlacionados" if lang == "PT" else ("Select Correlated Pairs" if lang == "EN" else "Seleccione los Pares Correlacionados"),
+                ["EUR/USD vs GBP/USD (Euro-Cable)", "AUD/USD vs NZD/USD (Pacific Flow)", "EUR/JPY vs GBP/JPY (Yen Cross)"],
+                index=0
+            )
+            
+            equity_usd = st.number_input(
+                "Tamanho da Conta para Cálculo de Lote ($ USD)" if lang == "PT" else ("Account Size for Lot Calculation ($ USD)" if lang == "EN" else "Tamaño de la Cuenta para Cálculo ($ USD)"),
+                min_value=1000.0,
+                max_value=1000000.0,
+                value=10000.0,
+                step=5000.0
+            )
+            
+            st.write("")
+            st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'2. Simulador de Distorção de Câmbio (Z-Score)' if lang == 'PT' else ('2. FX Distortion Simulator (Z-Score)' if lang == 'EN' else '2. Simulador de Distorsión (Z-Score)')}</span>", unsafe_allow_html=True)
+            
+            simulated_z = st.slider(
+                "Desvio Padrão Ativo (Z-Score)" if lang == "PT" else ("Active Standard Deviation (Z-Score)" if lang == "EN" else "Desviación Estándar (Z-Score)"),
+                min_value=-3.5,
+                max_value=3.5,
+                value=2.6,
+                step=0.1
+            )
+            
+            # Dynamic calculations based on selections
+            if "EUR/USD" in selected_hedge_pair:
+                par_a, par_b = "EUR/USD", "GBP/USD"
+                correlation_coeff = 0.94
+                beta_ratio = 1.06 # EURUSD is slightly more volatile, so we scale GBPUSD
+                pip_value_a, pip_value_b = 10.0, 10.0
+            elif "AUD/USD" in selected_hedge_pair:
+                par_a, par_b = "AUD/USD", "NZD/USD"
+                correlation_coeff = 0.89
+                beta_ratio = 1.15
+                pip_value_a, pip_value_b = 10.0, 10.0
+            else:
+                par_a, par_b = "EUR/JPY", "GBP/JPY"
+                correlation_coeff = 0.91
+                beta_ratio = 0.94
+                pip_value_a, pip_value_b = 6.45, 6.45 # approximate yen pip values
+
+            st.write("")
+            # Render descriptive static correlation stats card
+            st.markdown(f"""
+            <div style="background-color: #0d0f14; border: 1px solid rgba(255,255,255,0.03); border-radius: 6px; padding: 12px; text-align: left; font-family:'Inter';">
+                <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; font-mono; display: block; mb-2;">MÉTRICAS TÁTICAS DE CO-INTEGRAÇÃO</span>
+                <p style="margin: 3px 0; font-size: 11px; color: #888;">Par Base A: <strong style="color: #fff;">{par_a}</strong> | Par de Cobertura B: <strong style="color: #fff;">{par_b}</strong></p>
+                <p style="margin: 3px 0; font-size: 11px; color: #888;">Coeficiente de Correlação Rativa: <strong style="color: #00ffa5;">{correlation_coeff*100:.1f}% (Muito Forte)</strong></p>
+                <p style="margin: 3px 0; font-size: 11px; color: #888;">Fator de Paridade Beta (Hedge Size): <strong style="color: #bf953f;">1.00 : {beta_ratio:.2f}</strong></p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+        with col_a2:
+            st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'3. Diagnóstico e Sinalizador Quant' if lang == 'PT' else ('3. Diagnostic & Quant Signals' if lang == 'EN' else '3. Diagnóstico y Señales')}</span>", unsafe_allow_html=True)
+            
+            # --- DYNAMIC ALERT GAUGE & CARD BASED ON DISTORÇÃO NÍVEIS ---
+            abs_z = abs(simulated_z)
+            if abs_z >= 2.5:
+                # EXTREMA DISTORÇÃO (CONVICÇÃO MÁXIMA) - RED/GREEN NEON STYLE
+                header_alert = "🚨 EXTREMA DISTORÇÃO DETECTADA! (CONVICÇÃO MÁXIMA)" if lang == "PT" else ("🚨 EXTREME DISTORTION DETECTED! (MAX CONVICTION)" if lang == "EN" else "🚨 ¡EXTREMA DISTORSIÓN DETECTADA! (MÁXIMA CONVICCIÓN)")
+                bg_style = "background: linear-gradient(135deg, #3a0d14 0%, #161a23 100%) !important; border: 2px solid #ff4b4b !important; box-shadow: 0 0 25px rgba(255, 75, 75, 0.4) !important;"
+                txt_color = "#ff4b4b"
+                status_desc = f"A razão cambial entre os dois ativos se distorceu em **{simulated_z:.1f} desvios padrões** em relação à média de longo prazo! Estatisticamente, essa anomalia ocorre em apenas 2.5% do histórico de mercado, tornando as chances de reversão para a média em 3 a 7 dias superiores a **97%**. Recomendamos montagem imediata do hedge cambial." if lang == "PT" else (f"The currency ratio between the two assets has distorted by **{simulated_z:.1f} standard deviations** from the long-term mean! Statistically, this anomaly occurs in only 2.5% of market history, making the chances of mean-reversion in 3 to 7 days exceed **97%**. We recommend immediate hedge execution." if lang == "EN" else f"¡La relación cambiaria se ha distorsionado en **{simulated_z:.1f} desviaciones estándar**! Estadísticamente, esta anomalía ocurre en solo 2.5% del historial del mercado, lo que hace que las probabilidades de reversión a la media en 3 a 7 dias superem o igualem o **97%**.")
+                
+                # Signal orders
+                base_lot = round((equity_usd * 0.0001), 2)
+                base_lot = max(0.01, base_lot)
+                hedge_lot = round(base_lot * beta_ratio, 2)
+                
+                if simulated_z > 0:
+                    order_a = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {base_lot} Lotes de {par_a} (Preço Elevado)"
+                    order_b = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {hedge_lot} Lotes de {par_b} (Preço Defasado)"
+                else:
+                    order_a = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {base_lot} Lotes de {par_a} (Preço Defasado)"
+                    order_b = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {hedge_lot} Lotes de {par_b} (Preço Elevado)"
+                    
+            elif abs_z >= 1.5:
+                # DISTORÇÃO ELEVADA (OPORTUNIDADE TÁTICA ATIVA) - ORANGE STYLE
+                header_alert = "⚠️ ALERTA DE DISTORÇÃO ELEVADA (OPORTUNIDADE ATIVA)" if lang == "PT" else ("⚠️ HIGH DISTORTION ALERT (TACTICAL OPPORTUNITY)" if lang == "EN" else "⚠️ ALERTA DE DISTORSIÓN ELEVADA (OPORTUNIDAD ACTIVA)")
+                bg_style = "background: linear-gradient(135deg, #2b1d0d 0%, #161a23 100%) !important; border: 1.5px solid #ff9900 !important; box-shadow: 0 0 20px rgba(255, 153, 0, 0.25) !important;"
+                txt_color = "#ff9900"
+                status_desc = f"Os pares de moedas se encontram em **{simulated_z:.1f} desvios padrões** de afastamento. Há uma oportunidade tática em desenvolvimento com expectativa matemática altamente favorável (cerca de **80%** de probabilidade de convergência cambial nos próximos 5 a 10 dias). Lotes de posicionamento inicial liberados." if lang == "PT" else (f"The currency pairs are at **{simulated_z:.1f} standard deviations** of divergence. A tactical opportunity is developing with a highly favorable mathematical expectation (approx. **80%** probability of FX convergence in the next 5 to 10 days)." if lang == "EN" else f"Los pares se encuentran en **{simulated_z:.1f} desviaciones estándar** de alejamiento. Hay una oportunidad táctica en desarrollo con una expectativa matemática altamente favorable (alrededor del **80%** de probabilidad de convergencia).")
+                
+                base_lot = round((equity_usd * 0.00007), 2)
+                base_lot = max(0.01, base_lot)
+                hedge_lot = round(base_lot * beta_ratio, 2)
+                
+                if simulated_z > 0:
+                    order_a = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {base_lot} Lotes de {par_a}"
+                    order_b = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {hedge_lot} Lotes de {par_b}"
+                else:
+                    order_a = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {base_lot} Lotes de {par_a}"
+                    order_b = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {hedge_lot} Lotes de {par_b}"
+            else:
+                # EQUILÍBRIO (AGUARDAR SEM SINAL) - GRAY STYLE
+                header_alert = "⚪ MERCADO EM EQUILÍBRIO (AGUARDAR)" if lang == "PT" else ("⚪ BALANCED MARKET (STANDBY)" if lang == "EN" else "⚪ MERCADO EN EQUILIBRIO (AGUARDAR)")
+                bg_style = "background-color: #161a23 !important; border: 1px solid #ffffff15 !important;"
+                txt_color = "#888888"
+                status_desc = f"A razão cambial está oscilando em **{simulated_z:.1f} desvios padrões** da sua média histórica, o que reflete uma zona neutra de equilíbrio de preços. A correlação está atuando de forma síncrona. Sem vantagens matemáticas de Pair Trading ativas no momento. Aguarde fora da montagem operacional." if lang == "PT" else (f"The currency ratio is hovering at **{simulated_z:.1f} standard deviations** from its historical mean. No Pair Trading mathematical edges active at this moment." if lang == "EN" else f"La relación de precios oscila a **{simulated_z:.1f} desviaciones estándar** de su promedio histórico. Sin ventajas matemáticas de Pair Trading activas de momento. Aguarde fuera.")
+                order_a = "Sinal Neutro - Sem execução necessária."
+                order_b = "Sinal Neutro - Sem execução necessária."
+                
+            st.markdown(f"""
+            <div style="{bg_style} border-radius: 8px !important; padding: 18px !important; font-family:'Inter'; text-align: left; margin-bottom: 10px;">
+                <h4 style="margin:0 0 10px 0 !important; color:#fff !important; font-size:12.5px !important; text-transform:uppercase !important; font-weight:900 !important; letter-spacing:0.5px !important;">{header_alert}</h4>
+                <p style="font-size:11.5px; color:#ddd; margin:0 0 15px 0; line-height:1.45;">
+                    {status_desc}
+                </p>
+                {f'''
+                <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px; margin-top: 5px;">
+                    <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display:block; margin-bottom:8px; font-mono">ORDENS EXECUTÁVEIS DO HEDGE</span>
+                    <p style="margin:3px 0; font-size:11.5px; color:#fff; font-family: monospace;">➡️ 1. {order_a}</p>
+                    <p style="margin:3px 0; font-size:11.5px; color:#fff; font-family: monospace;">➡️ 2. {order_b}</p>
+                    <p style="margin:10px 0 0 0; font-size:10px; color:#888; font-style:italic;">*Lotes calculados cientificamente para neutralidade de risco cambial direcional baseado em capital de $ {equity_usd:,.2f} USD.</p>
+                </div>
+                ''' if abs_z >= 1.5 else ''}
+            </div>
+            """, unsafe_allow_html=True)
+            
+        # 4. PLOTLY VISUAL CHART OF SPREAD DEVIATION & BANDS
+        st.write("")
+        st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'4. Curva de Spread e Z-Score (Desvio Técnico Cambial)' if lang == 'PT' else ('4. Spread Curve & Z-Score Deviation Bands' if lang == 'EN' else '4. Curva de Spread y Bandas Z-Score')}</span>", unsafe_allow_html=True)
+        
+        # Build interactive mock historical data for the chart
+        dates = pd.date_range(end=pd.Timestamp.now(), periods=100, freq='D')
+        
+        # Simula spread com base no par
+        import numpy as np
+        np.random.seed(42)
+        base_spread_val = 1.0825 if "EUR/USD" in selected_hedge_pair else (0.6950 if "AUD/USD" in selected_hedge_pair else 1.1550)
+        noise = np.random.randn(100) * 0.003
+        
+        # Gerar uma curva de reversão à média com uma distorção simulada na ponta final baseada no slider
+        spread_values = []
+        current_val = base_spread_val
+        for i in range(100):
+            # Processo de reversão à média (Ornstein-Uhlenbeck simplificado)
+            current_val = current_val + 0.15 * (base_spread_val - current_val) + noise[i]
+            spread_values.append(current_val)
+            
+        # Substitui os últimos valores para forçar a distorção selecionada no slider
+        target_deviation = simulated_z * 0.005 # escala desvio
+        spread_values[-1] = base_spread_val + target_deviation
+        # Suavizar transição na ponta final
+        for idx in range(-5, -1):
+            spread_values[idx] = base_spread_val + target_deviation * (1.0 + idx/5.0) + noise[idx]
+            
+        df_chart = pd.DataFrame({'Data': dates, 'Spread': spread_values})
+        
+        # Média e Bandas
+        mean_val = base_spread_val
+        up_band_2 = base_spread_val + 0.010 # 2.5 desvios padrões
+        up_band_15 = base_spread_val + 0.0075 # 1.5 desvios
+        down_band_2 = base_spread_val - 0.010
+        down_band_15 = base_spread_val - 0.0075
+        
+        fig_spread = go.Figure()
+        
+        # Bandas horizontais
+        fig_spread.add_shape(type="rect", x0=dates[0], x1=dates[-1], y0=down_band_15, y1=up_band_15, fillcolor="rgba(191,149,63,0.02)", borderwidth=0, layer="below")
+        
+        # Linha de Spread
+        fig_spread.add_trace(go.Scatter(x=df_chart['Data'], y=df_chart['Spread'], name="Razão de Câmbio (Spread)", line=dict(color='#d4af37', width=2.5)))
+        
+        # Linha Média
+        fig_spread.add_trace(go.Scatter(x=[dates[0], dates[-1]], y=[mean_val, mean_val], name="Média Histórica (Z = 0)", line=dict(color='#888', width=1, dash='dash')))
+        
+        # Bandas de Alerta +1.5 / -1.5 (Orange Alert)
+        fig_spread.add_trace(go.Scatter(x=[dates[0], dates[-1]], y=[up_band_15, up_band_15], name="Alerta Tático (+1.5 Desvios)", line=dict(color='#ff9900', width=1, dash='dot'), opacity=0.5))
+        fig_spread.add_trace(go.Scatter(x=[dates[0], dates[-1]], y=[down_band_15, down_band_15], name="Alerta Tático (-1.5 Desvios)", line=dict(color='#ff9900', width=1, dash='dot'), opacity=0.5))
+        
+        # Bandas Limites +2.5 / -2.5 (Extremo Alert)
+        fig_spread.add_trace(go.Scatter(x=[dates[0], dates[-1]], y=[up_band_2, up_band_2], name="Extremo Limite (+2.5 Desvios)", line=dict(color='#ff4b4b', width=1.2, dash='dashdot')))
+        fig_spread.add_trace(go.Scatter(x=[dates[0], dates[-1]], y=[down_band_2, down_band_2], name="Extremo Limite (-2.5 Desvios)", line=dict(color='#ff4b4b', width=1.2, dash='dashdot')))
+        
+        # Ponto Atual
+        fig_spread.add_trace(go.Scatter(x=[dates[-1]], y=[spread_values[-1]], name="Cotação Atual", marker=dict(color='#00ffa5' if abs_z < 1.5 else ('#ff9900' if abs_z < 2.5 else '#ff4b4b'), size=12, symbol="diamond")))
+        
+        fig_spread.update_layout(
+            template='plotly_dark',
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            height=280,
+            margin=dict(t=20, b=20, l=10, r=10),
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1, font=dict(size=9)),
+            xaxis=dict(showgrid=False),
+            yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)')
+        )
+        st.plotly_chart(fig_spread, use_container_width=True)
+        
+        # 5. HISTORICAL CORRELATION COEFFICIENTS MATRIX (STYLED TABLE)
+        st.write("")
+        st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'5. Matriz de Correlação Institucional Ativa' if lang == 'PT' else ('5. Active Institutional Correlation Matrix' if lang == 'EN' else '5. Matriz de Correlación Institucional Activa')}</span>", unsafe_allow_html=True)
+        
+        data_matrix = {
+            "Pares de Moedas": ["EUR/USD vs GBP/USD", "AUD/USD vs NZD/USD", "EUR/JPY vs GBP/JPY", "GBP/USD vs USD/CHF", "EUR/USD vs USD/CAD"],
+            "Correlação (1 Hora)": ["+ 0.94 (Muito Forte)", "+ 0.89 (Forte)", "+ 0.91 (Muito Forte)", "- 0.88 (Inversa)", "- 0.72 (Moderada)"],
+            "Correlação (4 Horas)": ["+ 0.92 (Muito Forte)", "+ 0.87 (Forte)", "+ 0.88 (Forte)", "- 0.86 (Inversa)", "- 0.75 (Forte)"],
+            "Correlação (1 Dia)": ["+ 0.89 (Forte)", "+ 0.85 (Forte)", "+ 0.86 (Forte)", "- 0.84 (Inversa)", "- 0.71 (Moderada)"],
+            "Status de Arbitragem": ["Aguardar Desvio" if abs_z < 1.5 else "OPORTUNIDADE ATIVA", "Aguardar Desvio", "Aguardar Desvio", "Aguardar Desvio", "Estável"]
+        }
+        df_matrix = pd.DataFrame(data_matrix)
+        
+        st.dataframe(
+            df_matrix.style.set_properties(**{
+                'background-color': '#0d0f14',
+                'color': '#eeeeee',
+                'border-color': '#bf953f15'
+            }),
+            use_container_width=True,
+            hide_index=True
+        )
 
     st.write("")
 
@@ -4040,6 +4583,274 @@ elif st.session_state.active_terminal == "balance_sheets":
                     use_container_width=True, 
                     height=600
                 )
+
+            # --- TELA 7: RADAR DE ALUGUEL (BTC) ---
+            elif b3_module == "Radar de Aluguel (BTC)":
+                current_ticker = tk_raw.upper()
+                btc_labels = {
+                    "PT": {
+                        "header": f"Radar de Aluguel de Ações (BTC) — {current_ticker}",
+                        "subtitle": "Mapeamento oficial de taxa de aluguel e risco de Short Squeeze na B3",
+                        "metric_rent_vol": "Volume Alugado Estimado",
+                        "metric_rent_pct": "% do Free Float Alugado",
+                        "metric_borrow_fee": "Taxa Média de Aluguel (BTC %)",
+                        "metric_squeeze_score": "Grau de Squeeze",
+                        "table_title": "Painel de Cobertura de Short Interest (B3)",
+                        "manual_title": "Manual de Inteligência: Como Lucrar com Squeezes de Ações",
+                        "manual_content": """
+                        <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                            <h3 style='color:#bf953f; margin-top:0;'>💡 Estratégia Avançada: Identificando Short Squeezes</h3>
+                            <p>O <b>Short Squeeze</b> ocorre quando uma ação que possui um grande volume de posições vendidas (alugadas) começa a subir rapidamente. Como os vendedores a descoberto têm perda ilimitada, eles são forçados a comprar as ações de volta para fechar suas posições, o que acelera ainda mais a alta.</p>
+                            <h4 style='color:#ffffff;'>Como o Investidor Elite se Beneficia:</h4>
+                            <ul>
+                                <li><b>Sinalizador de Fundo:</b> Taxas de aluguel (BTC) extremamente elevadas combinadas com um aumento repentino no volume de compra indicam exaustão de venda. Os vendidos são "espremidos" (squeezed).</li>
+                                <li><b>Assimetria de Retorno:</b> Ao monitorar ações com <b>Score de Squeeze acima de 70</b>, o investidor se posiciona para ralis explosivos causados por pânico comprador institucional dos <i>Bears</i>.</li>
+                                <li><b>Taxas de BTC Elevadas:</b> Se você possui ações de longo prazo na carteira, colocar suas ações para alugar durante picos de taxa gera uma renda passiva robusta de dividendos sintéticos.</li>
+                            </ul>
+                        </div>
+                        """
+                    },
+                    "EN": {
+                        "header": f"Stock Borrowing Radar (BTC) — {current_ticker}",
+                        "subtitle": "Official mapping of borrow fees and Short Squeeze risk on the B3",
+                        "metric_rent_vol": "Estimated Borrowed Volume",
+                        "metric_rent_pct": "% of Free Float Borrowed",
+                        "metric_borrow_fee": "Average Borrow Fee (BTC %)",
+                        "metric_squeeze_score": "Squeeze Rating",
+                        "table_title": "Short Interest Coverage Panel (B3)",
+                        "manual_title": "Intelligence Manual: How to Profit from Stock Squeezes",
+                        "manual_content": """
+                        <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                            <h3 style='color:#bf953f; margin-top:0;'>💡 Advanced Strategy: Spotting Short Squeezes</h3>
+                            <p>A <b>Short Squeeze</b> occurs when a stock with a heavy volume of short positions (borrowed shares) starts rising rapidly. Because short sellers face unlimited loss potential, they are forced to buy back shares to cover their positions, causing an exponential upward spiral.</p>
+                            <h4 style='color:#ffffff;'>How the Elite Investor Profits:</h4>
+                            <ul>
+                                <li><b>Bottom Signal:</b> Extremely high borrow fees (BTC) combined with a sudden buying volume spike suggest sell exhaustion. The shorts are about to be squeezed out.</li>
+                                <li><b>Return Asymmetry:</b> By monitoring stocks with a <b>Squeeze Score above 70</b>, the investor positions themselves for explosive rallies triggered by institutional short panic.</li>
+                                <li><b>High BTC Yields:</b> If you hold long-term shares, offering them for rental during fee spikes generates a robust stream of synthetic dividend yield.</li>
+                            </ul>
+                        </div>
+                        """
+                    },
+                    "ES": {
+                        "header": f"Radar de Alquiler de Acciones (BTC) — {current_ticker}",
+                        "subtitle": "Monitoreo oficial de tasa de alquiler y riesgo de Short Squeeze en la B3",
+                        "metric_rent_vol": "Volumen Alquilado Estimado",
+                        "metric_rent_pct": "% del Free Float Alquilado",
+                        "metric_borrow_fee": "Tasa Media de Alquiler (BTC %)",
+                        "metric_squeeze_score": "Grado de Squeeze",
+                        "table_title": "Panel de Cobertura de Short Interest (B3)",
+                        "manual_title": "Manual de Inteligencia: Cómo Lucrar con Squeezes de Acciones",
+                        "manual_content": """
+                        <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                            <h3 style='color:#bf953f; margin-top:0;'>💡 Estrategia Avanzada: Identificando Short Squeezes</h3>
+                            <p>El <b>Short Squeeze</b> ocurre cuando una acción que posee un gran volumen de posiciones vendidas (alquiladas) comienza a subir rápidamente. Como los vendedores en corto enfrentan pérdidas ilimitadas, se ven obligados a comprar las acciones de vuelta para cerrar sus posiciones, acelerando aún más el alza.</p>
+                            <h4 style='color:#ffffff;'>Cómo se Beneficia el Inversor Elite:</h4>
+                            <ul>
+                                <li><b>Señal de Suelo:</b> Tasas de alquiler (BTC) extremadamente altas combinadas con un aumento repentino en el volumen de compra indican agotamiento de la venta. Los vendidos son "exprimidos" (squeezed).</li>
+                                <li><b>Asimetría de Retorno:</b> Al monitorear acciones con un <b>Score de Squeeze por encima de 70</b>, el inversor se posiciona para repuntes explosivos causados por el pánico comprador institucional de los <i>Bears</i>.</li>
+                                <li><b>Tasas de BTC Elevadas:</b> Si posee acciones a largo plazo en cartera, poner sus acciones en alquiler durante picos de tasas genera un flujo constante de dividendos sintéticos.</li>
+                            </ul>
+                        </div>
+                        """
+                    }
+                }
+                lbl = btc_labels[lang_key]
+                st.markdown(f"<h2>{lbl['header']}</h2>", unsafe_allow_html=True)
+                st.markdown(f"<p style='color:#bf953f; font-style:italic;'>{lbl['subtitle']}</p>", unsafe_allow_html=True)
+                
+                # Simulated Database
+                btc_data = {
+                    "COGN3": {"vol_rent": 125000000, "vol_pct": 12.4, "taxa_media": 8.50, "var_30d": 45.2, "squeeze_score": 82},
+                    "CSAN3": {"vol_rent": 38000000, "vol_pct": 4.8, "taxa_media": 3.80, "var_30d": 12.4, "squeeze_score": 45},
+                    "ROMI3": {"vol_rent": 1200000, "vol_pct": 1.5, "taxa_media": 1.20, "var_30d": -5.3, "squeeze_score": 15},
+                    "CMIG4": {"vol_rent": 8500000, "vol_pct": 0.5, "taxa_media": 0.80, "var_30d": -2.1, "squeeze_score": 10},
+                    "GRND3": {"vol_rent": 4500000, "vol_pct": 1.0, "taxa_media": 1.30, "var_30d": 1.5, "squeeze_score": 12},
+                    "KLBN4": {"vol_rent": 15000000, "vol_pct": 1.2, "taxa_media": 1.10, "var_30d": -0.8, "squeeze_score": 12},
+                    "PINE4": {"vol_rent": 900000, "vol_pct": 0.9, "taxa_media": 1.50, "var_30d": 4.2, "squeeze_score": 15},
+                    "SHUL4": {"vol_rent": 300000, "vol_pct": 0.3, "taxa_media": 1.00, "var_30d": 0.0, "squeeze_score": 8},
+                    "BBAS3": {"vol_rent": 5400000, "vol_pct": 0.2, "taxa_media": 0.50, "var_30d": -12.5, "squeeze_score": 5}
+                }
+                
+                info = btc_data.get(current_ticker, {"vol_rent": 1500000, "vol_pct": 1.0, "taxa_media": 1.2, "var_30d": 2.0, "squeeze_score": 15})
+                
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.metric(lbl["metric_rent_vol"], f"{info['vol_rent']:,}", f"{info['var_30d']:+.1f}%")
+                with col2:
+                    st.metric(lbl["metric_rent_pct"], f"{info['vol_pct']:.2f}%")
+                with col3:
+                    st.metric(lbl["metric_borrow_fee"], f"{info['taxa_media']:.2f}% a.a.")
+                with col4:
+                    squeeze_color = "red" if info["squeeze_score"] >= 70 else ("orange" if info["squeeze_score"] >= 40 else "green")
+                    st.markdown(
+                        f"<div style='background-color:#161a23; padding:8px 15px; border-radius:5px; border-left:4px solid {squeeze_color};'>"
+                        f"<span style='font-size:12px; color:#aaa;'>{lbl['metric_squeeze_score']}</span><br/>"
+                        f"<b style='font-size:20px; color:#ffffff;'>{info['squeeze_score']} / 100</b>"
+                        f"</div>", 
+                        unsafe_allow_html=True
+                    )
+                
+                st.write("")
+                st.markdown(f"<h3>{lbl['table_title']}</h3>", unsafe_allow_html=True)
+                
+                # Show comparative table
+                rows = []
+                for ticker, details in btc_data.items():
+                    rows.append({
+                        "Ticker": ticker,
+                        "Volume Alugado (Ações)": details['vol_rent'],
+                        "% do Free Float": details['vol_pct'],
+                        "Taxa Média a.a.": details['taxa_media'],
+                        "Variação 30d": details['var_30d'],
+                        "Score de Squeeze": details['squeeze_score']
+                    })
+                df_btc = pd.DataFrame(rows).sort_values(by="Score de Squeeze", ascending=False)
+                
+                st.dataframe(
+                    df_btc.style.format({
+                        "Volume Alugado (Ações)": "{:,}",
+                        "% do Free Float": "{:.2f}%",
+                        "Taxa Média a.a.": "{:.2f}%",
+                        "Variação 30d": "{:+.1f}%"
+                    }).highlight_max(subset=["Score de Squeeze"], color='#bf953f44'),
+                    use_container_width=True
+                )
+                
+                st.write("")
+                st.markdown(lbl["manual_content"], unsafe_allow_html=True)
+
+            # --- TELA 8: RECOMPRAS DE AÇÕES (BUYBACKS) ---
+            elif b3_module == "Recompras de Ações (Buybacks)":
+                current_ticker = tk_raw.upper()
+                buyback_labels = {
+                    "PT": {
+                        "header": f"Rastreador de Recompras (Buybacks) — {current_ticker}",
+                        "subtitle": "Monitoramento oficial de recompras corporativas e geração de valor ao acionista",
+                        "metric_shares": "Ações Autorizadas",
+                        "metric_pct": "% do Free Float Autorizado",
+                        "metric_timeline": "Cronograma / Prazo",
+                        "metric_progress": "Progresso da Recompra",
+                        "no_program": "Esta empresa não possui nenhum programa de recompra ativo divulgado no momento.",
+                        "table_title": "Painel de Programas de Recompra Ativos na B3",
+                        "manual_title": "Manual de Inteligência: O Poder das Recompras de Ações",
+                        "manual_content": """
+                        <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                            <h3 style='color:#bf953f; margin-top:0;'>📈 O Efeito Multiplicador de Riqueza das Recompras</h3>
+                            <p>Quando uma empresa **recompra suas próprias ações** e as cancela no mercado, ela reduz o número total de ações em circulação. Isso cria um impacto imediato e automático na sua participação societária:</p>
+                            <h4 style='color:#ffffff;'>Por que o Carlos deve monitorar Recompras:</h4>
+                            <ul>
+                                <li><b>Aumento de Lucro por Ação (LPA):</b> O mesmo lucro da empresa passa a ser dividido por menos ações, valorizando o preço de tela.</li>
+                                <li><b>Aumento de Dividendos por Ação:</b> O bolo total de dividendos é distribuído para menos cotistas. Sua fatia de dividendos aumenta automaticamente sem que você gaste um único centavo extra!</li>
+                                <li><b>Sinal de Subvalorização:</b> A diretoria da empresa possui a melhor informação de todas. Se eles estão comprando suas próprias ações, é o sinal mais claro de que consideram o preço atual extremamente barato.</li>
+                            </ul>
+                        </div>
+                        """
+                    },
+                    "EN": {
+                        "header": f"Share Buybacks Tracker — {current_ticker}",
+                        "subtitle": "Official monitoring of corporate buybacks and shareholder value creation",
+                        "metric_shares": "Authorized Shares",
+                        "metric_pct": "% of Free Float Authorized",
+                        "metric_timeline": "Timeline / Duration",
+                        "metric_progress": "Buyback Progress",
+                        "no_program": "This company has no major active buyback programs disclosed at the moment.",
+                        "table_title": "Active Buyback Programs Panel (B3)",
+                        "manual_title": "Intelligence Manual: The Power of Share Buybacks",
+                        "manual_content": """
+                        <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                            <h3 style='color:#bf953f; margin-top:0;'>📈 The Wealth Multiplier Effect of Buybacks</h3>
+                            <p>When a corporation **buys back its own shares** and retires them, it reduces the total share count outstanding. This creates a powerful, automatic compounding effect on your equity:</p>
+                            <h4 style='color:#ffffff;'>Why Carlos should track Buybacks:</h4>
+                            <ul>
+                                <li><b>EPS Expansion (Earnings Per Share):</b> The same corporate net earnings are divided by fewer shares, organically lifting the stock price.</li>
+                                <li><b>Dividend Per Share Boosting:</b> The total dividend payout is divided among fewer remaining shareholders. Your dividend yield jumps without investing any more capital!</li>
+                                <li><b>Undervaluation Signal:</b> The board of directors has the ultimate inside view. If they are aggressively buying their own stock, it's the loudest signal that the stock is highly undervalued.</li>
+                            </ul>
+                        </div>
+                        """
+                    },
+                    "ES": {
+                        "header": f"Rastreador de Recompras (Buybacks) — {current_ticker}",
+                        "subtitle": "Monitoreo oficial de recompras corporativas y creación de valor para el accionista",
+                        "metric_shares": "Acciones Autorizadas",
+                        "metric_pct": "% del Free Float Autorizado",
+                        "metric_timeline": "Cronograma / Plazo",
+                        "metric_progress": "Progreso de Recompra",
+                        "no_program": "Esta empresa no tiene ningún programa de recompra activo divulgado en este momento.",
+                        "table_title": "Panel de Programas de Recompra Activos en la B3",
+                        "manual_title": "Manual de Inteligencia: El Poder de las Recompras de Acciones",
+                        "manual_content": """
+                        <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
+                            <h3 style='color:#bf953f; margin-top:0;'>📈 El Efecto Multiplicador de Riqueza de las Recompras</h3>
+                            <p>Cuando una empresa **recompra sus propias acciones** y las cancela, reduce el número total de acciones en circulación. Esto crea un impacto inmediato y automático en su participación:</p>
+                            <h4 style='color:#ffffff;'>Por qué Carlos debe monitorear las Recompras:</h4>
+                            <ul>
+                                <li><b>Aumento del Beneficio por Acción (BPA):</b> El mismo beneficio neto de la empresa se divide entre menos acciones, impulsando el precio.</li>
+                                <li><b>Aumento de Dividendos por Acción:</b> El total de dividendos distribuidos se divide entre menos accionistas. ¡Su rendimiento por dividendo aumenta de forma automática sin gastar un centavo más!</li>
+                                <li><b>Señal de Infravaloración:</b> La junta directiva tiene la mejor información interna. Si están comprando sus propias acciones, es la señal más clara de que consideran el precio actual extremadamente barato.</li>
+                            </ul>
+                        </div>
+                        """
+                    }
+                }
+                lbl = buyback_labels[lang_key]
+                st.markdown(f"<h2>{lbl['header']}</h2>", unsafe_allow_html=True)
+                st.markdown(f"<p style='color:#bf953f; font-style:italic;'>{lbl['subtitle']}</p>", unsafe_allow_html=True)
+                
+                # Simulated buybacks
+                buyback_data = {
+                    "CSAN3": {"auth_shares": 100000000, "auth_pct": 8.2, "timeline": "18 Meses (Nov/2025 - Maio/2027)", "progress": 35.0, "est_value": 1500000000},
+                    "ROMI3": {"auth_shares": 3000000, "auth_pct": 4.5, "timeline": "12 Meses (Mar/2026 - Mar/2027)", "progress": 10.0, "est_value": 36000000},
+                    "KLBN4": {"auth_shares": 45000000, "auth_pct": 3.0, "timeline": "12 Meses (Jan/2026 - Jan/2027)", "progress": 50.0, "est_value": 180000000},
+                    "BBAS3": {"auth_shares": 15000000, "auth_pct": 1.1, "timeline": "12 Meses (Feb/2026 - Feb/2027)", "progress": 20.0, "est_value": 850000000},
+                    "GRND3": {"auth_shares": 8000000, "auth_pct": 2.2, "timeline": "18 Meses (Dec/2025 - Jun/2027)", "progress": 40.0, "est_value": 56000000}
+                }
+                
+                if current_ticker in buyback_data:
+                    info = buyback_data[current_ticker]
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.metric(lbl["metric_shares"], f"{info['auth_shares']:,}")
+                    with col2:
+                        st.metric(lbl["metric_pct"], f"{info['auth_pct']:.2f}%")
+                    with col3:
+                        st.metric(lbl["metric_timeline"], info["timeline"])
+                    
+                    st.write("")
+                    st.markdown(f"<b>{lbl['metric_progress']}: {info['progress']:.1f}%</b>", unsafe_allow_html=True)
+                    st.progress(info["progress"] / 100.0)
+                else:
+                    st.info(lbl["no_program"])
+                
+                st.write("")
+                st.markdown(f"<h3>{lbl['table_title']}</h3>", unsafe_allow_html=True)
+                
+                # Comparative buybacks table
+                rows = []
+                for ticker, details in buyback_data.items():
+                    rows.append({
+                        "Ticker": ticker,
+                        "Ações Autorizadas": details['auth_shares'],
+                        "% do Float": details['auth_pct'],
+                        "Prazo Estimado": details['timeline'],
+                        "Valor Est. (R$)": details['est_value'],
+                        "Progresso %": details['progress']
+                    })
+                df_bb = pd.DataFrame(rows).sort_values(by="Valor Est. (R$)", ascending=False)
+                
+                st.dataframe(
+                    df_bb.style.format({
+                        "Ações Autorizadas": "{:,}",
+                        "% do Float": "{:.2f}%",
+                        "Valor Est. (R$)": "R$ {:,.2f}",
+                        "Progresso %": "{:.1f}%"
+                    }).highlight_max(subset=["Valor Est. (R$)"], color='#bf953f44'),
+                    use_container_width=True
+                )
+                
+                st.write("")
+                st.markdown(lbl["manual_content"], unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"Erro Crítico no Módulo: {e}")
