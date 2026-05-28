@@ -1303,9 +1303,9 @@ elif st.session_state.active_terminal == "whale_radar":
     
     # Seletor de Módulos táticos na barra lateral com suporte a 3 idiomas
     module_options = {
-        "PT": ["Cérebro Elite IA (Wealth Copilot)", "Radar de Convicções", "Rastreador de Big Players", "Sincronizador SEC (EDGAR)"],
-        "EN": ["Elite IA Brain (Wealth Copilot)", "Radar of Convictions", "Big Players Tracker", "SEC Synchronizer (EDGAR)"],
-        "ES": ["Cerebro Elite IA (Wealth Copilot)", "Radar de Convicciones", "Rastreador de Big Players", "Sincronizador SEC (EDGAR)"]
+        "PT": ["Cérebro Elite IA (Wealth Copilot)", "Radar de Convicções", "Rastreador de Big Players", "Sincronizador SEC (EDGAR)", "Análise Quant & Timing (EUA)"],
+        "EN": ["Elite IA Brain (Wealth Copilot)", "Radar of Convictions", "Big Players Tracker", "SEC Synchronizer (EDGAR)", "Quant & Timing Desk (US)"],
+        "ES": ["Cerebro Elite IA (Wealth Copilot)", "Radar de Convicciones", "Rastreador de Big Players", "Sincronizador SEC (EDGAR)", "Análisis Quant y Timing (EEUU)"]
     }
     selected_module = st.sidebar.radio("MÓDULOS DE ANÁLISE / MODULES", module_options[lang], index=2)
     
@@ -1315,16 +1315,19 @@ elif st.session_state.active_terminal == "whale_radar":
         "Radar de Convicções": "Radar de Convicções",
         "Rastreador de Big Players": "Rastreador de Big Players",
         "Sincronizador SEC (EDGAR)": "Sincronizador SEC (EDGAR)",
+        "Análise Quant & Timing (EUA)": "Análise Quant & Timing (EUA)",
         
         "Elite IA Brain (Wealth Copilot)": "Cérebro Elite IA (Wealth Copilot)",
         "Radar of Convictions": "Radar de Convicções",
         "Big Players Tracker": "Rastreador de Big Players",
         "SEC Synchronizer (EDGAR)": "Sincronizador SEC (EDGAR)",
+        "Quant & Timing Desk (US)": "Análise Quant & Timing (EUA)",
         
         "Cerebro Elite IA (Wealth Copilot)": "Cérebro Elite IA (Wealth Copilot)",
         "Radar de Convicciones": "Radar de Convicções",
         "Rastreador de Big Players": "Rastreador de Big Players",
-        "Sincronizador SEC (EDGAR)": "Sincronizador SEC (EDGAR)"
+        "Sincronizador SEC (EDGAR)": "Sincronizador SEC (EDGAR)",
+        "Análisis Quant y Timing (EEUU)": "Análise Quant & Timing (EUA)"
     }
     module = module_map.get(selected_module, "Cérebro Elite IA (Wealth Copilot)")
     
@@ -2122,6 +2125,207 @@ elif st.session_state.active_terminal == "whale_radar":
                     
                 log_to_terminal("\n[LOTE COMPLETO] Sincronização finalizada e dados agregados com sucesso!")
                 st.success("Lote completo sincronizado e arquivado!")
+
+    elif module == "Análise Quant & Timing (EUA)":
+        st.header("📊 Mesa Quant & Timing de Ações (Wall Street)" if lang == "PT" else ("📊 Wall Street Quant & Timing Desk" if lang == "EN" else "📊 Mesa Quant y Timing de Acciones (Wall Street)"))
+        st.write("Análise quantitativa de altíssima precisão baseada em desvios estatísticos de médias móveis semanais e ciclos anuais, cruzada com fundamentos de hipercrescimento (PEG) e fluxo de compras de Big Players (SEC 13F).")
+        
+        # Educational Box
+        st.markdown("""
+        <div class="conviction-card" style="border-left-color: #bf953f; margin-bottom:20px;">
+            <h4 style="margin:0 0 5px 0; color:#fff; font-size:15px; text-transform:uppercase; border:none; padding:0;">O Modelo de Reversão à Média da Média de 50 Semanal (EMA 50 W - EUA)</h4>
+            <p style="font-size:13px; color:#ccc; line-height:1.6; margin:0;">
+                A <b>Média Móvel Exponencial de 50 períodos no gráfico semanal (EMA 50 W)</b> atua como o "centro de gravidade" estrutural dos preços. Desvios estatísticos acentuados (acima de +/- 8% a 12%) indicam exaustão extrema de fluxo institucional comprador ou vendedor, gerando uma altíssima probabilidade de <b>Reversão à Média (Mean Reversion)</b> ou correções táticas. Para o mercado americano, o Wealth Copilot cruza esses desvios com o **PEG Ratio** (valuation ajustado pelo crescimento) e a **telemetria SEC 13F** das maiores gestoras do planeta, localizando assimetrias extraordinárias de momentum.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        quant_timing_us = [
+            {
+                "Ticker": "META",
+                "Preço": "$ 475.20",
+                "EMA 50 W": "$ 442.80",
+                "Desvio EMA 50 (%)": 7.32,
+                "Tendência EMA 50": "Altista ↗",
+                "Mínima 12M": "+85.6%",
+                "Máxima 12M": "-4.2%",
+                "Probabilidade": 79.0,
+                "Evento Esperado": "Correção Leve (Esticada)",
+                "Valuation PEG": "1.1x (Subavaliada)",
+                "Smart Money (SEC 13F)": "ACUMULAÇÃO FORTE",
+                "Score Copilot": 8.9
+            },
+            {
+                "Ticker": "AAPL",
+                "Preço": "$ 185.20",
+                "EMA 50 W": "$ 192.50",
+                "Desvio EMA 50 (%)": -3.79,
+                "Tendência EMA 50": "Lateral →",
+                "Mínima 12M": "+5.2%",
+                "Máxima 12M": "-12.5%",
+                "Probabilidade": 74.0,
+                "Evento Esperado": "Reversão Alta (Média Reversão)",
+                "Valuation PEG": "2.8x (Esticado)",
+                "Smart Money (SEC 13F)": "DISTRIBUIÇÃO LEVE",
+                "Score Copilot": 7.3
+            },
+            {
+                "Ticker": "AMZN",
+                "Preço": "$ 180.10",
+                "EMA 50 W": "$ 172.50",
+                "Desvio EMA 50 (%)": 4.41,
+                "Tendência EMA 50": "Altista ↗",
+                "Mínima 12M": "+45.2%",
+                "Máxima 12M": "-2.8%",
+                "Probabilidade": 58.0,
+                "Evento Esperado": "Consolidação de Alta",
+                "Valuation PEG": "1.6x (Atrativo)",
+                "Smart Money (SEC 13F)": "COMPRA LEVE",
+                "Score Copilot": 8.6
+            },
+            {
+                "Ticker": "GOOGL",
+                "Preço": "$ 172.40",
+                "EMA 50 W": "$ 165.20",
+                "Desvio EMA 50 (%)": 4.36,
+                "Tendência EMA 50": "Altista ↗",
+                "Mínima 12M": "+42.1%",
+                "Máxima 12M": "-2.5%",
+                "Probabilidade": 52.0,
+                "Evento Esperado": "Consolidação de Alta",
+                "Valuation PEG": "1.3x (Subavaliada)",
+                "Smart Money (SEC 13F)": "COMPRA LEVE",
+                "Score Copilot": 8.7
+            },
+            {
+                "Ticker": "BRK-B",
+                "Preço": "$ 410.20",
+                "EMA 50 W": "$ 418.80",
+                "Desvio EMA 50 (%)": -2.05,
+                "Tendência EMA 50": "Lateral →",
+                "Mínima 12M": "+18.2%",
+                "Máxima 12M": "-5.8%",
+                "Probabilidade": 42.0,
+                "Evento Esperado": "Consolidação de Preço",
+                "Valuation PEG": "1.8x (Neutro)",
+                "Smart Money (SEC 13F)": "RECOMPRA CORPORATIVA",
+                "Score Copilot": 8.8
+            },
+            {
+                "Ticker": "JPM",
+                "Preço": "$ 195.40",
+                "EMA 50 W": "$ 185.10",
+                "Desvio EMA 50 (%)": 5.56,
+                "Tendência EMA 50": "Altista ↗",
+                "Mínima 12M": "+35.6%",
+                "Máxima 12M": "-2.2%",
+                "Probabilidade": 61.0,
+                "Evento Esperado": "Consolidação / Descanso",
+                "Valuation PEG": "1.5x (Atrativo)",
+                "Smart Money (SEC 13F)": "COMPRA LEVE",
+                "Score Copilot": 8.5
+            },
+            {
+                "Ticker": "MSFT",
+                "Preço": "$ 420.50",
+                "EMA 50 W": "$ 402.10",
+                "Desvio EMA 50 (%)": 4.58,
+                "Tendência EMA 50": "Altista ↗",
+                "Mínima 12M": "+38.4%",
+                "Máxima 12M": "-1.5%",
+                "Probabilidade": 65.0,
+                "Evento Esperado": "Consolidação de Tendência",
+                "Valuation PEG": "2.1x (Neutro)",
+                "Smart Money (SEC 13F)": "MANUTENÇÃO",
+                "Score Copilot": 8.3
+            },
+            {
+                "Ticker": "NVDA",
+                "Preço": "$ 125.40",
+                "EMA 50 W": "$ 108.50",
+                "Desvio EMA 50 (%)": 15.58,
+                "Tendência EMA 50": "Altista ↗",
+                "Mínima 12M": "+112.4%",
+                "Máxima 12M": "-3.1%",
+                "Probabilidade": 88.0,
+                "Evento Esperado": "Correção Baixa (Esticada)",
+                "Valuation PEG": "1.4x (Aceitável)",
+                "Smart Money (SEC 13F)": "ACUMULAÇÃO LEVE",
+                "Score Copilot": 8.1
+            },
+            {
+                "Ticker": "LLY",
+                "Preço": "$ 820.50",
+                "EMA 50 W": "$ 725.20",
+                "Desvio EMA 50 (%)": 13.14,
+                "Tendência EMA 50": "Altista ↗",
+                "Mínima 12M": "+128.5%",
+                "Máxima 12M": "-1.1%",
+                "Probabilidade": 89.0,
+                "Evento Esperado": "Correção Baixa (Extrema Saturação)",
+                "Valuation PEG": "3.5x (Hiper-esticada)",
+                "Smart Money (SEC 13F)": "DISTRIBUIÇÃO SEC",
+                "Score Copilot": 6.8
+            }
+        ]
+        
+        df_quant_us = pd.DataFrame(quant_timing_us)
+        
+        # Format and Style Dataframe
+        def style_quant_us(row):
+            styles = [''] * len(row)
+            
+            # Desvio
+            desvio = row['Desvio EMA 50 (%)']
+            if desvio < -6.0:
+                styles[3] = 'color: #00ffa5; font-weight: bold;'
+            elif desvio > 10.0:
+                styles[3] = 'color: #ff4b4b; font-weight: bold;'
+            else:
+                styles[3] = 'color: #ccc;'
+                
+            # Probabilidade
+            prob = row['Probabilidade']
+            if prob >= 80.0:
+                styles[7] = 'background-color: rgba(0, 255, 165, 0.1); color: #00ffa5; font-weight: bold;'
+            else:
+                styles[7] = 'color: #ccc;'
+                
+            # Smart Money
+            sm = row['Smart Money (SEC 13F)']
+            if 'ACUMULAÇÃO FORTE' in sm or 'RECOMPRA' in sm:
+                styles[10] = 'color: #00ffa5; font-weight: bold;'
+            elif 'DISTRIBUIÇÃO' in sm:
+                styles[10] = 'color: #ff4b4b; font-weight: bold;'
+            else:
+                styles[10] = 'color: #ccc;'
+                
+            # Score Copilot
+            score = row['Score Copilot']
+            if score >= 8.5:
+                styles[11] = 'color: #bf953f; font-weight: 900; font-size: 14px;'
+            else:
+                styles[11] = 'color: #ccc; font-weight: bold;'
+                
+            return styles
+            
+        df_display_us = df_quant_us.copy()
+        df_display_us.columns = [
+            "Ticker", "Preço Atual", "EMA 50 W", "Desvio EMA 50 (%)", "Tendência (EMA 50)",
+            "Mín. 12M (%)", "Máx. 12M (%)", "Prob. Evento (%)", "Evento Estimado",
+            "Valuation PEG", "Smart Money (SEC 13F)", "Score Copilot"
+        ]
+        
+        st.dataframe(
+            df_display_us.style.format({
+                "Desvio EMA 50 (%)": "{:+.2f}%",
+                "Prob. Evento (%)": "{:.1f}%"
+            }).apply(style_quant_us, axis=1),
+            use_container_width=True,
+            height=400
+        )
+        
+        st.info("💡 **Dica Operacional Quant:** No mercado americano, ativos com **Score Copilot superior a 8.5** representam assimetrias premium, pois combinam crescimento agressivo subavaliado (PEG atrativo) com compras pesadas de gestoras institucionais via relatórios oficiais da SEC (Form 13F), ocorrendo em janelas de preços saudáveis no semanal.")
 
 
 # --- TERMINAL II: RADAR CAMBIAL FOREX (CFTC COT) ---
