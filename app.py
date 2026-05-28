@@ -1175,9 +1175,9 @@ if st.session_state.active_terminal == "family_office_br":
     
     # 4. Módulos Temáticos (Aba Ativa)
     fo_modules_list = {
-        "PT": ["Big Players Brasil", "Gestão Patrimonial & Holding", "Ativos Alternativos", "Estilo de Vida & Elite"],
-        "EN": ["Big Players Brazil", "Asset Management & Holding", "Alternative Assets", "Lifestyle & Elite"],
-        "ES": ["Big Players Brasil", "Gestión Patrimonial & Holding", "Activos Alternativos", "Estilo de Vida & Elite"]
+        "PT": ["Big Players Brasil", "Gestão Patrimonial & Holding"],
+        "EN": ["Big Players Brazil", "Asset Management & Holding"],
+        "ES": ["Big Players Brasil", "Gestión Patrimonial & Holding"]
     }
     fo_module_map = {
         "Big Players Brasil": "Big Players Brasil",
