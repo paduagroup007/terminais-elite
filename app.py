@@ -2266,6 +2266,20 @@ elif st.session_state.active_terminal == "whale_radar":
                 "Valuation PEG": "3.5x (Hiper-esticada)",
                 "Smart Money (SEC 13F)": "DISTRIBUIÇÃO SEC",
                 "Score Copilot": 6.8
+            },
+            {
+                "Ticker": "TSLA",
+                "Preço": "$ 175.40",
+                "EMA 50 W": "$ 195.80",
+                "Desvio EMA 50 (%)": -10.42,
+                "Tendência EMA 50": "Baixista ↘",
+                "Mínima 12M": "+3.2%",
+                "Máxima 12M": "-38.5%",
+                "Probabilidade": 92.0,
+                "Evento Esperado": "Reversão Alta (Extrema Sobrevenda)",
+                "Valuation PEG": "1.3x (Subavaliada)",
+                "Smart Money (SEC 13F)": "ACUMULAÇÃO INSIDER",
+                "Score Copilot": 9.4
             }
         ]
         
@@ -2325,7 +2339,27 @@ elif st.session_state.active_terminal == "whale_radar":
             height=400
         )
         
-        st.info("💡 **Dica Operacional Quant:** No mercado americano, ativos com **Score Copilot superior a 8.5** representam assimetrias premium, pois combinam crescimento agressivo subavaliado (PEG atrativo) com compras pesadas de gestoras institucionais via relatórios oficiais da SEC (Form 13F), ocorrendo em janelas de preços saudáveis no semanal.")
+        st.markdown(f"""
+        <div class="conviction-card" style="border-left-color: #bf953f; background-color: #11151c; padding: 22px; border-radius: 8px; margin-top: 25px; border: 1px solid #bf953f33; font-family: 'Inter', sans-serif;">
+            <h4 style="margin: 0 0 15px 0; color: #bf953f; font-size: 15px; text-transform: uppercase; font-weight: 800; border: none; padding: 0; letter-spacing: 1px;">
+                🎯 MANUAL DE EXECUÇÃO PRÁTICA & FLUXO DE ANÁLISE DE ELITE (USA)
+            </h4>
+            <p style="font-size: 13px; color: #dddddd; line-height: 1.6; margin-bottom: 12px;">
+                Para maximizar a precisão matemática e a segurança patrimonial das suas alocações em Wall Street, siga rigorosamente este protocolo institucional:
+            </p>
+            <ol style="font-size: 12.5px; color: #cccccc; padding-left: 20px; margin-bottom: 15px; line-height: 1.7;">
+                <li style="margin-bottom: 6px;"><b>Mapeamento Inicial:</b> Explore as carteiras de grandes fundos e a telemetria do smart money americano para escolher as empresas que fazem sentido para seu portfólio.</li>
+                <li style="margin-bottom: 6px;"><b>Auditoria Fundamentalista (Terminal III):</b> Antes de qualquer compra, verifique a saúde contábil detalhada e o valuation intrínseco do ativo no nosso <b>Módulo de Análise de Balanços</b>.</li>
+                <li style="margin-bottom: 6px;"><b>Timing e Estrutura Semanal:</b> Com o ativo aprovado, analise o gráfico no período semanal (Weekly) estudando o <b>Desvio da Média de 50 (EMA 50 W)</b>, sua <b>Inclinação</b> (apontada para cima ou para baixo), a estrutura de preços e a tendência geral.</li>
+                <li style="margin-bottom: 6px;"><b>Confluência de Elite:</b> Realize a alocação apenas quando houver assimetria estatística favorável indicada pelo Score Copilot.</li>
+            </ol>
+            <div style="background-color: #161a23; border: 1px solid #bf953f22; border-radius: 6px; padding: 15px; margin-top: 15px;">
+                <p style="font-size: 12.5px; color: #cccccc; line-height: 1.6; margin: 0;">
+                    💡 <b>Mentoria Privada & Insights Exclusivos:</b> Como analista técnica sênior com <b>mais de 23 anos de experiência prática de mercado</b>, realizo varreduras constantes nas estruturas gráficas e tendências de ativos nacionais e internacionais. Todos os meus estudos detalhados e alertas de setups em tempo real são passados no nosso <b>Telegram VIP de Elite</b>. Use também o <b>WhatsApp de Suporte Privado</b> no menu lateral para esclarecer dúvidas diretamente comigo se necessário!
+                </p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
 
 # --- TERMINAL II: RADAR CAMBIAL FOREX (CFTC COT) ---
@@ -7192,6 +7226,34 @@ elif st.session_state.active_terminal == "family_office_br":
                     "Margem Graham": "-12%",
                     "Insiders CVM": "MANUTENÇÃO",
                     "Score Copilot": 7.8
+                },
+                {
+                    "Ticker": "PETR4",
+                    "Preço": "R$ 38.50",
+                    "EMA 50 W": "R$ 36.80",
+                    "Desvio EMA 50 (%)": 4.62,
+                    "Tendência EMA 50": "Altista ↗",
+                    "Mínima 12M": "+32.4%",
+                    "Máxima 12M": "-5.3%",
+                    "Probabilidade": 68.0,
+                    "Evento Esperado": "Consolidação de Alta",
+                    "Margem Graham": "+45%",
+                    "Insiders CVM": "COMPRA LEVE",
+                    "Score Copilot": 8.7
+                },
+                {
+                    "Ticker": "SAPR11",
+                    "Preço": "R$ 26.20",
+                    "EMA 50 W": "R$ 28.50",
+                    "Desvio EMA 50 (%)": -8.07,
+                    "Tendência EMA 50": "Baixista ↘",
+                    "Mínima 12M": "+4.2%",
+                    "Máxima 12M": "-18.5%",
+                    "Probabilidade": 88.0,
+                    "Evento Esperado": "Reversão Alta (Média Reversão)",
+                    "Margem Graham": "+58%",
+                    "Insiders CVM": "COMPRA FORTE",
+                    "Score Copilot": 9.3
                 }
             ]
             
@@ -7251,7 +7313,27 @@ elif st.session_state.active_terminal == "family_office_br":
                 height=380
             )
             
-            st.info("💡 **Dica Operacional Quant:** Ativos com **Score Copilot superior a 9.0** representam as maiores assimetrias da bolsa brasileira, pois combinam descontos matemáticos históricos com forte acúmulo de capital por diretores de empresas, ocorrendo em janelas de preços tecnicamente sobrevendidos no gráfico semanal.")
+            st.markdown(f"""
+            <div class="conviction-card" style="border-left-color: #bf953f; background-color: #11151c; padding: 22px; border-radius: 8px; margin-top: 25px; border: 1px solid #bf953f33; font-family: 'Inter', sans-serif;">
+                <h4 style="margin: 0 0 15px 0; color: #bf953f; font-size: 15px; text-transform: uppercase; font-weight: 800; border: none; padding: 0; letter-spacing: 1px;">
+                    🎯 MANUAL DE EXECUÇÃO PRÁTICA & FLUXO DE ANÁLISE DE ELITE (B3)
+                </h4>
+                <p style="font-size: 13px; color: #dddddd; line-height: 1.6; margin-bottom: 12px;">
+                    Para maximizar a precisão matemática e a segurança patrimonial das suas alocações na B3, siga rigorosamente este protocolo institucional:
+                </p>
+                <ol style="font-size: 12.5px; color: #cccccc; padding-left: 20px; margin-bottom: 15px; line-height: 1.7;">
+                    <li style="margin-bottom: 6px;"><b>Mapeamento Inicial:</b> Explore os portfólios rastreados e transações de CVM Insiders para filtrar as empresas do seu interesse.</li>
+                    <li style="margin-bottom: 6px;"><b>Auditoria Fundamentalista (Terminal III):</b> Antes de qualquer aporte, verifique a saúde contábil profunda e a solvência do ativo selecionado no nosso <b>Módulo de Análise de Balanços</b>.</li>
+                    <li style="margin-bottom: 6px;"><b>Timing e Estrutura Semanal:</b> Com o ativo fundamentalmente sólido, estude o gráfico de periodicidade semanal (Weekly) analisando o <b>Desvio da Média de 50 (EMA 50 W)</b>, sua <b>Inclinação</b> (apontada para cima ou para baixo), a estrutura de preços e a tendência principal.</li>
+                    <li style="margin-bottom: 6px;"><b>Confluência de Elite:</b> Busque executar a operação apenas nas maiores janelas de assimetria estatística indicadas pelo Score Copilot.</li>
+                </ol>
+                <div style="background-color: #161a23; border: 1px solid #bf953f22; border-radius: 6px; padding: 15px; margin-top: 15px;">
+                    <p style="font-size: 12.5px; color: #cccccc; line-height: 1.6; margin: 0;">
+                        💡 <b>Mentoria Privada & Insights Exclusivos:</b> Como analista técnica sênior com <b>mais de 23 anos de experiência prática de mercado</b>, realizo varreduras constantes nas estruturas gráficas e tendências de ativos nacionais e internacionais. Todos os meus estudos detalhados e alertas de setups em tempo real são passados no nosso <b>Telegram VIP de Elite</b>. Use também o <b>WhatsApp de Suporte Privado</b> no menu lateral para esclarecer dúvidas diretamente comigo se necessário!
+                    </p>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
 
     # 2. PLANEJAMENTO PATRIMONIAL E HOLDING
     elif fo_module == "Gestão Patrimonial & Holding":
@@ -7652,3 +7734,37 @@ elif st.session_state.active_terminal == "family_office_br":
     st.sidebar.caption(t["user_level"])
     st.sidebar.caption(t["data_source"])
     st.sidebar.caption(t["last_update"])
+
+# --- GLOBAL VIP SUPPORT & CHANNEL SIDEBAR SECTION ---
+if "active_terminal" in st.session_state and st.session_state.active_terminal != "hub":
+    st.sidebar.write("---")
+    st.sidebar.markdown(f"""
+    <div style="background-color: #11151c; border: 1px solid #bf953f66; border-radius: 8px; padding: 15px; margin-top: 15px; font-family: 'Inter', sans-serif;">
+        <h4 style="margin: 0 0 10px 0; color: #bf953f; font-size: 13px; text-transform: uppercase; font-weight: 800; border: none; padding: 0; letter-spacing: 1px;">
+            📢 Canal VIP & Suporte Direto
+        </h4>
+        <p style="font-size: 11px; color: #cccccc; line-height: 1.5; margin-bottom: 12px;">
+            Acesso exclusivo aos canais de comunicação direta com nossa analista técnica sênior (+23 anos de experiência):
+        </p>
+        <a href="https://t.me/+ExemploCanalTelegram" target="_blank" style="text-decoration: none; display: block; margin-bottom: 8px;">
+            <div style="background: linear-gradient(135deg, #0088cc 0%, #00a2ed 100%); color: white; padding: 8px; text-align: center; border-radius: 6px; font-weight: bold; font-size: 11px; box-shadow: 0 4px 10px rgba(0, 136, 204, 0.25);">
+                ✈️ TELEGRAM VIP ELITE
+            </div>
+        </a>
+        <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20tirar%20uma%20dúvida%20sobre%20as%20análises%20técnicas." target="_blank" style="text-decoration: none; display: block; margin-bottom: 12px;">
+            <div style="background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%); color: white; padding: 8px; text-align: center; border-radius: 6px; font-weight: bold; font-size: 11px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.25);">
+                💬 WHATSAPP ANALISTA
+            </div>
+        </a>
+        <p style="font-size: 10px; color: #888888; margin: 0 0 10px 0; word-break: break-all; text-align: center;">
+            📧 <b>Contato:</b> paduagroup@gmail.com
+        </p>
+        <div style="font-size: 9.5px; color: #888888; line-height: 1.4; border-top: 1px solid #bf953f22; padding-top: 8px;">
+            💡 <b>Fluxo de Análise Recomendado:</b><br>
+            1. Analise as carteiras e escolha os ativos do seu interesse.<br>
+            2. Audite a saúde contábil profunda no <b>Módulo de Análise de Balanços (Módulo III)</b>.<br>
+            3. Verifique a estrutura gráfica no semanal: Média Exponencial de 50 (EMA 50 W), inclinação, desvio e tendência.<br>
+            4. Conte com os estudos e setups em tempo real enviados diariamente pela analista técnica no canal do Telegram!
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
