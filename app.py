@@ -7746,7 +7746,7 @@ if "active_terminal" in st.session_state and st.session_state.active_terminal !=
         <p style="font-size: 11px; color: #cccccc; line-height: 1.5; margin-bottom: 12px;">
             Acesso exclusivo aos canais de comunicação direta com nossa analista técnica sênior (+23 anos de experiência):
         </p>
-        <a href="https://t.me/+ExemploCanalTelegram" target="_blank" style="text-decoration: none; display: block; margin-bottom: 8px;">
+        <a href="https://t.me/+d45_kiikjFw2NWM5" target="_blank" style="text-decoration: none; display: block; margin-bottom: 8px;">
             <div style="background: linear-gradient(135deg, #0088cc 0%, #00a2ed 100%); color: white; padding: 8px; text-align: center; border-radius: 6px; font-weight: bold; font-size: 11px; box-shadow: 0 4px 10px rgba(0, 136, 204, 0.25);">
                 ✈️ TELEGRAM VIP ELITE
             </div>
