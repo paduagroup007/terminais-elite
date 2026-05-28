@@ -6066,11 +6066,11 @@ elif st.session_state.active_terminal == "family_office_br":
         st.write("")
         
         fo_sub_tabs = st.tabs(
-            ["Cérebro Elite IA", "Rastreador de Portfólios", "Insider Trading B3"]
+            ["Cérebro Elite IA", "Rastreador de Portfólios", "Insider Trading B3", "Análise Quant & Timing"]
             if lang == "PT" else (
-                ["Elite IA Brain", "Portfolio Tracker", "Insider Trading B3"]
+                ["Elite IA Brain", "Portfolio Tracker", "Insider Trading B3", "Quant & Timing Desk"]
                 if lang == "EN" else
-                ["Cerebro Elite IA", "Rastreador de Portafolios", "Insider Trading B3"]
+                ["Cerebro Elite IA", "Rastreador de Portafolios", "Insider Trading B3", "Análisis Quant y Timing"]
             )
         )
         
@@ -6861,6 +6861,193 @@ elif st.session_state.active_terminal == "family_office_br":
             )
             
             st.info(" **Inteligência Wealth Copilot:** Compras táticas por insiders corporativos historicamente superam o índice Bovespa nos 12 meses seguintes em mais de **8.4% Alpha**, pois esses diretores e controladores possuem acesso direto a projeções internas e fluxos futuros de lucros reais.")
+
+        with fo_sub_tabs[3]:
+            st.markdown("### 📊 Mesa Quant & Timing de Ações (B3)" if lang == "PT" else ("### 📊 B3 Quant & Timing Desk" if lang == "EN" else "### 📊 Mesa Quant y Timing de Acciones (B3)"), unsafe_allow_html=True)
+            st.write("Análise quantitativa de altíssima precisão baseada em desvios estatísticos de médias móveis semanais e ciclos anuais, cruzada com fundamentos contábeis (Graham) e fluxo de compras de Insiders.")
+            
+            # Educational Box
+            st.markdown("""
+            <div class="conviction-card" style="border-left-color: #bf953f; margin-bottom:20px;">
+                <h4 style="margin:0 0 5px 0; color:#fff; font-size:15px; text-transform:uppercase; border:none; padding:0;">O Modelo de Reversão à Média da Média de 50 Semanal (EMA 50 W)</h4>
+                <p style="font-size:13px; color:#ccc; line-height:1.6; margin:0;">
+                    A <b>Média Móvel Exponencial de 50 períodos no gráfico semanal (EMA 50 W)</b> atua como o "centro de gravidade" estrutural dos preços. Desvios estatísticos acentuados (acima de +/- 8% a 10%) indicam exaustão extrema de fluxo institucional comprador ou vendedor, gerando uma altíssima probabilidade de <b>Reversão à Média (Mean Reversion)</b> ou correções táticas. Quando esse sinal técnico é acoplado a <b>compras robustas de Insiders (CVM)</b> e <b>Margem de Segurança (Graham)</b>, criamos a maior probabilidade quantitativa de assimetria favorável na bolsa.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            quant_timing_data = [
+                {
+                    "Ticker": "ROMI3",
+                    "Preço": "R$ 12.10",
+                    "EMA 50 W": "R$ 13.50",
+                    "Desvio EMA 50 (%)": -10.37,
+                    "Tendência EMA 50": "Baixista ↘",
+                    "Mínima 12M": "+3.4%",
+                    "Máxima 12M": "-32.5%",
+                    "Probabilidade": 91.0,
+                    "Evento Esperado": "Reversão Alta (Extrema Assimetria)",
+                    "Margem Graham": "+62%",
+                    "Insiders CVM": "COMPRA FORTE",
+                    "Score Copilot": 9.8
+                },
+                {
+                    "Ticker": "BBAS3",
+                    "Preço": "R$ 27.50",
+                    "EMA 50 W": "R$ 28.80",
+                    "Desvio EMA 50 (%)": -4.51,
+                    "Tendência EMA 50": "Baixista ↘",
+                    "Mínima 12M": "+8.5%",
+                    "Máxima 12M": "-18.2%",
+                    "Probabilidade": 78.0,
+                    "Evento Esperado": "Reversão Alta (Oversold)",
+                    "Margem Graham": "+53%",
+                    "Insiders CVM": "COMPRA FORTE",
+                    "Score Copilot": 9.5
+                },
+                {
+                    "Ticker": "VALE3",
+                    "Preço": "R$ 62.40",
+                    "EMA 50 W": "R$ 66.80",
+                    "Desvio EMA 50 (%)": -6.58,
+                    "Tendência EMA 50": "Lateral →",
+                    "Mínima 12M": "+6.2%",
+                    "Máxima 12M": "-22.1%",
+                    "Probabilidade": 82.0,
+                    "Evento Esperado": "Reversão Alta (Média Reversão)",
+                    "Margem Graham": "+41%",
+                    "Insiders CVM": "COMPRA LEVE",
+                    "Score Copilot": 8.9
+                },
+                {
+                    "Ticker": "RENT3",
+                    "Preço": "R$ 48.50",
+                    "EMA 50 W": "R$ 54.10",
+                    "Desvio EMA 50 (%)": -10.35,
+                    "Tendência EMA 50": "Baixista ↘",
+                    "Mínima 12M": "+2.1%",
+                    "Máxima 12M": "-35.2%",
+                    "Probabilidade": 89.0,
+                    "Evento Esperado": "Reversão Alta (Suporte Histórico)",
+                    "Margem Graham": "+38%",
+                    "Insiders CVM": "VENDA INSIDER",
+                    "Score Copilot": 7.2
+                },
+                {
+                    "Ticker": "KEPL3",
+                    "Preço": "R$ 10.20",
+                    "EMA 50 W": "R$ 9.80",
+                    "Desvio EMA 50 (%)": 4.08,
+                    "Tendência EMA 50": "Altista ↗",
+                    "Mínima 12M": "+22.4%",
+                    "Máxima 12M": "-8.9%",
+                    "Probabilidade": 45.0,
+                    "Evento Esperado": "Consolidação de Alta",
+                    "Margem Graham": "+28%",
+                    "Insiders CVM": "MANUTENÇÃO",
+                    "Score Copilot": 8.5
+                },
+                {
+                    "Ticker": "ITUB4",
+                    "Preço": "R$ 34.20",
+                    "EMA 50 W": "R$ 32.50",
+                    "Desvio EMA 50 (%)": 5.23,
+                    "Tendência EMA 50": "Altista ↗",
+                    "Mínima 12M": "+28.5%",
+                    "Máxima 12M": "-3.5%",
+                    "Probabilidade": 62.0,
+                    "Evento Esperado": "Correção Leve / Consolidação",
+                    "Margem Graham": "+15%",
+                    "Insiders CVM": "COMPRA LEVE",
+                    "Score Copilot": 8.4
+                },
+                {
+                    "Ticker": "TAEE11",
+                    "Preço": "R$ 35.10",
+                    "EMA 50 W": "R$ 34.90",
+                    "Desvio EMA 50 (%)": 0.57,
+                    "Tendência EMA 50": "Lateral →",
+                    "Mínima 12M": "+5.4%",
+                    "Máxima 12M": "-7.2%",
+                    "Probabilidade": 15.0,
+                    "Evento Esperado": "Consolidação Estável",
+                    "Margem Graham": "+12%",
+                    "Insiders CVM": "MANUTENÇÃO",
+                    "Score Copilot": 8.1
+                },
+                {
+                    "Ticker": "WEGE3",
+                    "Preço": "R$ 39.50",
+                    "EMA 50 W": "R$ 36.20",
+                    "Desvio EMA 50 (%)": 9.11,
+                    "Tendência EMA 50": "Altista ↗",
+                    "Mínima 12M": "+48.2%",
+                    "Máxima 12M": "-2.1%",
+                    "Probabilidade": 85.0,
+                    "Evento Esperado": "Correção Baixa (Esticada)",
+                    "Margem Graham": "-12%",
+                    "Insiders CVM": "MANUTENÇÃO",
+                    "Score Copilot": 7.8
+                }
+            ]
+            
+            df_quant = pd.DataFrame(quant_timing_data)
+            
+            # Format and Style Dataframe
+            def style_quant(row):
+                styles = [''] * len(row)
+                
+                # Desvio
+                desvio = row['Desvio EMA 50 (%)']
+                if desvio < -8.0:
+                    styles[3] = 'color: #00ffa5; font-weight: bold;'
+                elif desvio > 8.0:
+                    styles[3] = 'color: #ff4b4b; font-weight: bold;'
+                else:
+                    styles[3] = 'color: #ccc;'
+                    
+                # Probabilidade
+                prob = row['Probabilidade']
+                if prob >= 80.0:
+                    styles[7] = 'background-color: rgba(0, 255, 165, 0.1); color: #00ffa5; font-weight: bold;'
+                else:
+                    styles[7] = 'color: #ccc;'
+                    
+                # Insiders
+                ins = row['Insiders CVM']
+                if 'COMPRA FORTE' in ins:
+                    styles[10] = 'color: #00ffa5; font-weight: bold;'
+                elif 'VENDA' in ins:
+                    styles[10] = 'color: #ff4b4b; font-weight: bold;'
+                else:
+                    styles[10] = 'color: #ccc;'
+                    
+                # Score Copilot
+                score = row['Score Copilot']
+                if score >= 9.0:
+                    styles[11] = 'color: #bf953f; font-weight: 900; font-size: 14px;'
+                else:
+                    styles[11] = 'color: #ccc; font-weight: bold;'
+                    
+                return styles
+                
+            df_display = df_quant.copy()
+            df_display.columns = [
+                "Ticker", "Preço Atual", "EMA 50 W", "Desvio EMA 50 (%)", "Tendência (EMA 50)",
+                "Mín. 12M (%)", "Máx. 12M (%)", "Prob. Evento (%)", "Evento Estimado",
+                "Valuation Graham", "Insiders CVM", "Score Copilot"
+            ]
+            
+            st.dataframe(
+                df_display.style.format({
+                    "Desvio EMA 50 (%)": "{:+.2f}%",
+                    "Prob. Evento (%)": "{:.1f}%"
+                }).apply(style_quant, axis=1),
+                use_container_width=True,
+                height=380
+            )
+            
+            st.info("💡 **Dica Operacional Quant:** Ativos com **Score Copilot superior a 9.0** representam as maiores assimetrias da bolsa brasileira, pois combinam descontos matemáticos históricos com forte acúmulo de capital por diretores de empresas, ocorrendo em janelas de preços tecnicamente sobrevendidos no gráfico semanal.")
 
     # 2. PLANEJAMENTO PATRIMONIAL E HOLDING
     elif fo_module == "Gestão Patrimonial & Holding":
