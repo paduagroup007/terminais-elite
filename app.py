@@ -7258,12 +7258,75 @@ elif st.session_state.active_terminal == "family_office_br":
         st.subheader("PLANEJAMENTO PATRIMONIAL E SUCESSÃO FAMILIAR" if lang == "PT" else ("ESTATE & SUCCESSION PLANNING" if lang == "EN" else "PLANEACIÓN PATRIMONIAL Y SUCESIÓN FAMILIAR"))
         st.write("Compare de forma dinâmica os custos operacionais de herança tradicional (inventário judicial) com a implantação de uma Holding Familiar.")
         
-        # Parse ITCMD rate from state selected in sidebar
+        # Painel de controle interativo de Parâmetros de Riqueza diretamente na página principal
+        st.markdown(f"""
+        <div style="background-color: #11151c; border: 1px solid #bf953f66; border-radius: 8px; padding: 18px 24px; margin-bottom: 25px;">
+            <h4 style="margin:0 0 15px 0; color:#bf953f; font-size:14px; text-transform:uppercase; font-weight:800; border:none; padding:0; letter-spacing:1.5px; font-family:'Inter', sans-serif;">
+                ⚙️ {"AJUSTE DE PARÂMETROS PATRIMONIAIS" if lang == "PT" else ("WEALTH PARAMETER ADJUSTMENT" if lang == "EN" else "AJUSTE DE PARÁMETROS PATRIMONIALES")}
+            </h4>
+        """, unsafe_allow_html=True)
+        
+        col_main1, col_main2 = st.columns(2)
+        with col_main1:
+            fo_net_worth_input = st.number_input(
+                "Patrimônio Líquido Familiar (R$)" if lang == "PT" else ("Family Net Worth (BRL)" if lang == "EN" else "Patrimonio Neto Familiar (BRL)"),
+                min_value=10000.0,
+                max_value=10000000000.0,
+                value=float(fo_net_worth),
+                step=100000.0,
+                format="%.2f",
+                key="main_calc_net_worth"
+            )
+            fo_net_worth = fo_net_worth_input
+        with col_main2:
+            states_list_main = {
+                "PT": ["São Paulo (4%)", "Rio de Janeiro (8%)", "Minas Gerais (8%)", "Rio Grande do Sul (8%)", "Santa Catarina (8%)", "Outros Estados (Média 6%)"],
+                "EN": ["São Paulo (4%)", "Rio de Janeiro (8%)", "Minas Gerais (8%)", "Rio Grande do Sul (8%)", "Santa Catarina (8%)", "Other States (Avg 6%)"],
+                "ES": ["São Paulo (4%)", "Rio de Janeiro (8%)", "Minas Gerais (8%)", "Rio Grande do Sul (8%)", "Santa Catarina (8%)", "Otros Estados (Promedio 6%)"]
+            }
+            state_map_main = {
+                "São Paulo (4%)": "São Paulo (4%)",
+                "Rio de Janeiro (8%)": "Rio de Janeiro (8%)",
+                "Minas Gerais (8%)": "Minas Gerais (8%)",
+                "Rio Grande do Sul (8%)": "Rio Grande do Sul (8%)",
+                "Santa Catarina (8%)": "Santa Catarina (8%)",
+                "Outros Estados (Média 6%)": "Outros Estados (Média 6%)",
+                "Other States (Avg 6%)": "Outros Estados (Média 6%)",
+                "Otros Estados (Promedio 6%)": "Outros Estados (Média 6%)"
+            }
+            
+            # Find current index
+            default_state_key = fo_state_itcmd
+            if default_state_key not in states_list_main[lang]:
+                try:
+                    default_state_key = [k for k, v in state_map_main.items() if v == fo_state_itcmd][0]
+                except:
+                    default_state_key = states_list_main[lang][0]
+            
+            state_idx_main = states_list_main[lang].index(default_state_key) if default_state_key in states_list_main[lang] else 0
+            
+            selected_state_main = st.selectbox(
+                "Estado de Residência Fiscal (ITCMD)" if lang == "PT" else ("State of Residence (ITCMD)" if lang == "EN" else "Estado de Residencia (ITCMD)"),
+                states_list_main[lang],
+                index=state_idx_main,
+                key="main_calc_state_itcmd"
+            )
+            fo_state_itcmd = state_map_main.get(selected_state_main, "São Paulo (4%)")
+            
+        st.markdown("</div>", unsafe_allow_html=True)
+        
+        # Salvar estado atualizado se houver modificação pelos inputs da página principal
+        if fo_net_worth != app_fo_state.get("net_worth") or fo_state_itcmd != app_fo_state.get("state_itcmd"):
+            app_fo_state["net_worth"] = fo_net_worth
+            app_fo_state["state_itcmd"] = fo_state_itcmd
+            save_fo_state(app_fo_state)
+        
+        # Parse ITCMD rate from state selected
         import re
         pct_match = re.search(r"(\d+(?:\.\d+)?)%", fo_state_itcmd)
         itcmd_rate = float(pct_match.group(1)) / 100.0 if pct_match else 0.06
         
-        # Calculations based on sidebar net worth and state rate
+        # Calculations based on main page net worth and state rate
         cost_itcmd_trad = fo_net_worth * itcmd_rate
         cost_adv_trad = fo_net_worth * 0.06
         cost_jud_trad = fo_net_worth * 0.01
