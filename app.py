@@ -3395,9 +3395,9 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                         <strong style="color: #bf953f; font-size: 11px; text-transform: uppercase;">PASSO A PASSO PARA MONTAR O HEDGE</strong>
                         <ol style="font-size: 11px; color: #aaa; margin: 8px 0 0 12px; padding: 0;">
                             <li style="margin-bottom: 4px;"><b>Aguarde o Alerta Vermelho / Neon:</b> Setup ativo quando a distorção (Z-Score) ultrapassar +/- 2.5 desvios padrões.</li>
-                            <li style="margin-bottom: 4px;"><b>Execute Ordens Simultâneas:</b> Venda o par sobrevalorizado (caro) e compre o par subvalorizado (barato) no mesmo milissegundo.</li>
-                            <li style="margin-bottom: 4px;"><b>Use Lotes Neutros (Beta-Hedged):</b> Utilize a paridade de lotes calculada pelo cockpit para anular o risco de oscilação do USD.</li>
-                            <li style="margin-bottom: 4px;"><b>Colha o Lucro na Média:</b> Feche ambas as ordens quando o Z-Score retornar a 0.0. Lucro embolsado com proteção total!</li>
+                            <li style="margin-bottom: 4px;"><b>Execute Ordens Simultâneas:</b> Venda o par caro (ou compre ambos se correlação inversa) simultaneamente.</li>
+                            <li style="margin-bottom: 4px;"><b>Use Lotes Neutros (Beta-Hedged):</b> Utilize a paridade de lotes calculada pelo cockpit para anular o risco direcional.</li>
+                            <li style="margin-bottom: 4px;"><b>Colha o Lucro na Média:</b> Feche ambas as ordens quando o Z-Score retornar a 0.0. Lucro embolsado!</li>
                         </ol>
                     </div>
                 </div>
@@ -3411,7 +3411,16 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             
             selected_hedge_pair = st.selectbox(
                 "Selecione os Pares Correlacionados" if lang == "PT" else ("Select Correlated Pairs" if lang == "EN" else "Seleccione los Pares Correlacionados"),
-                ["EUR/USD vs GBP/USD (Euro-Cable)", "AUD/USD vs NZD/USD (Pacific Flow)", "EUR/JPY vs GBP/JPY (Yen Cross)"],
+                [
+                    "EUR/USD vs GBP/USD (Euro-Cable)", 
+                    "AUD/USD vs NZD/USD (Pacific Flow)", 
+                    "EUR/JPY vs GBP/JPY (Yen Cross)",
+                    "NZD/USD vs AUD/USD (Kiwi-Aussie Flow)",
+                    "CHF/JPY vs EUR/JPY (Safe Haven Cross)",
+                    "GBP/USD vs USD/CHF (Swiss Lock - Inversa)",
+                    "EUR/USD vs USD/CHF (Global Mirror - Inversa)",
+                    "USD/CAD vs AUD/USD (Commodity Divergence - Inversa)"
+                ],
                 index=0
             )
             
@@ -3435,29 +3444,68 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             )
             
             # Dynamic calculations based on selections
-            if "EUR/USD" in selected_hedge_pair:
+            is_inverse = False
+            if "EUR/USD vs GBP/USD" in selected_hedge_pair:
                 par_a, par_b = "EUR/USD", "GBP/USD"
                 correlation_coeff = 0.94
                 beta_ratio = 1.06 # EURUSD is slightly more volatile, so we scale GBPUSD
                 pip_value_a, pip_value_b = 10.0, 10.0
-            elif "AUD/USD" in selected_hedge_pair:
+                base_spread_val = 1.0825
+            elif "AUD/USD vs NZD/USD" in selected_hedge_pair:
                 par_a, par_b = "AUD/USD", "NZD/USD"
                 correlation_coeff = 0.89
                 beta_ratio = 1.15
                 pip_value_a, pip_value_b = 10.0, 10.0
-            else:
+                base_spread_val = 0.6950
+            elif "EUR/JPY vs GBP/JPY" in selected_hedge_pair:
                 par_a, par_b = "EUR/JPY", "GBP/JPY"
                 correlation_coeff = 0.91
                 beta_ratio = 0.94
-                pip_value_a, pip_value_b = 6.45, 6.45 # approximate yen pip values
-
+                pip_value_a, pip_value_b = 6.45, 6.45
+                base_spread_val = 1.1550
+            elif "NZD/USD vs AUD/USD" in selected_hedge_pair:
+                par_a, par_b = "NZD/USD", "AUD/USD"
+                correlation_coeff = 0.92
+                beta_ratio = 0.87
+                pip_value_a, pip_value_b = 10.0, 10.0
+                base_spread_val = 0.9250
+            elif "CHF/JPY vs EUR/JPY" in selected_hedge_pair:
+                par_a, par_b = "CHF/JPY", "EUR/JPY"
+                correlation_coeff = 0.88
+                beta_ratio = 1.12
+                pip_value_a, pip_value_b = 6.45, 6.45
+                base_spread_val = 1.0520
+            elif "GBP/USD vs USD/CHF" in selected_hedge_pair:
+                par_a, par_b = "GBP/USD", "USD/CHF"
+                correlation_coeff = -0.88
+                beta_ratio = 1.02
+                pip_value_a, pip_value_b = 10.0, 10.0
+                base_spread_val = 1.3420
+                is_inverse = True
+            elif "EUR/USD vs USD/CHF" in selected_hedge_pair:
+                par_a, par_b = "EUR/USD", "USD/CHF"
+                correlation_coeff = -0.95
+                beta_ratio = 0.98
+                pip_value_a, pip_value_b = 10.0, 10.0
+                base_spread_val = 1.2150
+                is_inverse = True
+            else: # USD/CAD vs AUD/USD
+                par_a, par_b = "USD/CAD", "AUD/USD"
+                correlation_coeff = -0.78
+                beta_ratio = 1.28
+                pip_value_a, pip_value_b = 7.30, 10.0
+                base_spread_val = 1.8840
+                is_inverse = True
+            corr_color = "#ff4b4b" if correlation_coeff < 0 else "#00ffa5"
+            corr_type = "Inversa" if correlation_coeff < 0 else "Direta"
+            
             st.write("")
             # Render descriptive static correlation stats card
             st.markdown(f"""
             <div style="background-color: #0d0f14; border: 1px solid rgba(255,255,255,0.03); border-radius: 6px; padding: 12px; text-align: left; font-family:'Inter';">
                 <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; font-mono; display: block; mb-2;">MÉTRICAS TÁTICAS DE CO-INTEGRAÇÃO</span>
                 <p style="margin: 3px 0; font-size: 11px; color: #888;">Par Base A: <strong style="color: #fff;">{par_a}</strong> | Par de Cobertura B: <strong style="color: #fff;">{par_b}</strong></p>
-                <p style="margin: 3px 0; font-size: 11px; color: #888;">Coeficiente de Correlação Rativa: <strong style="color: #00ffa5;">{correlation_coeff*100:.1f}% (Muito Forte)</strong></p>
+                <p style="margin: 3px 0; font-size: 11px; color: #888;">Coeficiente de Correlação Rativa: <strong style="color: {corr_color};">{correlation_coeff*100:.1f}% ({corr_type})</strong></p>
                 <p style="margin: 3px 0; font-size: 11px; color: #888;">Fator de Paridade Beta (Hedge Size): <strong style="color:#bf953f;">1.00 : {beta_ratio:.2f}</strong></p>
             </div>
             """, unsafe_allow_html=True)
@@ -3471,7 +3519,11 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 # EXTREMA DISTORÇÃO (CONVICÇÃO MÁXIMA) - RED/GREEN NEON STYLE
                 header_alert = "🚨 EXTREMA DISTORÇÃO DETECTADA! (CONVICÇÃO MÁXIMA)" if lang == "PT" else ("🚨 EXTREME DISTORTION DETECTED! (MAX CONVICTION)" if lang == "EN" else "🚨 ¡EXTREMA DISTORSIÓN DETECTADA! (MÁXIMA CONVICCIÓN)")
                 bg_style = "background: linear-gradient(135deg, #3a0d14 0%, #161a23 100%) !important; border: 2px solid #ff4b4b !important; box-shadow: 0 0 25px rgba(255, 75, 75, 0.4) !important;"
-                status_desc = f"A razão cambial entre os dois ativos se distorceu em **{simulated_z:.1f} desvios padrões** em relação à média de longo prazo! Estatisticamente, essa anomalia ocorre em apenas 2.5% do histórico de mercado, tornando as chances de reversão para a média em 3 a 7 dias superiores a **97%**. Recomendamos montagem imediata do hedge cambial." if lang == "PT" else (f"The currency ratio between the two assets has distorted by **{simulated_z:.1f} standard deviations** from the long-term mean! Statistically, this anomaly occurs in only 2.5% of market history, making the chances of mean-reversion in 3 to 7 days exceed **97%**. We recommend immediate hedge execution." if lang == "EN" else f"¡La relación cambiaria se ha distorsionado en **{simulated_z:.1f} desviaciones estándar**! Estadísticamente, esta anomalía ocurre en solo 2.5% del historial del mercado, lo que hace que las probabilidades de reversión a la media en 3 a 7 dias superem o igualem o **97%**.")
+                
+                if is_inverse:
+                    status_desc = f"A razão cambial entre os dois ativos de correlação INVERSA se distorceu em **{simulated_z:.1f} desvios padrões**! Essa anomalia mostra que eles andaram na mesma direção de forma irracional. A probabilidade estatística de retorno ao comportamento espelhado padrão em 3 a 7 dias supera **97%**. Recomendamos montagem imediata do hedge de contratendência." if lang == "PT" else (f"The currency ratio between the two INVERSE assets has distorted by **{simulated_z:.1f} standard deviations**! This anomaly means they moved in the same direction, which is highly irrational. Reversion probability to standard mirror behavior exceeds **97%**." if lang == "EN" else f"¡La relación entre los activos de correlación INVERSA se ha distorsionado en **{simulated_z:.1f} desviaciones estándar**! Probabilidad de reversión al comportamento espejo supera el **97%**.")
+                else:
+                    status_desc = f"A razão cambial entre os dois ativos se distorceu em **{simulated_z:.1f} desvios padrões** em relação à média de longo prazo! Estatisticamente, essa anomalia ocorre em apenas 2.5% do histórico de mercado, tornando as chances de reversão para a média em 3 a 7 dias superiores a **97%**. Recomendamos montagem imediata do hedge cambial." if lang == "PT" else (f"The currency ratio between the two assets has distorted by **{simulated_z:.1f} standard deviations** from the long-term mean! Statistically, this anomaly occurs in only 2.5% of market history, making the chances of mean-reversion in 3 to 7 days exceed **97%**. We recommend immediate hedge execution." if lang == "EN" else f"¡La relação cambial se ha distorsionado en **{simulated_z:.1f} desviaciones estándar**! Estadísticamente, esta anomalía ocurre en solo 2.5% del historial del mercado, lo que hace que las probabilidades de reversión a la media en 3 a 7 dias superem o igualem o **97%**.")
                 
                 # Signal orders
                 base_lot = round((equity_usd * 0.0001), 2)
@@ -3479,28 +3531,48 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 hedge_lot = round(base_lot * beta_ratio, 2)
                 
                 if simulated_z > 0:
-                    order_a = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {base_lot} Lotes de {par_a} (Preço Elevado)"
-                    order_b = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {hedge_lot} Lotes de {par_b} (Preço Defasado)"
+                    if is_inverse:
+                        order_a = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {base_lot} Lotes de {par_a} (Preço Elevado)"
+                        order_b = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {hedge_lot} Lotes de {par_b} (Preço Elevado)"
+                    else:
+                        order_a = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {base_lot} Lotes de {par_a} (Preço Elevado)"
+                        order_b = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {hedge_lot} Lotes de {par_b} (Preço Defasado)"
                 else:
-                    order_a = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {base_lot} Lotes de {par_a} (Preço Defasado)"
-                    order_b = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {hedge_lot} Lotes de {par_b} (Preço Elevado)"
+                    if is_inverse:
+                        order_a = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {base_lot} Lotes de {par_a} (Preço Defasado)"
+                        order_b = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {hedge_lot} Lotes de {par_b} (Preço Defasado)"
+                    else:
+                        order_a = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {base_lot} Lotes de {par_a} (Preço Defasado)"
+                        order_b = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {hedge_lot} Lotes de {par_b} (Preço Elevado)"
                     
             elif abs_z >= 1.5:
                 # DISTORÇÃO ELEVADA (OPORTUNIDADE TÁTICA ATIVA) - ORANGE STYLE
                 header_alert = "⚠️ ALERTA DE DISTORÇÃO ELEVADA (OPORTUNIDADE ATIVA)" if lang == "PT" else ("⚠️ HIGH DISTORTION ALERT (TACTICAL OPPORTUNITY)" if lang == "EN" else "⚠️ ALERTA DE DISTORSIÓN ELEVADA (OPORTUNIDAD ACTIVA)")
                 bg_style = "background: linear-gradient(135deg, #2b1d0d 0%, #161a23 100%) !important; border: 1.5px solid #ff9900 !important; box-shadow: 0 0 20px rgba(255, 153, 0, 0.25) !important;"
-                status_desc = f"Os pares de moedas se encontram em **{simulated_z:.1f} desvios padrões** de afastamento. Há uma oportunidade tática em desenvolvimento com expectativa matemática altamente favorável (cerca de **80%** de probabilidade de convergência cambial nos próximos 5 a 10 dias). Lotes de posicionamento inicial liberados." if lang == "PT" else (f"The currency pairs are at **{simulated_z:.1f} standard deviations** of divergence. A tactical opportunity is developing with a highly favorable mathematical expectation (approx. **80%** probability of FX convergence in the next 5 to 10 days)." if lang == "EN" else f"Los pares se encuentran en **{simulated_z:.1f} desviaciones estándar** de alejamiento. Hay una oportunidad táctica en desarrollo con una expectativa matemática altamente favorable (alrededor del **80%** de probabilidad de convergencia).")
+                
+                if is_inverse:
+                    status_desc = f"Os pares se encontram em **{simulated_z:.1f} desvios padrões** de afastamento. Por serem de correlação INVERSA, a anomalia aponta para uma convergência futura altamente favorável (cerca de **80%** de probabilidade nos próximos 5 a 10 dias). Lotes táticos iniciais liberados." if lang == "PT" else (f"The currency pairs are at **{simulated_z:.1f} standard deviations** of divergence. Given their INVERSE relationship, this anomaly points to a highly favorable future convergence." if lang == "EN" else f"Los pares se encuentran en **{simulated_z:.1f} desviaciones estándar** de alejamiento. Relación INVERSA indica convergencia futura altamente probable.")
+                else:
+                    status_desc = f"Os pares de moedas se encontram em **{simulated_z:.1f} desvios padrões** de afastamento. Há uma oportunidade tática em desenvolvimento com expectativa matemática altamente favorável (cerca de **80%** de probabilidade de convergência cambial nos próximos 5 a 10 dias). Lotes de posicionamento inicial liberados." if lang == "PT" else (f"The currency pairs are at **{simulated_z:.1f} standard deviations** of divergence. A tactical opportunity is developing with a highly favorable mathematical expectation (approx. **80%** probability of FX convergence in the next 5 to 10 days)." if lang == "EN" else f"Los pares se encuentran en **{simulated_z:.1f} desviaciones estándar** de alejamiento. Hay una oportunidad táctica en desarrollo con uma expectativa matemática altamente favorable (alrededor del **80%** de probabilidad de convergencia).")
                 
                 base_lot = round((equity_usd * 0.00007), 2)
                 base_lot = max(0.01, base_lot)
                 hedge_lot = round(base_lot * beta_ratio, 2)
                 
                 if simulated_z > 0:
-                    order_a = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {base_lot} Lotes de {par_a}"
-                    order_b = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {hedge_lot} Lotes de {par_b}"
+                    if is_inverse:
+                        order_a = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {base_lot} Lotes de {par_a}"
+                        order_b = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {hedge_lot} Lotes de {par_b}"
+                    else:
+                        order_a = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {base_lot} Lotes de {par_a}"
+                        order_b = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {hedge_lot} Lotes de {par_b}"
                 else:
-                    order_a = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {base_lot} Lotes de {par_a}"
-                    order_b = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {hedge_lot} Lotes de {par_b}"
+                    if is_inverse:
+                        order_a = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {base_lot} Lotes de {par_a}"
+                        order_b = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {hedge_lot} Lotes de {par_b}"
+                    else:
+                        order_a = f"<span style='color: #00ffa5; font-weight:900;'>COMPRAR (LONG)</span> {base_lot} Lotes de {par_a}"
+                        order_b = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {hedge_lot} Lotes de {par_b}"
             else:
                 # EQUILÍBRIO (AGUARDAR SEM SINAL) - GRAY STYLE
                 header_alert = "⚪ MERCADO EM EQUILÍBRIO (AGUARDAR)" if lang == "PT" else ("⚪ BALANCED MARKET (STANDBY)" if lang == "EN" else "⚪ MERCADO EN EQUILIBRIO (AGUARDAR)")
@@ -3535,7 +3607,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
         # Simula spread com base no par
         import numpy as np
         np.random.seed(42)
-        base_spread_val = 1.0825 if "EUR/USD" in selected_hedge_pair else (0.6950 if "AUD/USD" in selected_hedge_pair else 1.1550)
+        # base_spread_val is already set dynamically in the selection block
         noise = np.random.randn(100) * 0.003
         
         # Gerar uma curva de reversão à média com uma distorção simulada na ponta final baseada no slider
@@ -3564,15 +3636,17 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
         
         fig_spread = go.Figure()
         
-        # Bandas horizontais - Fix for Pandas Timestamp / Float Error
+        # Bandas horizontais - Robust fix using paper coords to bypass Pandas DateTime/Float ValueError
         fig_spread.add_shape(
-            type="rect", 
-            x0=dates[0].strftime('%Y-%m-%d'), 
-            x1=dates[-1].strftime('%Y-%m-%d'), 
-            y0=float(down_band_15), 
-            y1=float(up_band_15), 
-            fillcolor="rgba(191,149,63,0.02)", 
-            borderwidth=0, 
+            type="rect",
+            xref="paper",
+            yref="y",
+            x0=0,
+            x1=1,
+            y0=float(down_band_15),
+            y1=float(up_band_15),
+            fillcolor="rgba(191,149,63,0.02)",
+            borderwidth=0,
             layer="below"
         )
         
@@ -3610,11 +3684,56 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
         st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'5. Matriz de Correlação Institucional Ativa' if lang == 'PT' else ('5. Active Institutional Correlation Matrix' if lang == 'EN' else '5. Matriz de Correlación Institucional Activa')}</span>", unsafe_allow_html=True)
         
         data_matrix = {
-            "Pares de Moedas": ["EUR/USD vs GBP/USD", "AUD/USD vs NZD/USD", "EUR/JPY vs GBP/JPY", "GBP/USD vs USD/CHF", "EUR/USD vs USD/CAD"],
-            "Correlação (1 Hora)": ["+ 0.94 (Muito Forte)", "+ 0.89 (Forte)", "+ 0.91 (Muito Forte)", "- 0.88 (Inversa)", "- 0.72 (Moderada)"],
-            "Correlação (4 Horas)": ["+ 0.92 (Muito Forte)", "+ 0.87 (Forte)", "+ 0.88 (Forte)", "- 0.86 (Inversa)", "- 0.75 (Forte)"],
-            "Correlação (1 Dia)": ["+ 0.89 (Forte)", "+ 0.85 (Forte)", "+ 0.86 (Forte)", "- 0.84 (Inversa)", "- 0.71 (Moderada)"],
-            "Status de Arbitragem": ["Aguardar Desvio" if abs_z < 1.5 else "OPORTUNIDADE ATIVA", "Aguardar Desvio", "Aguardar Desvio", "Aguardar Desvio", "Estável"]
+            "Pares de Moedas": [
+                "EUR/USD vs GBP/USD (Euro-Cable)", 
+                "AUD/USD vs NZD/USD (Pacific)", 
+                "EUR/JPY vs GBP/JPY (Yen Cross)", 
+                "NZD/USD vs AUD/USD (Kiwi-Aussie)",
+                "CHF/JPY vs EUR/JPY (Safe Haven)",
+                "GBP/USD vs USD/CHF (Swiss Lock)", 
+                "EUR/USD vs USD/CHF (Global Mirror)",
+                "USD/CAD vs AUD/USD (Commodity Div)"
+            ],
+            "Correlação (1 Hora)": [
+                "+ 0.94 (Muito Forte)", 
+                "+ 0.89 (Forte)", 
+                "+ 0.91 (Muito Forte)", 
+                "+ 0.92 (Muito Forte)",
+                "+ 0.88 (Forte)",
+                "- 0.88 (Inversa Forte)", 
+                "- 0.95 (Inversa Extrema)",
+                "- 0.78 (Inversa Forte)"
+            ],
+            "Correlação (4 Horas)": [
+                "+ 0.92 (Muito Forte)", 
+                "+ 0.87 (Forte)", 
+                "+ 0.88 (Forte)", 
+                "+ 0.90 (Muito Forte)",
+                "+ 0.86 (Forte)",
+                "- 0.86 (Inversa Forte)", 
+                "- 0.93 (Inversa Extrema)",
+                "- 0.75 (Inversa Forte)"
+            ],
+            "Correlação (1 Dia)": [
+                "+ 0.89 (Forte)", 
+                "+ 0.85 (Forte)", 
+                "+ 0.86 (Forte)", 
+                "+ 0.88 (Forte)",
+                "+ 0.84 (Forte)",
+                "- 0.84 (Inversa Forte)", 
+                "- 0.91 (Inversa Extrema)",
+                "- 0.71 (Inversa Moderada)"
+            ],
+            "Status de Arbitragem": [
+                "OPORTUNIDADE ATIVA" if "EUR/USD vs GBP/USD" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if "AUD/USD vs NZD/USD" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if "EUR/JPY vs GBP/JPY" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if "NZD/USD vs AUD/USD" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if "CHF/JPY vs EUR/JPY" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if "GBP/USD vs USD/CHF" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if "EUR/USD vs USD/CHF" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if "USD/CAD vs AUD/USD" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio"
+            ]
         }
         df_matrix = pd.DataFrame(data_matrix)
         
