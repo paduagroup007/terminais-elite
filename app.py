@@ -3371,10 +3371,22 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             """, unsafe_allow_html=True)
 
     with t_arbitrage:
+        # Cache data for 20 minutes (1200 seconds) to avoid API limits and guarantee instant load times
+        @st.cache_data(ttl=1200)
+        def fetch_forex_data(ticker_a, ticker_b):
+            import yfinance as yf
+            try:
+                data_a = yf.download(ticker_a, period="60d", interval="1d", progress=False)
+                data_b = yf.download(ticker_b, period="60d", interval="1d", progress=False)
+                if not data_a.empty and not data_b.empty:
+                    return data_a['Close'], data_b['Close']
+            except Exception:
+                pass
+            return None, None
+
         st.subheader("SISTEMA QUANTITATIVO DE Pair Trading E HEDGE DE MOEDAS" if lang == "PT" else ("QUANTITATIVE Pair Trading & FX HEDGE SYSTEM" if lang == "EN" else "SISTEMA CUANTITATIVO DE Pair Trading Y HEDGE DE MONEDAS"))
         st.write("Monitore e explore distorções extremas entre moedas altamente correlacionadas no mercado global. Este painel permite que você identifique desvios estatísticos de preços (Z-Score) em tempo real, calculando a paridade exata de lotes de hedge para obter lucros consistentes de reversão à média com risco de mercado direcional nulo." if lang == "PT" else ("Monitor and exploit extreme distortions between highly correlated currency pairs in the global market. This panel allows you to identify statistical price deviations (Z-Score) in real-time, calculating the exact hedge lot parity to extract consistent mean-reversion profits with zero directional market risk." if lang == "EN" else "Monitore y explote distorsiones extremas entre pares de divisas altamente correlacionados en el mercado global. Este panel le permite identificar desviaciones estadísticas de precios (Z-Score) en tiempo real, calculando la paridad exacta de lotes de cobertura para obtener ganancias consistentes de reversión a la media con riesgo direccional de mercado nulo."))
         
-        # 1. EXPANDABLE EDUCATIONAL MANUAL (GOLD WRAPPER)
         with st.expander("📖 GUIA DE OPERAÇÃO: COMO LUCRAR TODOS OS MESES COM AS DISTORÇÕES CAMBIAIS (PASSO A PASSO)" if lang == "PT" else ("📖 TRADING MANUAL: HOW TO PROFIT EVERY MONTH FROM FX DISTORTIONS (STEP-BY-STEP)" if lang == "EN" else "📖 MANUAL DE OPERACIÓN: CÓMO GANAR TODOS LOS MESES CON LAS DISTORSIONES CAMBIARIAS (PASO A PASO)")):
             st.markdown(f"""
             <div style="background-color: #161a23; border-left: 4px solid #bf953f; padding: 15px; border-radius: 4px; font-family: 'Inter';">
@@ -3433,87 +3445,84 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             )
             
             st.write("")
-            st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'2. Simulador de Distorção de Câmbio (Z-Score)' if lang == 'PT' else ('2. FX Distortion Simulator (Z-Score)' if lang == 'EN' else '2. Simulador de Distorsión (Z-Score)')}</span>", unsafe_allow_html=True)
-            
-            simulated_z = st.slider(
-                "Desvio Padrão Ativo (Z-Score)" if lang == "PT" else ("Active Standard Deviation (Z-Score)" if lang == "EN" else "Desviación Estándar (Z-Score)"),
-                min_value=-3.5,
-                max_value=3.5,
-                value=2.6,
-                step=0.1
+            panel_mode = st.radio(
+                "Modo de Operação do Cockpit" if lang == "PT" else ("Cockpit Operation Mode" if lang == "EN" else "Modo de Operación"),
+                [
+                    "📡 Radar Automatizado (Tempo Real - 20 min)" if lang == "PT" else ("📡 Automated Radar (Real-Time - 20 min)" if lang == "EN" else "📡 Radar Automatizado (Tiempo Real)"),
+                    "🎛️ Simulador Manual (Estudos & Cenários)" if lang == "PT" else ("🎛️ Manual Simulator (Studies & Scenarios)" if lang == "EN" else "🎛️ Simulador Manual (Estudios)")
+                ],
+                index=0
             )
             
-            # Dynamic calculations based on selections
+            st.write("")
+            st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'2. Controle de Desvio Técnico (Z-Score)' if lang == 'PT' else ('2. Technical Deviation Control (Z-Score)' if lang == 'EN' else '2. Control de Desviación Z-Score')}</span>", unsafe_allow_html=True)
+            
+            ticker_map = {
+                "EUR/USD": "EURUSD=X", "GBP/USD": "GBPUSD=X", "AUD/USD": "AUDUSD=X", "NZD/USD": "NZDUSD=X",
+                "EUR/JPY": "EURJPY=X", "GBP/JPY": "GBPJPY=X", "USD/CHF": "USDCHF=X", "USD/CAD": "USDCAD=X", "CHF/JPY": "CHFJPY=X"
+            }
+            
+            simulated_z = 2.6
+            using_live_data = False
+            std_spread = 0.003
+            
             is_inverse = False
             if "EUR/USD vs GBP/USD" in selected_hedge_pair:
-                par_a, par_b = "EUR/USD", "GBP/USD"
-                correlation_coeff = 0.94
-                beta_ratio = 1.06 # EURUSD is slightly more volatile, so we scale GBPUSD
-                pip_value_a, pip_value_b = 10.0, 10.0
-                base_spread_val = 1.0825
+                par_a, par_b = "EUR/USD", "GBP/USD"; correlation_coeff = 0.94; beta_ratio = 1.06; base_spread_val = 1.0825
             elif "AUD/USD vs NZD/USD" in selected_hedge_pair:
-                par_a, par_b = "AUD/USD", "NZD/USD"
-                correlation_coeff = 0.89
-                beta_ratio = 1.15
-                pip_value_a, pip_value_b = 10.0, 10.0
-                base_spread_val = 0.6950
+                par_a, par_b = "AUD/USD", "NZD/USD"; correlation_coeff = 0.89; beta_ratio = 1.15; base_spread_val = 0.6950
             elif "EUR/JPY vs GBP/JPY" in selected_hedge_pair:
-                par_a, par_b = "EUR/JPY", "GBP/JPY"
-                correlation_coeff = 0.91
-                beta_ratio = 0.94
-                pip_value_a, pip_value_b = 6.45, 6.45
-                base_spread_val = 1.1550
+                par_a, par_b = "EUR/JPY", "GBP/JPY"; correlation_coeff = 0.91; beta_ratio = 0.94; base_spread_val = 1.1550
             elif "NZD/USD vs AUD/USD" in selected_hedge_pair:
-                par_a, par_b = "NZD/USD", "AUD/USD"
-                correlation_coeff = 0.92
-                beta_ratio = 0.87
-                pip_value_a, pip_value_b = 10.0, 10.0
-                base_spread_val = 0.9250
+                par_a, par_b = "NZD/USD", "AUD/USD"; correlation_coeff = 0.92; beta_ratio = 0.87; base_spread_val = 0.9250
             elif "CHF/JPY vs EUR/JPY" in selected_hedge_pair:
-                par_a, par_b = "CHF/JPY", "EUR/JPY"
-                correlation_coeff = 0.88
-                beta_ratio = 1.12
-                pip_value_a, pip_value_b = 6.45, 6.45
-                base_spread_val = 1.0520
+                par_a, par_b = "CHF/JPY", "EUR/JPY"; correlation_coeff = 0.88; beta_ratio = 1.12; base_spread_val = 1.0520
             elif "GBP/USD vs USD/CHF" in selected_hedge_pair:
-                par_a, par_b = "GBP/USD", "USD/CHF"
-                correlation_coeff = -0.88
-                beta_ratio = 1.02
-                pip_value_a, pip_value_b = 10.0, 10.0
-                base_spread_val = 1.3420
-                is_inverse = True
+                par_a, par_b = "GBP/USD", "USD/CHF"; correlation_coeff = -0.88; beta_ratio = 1.02; base_spread_val = 1.3420; is_inverse = True
             elif "EUR/USD vs USD/CHF" in selected_hedge_pair:
-                par_a, par_b = "EUR/USD", "USD/CHF"
-                correlation_coeff = -0.95
-                beta_ratio = 0.98
-                pip_value_a, pip_value_b = 10.0, 10.0
-                base_spread_val = 1.2150
-                is_inverse = True
-            else: # USD/CAD vs AUD/USD
-                par_a, par_b = "USD/CAD", "AUD/USD"
-                correlation_coeff = -0.78
-                beta_ratio = 1.28
-                pip_value_a, pip_value_b = 7.30, 10.0
-                base_spread_val = 1.8840
-                is_inverse = True
+                par_a, par_b = "EUR/USD", "USD/CHF"; correlation_coeff = -0.95; beta_ratio = 0.98; base_spread_val = 1.2150; is_inverse = True
+            else:
+                par_a, par_b = "USD/CAD", "AUD/USD"; correlation_coeff = -0.78; beta_ratio = 1.28; base_spread_val = 1.8840; is_inverse = True
+                
+            if "Radar Automatizado" in panel_mode or "Automated Radar" in panel_mode:
+                ticker_a_yf, ticker_b_yf = ticker_map.get(par_a), ticker_map.get(par_b)
+                with st.spinner("Requisitando cotações..." if lang == "PT" else "Requesting prices..."):
+                    close_a, close_b = fetch_forex_data(ticker_a_yf, ticker_b_yf)
+                if close_a is not None and close_b is not None:
+                    combined = pd.concat([close_a, close_b], axis=1).dropna()
+                    combined.columns = ['A', 'B']
+                    if len(combined) > 10:
+                        spread = (combined['A'] * combined['B']) if is_inverse else (combined['A'] / combined['B'])
+                        mean_spread, std_spread, current_spread = spread.mean(), spread.std(), spread.iloc[-1]
+                        simulated_z = (current_spread - mean_spread) / std_spread
+                        dates = list(combined.index)
+                        spread_values = list(spread.values)
+                        base_spread_val, using_live_data = float(mean_spread), True
+                        
+                if using_live_data:
+                    st.success(f"📡 RADAR AO VIVO ATIVO! Z-Score: **{simulated_z:+.2f}**")
+                else:
+                    st.warning("⚠️ Dados indisponíveis. Simulador ativado.")
+                    simulated_z = st.slider("Desvio (Z-Score)", -3.5, 3.5, 2.6, 0.1)
+            else:
+                simulated_z = st.slider("Desvio (Z-Score)", -3.5, 3.5, 2.6, 0.1)
+            
             corr_color = "#ff4b4b" if correlation_coeff < 0 else "#00ffa5"
             corr_type = "Inversa" if correlation_coeff < 0 else "Direta"
             
             st.write("")
-            # Render descriptive static correlation stats card
             st.markdown(f"""
             <div style="background-color: #0d0f14; border: 1px solid rgba(255,255,255,0.03); border-radius: 6px; padding: 12px; text-align: left; font-family:'Inter';">
-                <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; font-mono; display: block; mb-2;">MÉTRICAS TÁTICAS DE CO-INTEGRAÇÃO</span>
-                <p style="margin: 3px 0; font-size: 11px; color: #888;">Par Base A: <strong style="color: #fff;">{par_a}</strong> | Par de Cobertura B: <strong style="color: #fff;">{par_b}</strong></p>
-                <p style="margin: 3px 0; font-size: 11px; color: #888;">Coeficiente de Correlação Rativa: <strong style="color: {corr_color};">{correlation_coeff*100:.1f}% ({corr_type})</strong></p>
-                <p style="margin: 3px 0; font-size: 11px; color: #888;">Fator de Paridade Beta (Hedge Size): <strong style="color:#bf953f;">1.00 : {beta_ratio:.2f}</strong></p>
+                <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display: block; mb-2;">MÉTRICAS TÁTICAS DE CO-INTEGRAÇÃO</span>
+                <p style="margin: 3px 0; font-size: 11px; color: #888;">Par Base A: <strong style="color: #fff;">{par_a}</strong> | Par B: <strong style="color: #fff;">{par_b}</strong></p>
+                <p style="margin: 3px 0; font-size: 11px; color: #888;">Correlação: <strong style="color: {corr_color};">{correlation_coeff*100:.1f}% ({corr_type})</strong></p>
+                <p style="margin: 3px 0; font-size: 11px; color: #888;">Paridade (Beta): <strong style="color:#bf953f;">1.00 : {beta_ratio:.2f}</strong></p>
             </div>
             """, unsafe_allow_html=True)
             
         with col_a2:
             st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'3. Diagnóstico e Sinalizador Quant' if lang == 'PT' else ('3. Diagnostic & Quant Signals' if lang == 'EN' else '3. Diagnóstico y Señales')}</span>", unsafe_allow_html=True)
             
-            # --- DYNAMIC ALERT GAUGE & CARD BASED ON DISTORÇÃO NÍVEIS ---
             abs_z = abs(simulated_z)
             if abs_z >= 2.5:
                 # EXTREMA DISTORÇÃO (CONVICÇÃO MÁXIMA) - RED/GREEN NEON STYLE
@@ -3523,7 +3532,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 if is_inverse:
                     status_desc = f"A razão cambial entre os dois ativos de correlação INVERSA se distorceu em **{simulated_z:.1f} desvios padrões**! Essa anomalia mostra que eles andaram na mesma direção de forma irracional. A probabilidade estatística de retorno ao comportamento espelhado padrão em 3 a 7 dias supera **97%**. Recomendamos montagem imediata do hedge de contratendência." if lang == "PT" else (f"The currency ratio between the two INVERSE assets has distorted by **{simulated_z:.1f} standard deviations**! This anomaly means they moved in the same direction, which is highly irrational. Reversion probability to standard mirror behavior exceeds **97%**." if lang == "EN" else f"¡La relación entre los activos de correlación INVERSA se ha distorsionado en **{simulated_z:.1f} desviaciones estándar**! Probabilidad de reversión al comportamento espejo supera el **97%**.")
                 else:
-                    status_desc = f"A razão cambial entre os dois ativos se distorceu em **{simulated_z:.1f} desvios padrões** em relação à média de longo prazo! Estatisticamente, essa anomalia ocorre em apenas 2.5% do histórico de mercado, tornando as chances de reversão para a média em 3 a 7 dias superiores a **97%**. Recomendamos montagem imediata do hedge cambial." if lang == "PT" else (f"The currency ratio between the two assets has distorted by **{simulated_z:.1f} standard deviations** from the long-term mean! Statistically, this anomaly occurs in only 2.5% of market history, making the chances of mean-reversion in 3 to 7 days exceed **97%**. We recommend immediate hedge execution." if lang == "EN" else f"¡La relação cambial se ha distorsionado en **{simulated_z:.1f} desviaciones estándar**! Estadísticamente, esta anomalía ocurre en solo 2.5% del historial del mercado, lo que hace que las probabilidades de reversión a la media en 3 a 7 dias superem o igualem o **97%**.")
+                    status_desc = f"A razão cambial entre os dois ativos se distorceu em **{simulated_z:.1f} desvios padrões** em relação à média de longo prazo! Estatisticamente, essa anomalia ocorre em apenas 2.5% do histórico de mercado, tornando as chances de reversão para a média em 3 a 7 dias superiores a **97%**. Recomendamos montagem imediata do hedge cambial." if lang == "PT" else (f"The currency ratio between the two assets has distorted by **{simulated_z:.1f} standard deviations** from the long-term mean! Statistically, this anomaly occurs in only 2.5% of market history, making the chances of mean-reversion in 3 to 7 days exceed **97%**. We recommend immediate hedge execution." if lang == "EN" else f"¡La relación cambial se ha distorsionado en **{simulated_z:.1f} desviaciones estándar**! Estadísticamente, esta anomalía ocurre en solo 2.5% del historial del mercado, lo que hace que las probabilidades de reversión a la media en 3 a 7 dias superen o igualen el **97%**.")
                 
                 # Signal orders
                 base_lot = round((equity_usd * 0.0001), 2)
@@ -3597,42 +3606,47 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             html_card += '</div>'
             st.markdown(html_card, unsafe_allow_html=True)
             
-        # 4. PLOTLY VISUAL CHART OF SPREAD DEVIATION & BANDS
-        st.write("")
-        st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'4. Curva de Spread e Z-Score (Desvio Técnico Cambial)' if lang == 'PT' else ('4. Spread Curve & Z-Score Deviation Bands' if lang == 'EN' else '4. Curva de Spread y Bandas Z-Score')}</span>", unsafe_allow_html=True)
-        
-        # Build interactive mock historical data for the chart
-        dates = pd.date_range(end=pd.Timestamp.now(), periods=100, freq='D')
-        
-        # Simula spread com base no par
-        import numpy as np
-        np.random.seed(42)
-        # base_spread_val is already set dynamically in the selection block
-        noise = np.random.randn(100) * 0.003
-        
-        # Gerar uma curva de reversão à média com uma distorção simulada na ponta final baseada no slider
-        spread_values = []
-        current_val = base_spread_val
-        for i in range(100):
-            # Processo de reversão à média (Ornstein-Uhlenbeck simplificado)
-            current_val = current_val + 0.15 * (base_spread_val - current_val) + noise[i]
-            spread_values.append(current_val)
+        # --- PREPARE DATA AND BANDS FOR PLOTLY CHART ---
+        if not using_live_data:
+            # Build interactive mock historical data for the chart
+            dates = pd.date_range(end=pd.Timestamp.now(), periods=100, freq='D')
             
-        # Substitui os últimos valores para forçar a distorção selecionada no slider
-        target_deviation = simulated_z * 0.005 # escala desvio
-        spread_values[-1] = base_spread_val + target_deviation
-        # Suavizar transição na ponta final
-        for idx in range(-5, -1):
-            spread_values[idx] = base_spread_val + target_deviation * (1.0 + idx/5.0) + noise[idx]
+            # Simula spread com base no par
+            import numpy as np
+            np.random.seed(42)
+            noise = np.random.randn(100) * 0.003
             
-        df_chart = pd.DataFrame({'Data': dates, 'Spread': spread_values})
-        
-        # Média e Bandas
-        mean_val = base_spread_val
-        up_band_2 = base_spread_val + 0.010 # 2.5 desvios padrões
-        up_band_15 = base_spread_val + 0.0075 # 1.5 desvios
-        down_band_2 = base_spread_val - 0.010
-        down_band_15 = base_spread_val - 0.0075
+            # Gerar uma curva de reversão à média com uma distorção simulada na ponta final baseada no slider
+            spread_values = []
+            current_val = base_spread_val
+            for i in range(100):
+                # Processo de reversão à média (Ornstein-Uhlenbeck simplificado)
+                current_val = current_val + 0.15 * (base_spread_val - current_val) + noise[i]
+                spread_values.append(current_val)
+                
+            # Substitui os últimos valores para forçar a distorção selecionada no slider
+            target_deviation = simulated_z * 0.005 # escala desvio
+            spread_values[-1] = base_spread_val + target_deviation
+            # Suavizar transição na ponta final
+            for idx in range(-5, -1):
+                spread_values[idx] = base_spread_val + target_deviation * (1.0 + idx/5.0) + noise[idx]
+                
+            df_chart = pd.DataFrame({'Data': dates, 'Spread': spread_values})
+            
+            # Média e Bandas baseadas em desvio simulado fixo
+            mean_val = base_spread_val
+            up_band_2 = base_spread_val + 0.010 # 2.5 desvios padrões
+            up_band_15 = base_spread_val + 0.0075 # 1.5 desvios
+            down_band_2 = base_spread_val - 0.010
+            down_band_15 = base_spread_val - 0.0075
+        else:
+            # Use the actual live historical spread series loaded from yfinance!
+            mean_val = base_spread_val
+            up_band_2 = base_spread_val + 2.5 * std_spread
+            up_band_15 = base_spread_val + 1.5 * std_spread
+            down_band_2 = base_spread_val - 2.5 * std_spread
+            down_band_15 = base_spread_val - 1.5 * std_spread
+            df_chart = pd.DataFrame({'Data': dates, 'Spread': spread_values})
         
         fig_spread = go.Figure()
         
