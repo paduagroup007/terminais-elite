@@ -3617,7 +3617,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
         else:
             # Use the actual live historical Z-score series loaded from yfinance!
             dates_live = dates
-            z_values = [(val - mean_val) / std_spread for val in spread_values]
+            z_values = [(val - base_spread_val) / std_spread for val in spread_values]
             df_chart = pd.DataFrame({'Data': dates_live, 'Z-Score': z_values})
         
         fig_spread = go.Figure()
