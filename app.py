@@ -3636,17 +3636,12 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
         
         fig_spread = go.Figure()
         
-        # Bandas horizontais - Robust fix using paper coords to bypass Pandas DateTime/Float ValueError
-        fig_spread.add_shape(
-            type="rect",
-            xref="paper",
-            yref="y",
-            x0=0,
-            x1=1,
+        # Bandas horizontais - Robust fix using native add_hrect to avoid x-axis date type checks
+        fig_spread.add_hrect(
             y0=float(down_band_15),
             y1=float(up_band_15),
             fillcolor="rgba(191,149,63,0.02)",
-            borderwidth=0,
+            line_width=0,
             layer="below"
         )
         
