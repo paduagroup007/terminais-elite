@@ -3752,6 +3752,50 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
         st.write("")
         st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'5. Matriz de Correlação Institucional Ativa' if lang == 'PT' else ('5. Active Institutional Correlation Matrix' if lang == 'EN' else '5. Matriz de Correlación Institucional Activa')}</span>", unsafe_allow_html=True)
         
+        # Dynamically calculate Z-Scores and Status for all 8 pairs
+        matrix_status = []
+        pairs_config = [
+            {"par_a": "EUR/USD", "par_b": "GBP/USD", "ticker_a": "EURUSD=X", "ticker_b": "GBPUSD=X", "is_inverse": False},
+            {"par_a": "AUD/USD", "par_b": "NZD/USD", "ticker_a": "AUDUSD=X", "ticker_b": "NZDUSD=X", "is_inverse": False},
+            {"par_a": "EUR/JPY", "par_b": "GBP/JPY", "ticker_a": "EURJPY=X", "ticker_b": "GBPJPY=X", "is_inverse": False},
+            {"par_a": "NZD/USD", "par_b": "AUD/USD", "ticker_a": "NZDUSD=X", "ticker_b": "AUDUSD=X", "is_inverse": False},
+            {"par_a": "CHF/JPY", "par_b": "EUR/JPY", "ticker_a": "CHFJPY=X", "ticker_b": "EURJPY=X", "is_inverse": False},
+            {"par_a": "GBP/USD", "par_b": "USD/CHF", "ticker_a": "GBPUSD=X", "ticker_b": "USDCHF=X", "is_inverse": True},
+            {"par_a": "EUR/USD", "par_b": "USD/CHF", "ticker_a": "EURUSD=X", "ticker_b": "USDCHF=X", "is_inverse": True},
+            {"par_a": "USD/CAD", "par_b": "AUD/USD", "ticker_a": "USDCAD=X", "ticker_b": "AUDUSD=X", "is_inverse": True}
+        ]
+        
+        for p in pairs_config:
+            z_val = 0.0
+            is_active_selected = (par_a == p["par_a"] and par_b == p["par_b"])
+            
+            if is_active_selected and not using_live_data:
+                # Active selected pair under simulator mode
+                z_val = simulated_z
+            else:
+                # Real-time Z-Score using cached yfinance
+                try:
+                    close_a, close_b = fetch_forex_data(p["ticker_a"], p["ticker_b"])
+                    if close_a is not None and close_b is not None:
+                        combined = pd.concat([close_a, close_b], axis=1).dropna()
+                        combined.columns = ['A', 'B']
+                        if len(combined) > 10:
+                            spread = (combined['A'] * combined['B']) if p["is_inverse"] else (combined['A'] / combined['B'])
+                            mean_spread = spread.mean()
+                            std_spread = spread.std()
+                            current_spread = spread.iloc[-1]
+                            z_val = float((current_spread - mean_spread) / std_spread)
+                except Exception:
+                    pass
+            
+            # Format matrix status cell
+            if abs(z_val) >= 2.5:
+                matrix_status.append(f"🚨 EXTREMA (Z = {z_val:+.2f})")
+            elif abs(z_val) >= 1.5:
+                matrix_status.append(f"🟢 ATIVA (Z = {z_val:+.2f})")
+            else:
+                matrix_status.append(f"Aguardar Desvio (Z = {z_val:+.2f})")
+                
         data_matrix = {
             "Pares de Moedas": [
                 "EUR/USD vs GBP/USD (Euro-Cable)", 
@@ -3793,16 +3837,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 "- 0.91 (Inversa Extrema)",
                 "- 0.71 (Inversa Moderada)"
             ],
-            "Status de Arbitragem": [
-                "OPORTUNIDADE ATIVA" if par_a == "EUR/USD" and par_b == "GBP/USD" and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if par_a == "AUD/USD" and par_b == "NZD/USD" and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if par_a == "EUR/JPY" and par_b == "GBP/JPY" and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if par_a == "NZD/USD" and par_b == "AUD/USD" and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if par_a == "CHF/JPY" and par_b == "EUR/JPY" and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if par_a == "GBP/USD" and par_b == "USD/CHF" and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if par_a == "EUR/USD" and par_b == "USD/CHF" and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if par_a == "USD/CAD" and par_b == "AUD/USD" and abs_z >= 1.5 else "Aguardar Desvio"
-            ]
+            "Status de Arbitragem": matrix_status
         }
         df_matrix = pd.DataFrame(data_matrix)
         
