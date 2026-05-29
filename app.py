@@ -3445,16 +3445,6 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             )
             
             st.write("")
-            panel_mode = st.radio(
-                "Modo de Operação do Cockpit" if lang == "PT" else ("Cockpit Operation Mode" if lang == "EN" else "Modo de Operación"),
-                [
-                    "📡 Radar Automatizado (Tempo Real - 20 min)" if lang == "PT" else ("📡 Automated Radar (Real-Time - 20 min)" if lang == "EN" else "📡 Radar Automatizado (Tiempo Real)"),
-                    "🎛️ Simulador Manual (Estudos & Cenários)" if lang == "PT" else ("🎛️ Manual Simulator (Studies & Scenarios)" if lang == "EN" else "🎛️ Simulador Manual (Estudios)")
-                ],
-                index=0
-            )
-            
-            st.write("")
             st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'2. Controle de Desvio Técnico (Z-Score)' if lang == 'PT' else ('2. Technical Deviation Control (Z-Score)' if lang == 'EN' else '2. Control de Desviación Z-Score')}</span>", unsafe_allow_html=True)
             
             ticker_map = {
@@ -3462,7 +3452,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 "EUR/JPY": "EURJPY=X", "GBP/JPY": "GBPJPY=X", "USD/CHF": "USDCHF=X", "USD/CAD": "USDCAD=X", "CHF/JPY": "CHFJPY=X"
             }
             
-            simulated_z = 2.6
+            simulated_z = 1.6
             using_live_data = False
             std_spread = 0.003
             
@@ -3484,28 +3474,25 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             else:
                 par_a, par_b = "USD/CAD", "AUD/USD"; correlation_coeff = -0.78; beta_ratio = 1.28; base_spread_val = 1.8840; is_inverse = True
                 
-            if "Radar Automatizado" in panel_mode or "Automated Radar" in panel_mode:
-                ticker_a_yf, ticker_b_yf = ticker_map.get(par_a), ticker_map.get(par_b)
-                with st.spinner("Requisitando cotações..." if lang == "PT" else "Requesting prices..."):
-                    close_a, close_b = fetch_forex_data(ticker_a_yf, ticker_b_yf)
-                if close_a is not None and close_b is not None:
-                    combined = pd.concat([close_a, close_b], axis=1).dropna()
-                    combined.columns = ['A', 'B']
-                    if len(combined) > 10:
-                        spread = (combined['A'] * combined['B']) if is_inverse else (combined['A'] / combined['B'])
-                        mean_spread, std_spread, current_spread = spread.mean(), spread.std(), spread.iloc[-1]
-                        simulated_z = (current_spread - mean_spread) / std_spread
-                        dates = list(combined.index)
-                        spread_values = list(spread.values)
-                        base_spread_val, using_live_data = float(mean_spread), True
-                        
-                if using_live_data:
-                    st.success(f"📡 RADAR AO VIVO ATIVO! Z-Score: **{simulated_z:+.2f}**")
-                else:
-                    st.warning("⚠️ Dados indisponíveis. Simulador ativado.")
-                    simulated_z = st.slider("Desvio (Z-Score)", -3.5, 3.5, 2.6, 0.1)
+            ticker_a_yf, ticker_b_yf = ticker_map.get(par_a), ticker_map.get(par_b)
+            with st.spinner("Requisitando cotações..." if lang == "PT" else "Requesting prices..."):
+                close_a, close_b = fetch_forex_data(ticker_a_yf, ticker_b_yf)
+            if close_a is not None and close_b is not None:
+                combined = pd.concat([close_a, close_b], axis=1).dropna()
+                combined.columns = ['A', 'B']
+                if len(combined) > 10:
+                    spread = (combined['A'] * combined['B']) if is_inverse else (combined['A'] / combined['B'])
+                    mean_spread, std_spread, current_spread = spread.mean(), spread.std(), spread.iloc[-1]
+                    simulated_z = (current_spread - mean_spread) / std_spread
+                    dates = list(combined.index)
+                    spread_values = list(spread.values)
+                    base_spread_val, using_live_data = float(mean_spread), True
+                    
+            if using_live_data:
+                st.success(f"📡 RADAR AO VIVO ATIVO! Z-Score: **{simulated_z:+.2f}**")
             else:
-                simulated_z = st.slider("Desvio (Z-Score)", -3.5, 3.5, 2.6, 0.1)
+                st.warning("⚠️ Dados reais indisponíveis. Usando último registro histórico seguro...")
+                simulated_z = 1.6
             
             corr_color = "#ff4b4b" if correlation_coeff < 0 else "#00ffa5"
             corr_type = "Inversa" if correlation_coeff < 0 else "Direta"
@@ -3606,75 +3593,60 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             html_card += '</div>'
             st.markdown(html_card, unsafe_allow_html=True)
             
-        # --- PREPARE DATA AND BANDS FOR PLOTLY CHART ---
+        # --- PREPARE DATA FOR PLOTLY CHART (Z-SCORE CURVE) ---
         if not using_live_data:
-            # Build interactive mock historical data for the chart
+            # Build mock historical Z-Score series directly for fallback or offline state
             dates = pd.date_range(end=pd.Timestamp.now(), periods=100, freq='D')
-            
-            # Simula spread com base no par
             import numpy as np
             np.random.seed(42)
-            noise = np.random.randn(100) * 0.003
+            noise_z = np.random.randn(100) * 0.4
             
-            # Gerar uma curva de reversão à média com uma distorção simulada na ponta final baseada no slider
-            spread_values = []
-            current_val = base_spread_val
+            z_values = []
+            current_z = 0.0
             for i in range(100):
-                # Processo de reversão à média (Ornstein-Uhlenbeck simplificado)
-                current_val = current_val + 0.15 * (base_spread_val - current_val) + noise[i]
-                spread_values.append(current_val)
+                # Ornstein-Uhlenbeck mean-reversion process for Z-Score directly
+                current_z = current_z + 0.15 * (0.0 - current_z) + noise_z[i]
+                z_values.append(current_z)
                 
-            # Substitui os últimos valores para forçar a distorção selecionada no slider
-            target_deviation = simulated_z * 0.005 # escala desvio
-            spread_values[-1] = base_spread_val + target_deviation
-            # Suavizar transição na ponta final
+            # Transition smooth ending to simulated_z
+            z_values[-1] = simulated_z
             for idx in range(-5, -1):
-                spread_values[idx] = base_spread_val + target_deviation * (1.0 + idx/5.0) + noise[idx]
+                z_values[idx] = simulated_z * (1.0 + idx/5.0) + noise_z[idx]
                 
-            df_chart = pd.DataFrame({'Data': dates, 'Spread': spread_values})
-            
-            # Média e Bandas baseadas em desvio simulado fixo
-            mean_val = base_spread_val
-            up_band_2 = base_spread_val + 0.010 # 2.5 desvios padrões
-            up_band_15 = base_spread_val + 0.0075 # 1.5 desvios
-            down_band_2 = base_spread_val - 0.010
-            down_band_15 = base_spread_val - 0.0075
+            df_chart = pd.DataFrame({'Data': dates, 'Z-Score': z_values})
         else:
-            # Use the actual live historical spread series loaded from yfinance!
-            mean_val = base_spread_val
-            up_band_2 = base_spread_val + 2.5 * std_spread
-            up_band_15 = base_spread_val + 1.5 * std_spread
-            down_band_2 = base_spread_val - 2.5 * std_spread
-            down_band_15 = base_spread_val - 1.5 * std_spread
-            df_chart = pd.DataFrame({'Data': dates, 'Spread': spread_values})
+            # Use the actual live historical Z-score series loaded from yfinance!
+            dates_live = dates
+            z_values = list((np.array(spread_values) - mean_val) / std_spread)
+            df_chart = pd.DataFrame({'Data': dates_live, 'Z-Score': z_values})
         
         fig_spread = go.Figure()
         
         # Bandas horizontais - Robust fix using native add_hrect to avoid x-axis date type checks
         fig_spread.add_hrect(
-            y0=float(down_band_15),
-            y1=float(up_band_15),
+            y0=-1.5,
+            y1=1.5,
             fillcolor="rgba(191,149,63,0.02)",
             line_width=0,
             layer="below"
         )
         
-        # Linha de Spread
-        fig_spread.add_trace(go.Scatter(x=df_chart['Data'], y=df_chart['Spread'], name="Razão de Câmbio (Spread)", line=dict(color='#d4af37', width=2.5)))
+        # Linha de Z-Score
+        fig_spread.add_trace(go.Scatter(x=df_chart['Data'], y=df_chart['Z-Score'], name="Desvio Técnico (Z-Score)", line=dict(color='#d4af37', width=2.5)))
         
-        # Linha Média
-        fig_spread.add_trace(go.Scatter(x=[dates[0], dates[-1]], y=[mean_val, mean_val], name="Média Histórica (Z = 0)", line=dict(color='#888', width=1, dash='dash')))
+        # Linha Média (Z = 0)
+        fig_spread.add_trace(go.Scatter(x=[df_chart['Data'].iloc[0], df_chart['Data'].iloc[-1]], y=[0.0, 0.0], name="Média Histórica (Z = 0)", line=dict(color='#888', width=1, dash='dash')))
         
         # Bandas de Alerta +1.5 / -1.5 (Orange Alert)
-        fig_spread.add_trace(go.Scatter(x=[dates[0], dates[-1]], y=[up_band_15, up_band_15], name="Alerta Tático (+1.5 Desvios)", line=dict(color='#ff9900', width=1, dash='dot'), opacity=0.5))
-        fig_spread.add_trace(go.Scatter(x=[dates[0], dates[-1]], y=[down_band_15, down_band_15], name="Alerta Tático (-1.5 Desvios)", line=dict(color='#ff9900', width=1, dash='dot'), opacity=0.5))
+        fig_spread.add_trace(go.Scatter(x=[df_chart['Data'].iloc[0], df_chart['Data'].iloc[-1]], y=[1.5, 1.5], name="Alerta Tático (+1.5 Desvios)", line=dict(color='#ff9900', width=1, dash='dot'), opacity=0.5))
+        fig_spread.add_trace(go.Scatter(x=[df_chart['Data'].iloc[0], df_chart['Data'].iloc[-1]], y=[-1.5, -1.5], name="Alerta Tático (-1.5 Desvios)", line=dict(color='#ff9900', width=1, dash='dot'), opacity=0.5))
         
         # Bandas Limites +2.5 / -2.5 (Extremo Alert)
-        fig_spread.add_trace(go.Scatter(x=[dates[0], dates[-1]], y=[up_band_2, up_band_2], name="Extremo Limite (+2.5 Desvios)", line=dict(color='#ff4b4b', width=1.2, dash='dashdot')))
-        fig_spread.add_trace(go.Scatter(x=[dates[0], dates[-1]], y=[down_band_2, down_band_2], name="Extremo Limite (-2.5 Desvios)", line=dict(color='#ff4b4b', width=1.2, dash='dashdot')))
+        fig_spread.add_trace(go.Scatter(x=[df_chart['Data'].iloc[0], df_chart['Data'].iloc[-1]], y=[2.5, 2.5], name="Extremo Limite (+2.5 Desvios)", line=dict(color='#ff4b4b', width=1.2, dash='dashdot')))
+        fig_spread.add_trace(go.Scatter(x=[df_chart['Data'].iloc[0], df_chart['Data'].iloc[-1]], y=[-2.5, -2.5], name="Extremo Limite (-2.5 Desvios)", line=dict(color='#ff4b4b', width=1.2, dash='dashdot')))
         
         # Ponto Atual
-        fig_spread.add_trace(go.Scatter(x=[dates[-1]], y=[spread_values[-1]], name="Cotação Atual", marker=dict(color='#00ffa5' if abs_z < 1.5 else ('#ff9900' if abs_z < 2.5 else '#ff4b4b'), size=12, symbol="diamond")))
+        fig_spread.add_trace(go.Scatter(x=[df_chart['Data'].iloc[-1]], y=[simulated_z], name="Z-Score Atual", marker=dict(color='#00ffa5' if abs_z < 1.5 else ('#ff9900' if abs_z < 2.5 else '#ff4b4b'), size=12, symbol="diamond")))
         
         fig_spread.update_layout(
             template='plotly_dark',
@@ -3684,7 +3656,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             margin=dict(t=20, b=20, l=10, r=10),
             legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1, font=dict(size=9, color="#ffffff")),
             xaxis=dict(showgrid=False, tickfont=dict(color='#dddddd')),
-            yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)', tickfont=dict(color='#dddddd'))
+            yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)', tickfont=dict(color='#dddddd'), title="Desvio Técnico (Z-Score)")
         )
         st.plotly_chart(fig_spread, use_container_width=True)
         
