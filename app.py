@@ -3780,14 +3780,14 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 "- 0.71 (Inversa Moderada)"
             ],
             "Status de Arbitragem": [
-                "OPORTUNIDADE ATIVA" if "EUR/USD vs GBP/USD" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if "AUD/USD vs NZD/USD" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if "EUR/JPY vs GBP/JPY" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if "NZD/USD vs AUD/USD" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if "CHF/JPY vs EUR/JPY" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if "GBP/USD vs USD/CHF" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if "EUR/USD vs USD/CHF" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio",
-                "OPORTUNIDADE ATIVA" if "USD/CAD vs AUD/USD" in selected_hedge_pair and abs_z >= 1.5 else "Aguardar Desvio"
+                "OPORTUNIDADE ATIVA" if par_a == "EUR/USD" and par_b == "GBP/USD" and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if par_a == "AUD/USD" and par_b == "NZD/USD" and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if par_a == "EUR/JPY" and par_b == "GBP/JPY" and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if par_a == "NZD/USD" and par_b == "AUD/USD" and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if par_a == "CHF/JPY" and par_b == "EUR/JPY" and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if par_a == "GBP/USD" and par_b == "USD/CHF" and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if par_a == "EUR/USD" and par_b == "USD/CHF" and abs_z >= 1.5 else "Aguardar Desvio",
+                "OPORTUNIDADE ATIVA" if par_a == "USD/CAD" and par_b == "AUD/USD" and abs_z >= 1.5 else "Aguardar Desvio"
             ]
         }
         df_matrix = pd.DataFrame(data_matrix)
