@@ -3458,7 +3458,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; font-mono; display: block; mb-2;">MÉTRICAS TÁTICAS DE CO-INTEGRAÇÃO</span>
                 <p style="margin: 3px 0; font-size: 11px; color: #888;">Par Base A: <strong style="color: #fff;">{par_a}</strong> | Par de Cobertura B: <strong style="color: #fff;">{par_b}</strong></p>
                 <p style="margin: 3px 0; font-size: 11px; color: #888;">Coeficiente de Correlação Rativa: <strong style="color: #00ffa5;">{correlation_coeff*100:.1f}% (Muito Forte)</strong></p>
-                <p style="margin: 3px 0; font-size: 11px; color: #888;">Fator de Paridade Beta (Hedge Size): <strong style="color: #bf953f;">1.00 : {beta_ratio:.2f}</strong></p>
+                <p style="margin: 3px 0; font-size: 11px; color: #888;">Fator de Paridade Beta (Hedge Size): <strong style="color:#bf953f;">1.00 : {beta_ratio:.2f}</strong></p>
             </div>
             """, unsafe_allow_html=True)
             
@@ -3471,7 +3471,6 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 # EXTREMA DISTORÇÃO (CONVICÇÃO MÁXIMA) - RED/GREEN NEON STYLE
                 header_alert = "🚨 EXTREMA DISTORÇÃO DETECTADA! (CONVICÇÃO MÁXIMA)" if lang == "PT" else ("🚨 EXTREME DISTORTION DETECTED! (MAX CONVICTION)" if lang == "EN" else "🚨 ¡EXTREMA DISTORSIÓN DETECTADA! (MÁXIMA CONVICCIÓN)")
                 bg_style = "background: linear-gradient(135deg, #3a0d14 0%, #161a23 100%) !important; border: 2px solid #ff4b4b !important; box-shadow: 0 0 25px rgba(255, 75, 75, 0.4) !important;"
-                txt_color = "#ff4b4b"
                 status_desc = f"A razão cambial entre os dois ativos se distorceu em **{simulated_z:.1f} desvios padrões** em relação à média de longo prazo! Estatisticamente, essa anomalia ocorre em apenas 2.5% do histórico de mercado, tornando as chances de reversão para a média em 3 a 7 dias superiores a **97%**. Recomendamos montagem imediata do hedge cambial." if lang == "PT" else (f"The currency ratio between the two assets has distorted by **{simulated_z:.1f} standard deviations** from the long-term mean! Statistically, this anomaly occurs in only 2.5% of market history, making the chances of mean-reversion in 3 to 7 days exceed **97%**. We recommend immediate hedge execution." if lang == "EN" else f"¡La relación cambiaria se ha distorsionado en **{simulated_z:.1f} desviaciones estándar**! Estadísticamente, esta anomalía ocurre en solo 2.5% del historial del mercado, lo que hace que las probabilidades de reversión a la media en 3 a 7 dias superem o igualem o **97%**.")
                 
                 # Signal orders
@@ -3490,7 +3489,6 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 # DISTORÇÃO ELEVADA (OPORTUNIDADE TÁTICA ATIVA) - ORANGE STYLE
                 header_alert = "⚠️ ALERTA DE DISTORÇÃO ELEVADA (OPORTUNIDADE ATIVA)" if lang == "PT" else ("⚠️ HIGH DISTORTION ALERT (TACTICAL OPPORTUNITY)" if lang == "EN" else "⚠️ ALERTA DE DISTORSIÓN ELEVADA (OPORTUNIDAD ACTIVA)")
                 bg_style = "background: linear-gradient(135deg, #2b1d0d 0%, #161a23 100%) !important; border: 1.5px solid #ff9900 !important; box-shadow: 0 0 20px rgba(255, 153, 0, 0.25) !important;"
-                txt_color = "#ff9900"
                 status_desc = f"Os pares de moedas se encontram em **{simulated_z:.1f} desvios padrões** de afastamento. Há uma oportunidade tática em desenvolvimento com expectativa matemática altamente favorável (cerca de **80%** de probabilidade de convergência cambial nos próximos 5 a 10 dias). Lotes de posicionamento inicial liberados." if lang == "PT" else (f"The currency pairs are at **{simulated_z:.1f} standard deviations** of divergence. A tactical opportunity is developing with a highly favorable mathematical expectation (approx. **80%** probability of FX convergence in the next 5 to 10 days)." if lang == "EN" else f"Los pares se encuentran en **{simulated_z:.1f} desviaciones estándar** de alejamiento. Hay una oportunidad táctica en desarrollo con una expectativa matemática altamente favorable (alrededor del **80%** de probabilidad de convergencia).")
                 
                 base_lot = round((equity_usd * 0.00007), 2)
@@ -3507,27 +3505,25 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                 # EQUILÍBRIO (AGUARDAR SEM SINAL) - GRAY STYLE
                 header_alert = "⚪ MERCADO EM EQUILÍBRIO (AGUARDAR)" if lang == "PT" else ("⚪ BALANCED MARKET (STANDBY)" if lang == "EN" else "⚪ MERCADO EN EQUILIBRIO (AGUARDAR)")
                 bg_style = "background-color: #161a23 !important; border: 1px solid #ffffff15 !important;"
-                txt_color = "#888888"
                 status_desc = f"A razão cambial está oscilando em **{simulated_z:.1f} desvios padrões** da sua média histórica, o que reflete uma zona neutra de equilíbrio de preços. A correlação está atuando de forma síncrona. Sem vantagens matemáticas de Pair Trading ativas no momento. Aguarde fora da montagem operacional." if lang == "PT" else (f"The currency ratio is hovering at **{simulated_z:.1f} standard deviations** from its historical mean. No Pair Trading mathematical edges active at this moment." if lang == "EN" else f"La relación de precios oscila a **{simulated_z:.1f} desviaciones estándar** de su promedio histórico. Sin ventajas matemáticas de Pair Trading activas de momento. Aguarde fuera.")
-                order_a = "Sinal Neutro - Sem execução necessária."
-                order_b = "Sinal Neutro - Sem execução necessária."
+                order_a = ""
+                order_b = ""
+
+            # Build flat HTML strictly without leading spaces/tabs on lines to avoid Markdown parsing as code blocks
+            html_card = f'<div style="{bg_style} border-radius: 8px; padding: 18px; font-family:\'Inter\'; text-align: left; margin-bottom: 10px;">'
+            html_card += f'<h4 style="margin:0 0 10px 0; color:#fff; font-size:12.5px; text-transform:uppercase; font-weight:900; letter-spacing:0.5px;">{header_alert}</h4>'
+            html_card += f'<p style="font-size:11.5px; color:#ddd; margin:0 0 15px 0; line-height:1.45;">{status_desc}</p>'
+            
+            if abs_z >= 1.5:
+                html_card += '<div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px; margin-top: 5px;">'
+                html_card += '<span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display:block; margin-bottom:8px; font-family: monospace;">ORDENS EXECUTÁVEIS DO HEDGE</span>'
+                html_card += f'<p style="margin:3px 0; font-size:11.5px; color:#fff; font-family: monospace;">➡️ 1. {order_a}</p>'
+                html_card += f'<p style="margin:3px 0; font-size:11.5px; color:#fff; font-family: monospace;">➡️ 2. {order_b}</p>'
+                html_card += f'<p style="margin:10px 0 0 0; font-size:10px; color:#888; font-style:italic;">*Lotes calculados cientificamente para neutralidade de risco cambial direcional baseado em capital de $ {equity_usd:,.2f} USD.</p>'
+                html_card += '</div>'
                 
-            st.markdown(f"""
-            <div style="{bg_style} border-radius: 8px !important; padding: 18px !important; font-family:'Inter'; text-align: left; margin-bottom: 10px;">
-                <h4 style="margin:0 0 10px 0 !important; color:#fff !important; font-size:12.5px !important; text-transform:uppercase !important; font-weight:900 !important; letter-spacing:0.5px !important;">{header_alert}</h4>
-                <p style="font-size:11.5px; color:#ddd; margin:0 0 15px 0; line-height:1.45;">
-                    {status_desc}
-                </p>
-                {f'''
-                <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px; margin-top: 5px;">
-                    <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display:block; margin-bottom:8px; font-mono">ORDENS EXECUTÁVEIS DO HEDGE</span>
-                    <p style="margin:3px 0; font-size:11.5px; color:#fff; font-family: monospace;">➡️ 1. {order_a}</p>
-                    <p style="margin:3px 0; font-size:11.5px; color:#fff; font-family: monospace;">➡️ 2. {order_b}</p>
-                    <p style="margin:10px 0 0 0; font-size:10px; color:#888; font-style:italic;">*Lotes calculados cientificamente para neutralidade de risco cambial direcional baseado em capital de $ {equity_usd:,.2f} USD.</p>
-                </div>
-                ''' if abs_z >= 1.5 else ''}
-            </div>
-            """, unsafe_allow_html=True)
+            html_card += '</div>'
+            st.markdown(html_card, unsafe_allow_html=True)
             
         # 4. PLOTLY VISUAL CHART OF SPREAD DEVIATION & BANDS
         st.write("")
@@ -3568,8 +3564,17 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
         
         fig_spread = go.Figure()
         
-        # Bandas horizontais
-        fig_spread.add_shape(type="rect", x0=dates[0], x1=dates[-1], y0=down_band_15, y1=up_band_15, fillcolor="rgba(191,149,63,0.02)", borderwidth=0, layer="below")
+        # Bandas horizontais - Fix for Pandas Timestamp / Float Error
+        fig_spread.add_shape(
+            type="rect", 
+            x0=dates[0].strftime('%Y-%m-%d'), 
+            x1=dates[-1].strftime('%Y-%m-%d'), 
+            y0=float(down_band_15), 
+            y1=float(up_band_15), 
+            fillcolor="rgba(191,149,63,0.02)", 
+            borderwidth=0, 
+            layer="below"
+        )
         
         # Linha de Spread
         fig_spread.add_trace(go.Scatter(x=df_chart['Data'], y=df_chart['Spread'], name="Razão de Câmbio (Spread)", line=dict(color='#d4af37', width=2.5)))
