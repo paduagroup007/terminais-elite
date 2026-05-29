@@ -3674,6 +3674,66 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
         )
         st.plotly_chart(fig_spread, use_container_width=True)
         
+        # 4.1 Legend/Explanation of the Z-Score chart (Dynamic & Premium Card)
+        st.write("")
+        if lang == "PT":
+            st.markdown("""
+            <div style="background-color: #0d0f14; border: 1px solid rgba(191,149,63,0.15); border-radius: 6px; padding: 15px; font-family:'Inter'; text-align:left;">
+                <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">📈 COMO INTERPRETAR O GRÁFICO DE DESVIO TÉCNICO (Z-SCORE)</span>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 11px; color: #ccc; line-height: 1.45;">
+                    <div>
+                        <p style="margin: 3px 0;"><strong style="color: #d4af37;">🔹 Linha Dourada (Spread):</strong> Representa o preço relativo atual entre os dois pares de moedas (Razão Cambial A / B) ao longo do tempo.</p>
+                        <p style="margin: 3px 0;"><strong style="color: #888;">🔹 Linha Cinza Tracejada (Z = 0):</strong> A média histórica de longo prazo. É o ponto de equilíbrio perfeito onde a correlação atua em sincronia.</p>
+                    </div>
+                    <div>
+                        <p style="margin: 3px 0;"><strong style="color: #ff9900;">🔹 Linhas Laranja (+1.5 / -1.5):</strong> Bandas de Alerta Tático. O descolamento começa a ficar estatisticamente relevante (80% de chance de convergência).</p>
+                        <p style="margin: 3px 0;"><strong style="color: #ff4b4b;">🔹 Linhas Vermelhas (+2.5 / -2.5):</strong> Limite Extremo de Convicção. O spread atingiu um desvio raríssimo (97.5% de probabilidade de retorno imediato à média).</p>
+                    </div>
+                </div>
+                <p style="margin: 10px 0 0 0; font-size: 10px; color: #888; font-style: italic; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                    💡 <b>Dica Operacional:</b> O momento ideal de entrada ocorre quando o <b>Losango de Cotação Atual</b> toca ou ultrapassa as linhas vermelhas (+/- 2.5). O lucro é realizado quando a linha dourada retorna e cruza a linha cinza central (Z = 0).
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        elif lang == "EN":
+            st.markdown("""
+            <div style="background-color: #0d0f14; border: 1px solid rgba(191,149,63,0.15); border-radius: 6px; padding: 15px; font-family:'Inter'; text-align:left;">
+                <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">📈 HOW TO INTERPRET THE Z-SCORE DEVIATION CHART</span>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 11px; color: #ccc; line-height: 1.45;">
+                    <div>
+                        <p style="margin: 3px 0;"><strong style="color: #d4af37;">🔹 Golden Line (Spread):</strong> Represents the current relative price ratio between both currency pairs (Ratio A / B) over time.</p>
+                        <p style="margin: 3px 0;"><strong style="color: #888;">🔹 Gray Dashed Line (Z = 0):</strong> The long-term historical mean. Perfect equilibrium where correlation operates in full sync.</p>
+                    </div>
+                    <div>
+                        <p style="margin: 3px 0;"><strong style="color: #ff9900;">🔹 Orange Lines (+1.5 / -1.5):</strong> Tactical Alert Bands. The divergence becomes statistically relevant (80% chance of convergence).</p>
+                        <p style="margin: 3px 0;"><strong style="color: #ff4b4b;">🔹 Red Lines (+2.5 / -2.5):</strong> Maximum Conviction Limits. Extremely rare deviation (97.5% statistical probability of immediate mean reversion).</p>
+                    </div>
+                </div>
+                <p style="margin: 10px 0 0 0; font-size: 10px; color: #888; font-style: italic; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                    💡 <b>Trading Tip:</b> The ideal entry occurs when the <b>Current Price Diamond</b> touches or crosses the red lines (+/- 2.5). Profits are locked when the golden line returns to the central gray line (Z = 0).
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown("""
+            <div style="background-color: #0d0f14; border: 1px solid rgba(191,149,63,0.15); border-radius: 6px; padding: 15px; font-family:'Inter'; text-align:left;">
+                <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">📈 CÓMO INTERPRETAR EL GRÁFICO DE DESVIACIÓN TÉCNICA (Z-SCORE)</span>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 11px; color: #ccc; line-height: 1.45;">
+                    <div>
+                        <p style="margin: 3px 0;"><strong style="color: #d4af37;">🔹 Línea Dorada (Spread):</strong> Representa el precio relativo actual entre ambos pares de divisas (Relación Cambiaria A / B) en el tiempo.</p>
+                        <p style="margin: 3px 0;"><strong style="color: #888;">🔹 Línea Gris Discontinua (Z = 0):</strong> Promedio histórico de largo plazo. Equilibrio perfecto donde la correlación está en sincronía.</p>
+                    </div>
+                    <div>
+                        <p style="margin: 3px 0;"><strong style="color: #ff9900;">🔹 Líneas Naranjas (+1.5 / -1.5):</strong> Bandas de Alerta Táctica. La divergencia comienza a ser estadísticamente relevante (80% probabilidad).</p>
+                        <p style="margin: 3px 0;"><strong style="color: #ff4b4b;">🔹 Líneas Rojas (+2.5 / -2.5):</strong> Límite de Máxima Convicción. Desviación extremadamente rara (97.5% probabilidad de reversión).</p>
+                    </div>
+                </div>
+                <p style="margin: 10px 0 0 0; font-size: 10px; color: #888; font-style: italic; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                    💡 <b>Consejo Operativo:</b> El momento de entrada ideal ocurre cuando el <b>Diamante de Cotización Actual</b> toca o cruza las líneas rojas (+/- 2.5). La ganancia se toma cuando la línea dorada regresa al promedio central (Z = 0).
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        
         # 5. HISTORICAL CORRELATION COEFFICIENTS MATRIX (STYLED TABLE)
         st.write("")
         st.markdown(f"<span style='font-size:11px; font-weight:700; color:#bf953f; text-transform:uppercase;'>{'5. Matriz de Correlação Institucional Ativa' if lang == 'PT' else ('5. Active Institutional Correlation Matrix' if lang == 'EN' else '5. Matriz de Correlación Institucional Activa')}</span>", unsafe_allow_html=True)
