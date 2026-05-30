@@ -2016,6 +2016,40 @@ elif st.session_state.active_terminal == "whale_radar":
             
         holdings = whale_data.get("data", [])
         
+        # Mapeamento de descrições dos Gigantes de Wall Street
+        usa_whale_desc = {
+            "Vanguard": "O colosso global dos investimentos fundado pelo lendário Jack Bogle, criador dos fundos de índice (ETFs). A Vanguard administra o patrimônio de longo prazo de milhões de famílias e fundos soberanos, representando o fluxo contínuo de 'dinheiro forte' no mercado de capitais global.",
+            "BlackRock": "A maior gestora de ativos do planeta Terra, controlando mais de 10 trilhões de dólares sob custódia. Seguir as movimentações da BlackRock revela a direção dos maiores fluxos passivos do planeta e a âncora do capital institucional corporativo nas maiores multinacionais.",
+            "Berkshire Hathaway": "A lendária holding de investimentos do maior investidor de todos os tempos, Warren Buffett. Focada no mais puro 'Value Investing', a Berkshire Hathaway acumula posições massivas em corporações gigantescas com vantagens competitivas blindadas (Moats) e fortíssima geração de caixa perpétua.",
+            "Goldman Sachs": "O banco de investimento mais influente, tradicional e poderoso de Wall Street. O portfólio da Goldman Sachs reflete a inteligência de suas operações proprietárias institucionais, operações de hedge complexas e a alocação de alto nível dos maiores market-makers globais.",
+            "Morgan Stanley": "Titã global de Wealth Management e banco de negócios de primeira linha. A carteira do Morgan Stanley espelha a alocação patrimonial de fortunas ultra-elevadas (Private Wealth) e posições de altíssimo calibre institucional em tecnologia e finanças.",
+            "JPMorgan Chase": "O maior e mais sólido banco comercial e de investimentos dos EUA. Sob a liderança firme de Jamie Dimon, seu portfólio representa a ancoragem patrimonial tática de tesourarias internacionais e investimentos corporativos de extrema liquidez."
+        }
+        
+        selected_desc = usa_whale_desc.get(selected_whale, "Instituição financeira de elite em Wall Street com alocação bilionária controlada.")
+        
+        # Exibir a filosofia e rationales dos EUA no topo
+        st.markdown(f"""
+        <div style='background-color:#0b0e14; padding:20px; border-radius:15px; border:1px solid #bf953f33; border-left:4px solid #bf953f; margin-bottom:20px;'>
+            <h5 style='margin:0 0 10px 0; color:#fff; font-size:15px; text-transform:uppercase; letter-spacing:0.5px;'>🎯 ACOMPANHAR AS BALEIAS DE WALL STREET: O SEGREDO DO SMART MONEY</h5>
+            <p style='font-size:12px; color:#ccc; line-height:1.6; margin-bottom:12px;'>
+                Acompanhar os arquivamentos regulatórios 13F na SEC dos gigantes americanos é essencial para rastrear o fluxo dos maiores tomadores de decisão do mundo. 
+                O portfólio da <b>{selected_whale}</b> representa bilhões de dólares alocados com base em inteligência quantitativa de ponta, permitindo que você navegue ao lado do dinheiro institucional seguro.
+            </p>
+            <div style='background-color:#07070a; padding:12px; border-radius:8px; border:1px solid #ffffff05; margin:10px 0;'>
+                <strong style='color:#bf953f; font-size:10px; text-transform:uppercase; letter-spacing:0.5px;'>Perfil de Convicção: {selected_whale}</strong>
+                <p style='font-size:12px; color:#aaa; line-height:1.5; margin:3px 0 0 0; font-style:italic;'>
+                    "{selected_desc}"
+                </p>
+            </div>
+            <hr style='border-top:1px solid #bf953f22; margin:12px 0;'>
+            <strong style='color:#bf953f; font-size:11px; text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:5px;'>💡 ANÁLISE OPERACIONAL GRÁFICA & TIMING MILIMÉTRICO</strong>
+            <p style='font-size:12px; color:#ccc; line-height:1.6; margin:0;'>
+                <i>"O rastreamento da SEC nos dá a direção de <b>QUAIS</b> ações os maiores players estão acumulando. Contudo, as melhores zonas gráficas de entrada e saída para maximizar seus lucros são ditadas pela Análise Técnica. Como <b>Analista Técnico Profissional há mais de 23 anos</b>, eu publico **vídeos operacionais semanais de gráficos dinâmicos** dessas mesmas posições de Wall Street no nosso <b>TELEGRAM VIP EXCLUSIVO</b>. Junte-se a nós para dominar o mercado na direção dos tubarões!"</i>
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
         if not holdings:
             st.warning(f"Nenhum dado em cache para {selected_whale}. Vá no módulo 'Sincronizador SEC (EDGAR)' na barra lateral para carregar esta carteira ao vivo da SEC!")
         else:
@@ -7918,6 +7952,31 @@ elif st.session_state.active_terminal == "family_office_br":
                 st.metric("CDA DIVULGAÇÃO CVM", cda_per)
                 
             st.write("")
+            
+            # --- CARD DE ANÁLISE OPERACIONAL CARLOS (CREDENCIAIS DE 23 ANOS & TELEGRAM VIP) ---
+            st.markdown(f"""
+            <div style='background-color:#0b0e14; padding:20px; border-radius:15px; border:1px solid #bf953f33; border-left:4px solid #bf953f; margin-bottom:20px;'>
+                <h5 style='margin:0 0 10px 0; color:#fff; font-size:15px; text-transform:uppercase; letter-spacing:0.5px;'>🎯 POR QUE ACOMPANHAR AS CARTEIRAS DOS SUPER-RICOS?</h5>
+                <p style='font-size:12px; color:#ccc; line-height:1.6; margin-bottom:12px;'>
+                    Seguir as pegadas do <b>"Smart Money"</b> (Dinheiro Inteligente) é o maior segredo dos investidores de elite. Grandes fundos possuem equipes inteiras de Ph.Ds, analistas dedicados e acesso privilegiado a dados que investidores comuns não têm. O portfólio deles revela onde a convicção fundamentalista de longo prazo está ancorada, evitando que você caia em boatos e no FOMO de mercado.
+                </p>
+                <hr style='border-top:1px solid #bf953f22; margin:12px 0;'>
+                <strong style='color:#bf953f; font-size:11px; text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:5px;'>💡 ANÁLISE TÁTICA & TIMING DE ENTRADA EXCLUSIVO</strong>
+                <p style='font-size:12px; color:#ccc; line-height:1.6; margin:0;'>
+                    <i>"A análise fundamentalista do terminal nos mostra <b>O QUE</b> comprar. Mas o <b>TIMING exato</b> de quando entrar ou sair com máxima precisão gráfica é ditado pela Análise Técnica. Como <b>Analista Técnico Profissional com mais de 23 anos de experiência</b>, eu posto semanalmente <b>vídeos analíticos exclusivos e lives de gráficos dinâmicos</b> destas exatas ações das baleias no nosso <b>TELEGRAM VIP EXCLUSIVO</b>. Junte a inteligência dos tubarões com a precisão tática no nosso canal!"</i>
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Filosofia do Big Player no topo para dar contexto
+            st.markdown(f"""
+            <div style='background-color:#07070a; padding:15px; border-radius:10px; border:1px solid #ffffff08; margin-bottom:25px;'>
+                <strong style='color:#888; font-size:10px; text-transform:uppercase; letter-spacing:0.5px;'>Filosofia Institucional de {titan_key}</strong>
+                <p style='font-size:12px; color:#aaa; line-height:1.5; margin:5px 0 0 0; font-style:italic;'>
+                    "{titan_cfg["desc"]}"
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
             
             # DATABASE DE ALOCAÇÃO MACRO GLOBAL REAL (CVM)
             MACRO_ALLOCATIONS = {
