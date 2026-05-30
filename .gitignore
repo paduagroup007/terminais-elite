@@ -2,5 +2,15 @@ __pycache__/
 *.pyc
 .stfolder
 .streamlit/
-cache/
-*.json
+
+# Ignore dynamic runtime caches
+cache/live_market_cache.json
+
+# Allow static database JSON files containing full portfolios
+!cache/berkshire_hathaway_holdings.json
+!cache/blackrock_holdings.json
+!cache/brazil_elite_holdings.json
+!cache/goldman_sachs_holdings.json
+!cache/jpmorgan_chase_holdings.json
+!cache/morgan_stanley_holdings.json
+!cache/vanguard_holdings.json

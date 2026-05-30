@@ -7650,7 +7650,7 @@ elif st.session_state.active_terminal == "family_office_br":
                     "desc": "Especialistas em deep value e small caps ignoradas pelo mercado. Excelente histórico de turnaround corporativo e ativismo construtivo."
                 },
                 "Lírio Parisotto (Geração L. Par FIA)": {
-                    "key": "Lrio Parisotto (L. Par)",
+                    "key": "Lírio Parisotto (L. Par)",
                     "cnpj": "08.935.128/0001-59",
                     "desc": "Um dos maiores investidores pessoa física do país. Lírio foca em grandes corporações geradoras de caixa real com múltiplos de segurança severos."
                 },

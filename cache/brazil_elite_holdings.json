@@ -1,0 +1,2050 @@
+{
+    "last_updated": "2026-05-24 19:58:25",
+    "cda_period": "09/2025",
+    "funds": {
+        "Verde Asset Management": {
+            "cnpj": "08680812000137",
+            "total_portfolio_value": 335316720.77,
+            "assets_count": 97,
+            "holdings": [
+                {
+                    "ticker": "PETR3",
+                    "shares": 2053200.0,
+                    "value": 69357096.0,
+                    "cost": 0.0,
+                    "weight": 20.68405531365474
+                },
+                {
+                    "ticker": "PETR4",
+                    "shares": 1840645.0,
+                    "value": 57906691.7,
+                    "cost": 0.0,
+                    "weight": 17.269252653737862
+                },
+                {
+                    "ticker": "SRNA3",
+                    "shares": 2114770.0,
+                    "value": 26117409.5,
+                    "cost": 0.0,
+                    "weight": 7.788877763096824
+                },
+                {
+                    "ticker": "CSMG3",
+                    "shares": 698800.0,
+                    "value": 24101612.0,
+                    "cost": 0.0,
+                    "weight": 7.1877155259822985
+                },
+                {
+                    "ticker": "CSAN3",
+                    "shares": 3098110.0,
+                    "value": 19115338.7,
+                    "cost": 0.0,
+                    "weight": 5.7006816290296385
+                },
+                {
+                    "ticker": "BBDC3",
+                    "shares": 941309.0,
+                    "value": 14336136.07,
+                    "cost": 0.0,
+                    "weight": 4.275401488204766
+                },
+                {
+                    "ticker": "BBDC4",
+                    "shares": 704726.0,
+                    "value": 12466602.94,
+                    "cost": 0.0,
+                    "weight": 3.717859017400768
+                },
+                {
+                    "ticker": "PETR4",
+                    "shares": 329055.0,
+                    "value": 10352070.3,
+                    "cost": 0.0,
+                    "weight": 3.0872514428234195
+                },
+                {
+                    "ticker": "EQTL3",
+                    "shares": 188251.0,
+                    "value": 6955874.45,
+                    "cost": 0.0,
+                    "weight": 2.074419204036999
+                },
+                {
+                    "ticker": "ENGI11",
+                    "shares": 109451.0,
+                    "value": 5566677.86,
+                    "cost": 0.0,
+                    "weight": 1.6601253427556597
+                },
+                {
+                    "ticker": "ELET3",
+                    "shares": 101511.0,
+                    "value": 5331357.72,
+                    "cost": 0.0,
+                    "weight": 1.5899468740352134
+                },
+                {
+                    "ticker": "BPAN4",
+                    "shares": 658396.0,
+                    "value": 5122320.88,
+                    "cost": 0.0,
+                    "weight": 1.5276067558567994
+                },
+                {
+                    "ticker": "CPLE6",
+                    "shares": 344105.0,
+                    "value": 4432072.4,
+                    "cost": 0.0,
+                    "weight": 1.3217570510120913
+                },
+                {
+                    "ticker": "PRIO3",
+                    "shares": 112900.0,
+                    "value": 4304877.0,
+                    "cost": 0.0,
+                    "weight": 1.283824138001396
+                },
+                {
+                    "ticker": "RAIL3",
+                    "shares": 191615.0,
+                    "value": 3060091.55,
+                    "cost": 0.0,
+                    "weight": 0.9125973625690363
+                },
+                {
+                    "ticker": "ITUB4",
+                    "shares": 72818.0,
+                    "value": 2844999.26,
+                    "cost": 0.0,
+                    "weight": 0.8484513547272335
+                },
+                {
+                    "ticker": "ENEV3",
+                    "shares": 167200.0,
+                    "value": 2767160.0,
+                    "cost": 0.0,
+                    "weight": 0.8252377017303729
+                },
+                {
+                    "ticker": "RDOR3",
+                    "shares": 65205.0,
+                    "value": 2743826.4,
+                    "cost": 0.0,
+                    "weight": 0.8182790269746322
+                },
+                {
+                    "ticker": "SMFT3",
+                    "shares": 91786.0,
+                    "value": 2448850.48,
+                    "cost": 0.0,
+                    "weight": 0.7303096828504752
+                },
+                {
+                    "ticker": "ABEV3",
+                    "shares": 201800.0,
+                    "value": 2439762.0,
+                    "cost": 0.0,
+                    "weight": 0.7275992662690622
+                },
+                {
+                    "ticker": "CYRE3",
+                    "shares": 74692.0,
+                    "value": 2293044.4,
+                    "cost": 0.0,
+                    "weight": 0.6838443352107222
+                },
+                {
+                    "ticker": "ALOS3",
+                    "shares": 77040.0,
+                    "value": 1989943.2,
+                    "cost": 0.0,
+                    "weight": 0.5934518253162029
+                },
+                {
+                    "ticker": "PORT3",
+                    "shares": 108400.0,
+                    "value": 1978300.0,
+                    "cost": 0.0,
+                    "weight": 0.589979526060364
+                },
+                {
+                    "ticker": "BBDC4",
+                    "shares": 111200.0,
+                    "value": 1967128.0,
+                    "cost": 0.0,
+                    "weight": 0.5866477506647484
+                },
+                {
+                    "ticker": "RAPT3",
+                    "shares": 322420.0,
+                    "value": 1963537.8,
+                    "cost": 0.0,
+                    "weight": 0.5855770614394227
+                },
+                {
+                    "ticker": "BBAS3",
+                    "shares": 88100.0,
+                    "value": 1946129.0,
+                    "cost": 0.0,
+                    "weight": 0.5803853131842138
+                },
+                {
+                    "ticker": "ISAE4",
+                    "shares": 74600.0,
+                    "value": 1840382.0,
+                    "cost": 0.0,
+                    "weight": 0.5488488601981625
+                },
+                {
+                    "ticker": "RENT3",
+                    "shares": 46306.0,
+                    "value": 1826771.7,
+                    "cost": 0.0,
+                    "weight": 0.5447899215419731
+                },
+                {
+                    "ticker": "SBSP3",
+                    "shares": 12410.0,
+                    "value": 1640229.7,
+                    "cost": 0.0,
+                    "weight": 0.48915833849069046
+                },
+                {
+                    "ticker": "IGTI11",
+                    "shares": 63800.0,
+                    "value": 1561824.0,
+                    "cost": 0.0,
+                    "weight": 0.46577575863605214
+                },
+                {
+                    "ticker": "ORVR3",
+                    "shares": 27751.0,
+                    "value": 1547118.25,
+                    "cost": 0.0,
+                    "weight": 0.46139012884513964
+                },
+                {
+                    "ticker": "BPAC11",
+                    "shares": 27975.0,
+                    "value": 1350073.5,
+                    "cost": 0.0,
+                    "weight": 0.40262635782068285
+                },
+                {
+                    "ticker": "EQTL3",
+                    "shares": 34297.0,
+                    "value": 1267274.15,
+                    "cost": 0.0,
+                    "weight": 0.37793347945486055
+                },
+                {
+                    "ticker": "VBBR3",
+                    "shares": 49700.0,
+                    "value": 1222123.0,
+                    "cost": 0.0,
+                    "weight": 0.3644682547275288
+                },
+                {
+                    "ticker": "NEOE3",
+                    "shares": 40000.0,
+                    "value": 1148000.0,
+                    "cost": 0.0,
+                    "weight": 0.34236288526376074
+                },
+                {
+                    "ticker": "RADL3",
+                    "shares": 58761.0,
+                    "value": 1082377.62,
+                    "cost": 0.0,
+                    "weight": 0.3227926175332077
+                },
+                {
+                    "ticker": "GGPS3",
+                    "shares": 53957.0,
+                    "value": 1019787.3,
+                    "cost": 0.0,
+                    "weight": 0.3041265874419341
+                },
+                {
+                    "ticker": "CMIG4",
+                    "shares": 87800.0,
+                    "value": 978970.0,
+                    "cost": 0.0,
+                    "weight": 0.2919538273402995
+                },
+                {
+                    "ticker": "ITUB4",
+                    "shares": 24741.0,
+                    "value": 966630.87,
+                    "cost": 0.0,
+                    "weight": 0.2882739840054174
+                },
+                {
+                    "ticker": "CURY3",
+                    "shares": 27544.0,
+                    "value": 952196.08,
+                    "cost": 0.0,
+                    "weight": 0.2839691613986435
+                },
+                {
+                    "ticker": "CURY3",
+                    "shares": 26356.0,
+                    "value": 911126.92,
+                    "cost": 0.0,
+                    "weight": 0.27172129022010777
+                },
+                {
+                    "ticker": "CPLE6",
+                    "shares": 68595.0,
+                    "value": 883503.6,
+                    "cost": 0.0,
+                    "weight": 0.2634833115304177
+                },
+                {
+                    "ticker": "SUZB3",
+                    "shares": 17200.0,
+                    "value": 858280.0,
+                    "cost": 0.0,
+                    "weight": 0.2559609905611329
+                },
+                {
+                    "ticker": "GUAR3",
+                    "shares": 89800.0,
+                    "value": 850406.0,
+                    "cost": 0.0,
+                    "weight": 0.25361276289687606
+                },
+                {
+                    "ticker": "PRLK11",
+                    "shares": 690.0,
+                    "value": 833083.43,
+                    "cost": 0.0,
+                    "weight": 0.2484467306273783
+                },
+                {
+                    "ticker": "TAEE11",
+                    "shares": 22000.0,
+                    "value": 806520.0,
+                    "cost": 0.0,
+                    "weight": 0.24052483817328252
+                },
+                {
+                    "ticker": "ENGI11",
+                    "shares": 15549.0,
+                    "value": 790822.14,
+                    "cost": 0.0,
+                    "weight": 0.23584333587183076
+                },
+                {
+                    "ticker": "CASH3",
+                    "shares": 191800.0,
+                    "value": 784462.0,
+                    "cost": 0.0,
+                    "weight": 0.23394657987785739
+                },
+                {
+                    "ticker": "LREN3",
+                    "shares": 50500.0,
+                    "value": 764065.0,
+                    "cost": 0.0,
+                    "weight": 0.2278636741542294
+                },
+                {
+                    "ticker": "XPBR31",
+                    "shares": 7400.0,
+                    "value": 743552.0,
+                    "cost": 0.0,
+                    "weight": 0.22174617427146323
+                },
+                {
+                    "ticker": "MOTV3",
+                    "shares": 48300.0,
+                    "value": 718704.0,
+                    "cost": 0.0,
+                    "weight": 0.21433586680366365
+                },
+                {
+                    "ticker": "RAIL3",
+                    "shares": 44085.0,
+                    "value": 704037.45,
+                    "cost": 0.0,
+                    "weight": 0.20996192745273579
+                },
+                {
+                    "ticker": "MLAS3",
+                    "shares": 638487.0,
+                    "value": 670411.35,
+                    "cost": 0.0,
+                    "weight": 0.19993376663725865
+                },
+                {
+                    "ticker": "VALE3",
+                    "shares": 11400.0,
+                    "value": 656412.0,
+                    "cost": 0.0,
+                    "weight": 0.1957588033464771
+                },
+                {
+                    "ticker": "RENT3",
+                    "shares": 16400.0,
+                    "value": 646980.0,
+                    "cost": 0.0,
+                    "weight": 0.19294594033793372
+                },
+                {
+                    "ticker": "MBRF3",
+                    "shares": 32800.0,
+                    "value": 636976.0,
+                    "cost": 0.0,
+                    "weight": 0.1899624923377781
+                },
+                {
+                    "ticker": "BLAU3",
+                    "shares": 43300.0,
+                    "value": 601870.0,
+                    "cost": 0.0,
+                    "weight": 0.17949298759033075
+                },
+                {
+                    "ticker": "PRNR3",
+                    "shares": 34680.0,
+                    "value": 586438.8,
+                    "cost": 0.0,
+                    "weight": 0.1748910101033254
+                },
+                {
+                    "ticker": "RDOR3",
+                    "shares": 13095.0,
+                    "value": 551037.6,
+                    "cost": 0.0,
+                    "weight": 0.1643334691853816
+                },
+                {
+                    "ticker": "ASAI3",
+                    "shares": 56100.0,
+                    "value": 533511.0,
+                    "cost": 0.0,
+                    "weight": 0.15910658996511695
+                },
+                {
+                    "ticker": "AURE3",
+                    "shares": 47900.0,
+                    "value": 491933.0,
+                    "cost": 0.0,
+                    "weight": 0.14670696971816863
+                },
+                {
+                    "ticker": "BPAC11",
+                    "shares": 10125.0,
+                    "value": 488632.5,
+                    "cost": 0.0,
+                    "weight": 0.14572267642303532
+                },
+                {
+                    "ticker": "MGLU3",
+                    "shares": 50400.0,
+                    "value": 483840.0,
+                    "cost": 0.0,
+                    "weight": 0.14429343066726305
+                },
+                {
+                    "ticker": "FLRY3",
+                    "shares": 28600.0,
+                    "value": 461604.0,
+                    "cost": 0.0,
+                    "weight": 0.13766208823109147
+                },
+                {
+                    "ticker": "PSSA3",
+                    "shares": 9100.0,
+                    "value": 453726.0,
+                    "cost": 0.0,
+                    "weight": 0.13531266766479538
+                },
+                {
+                    "ticker": "INTB3",
+                    "shares": 37800.0,
+                    "value": 445284.0,
+                    "cost": 0.0,
+                    "weight": 0.13279504791096555
+                },
+                {
+                    "ticker": "VIVA3",
+                    "shares": 15400.0,
+                    "value": 439824.0,
+                    "cost": 0.0,
+                    "weight": 0.13116673662739398
+                },
+                {
+                    "ticker": "BBSE3",
+                    "shares": 12600.0,
+                    "value": 419076.0,
+                    "cost": 0.0,
+                    "weight": 0.12497915374982212
+                },
+                {
+                    "ticker": "RECV3",
+                    "shares": 32700.0,
+                    "value": 412347.0,
+                    "cost": 0.0,
+                    "weight": 0.12297239429429961
+                },
+                {
+                    "ticker": "JHSF3",
+                    "shares": 63200.0,
+                    "value": 408904.0,
+                    "cost": 0.0,
+                    "weight": 0.12194560386401813
+                },
+                {
+                    "ticker": "SMFT3",
+                    "shares": 14900.0,
+                    "value": 397532.0,
+                    "cost": 0.0,
+                    "weight": 0.11855418336644019
+                },
+                {
+                    "ticker": "TUPY3",
+                    "shares": 27000.0,
+                    "value": 352350.0,
+                    "cost": 0.0,
+                    "weight": 0.10507975838213075
+                },
+                {
+                    "ticker": "RADL3",
+                    "shares": 19061.0,
+                    "value": 351103.62,
+                    "cost": 0.0,
+                    "weight": 0.10470805607121171
+                },
+                {
+                    "ticker": "RAPT4",
+                    "shares": 56800.0,
+                    "value": 349320.0,
+                    "cost": 0.0,
+                    "weight": 0.10417613508740148
+                },
+                {
+                    "ticker": "ALOS3",
+                    "shares": 13360.0,
+                    "value": 345088.8,
+                    "cost": 0.0,
+                    "weight": 0.10291428331028647
+                },
+                {
+                    "ticker": "MRVE3",
+                    "shares": 45600.0,
+                    "value": 339720.0,
+                    "cost": 0.0,
+                    "weight": 0.10131317019320975
+                },
+                {
+                    "ticker": "SAPR11",
+                    "shares": 8500.0,
+                    "value": 314925.0,
+                    "cost": 0.0,
+                    "weight": 0.09391866867743019
+                },
+                {
+                    "ticker": "PLPL3",
+                    "shares": 17100.0,
+                    "value": 291897.0,
+                    "cost": 0.0,
+                    "weight": 0.08705113163748777
+                },
+                {
+                    "ticker": "SBSP3",
+                    "shares": 2190.0,
+                    "value": 289452.3,
+                    "cost": 0.0,
+                    "weight": 0.08632205973365127
+                },
+                {
+                    "ticker": "CYRE3",
+                    "shares": 9308.0,
+                    "value": 285755.6,
+                    "cost": 0.0,
+                    "weight": 0.08521960949153057
+                },
+                {
+                    "ticker": "VALE3",
+                    "shares": 4243.0,
+                    "value": 244311.94,
+                    "cost": 0.0,
+                    "weight": 0.07286005285957038
+                },
+                {
+                    "ticker": "GGPS3",
+                    "shares": 6043.0,
+                    "value": 114212.7,
+                    "cost": 0.0,
+                    "weight": 0.0340611406844637
+                },
+                {
+                    "ticker": "HBOR3",
+                    "shares": 26000.0,
+                    "value": 98020.0,
+                    "cost": 0.0,
+                    "weight": 0.02923206447173678
+                },
+                {
+                    "ticker": "VALE3",
+                    "shares": 1263.0,
+                    "value": 72723.54,
+                    "cost": 0.0,
+                    "weight": 0.021688014791807066
+                },
+                {
+                    "ticker": "LJQQ3",
+                    "shares": 23400.0,
+                    "value": 53118.0,
+                    "cost": 0.0,
+                    "weight": 0.0158411426301746
+                },
+                {
+                    "ticker": "RENT3",
+                    "shares": 1106.0,
+                    "value": 43631.7,
+                    "cost": 0.0,
+                    "weight": 0.013012085976448458
+                },
+                {
+                    "ticker": "NATU3",
+                    "shares": 1700.0,
+                    "value": 15895.0,
+                    "cost": 0.0,
+                    "weight": 0.00474029447845599
+                },
+                {
+                    "ticker": "PRIO3",
+                    "shares": 200.0,
+                    "value": 7626.0,
+                    "cost": 0.0,
+                    "weight": 0.0022742677378235535
+                },
+                {
+                    "ticker": "ABEV3",
+                    "shares": 0.0,
+                    "value": 0.0,
+                    "cost": 0.0,
+                    "weight": 0.0
+                },
+                {
+                    "ticker": "AZZA3",
+                    "shares": 0.0,
+                    "value": 0.0,
+                    "cost": 0.0,
+                    "weight": 0.0
+                },
+                {
+                    "ticker": "PSSA3",
+                    "shares": 0.0,
+                    "value": 0.0,
+                    "cost": 0.0,
+                    "weight": 0.0
+                },
+                {
+                    "ticker": "BBAS3",
+                    "shares": 0.0,
+                    "value": 0.0,
+                    "cost": 0.0,
+                    "weight": 0.0
+                },
+                {
+                    "ticker": "INTB3",
+                    "shares": 0.0,
+                    "value": 0.0,
+                    "cost": 0.0,
+                    "weight": 0.0
+                },
+                {
+                    "ticker": "NATU3",
+                    "shares": 0.0,
+                    "value": 0.0,
+                    "cost": 0.0,
+                    "weight": 0.0
+                },
+                {
+                    "ticker": "BBSE3",
+                    "shares": 0.0,
+                    "value": 0.0,
+                    "cost": 0.0,
+                    "weight": 0.0
+                },
+                {
+                    "ticker": "SUZB3",
+                    "shares": 0.0,
+                    "value": 0.0,
+                    "cost": 0.0,
+                    "weight": 0.0
+                },
+                {
+                    "ticker": "RAPT4",
+                    "shares": 0.0,
+                    "value": 0.0,
+                    "cost": 0.0,
+                    "weight": 0.0
+                }
+            ]
+        },
+        "Dynamo Capital": {
+            "cnpj": "37916879000126",
+            "total_portfolio_value": 10238043192.889996,
+            "assets_count": 39,
+            "holdings": [
+                {
+                    "ticker": "ENEV3",
+                    "shares": 100603880.0,
+                    "value": 1664994214.0,
+                    "cost": 0.0,
+                    "weight": 16.26281685504401
+                },
+                {
+                    "ticker": "ITSA4",
+                    "shares": 88837934.0,
+                    "value": 1018971102.98,
+                    "cost": 0.0,
+                    "weight": 9.952791600719598
+                },
+                {
+                    "ticker": "RDOR3",
+                    "shares": 21656588.0,
+                    "value": 911309223.04,
+                    "cost": 0.0,
+                    "weight": 8.90120510209291
+                },
+                {
+                    "ticker": "RENT3",
+                    "shares": 22223837.0,
+                    "value": 876730369.65,
+                    "cost": 0.0,
+                    "weight": 8.563456445064249
+                },
+                {
+                    "ticker": "VBBR3",
+                    "shares": 33110320.0,
+                    "value": 814182768.8,
+                    "cost": 0.0,
+                    "weight": 7.952523284580638
+                },
+                {
+                    "ticker": "ITUB4",
+                    "shares": 19795714.0,
+                    "value": 773418545.98,
+                    "cost": 0.0,
+                    "weight": 7.554359084137438
+                },
+                {
+                    "ticker": "NATU3",
+                    "shares": 60578533.0,
+                    "value": 566409283.55,
+                    "cost": 0.0,
+                    "weight": 5.532397870164815
+                },
+                {
+                    "ticker": "SUZB3",
+                    "shares": 10813541.0,
+                    "value": 539595695.9,
+                    "cost": 0.0,
+                    "weight": 5.270496380350617
+                },
+                {
+                    "ticker": "MOTV3",
+                    "shares": 34592527.0,
+                    "value": 514736801.76,
+                    "cost": 0.0,
+                    "weight": 5.027687342806571
+                },
+                {
+                    "ticker": "WEGE3",
+                    "shares": 13570771.0,
+                    "value": 496554510.89,
+                    "cost": 0.0,
+                    "weight": 4.850091971040342
+                },
+                {
+                    "ticker": "ASAI3",
+                    "shares": 39938433.0,
+                    "value": 379814497.83,
+                    "cost": 0.0,
+                    "weight": 3.709834884206871
+                },
+                {
+                    "ticker": "GOAU4",
+                    "shares": 28037049.0,
+                    "value": 266912706.48,
+                    "cost": 0.0,
+                    "weight": 2.6070675953522313
+                },
+                {
+                    "ticker": "SMFT3",
+                    "shares": 8869023.0,
+                    "value": 236625533.64,
+                    "cost": 0.0,
+                    "weight": 2.3112378916737635
+                },
+                {
+                    "ticker": "GGBR4",
+                    "shares": 13266877.0,
+                    "value": 220362826.97,
+                    "cost": 0.0,
+                    "weight": 2.152392042290222
+                },
+                {
+                    "ticker": "AURE3",
+                    "shares": 19411426.0,
+                    "value": 199355345.02,
+                    "cost": 0.0,
+                    "weight": 1.9472016406264638
+                },
+                {
+                    "ticker": "GGPS3",
+                    "shares": 6545725.0,
+                    "value": 123714202.5,
+                    "cost": 0.0,
+                    "weight": 1.2083774230012596
+                },
+                {
+                    "ticker": "MOTV3",
+                    "shares": 6764630.0,
+                    "value": 100657694.4,
+                    "cost": 0.0,
+                    "weight": 0.9831731758067173
+                },
+                {
+                    "ticker": "RDOR3",
+                    "shares": 2306461.0,
+                    "value": 97055878.88,
+                    "cost": 0.0,
+                    "weight": 0.9479924732824169
+                },
+                {
+                    "ticker": "VALE3",
+                    "shares": 883000.0,
+                    "value": 50843140.0,
+                    "cost": 0.0,
+                    "weight": 0.49660993846274243
+                },
+                {
+                    "ticker": "VBBR3",
+                    "shares": 1684595.0,
+                    "value": 41424191.05,
+                    "cost": 0.0,
+                    "weight": 0.40461043452881523
+                },
+                {
+                    "ticker": "RAIZ4",
+                    "shares": 40342327.0,
+                    "value": 41149173.54,
+                    "cost": 0.0,
+                    "weight": 0.4019242033338639
+                },
+                {
+                    "ticker": "CYRE3",
+                    "shares": 1319385.0,
+                    "value": 40505119.5,
+                    "cost": 0.0,
+                    "weight": 0.39563341096401655
+                },
+                {
+                    "ticker": "SLCE3",
+                    "shares": 2323391.0,
+                    "value": 38126846.31,
+                    "cost": 0.0,
+                    "weight": 0.3724036477642321
+                },
+                {
+                    "ticker": "ALPA4",
+                    "shares": 3458480.0,
+                    "value": 32578881.6,
+                    "cost": 0.0,
+                    "weight": 0.31821394954286797
+                },
+                {
+                    "ticker": "OFSA3",
+                    "shares": 1232562.0,
+                    "value": 27424504.5,
+                    "cost": 0.0,
+                    "weight": 0.2678686149619438
+                },
+                {
+                    "ticker": "RADL3",
+                    "shares": 1440706.0,
+                    "value": 26537804.52,
+                    "cost": 0.0,
+                    "weight": 0.2592077804323944
+                },
+                {
+                    "ticker": "ITUB4",
+                    "shares": 616814.0,
+                    "value": 24098922.98,
+                    "cost": 0.0,
+                    "weight": 0.23538602568834596
+                },
+                {
+                    "ticker": "OPCT3",
+                    "shares": 3077246.0,
+                    "value": 23602476.82,
+                    "cost": 0.0,
+                    "weight": 0.23053699203370417
+                },
+                {
+                    "ticker": "RADL3",
+                    "shares": 1052868.0,
+                    "value": 19393828.56,
+                    "cost": 0.0,
+                    "weight": 0.1894290558714229
+                },
+                {
+                    "ticker": "VVEO3",
+                    "shares": 14421284.0,
+                    "value": 18603456.36,
+                    "cost": 0.0,
+                    "weight": 0.18170910211552463
+                },
+                {
+                    "ticker": "ROXO34",
+                    "shares": 783909.0,
+                    "value": 11217737.79,
+                    "cost": 0.0,
+                    "weight": 0.10956915866295984
+                },
+                {
+                    "ticker": "GGPS3",
+                    "shares": 475636.0,
+                    "value": 8989520.4,
+                    "cost": 0.0,
+                    "weight": 0.08780506421620632
+                },
+                {
+                    "ticker": "GGBR4",
+                    "shares": 437428.0,
+                    "value": 7265679.08,
+                    "cost": 0.0,
+                    "weight": 0.07096745875272131
+                },
+                {
+                    "ticker": "ENEV3",
+                    "shares": 413523.0,
+                    "value": 6843805.65,
+                    "cost": 0.0,
+                    "weight": 0.06684681360548285
+                },
+                {
+                    "ticker": "ALPA3",
+                    "shares": 563549.0,
+                    "value": 5291725.11,
+                    "cost": 0.0,
+                    "weight": 0.051686880102976514
+                },
+                {
+                    "ticker": "CYRE3",
+                    "shares": 164722.0,
+                    "value": 5056965.4,
+                    "cost": 0.0,
+                    "weight": 0.04939386662787188
+                },
+                {
+                    "ticker": "ROXO34",
+                    "shares": 261369.0,
+                    "value": 3740190.39,
+                    "cost": 0.0,
+                    "weight": 0.036532277892687995
+                },
+                {
+                    "ticker": "VVEO3",
+                    "shares": 1761532.0,
+                    "value": 2272376.28,
+                    "cost": 0.0,
+                    "weight": 0.02219541603006808
+                },
+                {
+                    "ticker": "RAIZ4",
+                    "shares": 1642789.0,
+                    "value": 1675644.78,
+                    "cost": 0.0,
+                    "weight": 0.016366846168061524
+                }
+            ]
+        },
+        "Atmos Capital": {
+            "cnpj": "11188572000162",
+            "total_portfolio_value": 7937562291.020002,
+            "assets_count": 36,
+            "holdings": [
+                {
+                    "ticker": "EQTL3",
+                    "shares": 32211981.0,
+                    "value": 1190232697.95,
+                    "cost": 0.0,
+                    "weight": 14.994939936364911
+                },
+                {
+                    "ticker": "RENT3",
+                    "shares": 19883816.0,
+                    "value": 784416541.2,
+                    "cost": 0.0,
+                    "weight": 9.882335563998453
+                },
+                {
+                    "ticker": "ENEV3",
+                    "shares": 43979055.0,
+                    "value": 727853360.25,
+                    "cost": 0.0,
+                    "weight": 9.169734152177199
+                },
+                {
+                    "ticker": "ELET3",
+                    "shares": 13613052.0,
+                    "value": 714957491.04,
+                    "cost": 0.0,
+                    "weight": 9.007267783571946
+                },
+                {
+                    "ticker": "HAPV3",
+                    "shares": 12810996.0,
+                    "value": 459274206.6,
+                    "cost": 0.0,
+                    "weight": 5.78608632929521
+                },
+                {
+                    "ticker": "ITUB4",
+                    "shares": 11078830.0,
+                    "value": 432849888.1,
+                    "cost": 0.0,
+                    "weight": 5.453184141807565
+                },
+                {
+                    "ticker": "ITSA4",
+                    "shares": 37377752.0,
+                    "value": 428722815.44,
+                    "cost": 0.0,
+                    "weight": 5.401189933652889
+                },
+                {
+                    "ticker": "CPLE6",
+                    "shares": 29997136.0,
+                    "value": 386363111.68,
+                    "cost": 0.0,
+                    "weight": 4.867528562479491
+                },
+                {
+                    "ticker": "SMFT3",
+                    "shares": 13216952.0,
+                    "value": 352628279.36,
+                    "cost": 0.0,
+                    "weight": 4.442526136253933
+                },
+                {
+                    "ticker": "PASS5",
+                    "shares": 14025844.0,
+                    "value": 310084944.12,
+                    "cost": 0.0,
+                    "weight": 3.9065513157711935
+                },
+                {
+                    "ticker": "RDOR3",
+                    "shares": 6936313.0,
+                    "value": 291880051.04,
+                    "cost": 0.0,
+                    "weight": 3.6772001319625867
+                },
+                {
+                    "ticker": "RDOR3",
+                    "shares": 5896553.0,
+                    "value": 248126950.24,
+                    "cost": 0.0,
+                    "weight": 3.125984290173235
+                },
+                {
+                    "ticker": "MOTV3",
+                    "shares": 15312318.0,
+                    "value": 227847291.84,
+                    "cost": 0.0,
+                    "weight": 2.870494535806923
+                },
+                {
+                    "ticker": "PRIO3",
+                    "shares": 5730516.0,
+                    "value": 218504575.08,
+                    "cost": 0.0,
+                    "weight": 2.75279194126389
+                },
+                {
+                    "ticker": "MOTV3",
+                    "shares": 9074026.0,
+                    "value": 135021506.88,
+                    "cost": 0.0,
+                    "weight": 1.7010450051239763
+                },
+                {
+                    "ticker": "AURE3",
+                    "shares": 11337126.0,
+                    "value": 116432284.02,
+                    "cost": 0.0,
+                    "weight": 1.4668519093289292
+                },
+                {
+                    "ticker": "RENT3",
+                    "shares": 2926193.0,
+                    "value": 115438313.85,
+                    "cost": 0.0,
+                    "weight": 1.4543295487658565
+                },
+                {
+                    "ticker": "EQTL3",
+                    "shares": 2826568.0,
+                    "value": 104441687.6,
+                    "cost": 0.0,
+                    "weight": 1.315790462748972
+                },
+                {
+                    "ticker": "SRNA3",
+                    "shares": 7957716.0,
+                    "value": 98277792.6,
+                    "cost": 0.0,
+                    "weight": 1.2381357020805313
+                },
+                {
+                    "ticker": "CPLE3",
+                    "shares": 7694903.0,
+                    "value": 92954428.24,
+                    "cost": 0.0,
+                    "weight": 1.1710702207044354
+                },
+                {
+                    "ticker": "AURE3",
+                    "shares": 8861078.0,
+                    "value": 91003271.06,
+                    "cost": 0.0,
+                    "weight": 1.146488905831387
+                },
+                {
+                    "ticker": "RECV3",
+                    "shares": 5535469.0,
+                    "value": 69802264.09,
+                    "cost": 0.0,
+                    "weight": 0.8793917015173456
+                },
+                {
+                    "ticker": "VIVT3",
+                    "shares": 1731101.0,
+                    "value": 58978611.07,
+                    "cost": 0.0,
+                    "weight": 0.7430317886982032
+                },
+                {
+                    "ticker": "SBSP3",
+                    "shares": 426332.0,
+                    "value": 56348300.44,
+                    "cost": 0.0,
+                    "weight": 0.7098942770345057
+                },
+                {
+                    "ticker": "ENGI11",
+                    "shares": 1107905.0,
+                    "value": 56348048.3,
+                    "cost": 0.0,
+                    "weight": 0.7098911004925051
+                },
+                {
+                    "ticker": "BRST3",
+                    "shares": 14840316.0,
+                    "value": 42888513.24,
+                    "cost": 0.0,
+                    "weight": 0.540323485568372
+                },
+                {
+                    "ticker": "ELET6",
+                    "shares": 660719.0,
+                    "value": 36650082.93,
+                    "cost": 0.0,
+                    "weight": 0.4617297047415089
+                },
+                {
+                    "ticker": "RECV3",
+                    "shares": 2559289.0,
+                    "value": 32272634.29,
+                    "cost": 0.0,
+                    "weight": 0.4065811782858193
+                },
+                {
+                    "ticker": "DESK3",
+                    "shares": 3034450.0,
+                    "value": 30951390.0,
+                    "cost": 0.0,
+                    "weight": 0.38993571155991075
+                },
+                {
+                    "ticker": "PRIO3",
+                    "shares": 341491.0,
+                    "value": 13021051.83,
+                    "cost": 0.0,
+                    "weight": 0.16404346010274587
+                },
+                {
+                    "ticker": "BRBI11",
+                    "shares": 529853.0,
+                    "value": 9590339.3,
+                    "cost": 0.0,
+                    "weight": 0.12082222410839956
+                },
+                {
+                    "ticker": "VIVT3",
+                    "shares": 43721.0,
+                    "value": 1489574.47,
+                    "cost": 0.0,
+                    "weight": 0.018766145264588342
+                },
+                {
+                    "ticker": "ITUB4",
+                    "shares": 27881.0,
+                    "value": 1089310.67,
+                    "cost": 0.0,
+                    "weight": 0.013723491294454082
+                },
+                {
+                    "ticker": "ELET3",
+                    "shares": 8751.0,
+                    "value": 459602.52,
+                    "cost": 0.0,
+                    "weight": 0.005790222528646633
+                },
+                {
+                    "ticker": "SBSP3",
+                    "shares": 2000.0,
+                    "value": 264340.0,
+                    "cost": 0.0,
+                    "weight": 0.003330241581840002
+                },
+                {
+                    "ticker": "ELET6",
+                    "shares": 1744.0,
+                    "value": 96739.68,
+                    "cost": 0.0,
+                    "weight": 0.0012187580576147974
+                }
+            ]
+        },
+        "IP Capital Partners": {
+            "cnpj": "11435298000189",
+            "total_portfolio_value": 345741428.18,
+            "assets_count": 19,
+            "holdings": [
+                {
+                    "ticker": "ITSA4",
+                    "shares": 3332325.0,
+                    "value": 38221767.75,
+                    "cost": 0.0,
+                    "weight": 11.055015290241982
+                },
+                {
+                    "ticker": "MSFT34",
+                    "shares": 259398.0,
+                    "value": 29806142.38,
+                    "cost": 0.0,
+                    "weight": 8.620934591755756
+                },
+                {
+                    "ticker": "EQTL3",
+                    "shares": 781225.0,
+                    "value": 28866263.75,
+                    "cost": 0.0,
+                    "weight": 8.34909021518001
+                },
+                {
+                    "ticker": "EQTL3",
+                    "shares": 777038.0,
+                    "value": 28711554.1,
+                    "cost": 0.0,
+                    "weight": 8.304343003133598
+                },
+                {
+                    "ticker": "GOGL34",
+                    "shares": 264892.0,
+                    "value": 28571519.38,
+                    "cost": 0.0,
+                    "weight": 8.263840272310405
+                },
+                {
+                    "ticker": "GGPS3",
+                    "shares": 1360654.0,
+                    "value": 25716360.6,
+                    "cost": 0.0,
+                    "weight": 7.438032733124346
+                },
+                {
+                    "ticker": "ENGI11",
+                    "shares": 501163.0,
+                    "value": 25489150.18,
+                    "cost": 0.0,
+                    "weight": 7.37231587032429
+                },
+                {
+                    "ticker": "BPAC11",
+                    "shares": 508917.0,
+                    "value": 24560334.42,
+                    "cost": 0.0,
+                    "weight": 7.103671246250939
+                },
+                {
+                    "ticker": "MSCD34",
+                    "shares": 221089.0,
+                    "value": 21599073.47,
+                    "cost": 0.0,
+                    "weight": 6.247175406111611
+                },
+                {
+                    "ticker": "AMZO34",
+                    "shares": 320422.0,
+                    "value": 18729571.91,
+                    "cost": 0.0,
+                    "weight": 5.417219454606118
+                },
+                {
+                    "ticker": "RENT3",
+                    "shares": 396571.0,
+                    "value": 15644725.95,
+                    "cost": 0.0,
+                    "weight": 4.5249786906806655
+                },
+                {
+                    "ticker": "RENT3",
+                    "shares": 370538.0,
+                    "value": 14617724.1,
+                    "cost": 0.0,
+                    "weight": 4.227935361101625
+                },
+                {
+                    "ticker": "ITUB3",
+                    "shares": 372932.0,
+                    "value": 12922093.8,
+                    "cost": 0.0,
+                    "weight": 3.7375022912419094
+                },
+                {
+                    "ticker": "GGPS3",
+                    "shares": 562546.0,
+                    "value": 10632119.4,
+                    "cost": 0.0,
+                    "weight": 3.075165002923718
+                },
+                {
+                    "ticker": "TSMC34",
+                    "shares": 56416.0,
+                    "value": 10486491.46,
+                    "cost": 0.0,
+                    "weight": 3.033044525558135
+                },
+                {
+                    "ticker": "ENGI11",
+                    "shares": 190196.0,
+                    "value": 9673368.56,
+                    "cost": 0.0,
+                    "weight": 2.7978621511807513
+                },
+                {
+                    "ticker": "MULT3",
+                    "shares": 24467.0,
+                    "value": 711500.36,
+                    "cost": 0.0,
+                    "weight": 0.20578973244409068
+                },
+                {
+                    "ticker": "MULT3",
+                    "shares": 24467.0,
+                    "value": 711500.36,
+                    "cost": 0.0,
+                    "weight": 0.20578973244409068
+                },
+                {
+                    "ticker": "ITUB3",
+                    "shares": 2025.0,
+                    "value": 70166.25,
+                    "cost": 0.0,
+                    "weight": 0.020294429385960083
+                }
+            ]
+        },
+        "Constellation Asset": {
+            "cnpj": "11225860000140",
+            "total_portfolio_value": 261282972.71,
+            "assets_count": 17,
+            "holdings": [
+                {
+                    "ticker": "BPAC11",
+                    "shares": 792759.0,
+                    "value": 38258549.34,
+                    "cost": 0.0,
+                    "weight": 14.642572741417585
+                },
+                {
+                    "ticker": "EQTL3",
+                    "shares": 922872.0,
+                    "value": 34100120.4,
+                    "cost": 0.0,
+                    "weight": 13.051030477155503
+                },
+                {
+                    "ticker": "ENEV3",
+                    "shares": 1686800.0,
+                    "value": 27916540.0,
+                    "cost": 0.0,
+                    "weight": 10.684408444397478
+                },
+                {
+                    "ticker": "ITUB4",
+                    "shares": 650583.0,
+                    "value": 25418277.81,
+                    "cost": 0.0,
+                    "weight": 9.72825651299212
+                },
+                {
+                    "ticker": "TOTS3",
+                    "shares": 441766.0,
+                    "value": 20290312.38,
+                    "cost": 0.0,
+                    "weight": 7.765646635734037
+                },
+                {
+                    "ticker": "ELET3",
+                    "shares": 366209.0,
+                    "value": 19233296.68,
+                    "cost": 0.0,
+                    "weight": 7.3610983833023
+                },
+                {
+                    "ticker": "SMFT3",
+                    "shares": 668738.0,
+                    "value": 17841929.84,
+                    "cost": 0.0,
+                    "weight": 6.828584983914316
+                },
+                {
+                    "ticker": "RDOR3",
+                    "shares": 397400.0,
+                    "value": 16722592.0,
+                    "cost": 0.0,
+                    "weight": 6.400184377326622
+                },
+                {
+                    "ticker": "CYRE3",
+                    "shares": 396600.0,
+                    "value": 12175620.0,
+                    "cost": 0.0,
+                    "weight": 4.659936265159466
+                },
+                {
+                    "ticker": "INBR32",
+                    "shares": 192749.0,
+                    "value": 9537220.52,
+                    "cost": 0.0,
+                    "weight": 3.650150035067702
+                },
+                {
+                    "ticker": "CURY3",
+                    "shares": 192900.0,
+                    "value": 6668553.0,
+                    "cost": 0.0,
+                    "weight": 2.55223405139434
+                },
+                {
+                    "ticker": "RADL3",
+                    "shares": 354400.0,
+                    "value": 6528048.0,
+                    "cost": 0.0,
+                    "weight": 2.498459020230733
+                },
+                {
+                    "ticker": "ALPA4",
+                    "shares": 657900.0,
+                    "value": 6197418.0,
+                    "cost": 0.0,
+                    "weight": 2.3719180533354396
+                },
+                {
+                    "ticker": "ROXO34",
+                    "shares": 418200.0,
+                    "value": 5984442.0,
+                    "cost": 0.0,
+                    "weight": 2.2904064271506046
+                },
+                {
+                    "ticker": "LWSA3",
+                    "shares": 1232303.0,
+                    "value": 5643947.74,
+                    "cost": 0.0,
+                    "weight": 2.1600901434416326
+                },
+                {
+                    "ticker": "SRNA3",
+                    "shares": 376600.0,
+                    "value": 4651010.0,
+                    "cost": 0.0,
+                    "weight": 1.7800662445624393
+                },
+                {
+                    "ticker": "GMAT3",
+                    "shares": 592100.0,
+                    "value": 4115095.0,
+                    "cost": 0.0,
+                    "weight": 1.5749572034176813
+                }
+            ]
+        },
+        "Bogari Capital": {
+            "cnpj": "15165493000197",
+            "total_portfolio_value": 104955425.49,
+            "assets_count": 26,
+            "holdings": [
+                {
+                    "ticker": "ENGI11",
+                    "shares": 267899.0,
+                    "value": 13625343.14,
+                    "cost": 0.0,
+                    "weight": 12.982028395757592
+                },
+                {
+                    "ticker": "RENT3",
+                    "shares": 279418.0,
+                    "value": 11023040.1,
+                    "cost": 0.0,
+                    "weight": 10.502591979916522
+                },
+                {
+                    "ticker": "CPLE3",
+                    "shares": 857057.0,
+                    "value": 10353248.56,
+                    "cost": 0.0,
+                    "weight": 9.864424360783945
+                },
+                {
+                    "ticker": "VBBR3",
+                    "shares": 408964.0,
+                    "value": 10056424.76,
+                    "cost": 0.0,
+                    "weight": 9.581614969450209
+                },
+                {
+                    "ticker": "EQTL3",
+                    "shares": 237649.0,
+                    "value": 8781130.55,
+                    "cost": 0.0,
+                    "weight": 8.366533229705837
+                },
+                {
+                    "ticker": "ENEV3",
+                    "shares": 436042.0,
+                    "value": 7216495.1,
+                    "cost": 0.0,
+                    "weight": 6.875771372760122
+                },
+                {
+                    "ticker": "RAIL3",
+                    "shares": 422710.0,
+                    "value": 6750678.7,
+                    "cost": 0.0,
+                    "weight": 6.431948294700778
+                },
+                {
+                    "ticker": "VBBR3",
+                    "shares": 233780.0,
+                    "value": 5748650.2,
+                    "cost": 0.0,
+                    "weight": 5.477230141425822
+                },
+                {
+                    "ticker": "PRIO3",
+                    "shares": 144941.0,
+                    "value": 5526600.33,
+                    "cost": 0.0,
+                    "weight": 5.265664260992936
+                },
+                {
+                    "ticker": "HAPV3",
+                    "shares": 148644.0,
+                    "value": 5328887.4,
+                    "cost": 0.0,
+                    "weight": 5.077286262354993
+                },
+                {
+                    "ticker": "ASAI3",
+                    "shares": 328283.0,
+                    "value": 3121971.33,
+                    "cost": 0.0,
+                    "weight": 2.9745687899645143
+                },
+                {
+                    "ticker": "BRST3",
+                    "shares": 902757.0,
+                    "value": 2608967.73,
+                    "cost": 0.0,
+                    "weight": 2.4857864353554344
+                },
+                {
+                    "ticker": "SMFT3",
+                    "shares": 80817.0,
+                    "value": 2156197.56,
+                    "cost": 0.0,
+                    "weight": 2.0543936151308726
+                },
+                {
+                    "ticker": "SUZB3",
+                    "shares": 37810.0,
+                    "value": 1886719.0,
+                    "cost": 0.0,
+                    "weight": 1.7976383699952354
+                },
+                {
+                    "ticker": "ASAI3",
+                    "shares": 187958.0,
+                    "value": 1787480.58,
+                    "cost": 0.0,
+                    "weight": 1.7030854495180991
+                },
+                {
+                    "ticker": "STOC34",
+                    "shares": 15588.0,
+                    "value": 1569439.01,
+                    "cost": 0.0,
+                    "weight": 1.4953386189164026
+                },
+                {
+                    "ticker": "MOTV3",
+                    "shares": 104400.0,
+                    "value": 1553472.0,
+                    "cost": 0.0,
+                    "weight": 1.4801254844591265
+                },
+                {
+                    "ticker": "CSED3",
+                    "shares": 313255.0,
+                    "value": 1541214.6,
+                    "cost": 0.0,
+                    "weight": 1.4684468123535404
+                },
+                {
+                    "ticker": "MOTV3",
+                    "shares": 96967.0,
+                    "value": 1442868.96,
+                    "cost": 0.0,
+                    "weight": 1.374744519650844
+                },
+                {
+                    "ticker": "XPBR31",
+                    "shares": 9657.0,
+                    "value": 970335.36,
+                    "cost": 0.0,
+                    "weight": 0.9245213913143082
+                },
+                {
+                    "ticker": "CSAN3",
+                    "shares": 104469.0,
+                    "value": 644573.73,
+                    "cost": 0.0,
+                    "weight": 0.6141404572376433
+                },
+                {
+                    "ticker": "ENGI11",
+                    "shares": 10474.0,
+                    "value": 532707.64,
+                    "cost": 0.0,
+                    "weight": 0.5075560767944823
+                },
+                {
+                    "ticker": "HAPV3",
+                    "shares": 8338.0,
+                    "value": 298917.3,
+                    "cost": 0.0,
+                    "weight": 0.28480404762732386
+                },
+                {
+                    "ticker": "RAIL3",
+                    "shares": 15154.0,
+                    "value": 242009.38,
+                    "cost": 0.0,
+                    "weight": 0.23058301071158852
+                },
+                {
+                    "ticker": "SMFT3",
+                    "shares": 5899.0,
+                    "value": 157385.32,
+                    "cost": 0.0,
+                    "weight": 0.1499544394824977
+                },
+                {
+                    "ticker": "ENEV3",
+                    "shares": 1853.0,
+                    "value": 30667.15,
+                    "cost": 0.0,
+                    "weight": 0.02921921363933866
+                }
+            ]
+        },
+        "Luiz Alves Paes (Poland)": {
+            "cnpj": "05775774000108",
+            "total_portfolio_value": 4569715807.93,
+            "assets_count": 18,
+            "holdings": [
+                {
+                    "ticker": "HBSA3",
+                    "shares": 219504633.0,
+                    "value": 737535566.88,
+                    "cost": 0.0,
+                    "weight": 16.13963751531609
+                },
+                {
+                    "ticker": "VLID3",
+                    "shares": 27799036.0,
+                    "value": 587949611.4,
+                    "cost": 0.0,
+                    "weight": 12.866218296982687
+                },
+                {
+                    "ticker": "POMO3",
+                    "shares": 72426111.0,
+                    "value": 543920093.61,
+                    "cost": 0.0,
+                    "weight": 11.902711601148477
+                },
+                {
+                    "ticker": "COGN3",
+                    "shares": 158131843.0,
+                    "value": 528160355.62,
+                    "cost": 0.0,
+                    "weight": 11.557838119899348
+                },
+                {
+                    "ticker": "LOGN3",
+                    "shares": 16868580.0,
+                    "value": 457138518.0,
+                    "cost": 0.0,
+                    "weight": 10.003653120106732
+                },
+                {
+                    "ticker": "CLSC4",
+                    "shares": 3534800.0,
+                    "value": 359595204.0,
+                    "cost": 0.0,
+                    "weight": 7.869093377228861
+                },
+                {
+                    "ticker": "BBAS3",
+                    "shares": 15954000.0,
+                    "value": 352423860.0,
+                    "cost": 0.0,
+                    "weight": 7.712161430004587
+                },
+                {
+                    "ticker": "ALOS3",
+                    "shares": 10651400.0,
+                    "value": 275125662.0,
+                    "cost": 0.0,
+                    "weight": 6.020629587567876
+                },
+                {
+                    "ticker": "BBAS3",
+                    "shares": 8100000.0,
+                    "value": 178929000.0,
+                    "cost": 0.0,
+                    "weight": 3.9155388982723554
+                },
+                {
+                    "ticker": "MYPK3",
+                    "shares": 11641733.0,
+                    "value": 138769457.36,
+                    "cost": 0.0,
+                    "weight": 3.0367196384332726
+                },
+                {
+                    "ticker": "LJQQ3",
+                    "shares": 44478518.0,
+                    "value": 100966235.86,
+                    "cost": 0.0,
+                    "weight": 2.2094642228032972
+                },
+                {
+                    "ticker": "MGLU3",
+                    "shares": 9861719.0,
+                    "value": 94672502.4,
+                    "cost": 0.0,
+                    "weight": 2.0717372015938333
+                },
+                {
+                    "ticker": "COGN3",
+                    "shares": 25715600.0,
+                    "value": 85890104.0,
+                    "cost": 0.0,
+                    "weight": 1.8795502304749818
+                },
+                {
+                    "ticker": "SCAR3",
+                    "shares": 3035800.0,
+                    "value": 64146454.0,
+                    "cost": 0.0,
+                    "weight": 1.4037296124341962
+                },
+                {
+                    "ticker": "BRKM5",
+                    "shares": 6602840.0,
+                    "value": 43380658.8,
+                    "cost": 0.0,
+                    "weight": 0.9493075854896689
+                },
+                {
+                    "ticker": "LVTC3",
+                    "shares": 4894700.0,
+                    "value": 17718814.0,
+                    "cost": 0.0,
+                    "weight": 0.387744331261298
+                },
+                {
+                    "ticker": "CTNM4",
+                    "shares": 3936850.0,
+                    "value": 3385691.0,
+                    "cost": 0.0,
+                    "weight": 0.07408974961035175
+                },
+                {
+                    "ticker": "POMO4",
+                    "shares": 900.0,
+                    "value": 8019.0,
+                    "cost": 0.0,
+                    "weight": 0.00017548137208192087
+                }
+            ]
+        },
+        "Ronaldo Cezar (Samambaia)": {
+            "cnpj": "10643191000163",
+            "total_portfolio_value": 3523019789.8199997,
+            "assets_count": 4,
+            "holdings": [
+                {
+                    "ticker": "VBBR3",
+                    "shares": 64272900.0,
+                    "value": 1580470611.0,
+                    "cost": 0.0,
+                    "weight": 44.86124703491235
+                },
+                {
+                    "ticker": "ENGI11",
+                    "shares": 22618987.0,
+                    "value": 1150401678.82,
+                    "cost": 0.0,
+                    "weight": 32.65385230432602
+                },
+                {
+                    "ticker": "LIGT3",
+                    "shares": 74551000.0,
+                    "value": 432395800.0,
+                    "cost": 0.0,
+                    "weight": 12.273442268176762
+                },
+                {
+                    "ticker": "VBBR3",
+                    "shares": 14630000.0,
+                    "value": 359751700.0,
+                    "cost": 0.0,
+                    "weight": 10.211458392584865
+                }
+            ]
+        },
+        "Lírio Parisotto (L. Par)": {
+            "cnpj": "08935128000159",
+            "total_portfolio_value": 4593201625.0,
+            "assets_count": 27,
+            "holdings": [
+                {
+                    "ticker": "ELET6",
+                    "shares": 21724671.0,
+                    "value": 1205067500.37,
+                    "cost": 0.0,
+                    "weight": 26.235893800329308
+                },
+                {
+                    "ticker": "VALE3",
+                    "shares": 10112783.0,
+                    "value": 582294045.14,
+                    "cost": 0.0,
+                    "weight": 12.677302079897265
+                },
+                {
+                    "ticker": "BBAS3",
+                    "shares": 21056989.0,
+                    "value": 465148887.01,
+                    "cost": 0.0,
+                    "weight": 10.126898947311071
+                },
+                {
+                    "ticker": "BBAS3",
+                    "shares": 17943011.0,
+                    "value": 396361112.99,
+                    "cost": 0.0,
+                    "weight": 8.629299241572049
+                },
+                {
+                    "ticker": "HYPE3",
+                    "shares": 13094834.0,
+                    "value": 297645576.82,
+                    "cost": 0.0,
+                    "weight": 6.4801330557745755
+                },
+                {
+                    "ticker": "CLSC4",
+                    "shares": 2800000.0,
+                    "value": 284844000.0,
+                    "cost": 0.0,
+                    "weight": 6.2014260042416485
+                },
+                {
+                    "ticker": "PETR4",
+                    "shares": 8407854.0,
+                    "value": 264511086.84,
+                    "cost": 0.0,
+                    "weight": 5.7587519215423075
+                },
+                {
+                    "ticker": "CSNA3",
+                    "shares": 26232811.0,
+                    "value": 207239206.9,
+                    "cost": 0.0,
+                    "weight": 4.511868274452246
+                },
+                {
+                    "ticker": "PETR4",
+                    "shares": 6192146.0,
+                    "value": 194804913.16,
+                    "cost": 0.0,
+                    "weight": 4.241157455394743
+                },
+                {
+                    "ticker": "USIM5",
+                    "shares": 36558579.0,
+                    "value": 154642789.17,
+                    "cost": 0.0,
+                    "weight": 3.3667755477640284
+                },
+                {
+                    "ticker": "VALE3",
+                    "shares": 1887217.0,
+                    "value": 108665954.86,
+                    "cost": 0.0,
+                    "weight": 2.365799800046879
+                },
+                {
+                    "ticker": "ELET3",
+                    "shares": 1708845.0,
+                    "value": 89748539.4,
+                    "cost": 0.0,
+                    "weight": 1.9539429515028093
+                },
+                {
+                    "ticker": "ELET6",
+                    "shares": 1275329.0,
+                    "value": 70742499.63,
+                    "cost": 0.0,
+                    "weight": 1.540156635949984
+                },
+                {
+                    "ticker": "CSNA3",
+                    "shares": 5767189.0,
+                    "value": 45560793.1,
+                    "cost": 0.0,
+                    "weight": 0.9919179870533116
+                },
+                {
+                    "ticker": "CLSC3",
+                    "shares": 450100.0,
+                    "value": 44109800.0,
+                    "cost": 0.0,
+                    "weight": 0.9603279716683458
+                },
+                {
+                    "ticker": "UNIP6",
+                    "shares": 593196.0,
+                    "value": 41992344.84,
+                    "cost": 0.0,
+                    "weight": 0.9142282065616921
+                },
+                {
+                    "ticker": "IRBR3",
+                    "shares": 843888.0,
+                    "value": 41350512.0,
+                    "cost": 0.0,
+                    "weight": 0.9002546671353665
+                },
+                {
+                    "ticker": "BRKM3",
+                    "shares": 4000000.0,
+                    "value": 29800000.0,
+                    "cost": 0.0,
+                    "weight": 0.6487849311426646
+                },
+                {
+                    "ticker": "BRKM5",
+                    "shares": 3990449.0,
+                    "value": 26217249.93,
+                    "cost": 0.0,
+                    "weight": 0.5707837815632577
+                },
+                {
+                    "ticker": "ETER3",
+                    "shares": 2981789.0,
+                    "value": 13358414.72,
+                    "cost": 0.0,
+                    "weight": 0.2908301400768576
+                },
+                {
+                    "ticker": "HYPE3",
+                    "shares": 505166.0,
+                    "value": 11482423.18,
+                    "cost": 0.0,
+                    "weight": 0.24998735342910186
+                },
+                {
+                    "ticker": "USIM5",
+                    "shares": 1941421.0,
+                    "value": 8212210.83,
+                    "cost": 0.0,
+                    "weight": 0.1787905583178052
+                },
+                {
+                    "ticker": "ELET3",
+                    "shares": 91155.0,
+                    "value": 4787460.6,
+                    "cost": 0.0,
+                    "weight": 0.10422927166843017
+                },
+                {
+                    "ticker": "IRBR3",
+                    "shares": 56112.0,
+                    "value": 2749488.0,
+                    "cost": 0.0,
+                    "weight": 0.059859945730120226
+                },
+                {
+                    "ticker": "UNIP6",
+                    "shares": 24304.0,
+                    "value": 1720480.16,
+                    "cost": 0.0,
+                    "weight": 0.037457100742883234
+                },
+                {
+                    "ticker": "ETER3",
+                    "shares": 18211.0,
+                    "value": 81585.28,
+                    "cost": 0.0,
+                    "weight": 0.0017762181297669467
+                },
+                {
+                    "ticker": "BRKM5",
+                    "shares": 9551.0,
+                    "value": 62750.07,
+                    "cost": 0.0,
+                    "weight": 0.0013661510014814557
+                }
+            ]
+        }
+    }
+}

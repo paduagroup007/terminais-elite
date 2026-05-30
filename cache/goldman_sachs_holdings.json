@@ -1,0 +1,1060 @@
+{
+    "name": "Goldman Sachs",
+    "cik": "0000886982",
+    "type": "Banco de Investimento",
+    "last_updated": "2026-05-24",
+    "total_holdings_count": 5539,
+    "total_portfolio_value": 870939686922000.0,
+    "data": [
+        {
+            "name": "NVIDIA CORPORATION",
+            "class": "CMN",
+            "cusip": "67066G104",
+            "value": 38468012425000.0,
+            "shares": 220573465
+        },
+        {
+            "name": "STATE STR SPDR S&P 500 ETF T",
+            "class": "CMN",
+            "cusip": "78462F103",
+            "value": 31823754236000.0,
+            "shares": 48934026
+        },
+        {
+            "name": "APPLE INC",
+            "class": "CMN",
+            "cusip": "037833100",
+            "value": 31130641039000.0,
+            "shares": 122662993
+        },
+        {
+            "name": "MICROSOFT CORP",
+            "class": "CMN",
+            "cusip": "594918104",
+            "value": 26035672240000.0,
+            "shares": 70334366
+        },
+        {
+            "name": "ALPHABET INC",
+            "class": "CMN",
+            "cusip": "02079K305",
+            "value": 17800607254000.0,
+            "shares": 61902236
+        },
+        {
+            "name": "AMAZON COM INC",
+            "class": "CMN",
+            "cusip": "023135106",
+            "value": 15968250713000.0,
+            "shares": 76670911
+        },
+        {
+            "name": "TESLA INC",
+            "class": "CMN",
+            "cusip": "88160R101",
+            "value": 12689832894000.0,
+            "shares": 34135394
+        },
+        {
+            "name": "BROADCOM INC",
+            "class": "CMN",
+            "cusip": "11135F101",
+            "value": 11949856188000.0,
+            "shares": 38608951
+        },
+        {
+            "name": "META PLATFORMS INC",
+            "class": "CMN",
+            "cusip": "30303M102",
+            "value": 11813815381000.0,
+            "shares": 20648830
+        },
+        {
+            "name": "INVESCO QQQ TR",
+            "class": "CMN",
+            "cusip": "46090E103",
+            "value": 11449429052000.0,
+            "shares": 19836844
+        },
+        {
+            "name": "ALPHABET INC",
+            "class": "CMN",
+            "cusip": "02079K107",
+            "value": 10083267999000.0,
+            "shares": 35150484
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287200",
+            "value": 9046887775000.0,
+            "shares": 13849892
+        },
+        {
+            "name": "VANGUARD INDEX FDS",
+            "class": "CMN",
+            "cusip": "922908363",
+            "value": 9000425562000.0,
+            "shares": 15062213
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464288513",
+            "value": 8618622700000.0,
+            "shares": 108328591
+        },
+        {
+            "name": "TAIWAN SEMICONDUCTOR MANUFAC",
+            "class": "CMN",
+            "cusip": "874039100",
+            "value": 8207890951000.0,
+            "shares": 24287294
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287655",
+            "value": 7495405150000.0,
+            "shares": 30223408
+        },
+        {
+            "name": "JPMORGAN CHASE & CO",
+            "class": "CMN",
+            "cusip": "46625H100",
+            "value": 7335636573000.0,
+            "shares": 24937574
+        },
+        {
+            "name": "ELI LILLY & CO",
+            "class": "CMN",
+            "cusip": "532457108",
+            "value": 6418582295000.0,
+            "shares": 6978465
+        },
+        {
+            "name": "EXXON MOBIL CORP",
+            "class": "CMN",
+            "cusip": "30231G102",
+            "value": 5998941708000.0,
+            "shares": 35358610
+        },
+        {
+            "name": "MICRON TECHNOLOGY INC",
+            "class": "CMN",
+            "cusip": "595112103",
+            "value": 5629856967000.0,
+            "shares": 16664270
+        },
+        {
+            "name": "BERKSHIRE HATHAWAY INC DEL",
+            "class": "CMN",
+            "cusip": "084670702",
+            "value": 5262415490000.0,
+            "shares": 10981668
+        },
+        {
+            "name": "WALMART INC",
+            "class": "CMN",
+            "cusip": "931142103",
+            "value": 5246030494000.0,
+            "shares": 42211382
+        },
+        {
+            "name": "VISA INC",
+            "class": "CMN",
+            "cusip": "92826C839",
+            "value": 5206392444000.0,
+            "shares": 17226020
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287242",
+            "value": 4879784748000.0,
+            "shares": 44772775
+        },
+        {
+            "name": "JOHNSON & JOHNSON",
+            "class": "CMN",
+            "cusip": "478160104",
+            "value": 4568912798000.0,
+            "shares": 18691347
+        },
+        {
+            "name": "MASTERCARD INCORPORATED",
+            "class": "CMN",
+            "cusip": "57636Q104",
+            "value": 4228603059000.0,
+            "shares": 8462960
+        },
+        {
+            "name": "ADVANCED MICRO DEVICES INC",
+            "class": "CMN",
+            "cusip": "007903107",
+            "value": 3925506528000.0,
+            "shares": 19296596
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287465",
+            "value": 3807527846000.0,
+            "shares": 39200327
+        },
+        {
+            "name": "ABBVIE INC",
+            "class": "CMN",
+            "cusip": "00287Y109",
+            "value": 3575030916000.0,
+            "shares": 16437679
+        },
+        {
+            "name": "TOTALENERGIES SE",
+            "class": "CMN",
+            "cusip": "F92124100",
+            "value": 3526939594000.0,
+            "shares": 38766098
+        },
+        {
+            "name": "COSTCO WHOLESALE CORPORATION",
+            "class": "CMN",
+            "cusip": "22160K105",
+            "value": 3457920456000.0,
+            "shares": 3470309
+        },
+        {
+            "name": "GE AEROSPACE",
+            "class": "CMN",
+            "cusip": "369604301",
+            "value": 3407167862000.0,
+            "shares": 12006794
+        },
+        {
+            "name": "BANK AMERICA CORP",
+            "class": "CMN",
+            "cusip": "060505104",
+            "value": 3299261479000.0,
+            "shares": 67677158
+        },
+        {
+            "name": "SANDISK CORP",
+            "class": "CMN",
+            "cusip": "80004C200",
+            "value": 3235176479000.0,
+            "shares": 5092040
+        },
+        {
+            "name": "NETFLIX INC.",
+            "class": "CMN",
+            "cusip": "64110L106",
+            "value": 3180373556000.0,
+            "shares": 33077208
+        },
+        {
+            "name": "COREWEAVE INC",
+            "class": "CMN",
+            "cusip": "21873S108",
+            "value": 3104962507000.0,
+            "shares": 40079547
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287614",
+            "value": 3005758935000.0,
+            "shares": 7049153
+        },
+        {
+            "name": "HOME DEPOT INC",
+            "class": "CMN",
+            "cusip": "437076102",
+            "value": 2982454939000.0,
+            "shares": 9068245
+        },
+        {
+            "name": "CISCO SYS INC",
+            "class": "CMN",
+            "cusip": "17275R102",
+            "value": 2951186839000.0,
+            "shares": 38035660
+        },
+        {
+            "name": "APPLIED MATLS INC",
+            "class": "CMN",
+            "cusip": "038222105",
+            "value": 2895791228000.0,
+            "shares": 8472428
+        },
+        {
+            "name": "PALANTIR TECHNOLOGIES INC",
+            "class": "CMN",
+            "cusip": "69608A108",
+            "value": 2830832705000.0,
+            "shares": 19352152
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287432",
+            "value": 2805376928000.0,
+            "shares": 32361021
+        },
+        {
+            "name": "MORGAN STANLEY",
+            "class": "CMN",
+            "cusip": "617446448",
+            "value": 2785393378000.0,
+            "shares": 16925281
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287507",
+            "value": 2733175245000.0,
+            "shares": 40473497
+        },
+        {
+            "name": "KLA CORP",
+            "class": "CMN",
+            "cusip": "482480100",
+            "value": 2732546242000.0,
+            "shares": 1855832
+        },
+        {
+            "name": "STATE STR SPDR DOW JONES IND",
+            "class": "CMN",
+            "cusip": "78467X109",
+            "value": 2677089533000.0,
+            "shares": 5779679
+        },
+        {
+            "name": "PROCTER & GAMBLE CO",
+            "class": "CMN",
+            "cusip": "742718109",
+            "value": 2662537555000.0,
+            "shares": 18433519
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287234",
+            "value": 2656243075000.0,
+            "shares": 46773077
+        },
+        {
+            "name": "MERCK & CO INC",
+            "class": "CMN",
+            "cusip": "58933Y105",
+            "value": 2626180733000.0,
+            "shares": 21832079
+        },
+        {
+            "name": "COCA COLA CO",
+            "class": "CMN",
+            "cusip": "191216100",
+            "value": 2601465471000.0,
+            "shares": 34207304
+        },
+        {
+            "name": "CHEVRON CORPORATION",
+            "class": "CMN",
+            "cusip": "166764100",
+            "value": 2560777602000.0,
+            "shares": 12376885
+        },
+        {
+            "name": "ORACLE CORP",
+            "class": "CMN",
+            "cusip": "68389X105",
+            "value": 2526134236000.0,
+            "shares": 17171737
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287598",
+            "value": 2485955033000.0,
+            "shares": 11634553
+        },
+        {
+            "name": "UNITEDHEALTH GROUP INC",
+            "class": "CMN",
+            "cusip": "91324P102",
+            "value": 2447752517000.0,
+            "shares": 9045982
+        },
+        {
+            "name": "CATERPILLAR INC",
+            "class": "CMN",
+            "cusip": "149123101",
+            "value": 2424471713000.0,
+            "shares": 3422171
+        },
+        {
+            "name": "BLOOM ENERGY CORP",
+            "class": "CMN",
+            "cusip": "093712107",
+            "value": 2371063213000.0,
+            "shares": 17499913
+        },
+        {
+            "name": "LAM RESEARCH CORP",
+            "class": "CMN",
+            "cusip": "512807306",
+            "value": 2369644704000.0,
+            "shares": 11090727
+        },
+        {
+            "name": "SPDR GOLD TR",
+            "class": "CMN",
+            "cusip": "78463V107",
+            "value": 2342519845000.0,
+            "shares": 5444049
+        },
+        {
+            "name": "ISHARES INC",
+            "class": "CMN",
+            "cusip": "46434G764",
+            "value": 2334605281000.0,
+            "shares": 29679701
+        },
+        {
+            "name": "RTX CORPORATION",
+            "class": "CMN",
+            "cusip": "75513E101",
+            "value": 2257993195000.0,
+            "shares": 11705512
+        },
+        {
+            "name": "SELECT SECTOR SPDR TR",
+            "class": "CMN",
+            "cusip": "81369Y605",
+            "value": 2241462902000.0,
+            "shares": 45401315
+        },
+        {
+            "name": "ASTRAZENECA PLC",
+            "class": "CMN",
+            "cusip": "G0593M107",
+            "value": 2185343945000.0,
+            "shares": 11080742
+        },
+        {
+            "name": "NEXTERA ENERGY INC",
+            "class": "CMN",
+            "cusip": "65339F101",
+            "value": 2165550390000.0,
+            "shares": 23315572
+        },
+        {
+            "name": "SELECT SECTOR SPDR TR",
+            "class": "CMN",
+            "cusip": "81369Y506",
+            "value": 2139422548000.0,
+            "shares": 34923646
+        },
+        {
+            "name": "LINDE PLC",
+            "class": "CMN",
+            "cusip": "G54950103",
+            "value": 2061575834000.0,
+            "shares": 4158415
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "46434V803",
+            "value": 2043630742000.0,
+            "shares": 48091087
+        },
+        {
+            "name": "GE VERNOVA INC",
+            "class": "CMN",
+            "cusip": "36828A101",
+            "value": 2013796515000.0,
+            "shares": 2307019
+        },
+        {
+            "name": "PEPSICO INC",
+            "class": "CMN",
+            "cusip": "713448108",
+            "value": 1996361304000.0,
+            "shares": 12855698
+        },
+        {
+            "name": "VERIZON COMMUNICATIONS INC",
+            "class": "CMN",
+            "cusip": "92343V104",
+            "value": 1980121985000.0,
+            "shares": 39444661
+        },
+        {
+            "name": "EATON CORP PLC",
+            "class": "CMN",
+            "cusip": "G29183103",
+            "value": 1969736270000.0,
+            "shares": 5507133
+        },
+        {
+            "name": "WELLS FARGO & CO",
+            "class": "CMN",
+            "cusip": "949746101",
+            "value": 1960926355000.0,
+            "shares": 24631659
+        },
+        {
+            "name": "TEXAS INSTRS INC",
+            "class": "CMN",
+            "cusip": "882508104",
+            "value": 1930675831000.0,
+            "shares": 9944760
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "46432F842",
+            "value": 1916415040000.0,
+            "shares": 21168840
+        },
+        {
+            "name": "INTERNATIONAL BUSINESS MACHS",
+            "class": "CMN",
+            "cusip": "459200101",
+            "value": 1876621385000.0,
+            "shares": 7742156
+        },
+        {
+            "name": "ISHARES INC",
+            "class": "CMN",
+            "cusip": "46434G103",
+            "value": 1836287395000.0,
+            "shares": 26326701
+        },
+        {
+            "name": "SPDR SERIES TRUST",
+            "class": "CMN",
+            "cusip": "78464A870",
+            "value": 1806337796000.0,
+            "shares": 14141844
+        },
+        {
+            "name": "INVESCO EXCHANGE TRADED FD T",
+            "class": "CMN",
+            "cusip": "46137V357",
+            "value": 1775946039000.0,
+            "shares": 9253575
+        },
+        {
+            "name": "AT&T INC",
+            "class": "CMN",
+            "cusip": "00206R102",
+            "value": 1735140874000.0,
+            "shares": 59853082
+        },
+        {
+            "name": "TJX COS INC NEW",
+            "class": "CMN",
+            "cusip": "872540109",
+            "value": 1725266990000.0,
+            "shares": 10803174
+        },
+        {
+            "name": "VANGUARD TAX-MANAGED FDS",
+            "class": "CMN",
+            "cusip": "921943858",
+            "value": 1724233734000.0,
+            "shares": 26907518
+        },
+        {
+            "name": "SALESFORCE INC",
+            "class": "CMN",
+            "cusip": "79466L302",
+            "value": 1709920613000.0,
+            "shares": 9160125
+        },
+        {
+            "name": "MCDONALDS CORP",
+            "class": "CMN",
+            "cusip": "580135101",
+            "value": 1693435461000.0,
+            "shares": 5448809
+        },
+        {
+            "name": "HONEYWELL INTL INC",
+            "class": "CMN",
+            "cusip": "438516106",
+            "value": 1673541961000.0,
+            "shares": 7404070
+        },
+        {
+            "name": "AMERICAN EXPRESS CO",
+            "class": "CMN",
+            "cusip": "025816109",
+            "value": 1650448317000.0,
+            "shares": 5456388
+        },
+        {
+            "name": "WESTERN DIGITAL CORP",
+            "class": "CMN",
+            "cusip": "958102105",
+            "value": 1611818395000.0,
+            "shares": 5958883
+        },
+        {
+            "name": "GILEAD SCIENCES INC",
+            "class": "CMN",
+            "cusip": "375558103",
+            "value": 1608610528000.0,
+            "shares": 11542014
+        },
+        {
+            "name": "THERMO FISHER SCIENTIFIC INC",
+            "class": "CMN",
+            "cusip": "883556102",
+            "value": 1605349703000.0,
+            "shares": 3266026
+        },
+        {
+            "name": "ISHARES BITCOIN TRUST ETF",
+            "class": "CMN",
+            "cusip": "46438F101",
+            "value": 1579571103000.0,
+            "shares": 41113251
+        },
+        {
+            "name": "ABBOTT LABORATORIES",
+            "class": "CMN",
+            "cusip": "002824100",
+            "value": 1554649814000.0,
+            "shares": 15142201
+        },
+        {
+            "name": "AMGEN INC",
+            "class": "CMN",
+            "cusip": "031162100",
+            "value": 1554223141000.0,
+            "shares": 4417289
+        },
+        {
+            "name": "PHILIP MORRIS INTL INC",
+            "class": "CMN",
+            "cusip": "718172109",
+            "value": 1548664734000.0,
+            "shares": 9366547
+        },
+        {
+            "name": "SPDR SERIES TRUST",
+            "class": "CMN",
+            "cusip": "78464A698",
+            "value": 1547015155000.0,
+            "shares": 23745436
+        },
+        {
+            "name": "VANGUARD BD INDEX FDS",
+            "class": "CMN",
+            "cusip": "921937827",
+            "value": 1545524162000.0,
+            "shares": 19710804
+        },
+        {
+            "name": "CONOCOPHILLIPS",
+            "class": "CMN",
+            "cusip": "20825C104",
+            "value": 1532069429000.0,
+            "shares": 11606588
+        },
+        {
+            "name": "QUALCOMM INC",
+            "class": "CMN",
+            "cusip": "747525103",
+            "value": 1484927548000.0,
+            "shares": 11530730
+        },
+        {
+            "name": "SPDR SERIES TRUST",
+            "class": "CMN",
+            "cusip": "78464A409",
+            "value": 1470743262000.0,
+            "shares": 15021380
+        },
+        {
+            "name": "ISHARES INC",
+            "class": "CMN",
+            "cusip": "464286400",
+            "value": 1465765442000.0,
+            "shares": 38180918
+        },
+        {
+            "name": "APPLOVIN CORP",
+            "class": "CMN",
+            "cusip": "03831W108",
+            "value": 1463907219000.0,
+            "shares": 3678159
+        },
+        {
+            "name": "CAPITAL ONE FINL CORP",
+            "class": "CMN",
+            "cusip": "14040H105",
+            "value": 1463234296000.0,
+            "shares": 8020798
+        },
+        {
+            "name": "UBER TECHNOLOGIES INC",
+            "class": "CMN",
+            "cusip": "90353T100",
+            "value": 1461825802000.0,
+            "shares": 20322894
+        },
+        {
+            "name": "WELLTOWER INC",
+            "class": "CMN",
+            "cusip": "95040Q104",
+            "value": 1461399389000.0,
+            "shares": 7391631
+        },
+        {
+            "name": "SEAGATE TECHNOLOGY HLDNGS PL",
+            "class": "CMN",
+            "cusip": "G7997R103",
+            "value": 1453621720000.0,
+            "shares": 3710490
+        },
+        {
+            "name": "GOLDMAN SACHS ETF TR",
+            "class": "CMN",
+            "cusip": "381430123",
+            "value": 1451611808000.0,
+            "shares": 16202833
+        },
+        {
+            "name": "AMPHENOL CORP",
+            "class": "CMN",
+            "cusip": "032095101",
+            "value": 1441233273000.0,
+            "shares": 11406674
+        },
+        {
+            "name": "T-MOBILE US INC",
+            "class": "CMN",
+            "cusip": "872590104",
+            "value": 1432538070000.0,
+            "shares": 6820635
+        },
+        {
+            "name": "UNITED STS OIL FD LP",
+            "class": "CMN",
+            "cusip": "91232N207",
+            "value": 1418790036000.0,
+            "shares": 11149627
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287226",
+            "value": 1401221928000.0,
+            "shares": 14115260
+        },
+        {
+            "name": "PFIZER INC",
+            "class": "CMN",
+            "cusip": "717081103",
+            "value": 1398669184000.0,
+            "shares": 49810156
+        },
+        {
+            "name": "SELECT SECTOR SPDR TR",
+            "class": "CMN",
+            "cusip": "81369Y704",
+            "value": 1394100653000.0,
+            "shares": 8619926
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287515",
+            "value": 1361909702000.0,
+            "shares": 17013238
+        },
+        {
+            "name": "INTUIT",
+            "class": "CMN",
+            "cusip": "461202103",
+            "value": 1356756598000.0,
+            "shares": 3137880
+        },
+        {
+            "name": "BLACKROCK INC",
+            "class": "CMN",
+            "cusip": "09290D101",
+            "value": 1353447240000.0,
+            "shares": 1407334
+        },
+        {
+            "name": "PDD HOLDINGS INC",
+            "class": "CMN",
+            "cusip": "722304102",
+            "value": 1307284362000.0,
+            "shares": 12793935
+        },
+        {
+            "name": "SPDR SERIES TRUST",
+            "class": "CMN",
+            "cusip": "78464A508",
+            "value": 1291871603000.0,
+            "shares": 22832655
+        },
+        {
+            "name": "ANALOG DEVICES INC",
+            "class": "CMN",
+            "cusip": "032654105",
+            "value": 1279835636000.0,
+            "shares": 4022869
+        },
+        {
+            "name": "CANADIAN NAT RES LTD MED TER",
+            "class": "CMN",
+            "cusip": "136385101",
+            "value": 1274714142000.0,
+            "shares": 26158715
+        },
+        {
+            "name": "CITIGROUP INC",
+            "class": "CMN",
+            "cusip": "172967424",
+            "value": 1274005998000.0,
+            "shares": 11233631
+        },
+        {
+            "name": "S&P GLOBAL INC",
+            "class": "CMN",
+            "cusip": "78409V104",
+            "value": 1262243503000.0,
+            "shares": 2967610
+        },
+        {
+            "name": "SYNOPSYS INC",
+            "class": "CMN",
+            "cusip": "871607107",
+            "value": 1261876506000.0,
+            "shares": 3182699
+        },
+        {
+            "name": "ARISTA NETWORKS INC",
+            "class": "CMN",
+            "cusip": "040413205",
+            "value": 1259384087000.0,
+            "shares": 10257241
+        },
+        {
+            "name": "DELL TECHNOLOGIES INC",
+            "class": "CMN",
+            "cusip": "24703L202",
+            "value": 1247091967000.0,
+            "shares": 7598196
+        },
+        {
+            "name": "COMCAST CORP NEW",
+            "class": "CMN",
+            "cusip": "20030N101",
+            "value": 1244394016000.0,
+            "shares": 43343574
+        },
+        {
+            "name": "LOWES COS INC",
+            "class": "CMN",
+            "cusip": "548661107",
+            "value": 1242782033000.0,
+            "shares": 5259786
+        },
+        {
+            "name": "SCHWAB CHARLES CORP",
+            "class": "CMN",
+            "cusip": "808513105",
+            "value": 1231947259000.0,
+            "shares": 13108611
+        },
+        {
+            "name": "BOSTON SCIENTIFIC CORP",
+            "class": "CMN",
+            "cusip": "101137107",
+            "value": 1215255564000.0,
+            "shares": 19366624
+        },
+        {
+            "name": "PROLOGIS INC.",
+            "class": "CMN",
+            "cusip": "74340W103",
+            "value": 1213108840000.0,
+            "shares": 9177704
+        },
+        {
+            "name": "MARVELL TECHNOLOGY INC",
+            "class": "CMN",
+            "cusip": "573874104",
+            "value": 1205213301000.0,
+            "shares": 12167727
+        },
+        {
+            "name": "ACCENTURE PLC IRELAND",
+            "class": "CMN",
+            "cusip": "G1151C101",
+            "value": 1200956167000.0,
+            "shares": 6056565
+        },
+        {
+            "name": "SPOTIFY TECHNOLOGY S A",
+            "class": "CMN",
+            "cusip": "L8681T102",
+            "value": 1189896509000.0,
+            "shares": 2453851
+        },
+        {
+            "name": "BOOKING HOLDINGS INC",
+            "class": "CMN",
+            "cusip": "09857L108",
+            "value": 1182442615000.0,
+            "shares": 280843
+        },
+        {
+            "name": "ENERGY TRANSFER L P",
+            "class": "CMN",
+            "cusip": "29273V100",
+            "value": 1166099182000.0,
+            "shares": 60419647
+        },
+        {
+            "name": "INTUITIVE SURGICAL INC",
+            "class": "CMN",
+            "cusip": "46120E602",
+            "value": 1163247897000.0,
+            "shares": 2523369
+        },
+        {
+            "name": "REGENERON PHARMACEUTICALS",
+            "class": "CMN",
+            "cusip": "75886F107",
+            "value": 1162559093000.0,
+            "shares": 1504658
+        },
+        {
+            "name": "UNION PAC CORP",
+            "class": "CMN",
+            "cusip": "907818108",
+            "value": 1146271637000.0,
+            "shares": 4724555
+        },
+        {
+            "name": "INTEL CORP",
+            "class": "CMN",
+            "cusip": "458140100",
+            "value": 1139345293000.0,
+            "shares": 25817931
+        },
+        {
+            "name": "MCKESSON CORP",
+            "class": "CMN",
+            "cusip": "58155Q103",
+            "value": 1129365488000.0,
+            "shares": 1305081
+        },
+        {
+            "name": "ALIBABA GROUP HLDG LTD",
+            "class": "CMN",
+            "cusip": "01609W102",
+            "value": 1123060560000.0,
+            "shares": 8951542
+        },
+        {
+            "name": "SHOPIFY INC",
+            "class": "CMN",
+            "cusip": "82509L107",
+            "value": 1121281046000.0,
+            "shares": 9452715
+        },
+        {
+            "name": "ISHARES TR",
+            "class": "CMN",
+            "cusip": "464287523",
+            "value": 1120339495000.0,
+            "shares": 3408810
+        },
+        {
+            "name": "CADENCE DESIGN SYSTEM INC",
+            "class": "CMN",
+            "cusip": "127387108",
+            "value": 1118622192000.0,
+            "shares": 4025703
+        },
+        {
+            "name": "MOTOROLA SOLUTIONS INC",
+            "class": "CMN",
+            "cusip": "620076307",
+            "value": 1116183292000.0,
+            "shares": 2572029
+        },
+        {
+            "name": "SELECT SECTOR SPDR TR",
+            "class": "CMN",
+            "cusip": "81369Y803",
+            "value": 1112177567000.0,
+            "shares": 8368529
+        },
+        {
+            "name": "PALO ALTO NETWORKS INC",
+            "class": "CMN",
+            "cusip": "697435105",
+            "value": 1111112322000.0,
+            "shares": 6930591
+        },
+        {
+            "name": "VERTEX PHARMACEUTICALS INC",
+            "class": "CMN",
+            "cusip": "92532F100",
+            "value": 1101424226000.0,
+            "shares": 2466575
+        },
+        {
+            "name": "CME GROUP INC",
+            "class": "CMN",
+            "cusip": "12572Q105",
+            "value": 1095189365000.0,
+            "shares": 3708107
+        },
+        {
+            "name": "CORNING INC",
+            "class": "CMN",
+            "cusip": "219350105",
+            "value": 1091104433000.0,
+            "shares": 8024597
+        },
+        {
+            "name": "DEERE & CO",
+            "class": "CMN",
+            "cusip": "244199105",
+            "value": 1084224234000.0,
+            "shares": 1924772
+        },
+        {
+            "name": "ASML HLDG NV",
+            "class": "CMN",
+            "cusip": "N07059210",
+            "value": 1072397141000.0,
+            "shares": 811912
+        },
+        {
+            "name": "QUANTA SVCS INC",
+            "class": "CMN",
+            "cusip": "74762E102",
+            "value": 1065283486000.0,
+            "shares": 1940336
+        },
+        {
+            "name": "SELECT SECTOR SPDR TR",
+            "class": "CMN",
+            "cusip": "81369Y209",
+            "value": 1052720945000.0,
+            "shares": 7180417
+        }
+    ]
+}

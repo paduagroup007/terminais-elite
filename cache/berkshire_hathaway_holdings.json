@@ -1,0 +1,213 @@
+{
+    "name": "Berkshire Hathaway",
+    "cik": "0001067983",
+    "type": " Warren Buffett (Holding)",
+    "last_updated": "2026-05-24",
+    "total_holdings_count": 29,
+    "total_portfolio_value": 263095703570000.0,
+    "data": [
+        {
+            "name": "APPLE INC",
+            "class": "COM",
+            "cusip": "037833100",
+            "value": 57843260493000.0,
+            "shares": 227917808
+        },
+        {
+            "name": "AMERICAN EXPRESS CO",
+            "class": "COM",
+            "cusip": "025816109",
+            "value": 45859204536000.0,
+            "shares": 151610700
+        },
+        {
+            "name": "COCA COLA CO",
+            "class": "COM",
+            "cusip": "191216100",
+            "value": 30420000000000.0,
+            "shares": 400000000
+        },
+        {
+            "name": "BANK AMERICA CORP",
+            "class": "COM",
+            "cusip": "060505104",
+            "value": 25039178044000.0,
+            "shares": 513624165
+        },
+        {
+            "name": "CHEVRON CORPORATION",
+            "class": "COM",
+            "cusip": "166764100",
+            "value": 17457364606000.0,
+            "shares": 84375856
+        },
+        {
+            "name": "OCCIDENTAL PETE CORP",
+            "class": "COM",
+            "cusip": "674599105",
+            "value": 17221193015000.0,
+            "shares": 264941431
+        },
+        {
+            "name": "ALPHABET INC",
+            "class": "CAP STK CL A",
+            "cusip": "02079K305",
+            "value": 15600071913000.0,
+            "shares": 54249798
+        },
+        {
+            "name": "CHUBB LTD SWITZ",
+            "class": "COM",
+            "cusip": "H1467J104",
+            "value": 11162836215000.0,
+            "shares": 34249183
+        },
+        {
+            "name": "MOODYS CORP",
+            "class": "COM",
+            "cusip": "615369105",
+            "value": 10762190653000.0,
+            "shares": 24669778
+        },
+        {
+            "name": "KRAFT HEINZ CO",
+            "class": "COM",
+            "cusip": "500754106",
+            "value": 7323527057000.0,
+            "shares": 325634818
+        },
+        {
+            "name": "DAVITA INC",
+            "class": "COM",
+            "cusip": "23918K108",
+            "value": 4626158909000.0,
+            "shares": 30100585
+        },
+        {
+            "name": "KROGER CO",
+            "class": "COM",
+            "cusip": "501044101",
+            "value": 3618000000000.0,
+            "shares": 50000000
+        },
+        {
+            "name": "SIRIUSXM HOLDINGS INC",
+            "class": "COMMON STOCK",
+            "cusip": "829933100",
+            "value": 2880548260000.0,
+            "shares": 124807117
+        },
+        {
+            "name": "DELTA AIR LINES INC",
+            "class": "COM NEW",
+            "cusip": "247361702",
+            "value": 2646532635000.0,
+            "shares": 39809456
+        },
+        {
+            "name": "VERISIGN INC",
+            "class": "COM",
+            "cusip": "92343E102",
+            "value": 2232726597000.0,
+            "shares": 8989880
+        },
+        {
+            "name": "CAPITAL ONE FINL CORP",
+            "class": "COM",
+            "cusip": "14040H105",
+            "value": 1304374500000.0,
+            "shares": 7150000
+        },
+        {
+            "name": "NEW YORK TIMES CO MTN BE",
+            "class": "CL A",
+            "cusip": "650111107",
+            "value": 1268219376000.0,
+            "shares": 15146535
+        },
+        {
+            "name": "ALLY FINL INC",
+            "class": "COM",
+            "cusip": "02005N100",
+            "value": 1137670000000.0,
+            "shares": 29000000
+        },
+        {
+            "name": "ALPHABET INC",
+            "class": "CAP STK CL C",
+            "cusip": "02079K107",
+            "value": 1028454775000.0,
+            "shares": 3585215
+        },
+        {
+            "name": "LIBERTY LIVE HOLDINGS INC",
+            "class": "COM SHS SER C",
+            "cusip": "530909308",
+            "value": 996356028000.0,
+            "shares": 10587143
+        },
+        {
+            "name": "LENNAR CORP",
+            "class": "CL A",
+            "cusip": "526057104",
+            "value": 877052911000.0,
+            "shares": 10099642
+        },
+        {
+            "name": "NUCOR CORP",
+            "class": "COM",
+            "cusip": "670346105",
+            "value": 660686383000.0,
+            "shares": 3907075
+        },
+        {
+            "name": "LIBERTY LIVE HOLDINGS INC",
+            "class": "COM SER A",
+            "cusip": "530909100",
+            "value": 456970925000.0,
+            "shares": 4986588
+        },
+        {
+            "name": "LOUISIANA PAC CORP",
+            "class": "COM",
+            "cusip": "546347105",
+            "value": 412113691000.0,
+            "shares": 5664793
+        },
+        {
+            "name": "CONSTELLATION BRANDS INC",
+            "class": "CL A",
+            "cusip": "21036P108",
+            "value": 94933500000.0,
+            "shares": 632890
+        },
+        {
+            "name": "NVR INC",
+            "class": "COM",
+            "cusip": "62944T105",
+            "value": 73226191000.0,
+            "shares": 11112
+        },
+        {
+            "name": "MACYS INC",
+            "class": "COM",
+            "cusip": "55616P104",
+            "value": 54963842000.0,
+            "shares": 3038355
+        },
+        {
+            "name": "LENNAR CORP",
+            "class": "CL B",
+            "cusip": "526057302",
+            "value": 19995576000.0,
+            "shares": 237703
+        },
+        {
+            "name": "JEFFERIES FINANCIAL GROUP IN",
+            "class": "COM",
+            "cusip": "47233W109",
+            "value": 17892939000.0,
+            "shares": 433558
+        }
+    ]
+}
