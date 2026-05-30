@@ -7615,6 +7615,23 @@ elif st.session_state.active_terminal == "family_office_br":
                 """, unsafe_allow_html=True)
                 
         with fo_sub_tabs[1]:
+            # --- PROD DEBUG BLOCK ---
+            import os, json
+            st.sidebar.markdown("---")
+            st.sidebar.write("### 🔍 DEBUG INFRA")
+            st.sidebar.write("CWD:", os.getcwd())
+            st.sidebar.write("JSON Exists:", os.path.exists("cache/brazil_elite_holdings.json"))
+            if os.path.exists("cache/brazil_elite_holdings.json"):
+                try:
+                    with open("cache/brazil_elite_holdings.json", "r", encoding="utf-8") as f_deb:
+                        debug_json = json.load(f_deb)
+                    st.sidebar.write("JSON Keys count:", len(debug_json.get("funds", {})))
+                    st.sidebar.write("JSON Funds:", list(debug_json.get("funds", {}).keys()))
+                except Exception as debug_e:
+                    st.sidebar.write("Debug Error:", str(debug_e))
+            else:
+                st.sidebar.write("Cache dir files:", os.listdir("cache") if os.path.exists("cache") else "cache dir not found")
+            # -------------------------
             st.markdown("### Rastreador de Portfólios (Billionaire & Fund Tracker)")
             st.write("Selecione um fundo de elite ou grande investidor individual brasileiro para abrir seu portfólio completo consolidado de ações B3 e analisar suas movimentações táticas.")
             
