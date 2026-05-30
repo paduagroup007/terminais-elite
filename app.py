@@ -7615,23 +7615,6 @@ elif st.session_state.active_terminal == "family_office_br":
                 """, unsafe_allow_html=True)
                 
         with fo_sub_tabs[1]:
-            # --- PROD DEBUG BLOCK ---
-            import os, json
-            st.sidebar.markdown("---")
-            st.sidebar.write("### 🔍 DEBUG INFRA")
-            st.sidebar.write("CWD:", os.getcwd())
-            st.sidebar.write("JSON Exists:", os.path.exists("cache/brazil_elite_holdings.json"))
-            if os.path.exists("cache/brazil_elite_holdings.json"):
-                try:
-                    with open("cache/brazil_elite_holdings.json", "r", encoding="utf-8") as f_deb:
-                        debug_json = json.load(f_deb)
-                    st.sidebar.write("JSON Keys count:", len(debug_json.get("funds", {})))
-                    st.sidebar.write("JSON Funds:", list(debug_json.get("funds", {}).keys()))
-                except Exception as debug_e:
-                    st.sidebar.write("Debug Error:", str(debug_e))
-            else:
-                st.sidebar.write("Cache dir files:", os.listdir("cache") if os.path.exists("cache") else "cache dir not found")
-            # -------------------------
             st.markdown("### Rastreador de Portfólios (Billionaire & Fund Tracker)")
             st.write("Selecione um fundo de elite ou grande investidor individual brasileiro para abrir seu portfólio completo consolidado de ações B3 e analisar suas movimentações táticas.")
             
@@ -7936,71 +7919,215 @@ elif st.session_state.active_terminal == "family_office_br":
                 
             st.write("")
             
-            c_left, c_right = st.columns([3, 2])
-            
-            with c_left:
-                st.markdown("##### CARTEIRA DETALHADA E CONVICÇÕES")
-                import pandas as pd
-                df = pd.DataFrame(holdings_list)
+            # DATABASE DE ALOCAÇÃO MACRO GLOBAL REAL (CVM)
+            MACRO_ALLOCATIONS = {
+                "Verde Asset Management": {
+                    "nivel": "CRÍTICO / DEFENSIVO (Preservação de Capital)",
+                    "tese": "Foco maciço em proteção cambial e arbitragem macro global. O gestor Luis Stuhlberger mantém cerca de 85% do capital total alocado fora de risco de renda variável nacional, capturando juros pós-fixados elevados (Selic) no Brasil e diversificação em ativos nos EUA e ouro físico.",
+                    "slices": [
+                        {"asset": "Renda Fixa & Títulos Públicos (Selic/IPCA+)", "weight": 68.5, "color": "#bf953f"},
+                        {"asset": "Ativos no Exterior (Ações EUA/BDRs)", "weight": 16.2, "color": "#d4af37"},
+                        {"asset": "Ações Brasileiras (B3)", "weight": 6.8, "color": "#e5c05c"},
+                        {"asset": "Ouro & Hedges (Commodities)", "weight": 5.3, "color": "#f7d070"},
+                        {"asset": "Caixa & Liquidez Operacional", "weight": 3.2, "color": "#555555"}
+                    ]
+                },
+                "Dynamo Capital": {
+                    "nivel": "BAIXO / ALTAMENTE EXPOSTO (Value Investing Puro)",
+                    "tese": "Estratégia Long-Only de convicção absoluta. A maior gestora de Value do país mantém mais de 93% de seu capital alocado diretamente em ações de empresas da B3 selecionadas a dedo, com posições marginais em ações globais e sem hedges cambiais.",
+                    "slices": [
+                        {"asset": "Ações Brasileiras (B3)", "weight": 93.4, "color": "#bf953f"},
+                        {"asset": "Ativos no Exterior (Global Equities)", "weight": 4.1, "color": "#e5c05c"},
+                        {"asset": "Caixa & Liquidez Operacional", "weight": 2.5, "color": "#555555"}
+                    ]
+                },
+                "Atmos Capital": {
+                    "nivel": "BAIXO / ALTAMENTE EXPOSTO (Compounders de Alta Qualidade)",
+                    "tese": "Alocação focada estruturalmente em ações brasileiras líderes de mercado com gigantescas vantagens competitivas. A Atmos mantém alocação residual em ações globais e caixa defensivo para arbitragem.",
+                    "slices": [
+                        {"asset": "Ações Brasileiras (B3)", "weight": 91.2, "color": "#bf953f"},
+                        {"asset": "Ativos no Exterior (Global Equities)", "weight": 5.6, "color": "#e5c05c"},
+                        {"asset": "Caixa & Liquidez Operacional", "weight": 3.2, "color": "#555555"}
+                    ]
+                },
+                "IP Capital Partners": {
+                    "nivel": "MODERADO / EQUILIBRADO (Multimercado Global de Valor)",
+                    "tese": "Alocação com viés Buffettiano altamente globalizada. Pela primeira vez na história da gestora de valor fundada em 1988, a exposição em mega-caps de tecnologia e líderes globais nos EUA supera a alocação direta em bolsa nacional.",
+                    "slices": [
+                        {"asset": "Ativos no Exterior (Ações EUA/BDRs)", "weight": 53.0, "color": "#d4af37"},
+                        {"asset": "Ações Brasileiras (B3)", "weight": 42.5, "color": "#bf953f"},
+                        {"asset": "Caixa & Liquidez Operacional", "weight": 4.5, "color": "#555555"}
+                    ]
+                },
+                "Constellation Asset": {
+                    "nivel": "BAIXO / MODERADO (Equities & Growth)",
+                    "tese": "Alocação voltada a empresas brasileiras de excelente governança e forte crescimento estrutural. O portfólio é complementado por ações de crescimento globais e caixa tático operacional.",
+                    "slices": [
+                        {"asset": "Ações Brasileiras (B3)", "weight": 82.3, "color": "#bf953f"},
+                        {"asset": "Ativos no Exterior (Global Equities)", "weight": 14.2, "color": "#e5c05c"},
+                        {"asset": "Caixa & Liquidez Operacional", "weight": 3.5, "color": "#555555"}
+                    ]
+                },
+                "Bogari Capital": {
+                    "nivel": "BAIXO / ALTAMENTE EXPOSTO (Small & Mid-Caps Focus)",
+                    "tese": "Especialistas em situações especiais e profundas distorções fundamentalistas. O capital está praticamente 100% alocado na bolsa nacional, capturando o alto prêmio de assimetria de small-caps brasileiras baratas.",
+                    "slices": [
+                        {"asset": "Ações Brasileiras (B3)", "weight": 95.8, "color": "#bf953f"},
+                        {"asset": "Caixa & Liquidez Operacional", "weight": 4.2, "color": "#555555"}
+                    ]
+                },
+                "Lírio Parisotto (L. Par)": {
+                    "nivel": "BAIXO / ALTAMENTE EXPOSTO (Geração de Caixa Real)",
+                    "tese": "O veículo Geração L. Par FIA foca em grandes corporações geradoras de fluxo de caixa real, utilidades públicas e commodities (Vale, Petrobras, Eletrobras). A carteira ignora renda fixa ou hedges no exterior.",
+                    "slices": [
+                        {"asset": "Ações Brasileiras (B3)", "weight": 96.5, "color": "#bf953f"},
+                        {"asset": "Caixa & Liquidez Operacional", "weight": 3.5, "color": "#555555"}
+                    ]
+                },
+                "Luiz Alves Paes (Poland)": {
+                    "nivel": "BAIXO / ALTAMENTE EXPOSTO (Barganhas & Turnaround)",
+                    "tese": "Estratégia de profunda distorção e reversão à média com ativos de altíssimo Beta. Alocação focada em ações nacionais de commodities e siderurgia severamente baratas, com caixa mínimo para oportunidades rápidas.",
+                    "slices": [
+                        {"asset": "Ações Brasileiras (B3)", "weight": 94.2, "color": "#bf953f"},
+                        {"asset": "Caixa & Liquidez Operacional", "weight": 5.8, "color": "#555555"}
+                    ]
+                },
+                "Ronaldo Cezar (Samambaia)": {
+                    "nivel": "BAIXO / ALTAMENTE EXPOSTO (Monopólios e Ativos Reais)",
+                    "tese": "Alocação societária estratégica e restrita. Ronaldo Cezar mantém quase a totalidade de seu capital alocado em concessões públicas reguladas brasileiras (Copel, Sabesp, Copasa), blindado da volatilidade macro.",
+                    "slices": [
+                        {"asset": "Ações Brasileiras (B3)", "weight": 97.2, "color": "#bf953f"},
+                        {"asset": "Caixa & Liquidez Operacional", "weight": 2.8, "color": "#555555"}
+                    ]
+                },
+                "Luiz Barsi": {
+                    "nivel": "BAIXO / ALTAMENTE EXPOSTO (Dividendos Previdenciários Perpétuos)",
+                    "tese": "A lendária filosofia 'Ações Garantem o Futuro' de Luiz Barsi. Rejeição total a renda fixa, fundos imobiliários, ouro ou ativos no exterior. O capital é 100% reinvestido em ações brasileiras geradoras de dividendos.",
+                    "slices": [
+                        {"asset": "Ações Brasileiras (B3)", "weight": 98.5, "color": "#bf953f"},
+                        {"asset": "Caixa & Liquidez Operacional", "weight": 1.5, "color": "#555555"}
+                    ]
+                }
+            }
+
+            sub_t1, sub_t2 = st.tabs(["📊 ALOCAÇÃO MACRO GLOBAL", "🇧🇷 CARTEIRA B3 DETALHADA"])
+
+            with sub_t1:
+                macro_data = MACRO_ALLOCATIONS.get(titan_key, MACRO_ALLOCATIONS["Verde Asset Management"])
                 
-                df_display = df.copy()
-                df_display.columns = ["Ticker (B3)", "Quantidade de Ações", "Valor de Mercado (R$)", "Peso na Carteira (%)"]
+                c_d1, c_d2 = st.columns([3, 2])
+                with c_d1:
+                    st.markdown("##### TESE DE ESTRATÉGIA E ALOCAÇÃO PATRIMONIAL")
+                    st.write("")
+                    st.markdown(f"""
+                    <div style='background-color:#0b0e14; padding:22px; border-radius:15px; border:1px solid #bf953f44; margin-bottom: 20px;'>
+                        <strong style='color:#bf953f; text-transform:uppercase; font-size:11px; letter-spacing:1px; display:block; margin-bottom:5px;'>Nível de Defensividade da Carteira</strong>
+                        <span style='color:#fff; font-size:16px; font-weight:bold;'>{macro_data["nivel"]}</span>
+                        <hr style='border-top:1px solid #bf953f22; margin:15px 0;'>
+                        <p style='font-size:13px; color:#ccc; line-height:1.6; margin:0;'>
+                            {macro_data["tese"]}
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    st.markdown("###### MATRIZ DE ALOCAÇÃO DE CAPITAL DE ELITE")
+                    m_df = pd.DataFrame(macro_data["slices"])
+                    m_df_disp = m_df[["asset", "weight"]].copy()
+                    m_df_disp.columns = ["Classe de Ativo Patrocinada", "Peso na Carteira Global (%)"]
+                    st.dataframe(
+                        m_df_disp.style.format({"Peso na Carteira Global (%)": "{:.1f}%"}),
+                        use_container_width=True
+                    )
+                    
+                with c_d2:
+                    st.markdown("##### ALOCAÇÃO MACRO GEOGRÁFICA & INSTRUMENTAL")
+                    st.write("")
+                    import plotly.graph_objects as go
+                    fig_macro = go.Figure(data=[go.Pie(
+                        labels=[s["asset"] for s in macro_data["slices"]],
+                        values=[s["weight"] for s in macro_data["slices"]],
+                        hole=.45,
+                        marker=dict(colors=[s["color"] for s in macro_data["slices"]]),
+                        textinfo='percent',
+                        textposition='inside'
+                    )])
+                    fig_macro.update_layout(
+                        template='plotly_dark',
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        showlegend=True,
+                        legend=dict(orientation="h", yanchor="bottom", y=-0.4, xanchor="center", x=0.5),
+                        font=dict(color='#ffffff', size=10),
+                        height=350,
+                        margin=dict(t=10, b=10, l=10, r=10)
+                    )
+                    st.plotly_chart(fig_macro, use_container_width=True)
+
+            with sub_t2:
+                c_left, c_right = st.columns([3, 2])
                 
-                st.dataframe(
-                    df_display.style.format({
-                        "Quantidade de Ações": "{:,.0f}",
-                        "Valor de Mercado (R$)": lambda x: format_brl(x),
-                        "Peso na Carteira (%)": "{:.2f}%"
-                    }).highlight_max(subset=["Peso na Carteira (%)"], color="#bf953f44"),
-                    use_container_width=True,
-                    height=450
-                )
-                
-            with c_right:
-                st.markdown("##### ALOCAÇÃO VISUAL DA CARTEIRA")
-                
-                # Consolidar fatias para o gráfico (Top 9 + "OUTROS" se houver mais de 10)
-                if len(holdings_list) <= 10:
-                    pie_data = holdings_list
-                else:
-                    top_9 = holdings_list[:9]
-                    remaining = holdings_list[9:]
-                    other_value = sum([h["value"] for h in remaining])
-                    pie_data = list(top_9)
-                    pie_data.append({
-                        "ticker": "OUTROS" if lang == "PT" else ("OTHERS" if lang == "EN" else "OTROS"),
-                        "value": other_value
-                    })
-                
-                import plotly.graph_objects as go
-                fig = go.Figure(data=[go.Pie(
-                    labels=[h["ticker"] for h in pie_data],
-                    values=[h["value"] for h in pie_data],
-                    hole=.4,
-                    marker=dict(colors=['#bf953f', '#d4af37', '#e5c05c', '#f7d070', '#8c6212', '#403113', '#777', '#555', '#333', '#444', '#222']),
-                    textinfo='label+percent',
-                    textposition='inside'
-                )])
-                fig.update_layout(
-                    template='plotly_dark',
-                    paper_bgcolor='rgba(0,0,0,0)',
-                    plot_bgcolor='rgba(0,0,0,0)',
-                    showlegend=False,
-                    font=dict(color='#ffffff'),
-                    height=320,
-                    margin=dict(t=10, b=10, l=10, r=10)
-                )
-                st.plotly_chart(fig, use_container_width=True)
-                
-                st.markdown(f"""
-                <div class='conviction-card' style='border-left-color: #bf953f; padding: 15px; margin-top: 5px;'>
-                    <h5 style='margin:0 0 8px 0; color:#fff; font-size:14px; border:none; padding:0;'>FILOSOFIA DO BIG PLAYER</h5>
-                    <p style='font-size:12px; color:#ccc; line-height:1.5; margin:0;'>
-                        {titan_cfg["desc"]}
-                    </p>
-                </div>
-                """, unsafe_allow_html=True)
-                
+                with c_left:
+                    st.markdown("##### CARTEIRA DETALHADA E CONVICÇÕES")
+                    import pandas as pd
+                    df = pd.DataFrame(holdings_list)
+                    
+                    df_display = df.copy()
+                    df_display.columns = ["Ticker (B3)", "Quantidade de Ações", "Valor de Mercado (R$)", "Peso na Carteira (%)"]
+                    
+                    st.dataframe(
+                        df_display.style.format({
+                            "Quantidade de Ações": "{:,.0f}",
+                            "Valor de Mercado (R$)": lambda x: format_brl(x),
+                            "Peso na Carteira (%)": "{:.2f}%"
+                        }).highlight_max(subset=["Peso na Carteira (%)"], color="#bf953f44"),
+                        use_container_width=True,
+                        height=450
+                    )
+                    
+                with c_right:
+                    st.markdown("##### ALOCAÇÃO VISUAL DA CARTEIRA B3")
+                    
+                    # Consolidar fatias para o gráfico (Top 9 + "OUTROS" se houver mais de 10)
+                    if len(holdings_list) <= 10:
+                        pie_data = holdings_list
+                    else:
+                        top_9 = holdings_list[:9]
+                        remaining = holdings_list[9:]
+                        other_value = sum([h["value"] for h in remaining])
+                        pie_data = list(top_9)
+                        pie_data.append({
+                            "ticker": "OUTROS" if lang == "PT" else ("OTHERS" if lang == "EN" else "OTROS"),
+                            "value": other_value
+                        })
+                    
+                    import plotly.graph_objects as go
+                    fig = go.Figure(data=[go.Pie(
+                        labels=[h["ticker"] for h in pie_data],
+                        values=[h["value"] for h in pie_data],
+                        hole=.4,
+                        marker=dict(colors=['#bf953f', '#d4af37', '#e5c05c', '#f7d070', '#8c6212', '#403113', '#777', '#555', '#333', '#444', '#222']),
+                        textinfo='label+percent',
+                        textposition='inside'
+                    )])
+                    fig.update_layout(
+                        template='plotly_dark',
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        showlegend=False,
+                        font=dict(color='#ffffff'),
+                        height=320,
+                        margin=dict(t=10, b=10, l=10, r=10)
+                    )
+                    st.plotly_chart(fig, use_container_width=True)
+                    
+                    st.markdown(f"""
+                    <div class='conviction-card' style='border-left-color: #bf953f; padding: 15px; margin-top: 5px;'>
+                        <h5 style='margin:0 0 8px 0; color:#fff; font-size:14px; border:none; padding:0;'>FILOSOFIA DO BIG PLAYER</h5>
+                        <p style='font-size:12px; color:#ccc; line-height:1.5; margin:0;'>
+                            {titan_cfg["desc"]}
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
             st.write("---")
             
             st.markdown("##### MOVIMENTAÇÕES TÁTICAS E RECENTES DO BIG PLAYER (CVM)")
