@@ -4,6 +4,3 @@ plotly
 yfinance>=1.4.0
 requests
 beautifulsoup4
-lxml
-cffi
-curl_cffi
