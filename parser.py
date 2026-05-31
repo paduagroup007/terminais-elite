@@ -7,7 +7,14 @@ class EliteB3Parser:
         self.folder_path = folder_path
 
     def get_available_files(self):
-        return [f for f in os.listdir(self.folder_path) if f.endswith('.xls')]
+        if not os.path.exists(self.folder_path):
+            return []
+        files = []
+        for f in os.listdir(self.folder_path):
+            lower_f = f.lower()
+            if lower_f.endswith('.xls') or lower_f.endswith('.xlsx'):
+                files.append(f)
+        return sorted(files)
 
     def parse_file(self, file_name):
         full_path = os.path.join(self.folder_path, file_name)

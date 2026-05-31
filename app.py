@@ -948,7 +948,17 @@ def get_market_data(ticker):
 app_b3_state = load_b3_state()
 
 # Inicializar B3 Parser
-base_path_b3 = r"C:\Users\padua\OneDrive\Área de Trabalho\balanços empresas B3"
+local_windows_path1 = r"C:\Users\padua\OneDrive\Área de Trabalho\balanços empresas B3"
+local_windows_path2 = r"C:\Users\padua\OneDrive\Área de Trabalho\balanços empresas B3"
+
+if os.path.exists(local_windows_path1):
+    base_path_b3 = local_windows_path1
+elif os.path.exists(local_windows_path2):
+    base_path_b3 = local_windows_path2
+else:
+    # Pasta portátil e compatível com a nuvem (Linux Render / Docker)
+    base_path_b3 = os.path.join(os.path.dirname(__file__), "balancos_empresas_b3")
+
 if not os.path.exists(base_path_b3):
     try:
         os.makedirs(base_path_b3)
@@ -989,7 +999,7 @@ if st.session_state.active_terminal == "balance_sheets":
     # UPLOAD DE NOVO ARQUIVO B3
     uploaded_file = st.sidebar.file_uploader(
         "IMPORTAR PLANILHA (B3)" if lang == "PT" else ("IMPORT SPREADSHEET (B3)" if lang == "EN" else "IMPORTAR PLANILLA (B3)"), 
-        type=["xls"]
+        type=["xls", "xlsx"]
     )
     if uploaded_file:
         with open(os.path.join(base_path_b3, uploaded_file.name), "wb") as f:
