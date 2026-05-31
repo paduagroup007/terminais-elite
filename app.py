@@ -997,15 +997,29 @@ if st.session_state.active_terminal != "hub":
 if st.session_state.active_terminal == "balance_sheets":
     st.sidebar.markdown(f"<h3 style='font-size:16px; border:none; padding:0; text-align:center; color:#bf953f; font-weight:bold; margin-bottom:15px;'>{t['term_3_title']}</h3>", unsafe_allow_html=True)
     # UPLOAD DE NOVO ARQUIVO B3
+    if "b3_uploader_key" not in st.session_state:
+        st.session_state.b3_uploader_key = 0
+    if "b3_upload_success" not in st.session_state:
+        st.session_state.b3_upload_success = False
+
     uploaded_file = st.sidebar.file_uploader(
         "IMPORTAR PLANILHA (B3)" if lang == "PT" else ("IMPORT SPREADSHEET (B3)" if lang == "EN" else "IMPORTAR PLANILLA (B3)"), 
-        type=["xls", "xlsx"]
+        type=["xls", "xlsx"],
+        key=f"b3_uploader_{st.session_state.b3_uploader_key}"
     )
     if uploaded_file:
-        with open(os.path.join(base_path_b3, uploaded_file.name), "wb") as f:
-            f.write(uploaded_file.getbuffer())
-        st.sidebar.success("Arquivo Importado!" if lang == "PT" else ("Spreadsheet Imported!" if lang == "EN" else "¡Planilla Importada!"))
-        st.rerun()
+        try:
+            with open(os.path.join(base_path_b3, uploaded_file.name), "wb") as f:
+                f.write(uploaded_file.getbuffer())
+            st.session_state.b3_uploader_key += 1
+            st.session_state.b3_upload_success = True
+            st.rerun()
+        except Exception as e:
+            st.sidebar.error(f"Erro ao salvar arquivo: {str(e)}" if lang == "PT" else f"Error saving file: {str(e)}")
+            
+    if st.session_state.b3_upload_success:
+        st.sidebar.success("Arquivo Importado com Sucesso!" if lang == "PT" else ("Spreadsheet Imported Successfully!" if lang == "EN" else "¡Planilla Importada con Éxito!"))
+        st.session_state.b3_upload_success = False
     
     st.sidebar.write("---")
     
