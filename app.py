@@ -4452,23 +4452,35 @@ elif st.session_state.active_terminal == "balance_sheets":
                 dividendo_pago_rs = (dy_atual / 100) * price_now
                 preco_teto_bazin = dividendo_pago_rs / 0.06 if dividendo_pago_rs > 0 else 0.0
                 
-                # Piotroski F-Score (Saúde Fundamentalista)
+                # Piotroski F-Score (Saúde Fundamentalista) - Comparação YoY Real (TTM vs 12M Anteriores)
                 f_score = 0
-                if lucro_ttm > 0: f_score += 1
-                if last['Caixa'] > df['Caixa'].iloc[0]: f_score += 1
+                if lucro_ttm > 0: 
+                    f_score += 1
                 
-                lucro_ano_anterior = df['Lucro'].iloc[4:8].sum() if len(df) >= 8 else df['Lucro'].iloc[0]
-                patrimonio_ano_anterior = df['Patrimonio'].iloc[4] if len(df) >= 8 else patrimonio_inicial
+                # Caixa (trimestre atual vs mesmo trimestre do ano anterior, ex: index -5)
+                caixa_anterior = df['Caixa'].iloc[-5] if len(df) >= 5 else df['Caixa'].iloc[0]
+                if last['Caixa'] > caixa_anterior: 
+                    f_score += 1
+                
+                # ROE (TTM vs 12M anteriores)
+                lucro_ano_anterior = df['Lucro'].iloc[-8:-4].sum() if len(df) >= 8 else df['Lucro'].iloc[0]
+                patrimonio_ano_anterior = df['Patrimonio'].iloc[-5] if len(df) >= 5 else patrimonio_inicial
                 roe_anterior = (lucro_ano_anterior / patrimonio_ano_anterior) * 100 if patrimonio_ano_anterior > 0 else 0
-                if roe > roe_anterior: f_score += 1
+                if roe > roe_anterior: 
+                    f_score += 1
                 
-                divida_liq_anterior = df['Divida'].iloc[0] - df['Caixa'].iloc[0]
-                ebitda_anterior = df['EBITDA'].iloc[0:4].sum() if len(df) >= 4 else df['EBITDA'].iloc[0]
+                # Alavancagem Dívida Líquida / EBITDA (TTM vs 12M anteriores)
+                divida_liq_anterior = (df['Divida'].iloc[-5] - df['Caixa'].iloc[-5]) if len(df) >= 5 else (df['Divida'].iloc[0] - df['Caixa'].iloc[0])
+                ebitda_anterior = df['EBITDA'].iloc[-8:-4].sum() if len(df) >= 8 else df['EBITDA'].iloc[0]
                 alavancagem_anterior = divida_liq_anterior / ebitda_anterior if ebitda_anterior > 0 else 999.0
-                if alavancagem < alavancagem_anterior: f_score += 1
+                if alavancagem < alavancagem_anterior: 
+                    f_score += 1
                 
-                margem_anterior = (ebitda_anterior / (df['Receita'].iloc[0:4].sum() if len(df) >= 4 else df['Receita'].iloc[0])) * 100 if ebitda_anterior > 0 else 0
-                if margem_ebitda_atual > margem_anterior: f_score += 1
+                # Margem EBITDA (TTM vs 12M anteriores)
+                receita_anterior = df['Receita'].iloc[-8:-4].sum() if len(df) >= 8 else df['Receita'].iloc[0]
+                margem_anterior = (ebitda_anterior / receita_anterior) * 100 if receita_anterior > 0 else 0
+                if margem_ebitda_atual > margem_anterior: 
+                    f_score += 1
                 
                 # Diagnósticos Textuais Localizados e Inteligentes
                 if lang_key == "PT":
