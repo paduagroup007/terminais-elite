@@ -4128,6 +4128,7 @@ elif st.session_state.active_terminal == "balance_sheets":
             lucro_ttm = df_ttm['Lucro'].sum()
             ebitda_ttm = df_ttm['EBITDA'].sum()
             patrimonio_atual = last['Patrimonio']
+            roe = (lucro_ttm / patrimonio_atual) * 100 if patrimonio_atual > 0 else 0.0
             divida_liquida = last['Divida'] - last['Caixa']
             
             # TTM do ano anterior (para comparação de crescimento real)
@@ -4243,7 +4244,6 @@ elif st.session_state.active_terminal == "balance_sheets":
                     st.markdown(f"""
                     <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 20px; margin-top: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                            <span style="color: #bf953f; font-size: 18px;">🧠</span>
                             <strong style="color: #bf953f; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Cérebro Elite IA | Eficiência Operacional</strong>
                         </div>
                         <p style="color: #e0e0e0; font-size: 12px; line-height: 1.6; margin: 0;">
@@ -4293,7 +4293,6 @@ elif st.session_state.active_terminal == "balance_sheets":
                 st.markdown(f"""
                 <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 20px; margin-top: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                        <span style="color: #bf953f; font-size: 18px;">🧠</span>
                         <strong style="color: #bf953f; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Cérebro Elite IA | Lucratividade e Retorno</strong>
                     </div>
                     <p style="color: #e0e0e0; font-size: 12px; line-height: 1.6; margin: 0;">
@@ -5139,7 +5138,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                 taxa_media = info['taxa_media']
                 
                 if squeeze_score >= 70:
-                    squeeze_rating = f"🚨 ALERTA MÁXIMO DE SHORT SQUEEZE (Score {squeeze_score}/100)"
+                    squeeze_rating = f"ALERTA MÁXIMO DE SHORT SQUEEZE (Score {squeeze_score}/100)"
                     squeeze_color = "#ff4b4b"
                     squeeze_desc = (
                         f"A empresa {current_ticker} apresenta uma taxa de aluguel elevada de **{taxa_media:.2f}% a.a.** "
@@ -5148,7 +5147,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                         "ou aumento repentino de fluxo comprador forçará uma corrida compradora frenética dos vendidos para fechar posições, gerando ralis verticais de altíssima velocidade."
                     )
                 elif squeeze_score >= 40:
-                    squeeze_rating = f"⚠️ PRESSÃO MODERADA DE VENDA (Score {squeeze_score}/100)"
+                    squeeze_rating = f"PRESSÃO MODERADA DE VENDA (Score {squeeze_score}/100)"
                     squeeze_color = "orange"
                     squeeze_desc = (
                         f"A empresa {current_ticker} possui **{vol_pct:.2f}% do Free Float alugado**, "
@@ -5156,7 +5155,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                         "O mercado monitora se as posições vendidas continuarão crescendo ou se iniciarão um processo lento de desalocação. Excelente para manter no radar tático."
                     )
                 else:
-                    squeeze_rating = f"🟢 COMPORTAMENTO FUNDAMENTALISTA PURO (Score {squeeze_score}/100)"
+                    squeeze_rating = f"COMPORTAMENTO FUNDAMENTALISTA PURO (Score {squeeze_score}/100)"
                     squeeze_color = "#00ffa5"
                     squeeze_desc = (
                         f"O volume alugado da empresa {current_ticker} é insignificante (**{vol_pct:.2f}% do float**), "
@@ -5167,7 +5166,6 @@ elif st.session_state.active_terminal == "balance_sheets":
                 st.markdown(f"""
                 <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 20px; margin-top: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                        <span style="color: #bf953f; font-size: 18px;">🧠</span>
                         <strong style="color: #bf953f; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Cérebro Elite IA | Rastreamento de Squeeze e Aluguel</strong>
                     </div>
                     <h5 style="color: {squeeze_color}; font-size: 13px; font-weight: bold; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px;">
@@ -5324,7 +5322,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                         "ações como o melhor e mais rentável investimento para o caixa acumulado. A recompra gerará um aumento orgânico e automático "
                         "no Lucro por Ação (LPA) e turbinará o Dividend Yield de longo prazo dos investidores Elite!"
                     )
-                    bb_rating = f"📈 SINAL SOBERANO DE SUBVALORIZAÇÃO (Programa {bb_prog:.1f}% Executado)"
+                    bb_rating = f"SINAL SOBERANO DE SUBVALORIZAÇÃO (Programa {bb_prog:.1f}% Executado)"
                     bb_color = "#00ffa5"
                 else:
                     bb_desc = (
@@ -5333,13 +5331,12 @@ elif st.session_state.active_terminal == "balance_sheets":
                         "ou por complementar a distribuição massiva de proventos (Dividendos e Juros sobre Capital Próprio). "
                         "Essa política de alocação de capital é muito comum em empresas maduras e geradoras de caixa estável que priorizam o retorno direto de capital ao acionista (Payout Alto)."
                     )
-                    bb_rating = "💤 INEXISTÊNCIA DE PROGRAMAS DE RECOMPRA ATIVOS"
+                    bb_rating = "INEXISTÊNCIA DE PROGRAMAS DE RECOMPRA ATIVOS"
                     bb_color = "#aaaaaa"
 
                 st.markdown(f"""
                 <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 20px; margin-top: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                        <span style="color: #bf953f; font-size: 18px;">🧠</span>
                         <strong style="color: #bf953f; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Cérebro Elite IA | Alocação de Capital e Recompras</strong>
                     </div>
                     <h5 style="color: {bb_color}; font-size: 13px; font-weight: bold; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px;">
