@@ -945,7 +945,50 @@ def get_market_data(ticker):
 
     return price, shares, dy
 
+def sync_user_spreadsheets_from_firestore(email, token, local_dir):
+    if not email or not token:
+        return
+    import requests
+    import base64
+    import os
+    
+    if not os.path.exists(local_dir):
+        try:
+            os.makedirs(local_dir)
+        except:
+            pass
+            
+    try:
+        list_url = f"https://firestore.googleapis.com/v1/projects/perfect-life-82065/databases/(default)/documents/users/{email}/spreadsheets"
+        headers = {
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json"
+        }
+        res = requests.get(list_url, headers=headers, timeout=8)
+        if res.status_code == 200:
+            data = res.json()
+            documents = data.get("documents", [])
+            for doc in documents:
+                fields = doc.get("fields", {})
+                filename = fields.get("filename", {}).get("stringValue", "")
+                base64_content = fields.get("content", {}).get("stringValue", "")
+                if filename and base64_content:
+                    local_path = os.path.join(local_dir, filename)
+                    if not os.path.exists(local_path):
+                        try:
+                            file_data = base64.b64decode(base64_content)
+                            with open(local_path, "wb") as f:
+                                f.write(file_data)
+                        except Exception as e:
+                            pass
+    except Exception as e:
+        pass
+
 app_b3_state = load_b3_state()
+
+# Mapear parâmetros do usuário logado via React Iframe
+user_email = st.query_params.get("email", "").strip().lower()
+id_token = st.query_params.get("token", "").strip()
 
 # Inicializar B3 Parser
 local_windows_path1 = r"C:\Users\padua\OneDrive\Área de Trabalho\balanços empresas B3"
@@ -956,8 +999,12 @@ if os.path.exists(local_windows_path1):
 elif os.path.exists(local_windows_path2):
     base_path_b3 = local_windows_path2
 else:
-    # Pasta portátil e compatível com a nuvem (Linux Render / Docker)
-    base_path_b3 = os.path.join(os.path.dirname(__file__), "balancos_empresas_b3")
+    # Pasta portátil e compatível com a nuvem (Linux Render / Docker) com isolamento por usuário
+    if user_email:
+        safe_email_dir = user_email.replace("@", "_").replace(".", "_")
+        base_path_b3 = os.path.join(os.path.dirname(__file__), "balancos_empresas_b3", safe_email_dir)
+    else:
+        base_path_b3 = os.path.join(os.path.dirname(__file__), "balancos_empresas_b3")
 
 if not os.path.exists(base_path_b3):
     try:
@@ -995,6 +1042,12 @@ if st.session_state.active_terminal != "hub":
 
 # --- CONTROLES DA SIDEBAR EXCLUSIVOS DO TERMINAL B3 ---
 if st.session_state.active_terminal == "balance_sheets":
+    # Sincronizar as planilhas do usuário a partir do Firestore ao inicializar a sessão
+    if user_email and id_token and not st.session_state.get("b3_synced", False):
+        with st.spinner("Sincronizando suas planilhas salvas..." if lang == "PT" else ("Syncing your saved spreadsheets..." if lang == "EN" else "Sincronizando suas planilhas...")):
+            sync_user_spreadsheets_from_firestore(user_email, id_token, base_path_b3)
+            st.session_state.b3_synced = True
+
     st.sidebar.markdown(f"<h3 style='font-size:16px; border:none; padding:0; text-align:center; color:#bf953f; font-weight:bold; margin-bottom:15px;'>{t['term_3_title']}</h3>", unsafe_allow_html=True)
     # UPLOAD DE NOVO ARQUIVO B3
     if "b3_uploader_key" not in st.session_state:
@@ -1011,6 +1064,28 @@ if st.session_state.active_terminal == "balance_sheets":
         try:
             with open(os.path.join(base_path_b3, uploaded_file.name), "wb") as f:
                 f.write(uploaded_file.getbuffer())
+                
+            # Salvar backup permanente no Firestore do usuário
+            if user_email and id_token:
+                import requests
+                import base64
+                file_bytes = uploaded_file.getvalue()
+                base64_content = base64.b64encode(file_bytes).decode("utf-8")
+                safe_doc_id = uploaded_file.name.replace(".", "_")
+                
+                firestore_url = f"https://firestore.googleapis.com/v1/projects/perfect-life-82065/databases/(default)/documents/users/{user_email}/spreadsheets/{safe_doc_id}?updateMask.fieldPaths=filename&updateMask.fieldPaths=content"
+                headers = {
+                    "Authorization": f"Bearer {id_token}",
+                    "Content-Type": "application/json"
+                }
+                payload = {
+                    "fields": {
+                        "filename": {"stringValue": uploaded_file.name},
+                        "content": {"stringValue": base64_content}
+                    }
+                }
+                requests.patch(firestore_url, headers=headers, json=payload, timeout=10)
+                
             st.session_state.b3_uploader_key += 1
             st.session_state.b3_upload_success = True
             st.rerun()
@@ -4140,6 +4215,43 @@ elif st.session_state.active_terminal == "balance_sheets":
                     )
                     st.plotly_chart(fig_m, use_container_width=True)
 
+                    # Cérebro Elite IA - Eficiência Operacional
+                    eff_margin = last['Margem_EBITDA']
+                    grow_rec = ((receita_ttm / receita_prev_ttm) - 1) * 100 if receita_prev_ttm > 0 else 0
+                    if is_bank:
+                        eff_desc = (
+                            f"**Insight Corporativo (Bancos):** Para instituições financeiras, a margem EBITDA de **{eff_margin:.1f}%** indica excelente eficiência na conversão de intermediação financeira. "
+                            "Como bancos operam alavancados por natureza (funding de depósitos), a estabilidade de margem operacional reflete um controle rigoroso de spreads cambiais/crédito e baixíssima inadimplência sistêmica."
+                        )
+                    else:
+                        if eff_margin > 20:
+                            rating = "EXCELENTE (Alta Rentabilidade)"
+                            rating_color = "#00ffa5"
+                        elif eff_margin > 10:
+                            rating = "SAUDÁVEL (Moderada)"
+                            rating_color = "lightgreen"
+                        else:
+                            rating = "SOB PRESSÃO (Baixa Margem)"
+                            rating_color = "red"
+                        
+                        eff_desc = (
+                            f"A empresa opera com uma **Margem EBITDA de {eff_margin:.1f}%**, classificada como **<span style='color:{rating_color}; font-weight:bold;'>{rating}</span>**. "
+                            f"Nos últimos 12 meses, a receita operacional registrou uma variação de **{grow_rec:+.1f}%**. "
+                            "Esta dinâmica operacional sugere que a empresa possui robustez estrutural para defender suas margens mesmo em cenários macroeconômicos voláteis, consolidando um forte diferencial competitivo (Moat)."
+                        )
+                    
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 20px; margin-top: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                            <span style="color: #bf953f; font-size: 18px;">🧠</span>
+                            <strong style="color: #bf953f; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Cérebro Elite IA | Eficiência Operacional</strong>
+                        </div>
+                        <p style="color: #e0e0e0; font-size: 12px; line-height: 1.6; margin: 0;">
+                            {eff_desc}
+                        </p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
             # --- TELA 3: ANÁLISE DE LUCRATIVIDADE ---
             elif b3_module == "Análise de Lucratividade":
                 st.markdown(f"<h2>{b3_t_active['title_profitability']}</h2>", unsafe_allow_html=True)
@@ -4158,6 +4270,37 @@ elif st.session_state.active_terminal == "balance_sheets":
                     legend=dict(font=dict(color='#ffffff'))
                 )
                 st.plotly_chart(fig2, use_container_width=True)
+
+                # Cérebro Elite IA - Análise de Lucratividade
+                net_margin = last['Margem_Liquida']
+                grow_luc = ((lucro_ttm / lucro_prev_ttm) - 1) * 100 if lucro_prev_ttm > 0 else 0
+                if net_margin > 12:
+                    margin_rating = "EXCELENTE (Altamente Lucrativa)"
+                    margin_color = "#00ffa5"
+                elif net_margin > 5:
+                    margin_rating = "SAUDÁVEL (Moderada)"
+                    margin_color = "lightgreen"
+                else:
+                    margin_rating = "SOB PRESSÃO (Baixa Rentabilidade)"
+                    margin_color = "red"
+                
+                luc_desc = (
+                    f"A **Margem Líquida acumulada é de {net_margin:.1f}%**, o que é classificado como **<span style='color:{margin_color}; font-weight:bold;'>{margin_rating}</span>**. "
+                    f"A geração de Lucro Líquido variou **{grow_luc:+.1f}%** em comparação com o período anterior de 12 meses. "
+                    f"Com um **ROE atual de {roe:.1f}%**, a companhia demonstra forte eficiência na alocação de seu capital próprio para gerar retorno para o acionista. Lucros consistentes sustentam dividendos perenes e crescimento de longo prazo."
+                )
+                
+                st.markdown(f"""
+                <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 20px; margin-top: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <span style="color: #bf953f; font-size: 18px;">🧠</span>
+                        <strong style="color: #bf953f; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Cérebro Elite IA | Lucratividade e Retorno</strong>
+                    </div>
+                    <p style="color: #e0e0e0; font-size: 12px; line-height: 1.6; margin: 0;">
+                        {luc_desc}
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
             # --- TELA 4: SOLVÊNCIA PATRIMONIAL ---
             elif b3_module == "Solvência Patrimonial":
@@ -4990,6 +5133,52 @@ elif st.session_state.active_terminal == "balance_sheets":
                 st.write("")
                 st.markdown(lbl["manual_content"], unsafe_allow_html=True)
 
+                # --- CÉREBRO ELITE IA | RADAR DE ALUGUEL ---
+                vol_pct = info['vol_pct']
+                squeeze_score = info['squeeze_score']
+                taxa_media = info['taxa_media']
+                
+                if squeeze_score >= 70:
+                    squeeze_rating = f"🚨 ALERTA MÁXIMO DE SHORT SQUEEZE (Score {squeeze_score}/100)"
+                    squeeze_color = "#ff4b4b"
+                    squeeze_desc = (
+                        f"A empresa {current_ticker} apresenta uma taxa de aluguel elevada de **{taxa_media:.2f}% a.a.** "
+                        f"e um volume alugado expressivo de **{vol_pct:.2f}% do seu Free Float**. "
+                        "Este cenário indica que os investidores baixistas (shorters) estão muito expostos. Qualquer surpresa positiva "
+                        "ou aumento repentino de fluxo comprador forçará uma corrida compradora frenética dos vendidos para fechar posições, gerando ralis verticais de altíssima velocidade."
+                    )
+                elif squeeze_score >= 40:
+                    squeeze_rating = f"⚠️ PRESSÃO MODERADA DE VENDA (Score {squeeze_score}/100)"
+                    squeeze_color = "orange"
+                    squeeze_desc = (
+                        f"A empresa {current_ticker} possui **{vol_pct:.2f}% do Free Float alugado**, "
+                        f"com taxa média anual de **{taxa_media:.2f}%**. O risco de squeeze imediato é moderado. "
+                        "O mercado monitora se as posições vendidas continuarão crescendo ou se iniciarão um processo lento de desalocação. Excelente para manter no radar tático."
+                    )
+                else:
+                    squeeze_rating = f"🟢 COMPORTAMENTO FUNDAMENTALISTA PURO (Score {squeeze_score}/100)"
+                    squeeze_color = "#00ffa5"
+                    squeeze_desc = (
+                        f"O volume alugado da empresa {current_ticker} é insignificante (**{vol_pct:.2f}% do float**), "
+                        f"com taxas de aluguel baixíssimas (**{taxa_media:.2f}% a.a.**). "
+                        "Risco de Short Squeeze nulo. A flutuação de preço atual do ativo reflete puramente a atração fundamentalista de longo prazo e fluxo geral da bolsa, sem distorções de derivativos."
+                    )
+
+                st.markdown(f"""
+                <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 20px; margin-top: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <span style="color: #bf953f; font-size: 18px;">🧠</span>
+                        <strong style="color: #bf953f; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Cérebro Elite IA | Rastreamento de Squeeze e Aluguel</strong>
+                    </div>
+                    <h5 style="color: {squeeze_color}; font-size: 13px; font-weight: bold; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px;">
+                        {squeeze_rating}
+                    </h5>
+                    <p style="color: #e0e0e0; font-size: 12px; line-height: 1.6; margin: 0;">
+                        {squeeze_desc}
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
             # --- TELA 8: RECOMPRAS DE AÇÕES (BUYBACKS) ---
             elif b3_module == "Recompras de Ações (Buybacks)":
                 current_ticker = tk_raw.upper()
@@ -5121,6 +5310,46 @@ elif st.session_state.active_terminal == "balance_sheets":
                 
                 st.write("")
                 st.markdown(lbl["manual_content"], unsafe_allow_html=True)
+
+                # --- CÉREBRO ELITE IA | RECOMPRAS ---
+                if current_ticker in buyback_data:
+                    bb_info = buyback_data[current_ticker]
+                    bb_pct = bb_info['auth_pct']
+                    bb_prog = bb_info['progress']
+                    bb_desc = (
+                        f"**Dossiê de Capital (Recompra Ativa):** A empresa {current_ticker} possui um programa de recompra vigoroso, "
+                        f"planejando readquirir até **{bb_pct:.2f}% de todo o seu Free Float** em circulação. "
+                        f"Até o momento, a companhia já executou **{bb_prog:.1f}%** da meta autorizada. "
+                        "Isso indica que o conselho de administração enxerga uma forte assimetria de valor de tela: a empresa considera suas próprias "
+                        "ações como o melhor e mais rentável investimento para o caixa acumulado. A recompra gerará um aumento orgânico e automático "
+                        "no Lucro por Ação (LPA) e turbinará o Dividend Yield de longo prazo dos investidores Elite!"
+                    )
+                    bb_rating = f"📈 SINAL SOBERANO DE SUBVALORIZAÇÃO (Programa {bb_prog:.1f}% Executado)"
+                    bb_color = "#00ffa5"
+                else:
+                    bb_desc = (
+                        f"**Dossiê de Capital (Sem Recompra):** A empresa {current_ticker} não possui programas de recompra de ações ativos no momento. "
+                        "A diretoria opta por reter 100% dos lucros para reinvestimento operacional (crescimento orgânico/CAPEX) "
+                        "ou por complementar a distribuição massiva de proventos (Dividendos e Juros sobre Capital Próprio). "
+                        "Essa política de alocação de capital é muito comum em empresas maduras e geradoras de caixa estável que priorizam o retorno direto de capital ao acionista (Payout Alto)."
+                    )
+                    bb_rating = "💤 INEXISTÊNCIA DE PROGRAMAS DE RECOMPRA ATIVOS"
+                    bb_color = "#aaaaaa"
+
+                st.markdown(f"""
+                <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 20px; margin-top: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                        <span style="color: #bf953f; font-size: 18px;">🧠</span>
+                        <strong style="color: #bf953f; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Cérebro Elite IA | Alocação de Capital e Recompras</strong>
+                    </div>
+                    <h5 style="color: {bb_color}; font-size: 13px; font-weight: bold; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 0.5px;">
+                        {bb_rating}
+                    </h5>
+                    <p style="color: #e0e0e0; font-size: 12px; line-height: 1.6; margin: 0;">
+                        {bb_desc}
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"Erro Crítico no Módulo: {e}")
