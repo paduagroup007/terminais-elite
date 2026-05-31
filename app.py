@@ -8115,7 +8115,14 @@ elif st.session_state.active_terminal == "family_office_br":
                         paper_bgcolor='rgba(0,0,0,0)',
                         plot_bgcolor='rgba(0,0,0,0)',
                         showlegend=True,
-                        legend=dict(orientation="h", yanchor="bottom", y=-0.4, xanchor="center", x=0.5),
+                        legend=dict(
+                            orientation="h", 
+                            yanchor="bottom", 
+                            y=-0.4, 
+                            xanchor="center", 
+                            x=0.5,
+                            font=dict(color='#ffffff')
+                        ),
                         font=dict(color='#ffffff', size=10),
                         height=350,
                         margin=dict(t=10, b=10, l=10, r=10)
