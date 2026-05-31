@@ -2130,7 +2130,7 @@ elif st.session_state.active_terminal == "whale_radar":
         # Exibir a filosofia e rationales dos EUA no topo
         st.markdown(f"""
         <div style='background-color:#0b0e14; padding:20px; border-radius:15px; border:1px solid #bf953f33; border-left:4px solid #bf953f; margin-bottom:20px;'>
-            <h5 style='margin:0 0 10px 0; color:#fff; font-size:15px; text-transform:uppercase; letter-spacing:0.5px;'>🎯 ACOMPANHAR AS BALEIAS DE WALL STREET: O SEGREDO DO SMART MONEY</h5>
+            <h5 style='margin:0 0 10px 0; color:#fff; font-size:15px; text-transform:uppercase; letter-spacing:0.5px;'> ACOMPANHAR AS BALEIAS DE WALL STREET: O SEGREDO DO SMART MONEY</h5>
             <p style='font-size:12px; color:#ccc; line-height:1.6; margin-bottom:12px;'>
                 Acompanhar os arquivamentos regulatórios 13F na SEC dos gigantes americanos é essencial para rastrear o fluxo dos maiores tomadores de decisão do mundo. 
                 O portfólio da <b>{selected_whale}</b> representa bilhões de dólares alocados com base em inteligência quantitativa de ponta, permitindo que você navegue ao lado do dinheiro institucional seguro.
@@ -2142,7 +2142,7 @@ elif st.session_state.active_terminal == "whale_radar":
                 </p>
             </div>
             <hr style='border-top:1px solid #bf953f22; margin:12px 0;'>
-            <strong style='color:#bf953f; font-size:11px; text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:5px;'>💡 ANÁLISE OPERACIONAL GRÁFICA & TIMING MILIMÉTRICO</strong>
+            <strong style='color:#bf953f; font-size:11px; text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:5px;'> ANÁLISE OPERACIONAL GRÁFICA & TIMING MILIMÉTRICO</strong>
             <p style='font-size:12px; color:#ccc; line-height:1.6; margin:0;'>
                 <i>"O rastreamento da SEC nos dá a direção de <b>QUAIS</b> ações os maiores players estão acumulando. Contudo, as melhores zonas gráficas de entrada e saída para maximizar seus lucros são ditadas pela Análise Técnica. Como <b>Analista Técnico Profissional há mais de 23 anos</b>, eu publico **vídeos operacionais semanais de gráficos dinâmicos** dessas mesmas posições de Wall Street no nosso <b>TELEGRAM VIP EXCLUSIVO</b>. Junte-se a nós para dominar o mercado na direção dos tubarões!"</i>
             </p>
@@ -2276,7 +2276,7 @@ elif st.session_state.active_terminal == "whale_radar":
                 st.success("Lote completo sincronizado e arquivado!")
 
     elif module == "Análise Quant & Timing (EUA)":
-        st.header("📊 Mesa Quant & Timing de Ações (Wall Street)" if lang == "PT" else ("📊 Wall Street Quant & Timing Desk" if lang == "EN" else "📊 Mesa Quant y Timing de Acciones (Wall Street)"))
+        st.header(" Mesa Quant & Timing de Ações (Wall Street)" if lang == "PT" else (" Wall Street Quant & Timing Desk" if lang == "EN" else " Mesa Quant y Timing de Acciones (Wall Street)"))
         st.write("Análise quantitativa de altíssima precisão baseada em desvios estatísticos de médias móveis semanais e ciclos anuais, cruzada com fundamentos de hipercrescimento (PEG) e fluxo de compras de Big Players (SEC 13F).")
         
         # Educational Box
@@ -2491,7 +2491,7 @@ elif st.session_state.active_terminal == "whale_radar":
         st.markdown(f"""
         <div class="conviction-card" style="border-left-color: #bf953f; background-color: #11151c; padding: 22px; border-radius: 8px; margin-top: 25px; border: 1px solid #bf953f33; font-family: 'Inter', sans-serif;">
             <h4 style="margin: 0 0 15px 0; color: #bf953f; font-size: 15px; text-transform: uppercase; font-weight: 800; border: none; padding: 0; letter-spacing: 1px;">
-                🎯 MANUAL DE EXECUÇÃO PRÁTICA & FLUXO DE ANÁLISE DE ELITE (USA)
+                 MANUAL DE EXECUÇÃO PRÁTICA & FLUXO DE ANÁLISE DE ELITE (USA)
             </h4>
             <p style="font-size: 13px; color: #dddddd; line-height: 1.6; margin-bottom: 12px;">
                 Para maximizar a precisão matemática e a segurança patrimonial das suas alocações em Wall Street, siga rigorosamente este protocolo institucional:
@@ -2504,7 +2504,7 @@ elif st.session_state.active_terminal == "whale_radar":
             </ol>
             <div style="background-color: #161a23; border: 1px solid #bf953f22; border-radius: 6px; padding: 15px; margin-top: 15px;">
                 <p style="font-size: 12.5px; color: #cccccc; line-height: 1.6; margin: 0;">
-                    💡 <b>Mentoria Privada & Insights Exclusivos:</b> Como analista técnica sênior com <b>mais de 23 anos de experiência prática de mercado</b>, realizo varreduras constantes nas estruturas gráficas e tendências de ativos nacionais e internacionais. Todos os meus estudos detalhados e alertas de setups em tempo real são passados no nosso <b>Telegram VIP de Elite</b>. Use também o <b>WhatsApp de Suporte Privado</b> no menu lateral para esclarecer dúvidas diretamente comigo se necessário!
+                     <b>Mentoria Privada & Insights Exclusivos:</b> Como analista técnica sênior com <b>mais de 23 anos de experiência prática de mercado</b>, realizo varreduras constantes nas estruturas gráficas e tendências de ativos nacionais e internacionais. Todos os meus estudos detalhados e alertas de setups em tempo real são passados no nosso <b>Telegram VIP de Elite</b>. Use também o <b>WhatsApp de Suporte Privado</b> no menu lateral para esclarecer dúvidas diretamente comigo se necessário!
                 </p>
             </div>
         </div>
@@ -2521,10 +2521,10 @@ elif st.session_state.active_terminal == "whale_radar":
                 "metric_days_cover": "Days to Cover (Dias para Cobrir)",
                 "metric_squeeze_score": "Score de Squeeze",
                 "table_title": "Painel Quantitativo de Posições Vendidas (Wall Street)",
-                "manual_title": "💡 Manual Estratégico: O Fenômeno de Short Squeeze em Wall Street",
+                "manual_title": " Manual Estratégico: O Fenômeno de Short Squeeze em Wall Street",
                 "manual_content": """
                 <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                    <h3 style='color:#bf953f; margin-top:0;'>💡 Estratégia de Squeeze em Wall Street</h3>
+                    <h3 style='color:#bf953f; margin-top:0;'> Estratégia de Squeeze em Wall Street</h3>
                     <p>No mercado americano, o Short Interest % of Float e a taxa de empréstimo (Borrow Fee) são métricas rastreadas diariamente pelos maiores algoritmos quant do planeta. Quando uma ação possui alto Short Interest (> 15% do float) e alta taxa de aluguel (> 10%), qualquer gatilho positivo de notícias pode desencadear uma explosão exponencial.</p>
                     <h4 style='color:#ffffff;'>O Protocolo de Ação de Elite:</h4>
                     <ul>
@@ -2543,10 +2543,10 @@ elif st.session_state.active_terminal == "whale_radar":
                 "metric_days_cover": "Days to Cover",
                 "metric_squeeze_score": "Squeeze Score",
                 "table_title": "Wall Street Short Positions Quantitative Panel",
-                "manual_title": "💡 Strategic Manual: The Short Squeeze Phenomenon on Wall Street",
+                "manual_title": " Strategic Manual: The Short Squeeze Phenomenon on Wall Street",
                 "manual_content": """
                 <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                    <h3 style='color:#bf953f; margin-top:0;'>💡 Wall Street Squeeze Strategy</h3>
+                    <h3 style='color:#bf953f; margin-top:0;'> Wall Street Squeeze Strategy</h3>
                     <p>In the US market, Short Interest % of Float and Borrow Fees are metrics tracked daily by the world's top quantitative algorithms. When a stock has high Short Interest (> 15% of float) and a high borrow fee (> 10%), any positive news catalyst can trigger an exponential price spike.</p>
                     <h4 style='color:#ffffff;'>The Elite Action Protocol:</h4>
                     <ul>
@@ -2565,10 +2565,10 @@ elif st.session_state.active_terminal == "whale_radar":
                 "metric_days_cover": "Days to Cover (Días para Cubrir)",
                 "metric_squeeze_score": "Score de Squeeze",
                 "table_title": "Panel Cuantitativo de Posiciones Cortas (Wall Street)",
-                "manual_title": "💡 Manual Estratégico: El Fenómeno de Short Squeeze en Wall Street",
+                "manual_title": " Manual Estratégico: El Fenómeno de Short Squeeze en Wall Street",
                 "manual_content": """
                 <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                    <h3 style='color:#bf953f; margin-top:0;'>💡 Estrategia de Squeeze en Wall Street</h3>
+                    <h3 style='color:#bf953f; margin-top:0;'> Estrategia de Squeeze en Wall Street</h3>
                     <p>En el mercado estadounidense, el Short Interest % del Float y la tasa de préstamo (Borrow Fee) son métricas seguidas diariamente por los principales algoritmos cuantitativos del planeta. Cuando una acción tiene un alto Short Interest (> 15% del float) y una tasa de alquiler alta (> 10%), cualquier catalizador de noticias positivas puede desencadenar una explosión exponencial.</p>
                     <h4 style='color:#ffffff;'>El Protocolo de Acción Elite:</h4>
                     <ul>
@@ -2658,10 +2658,10 @@ elif st.session_state.active_terminal == "whale_radar":
                 "metric_progress": "Progresso da Recompra",
                 "no_program": "Esta empresa não possui nenhum mega-programa de recompra ativo divulgado no momento nos EUA.",
                 "table_title": "Painel de Mega-Programas de Recompra em Wall Street",
-                "manual_title": "💡 Manual Estratégico: O Poder Deflacionário das Recompras nos EUA",
+                "manual_title": " Manual Estratégico: O Poder Deflacionário das Recompras nos EUA",
                 "manual_content": """
                 <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                    <h3 style='color:#bf953f; margin-top:0;'>📈 O Efeito Motor das Recompras Americanas</h3>
+                    <h3 style='color:#bf953f; margin-top:0;'>▲ O Efeito Motor das Recompras Americanas</h3>
                     <p>Nos Estados Unidos, as maiores empresas de tecnologia do mundo (Mega-Caps) utilizam as recompras como o principal motor de retorno ao acionista, muitas vezes superando os dividendos tradicionais devido à eficiência fiscal americana (isenta de imposto sobre dividendos para a corporação).</p>
                     <h4 style='color:#ffffff;'>Por que as Recompras nos EUA são essenciais para o Carlos:</h4>
                     <ul>
@@ -2681,10 +2681,10 @@ elif st.session_state.active_terminal == "whale_radar":
                 "metric_progress": "Buyback Progress",
                 "no_program": "This company has no major active buyback programs disclosed at the moment in the US.",
                 "table_title": "Mega Buyback Programs Panel on Wall Street",
-                "manual_title": "💡 Strategic Manual: The Deflationary Power of US Buybacks",
+                "manual_title": " Strategic Manual: The Deflationary Power of US Buybacks",
                 "manual_content": """
                 <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                    <h3 style='color:#bf953f; margin-top:0;'>📈 O Efeito Motor das Recompras Americanas</h3>
+                    <h3 style='color:#bf953f; margin-top:0;'>▲ O Efeito Motor das Recompras Americanas</h3>
                     <p>Nos Estados Unidos, as maiores empresas de tecnologia do mundo (Mega-Caps) utilizam as recompras como o principal motor de retorno ao acionista, muitas vezes superando os dividendos tradicionais devido à eficiência fiscal americana (isenta de imposto sobre dividendos para a corporação).</p>
                     <h4 style='color:#ffffff;'>Por que as Recompras nos EUA são essenciais para o Carlos:</h4>
                     <ul>
@@ -2704,10 +2704,10 @@ elif st.session_state.active_terminal == "whale_radar":
                 "metric_progress": "Progreso de Recompra",
                 "no_program": "Esta empresa no tiene ningún mega-programa de recompra activo divulgado en este momento en EEUU.",
                 "table_title": "Panel de Mega-Programas de Recompra en Wall Street",
-                "manual_title": "💡 Manual Estratégico: El Poder Deflacionario de las Recompras en EEUU",
+                "manual_title": " Manual Estratégico: El Poder Deflacionario de las Recompras en EEUU",
                 "manual_content": """
                 <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                    <h3 style='color:#bf953f; margin-top:0;'>📈 El Motor de las Recompras Estadounidenses</h3>
+                    <h3 style='color:#bf953f; margin-top:0;'>▲ El Motor de las Recompras Estadounidenses</h3>
                     <p>En los Estados Unidos, las empresas tecnológicas más grandes del mundo (Mega-Caps) utilizan las recompras como el vehículo principal de retorno al accionista, a menudo superando a los dividendos tradicionales debido a la eficiencia fiscal (evitando la retención inmediata de impuestos sobre dividendos).</p>
                     <h4 style='color:#ffffff;'>Por qué las Recompras en EEUU son esenciales para Carlos:</h4>
                     <ul>
@@ -3520,7 +3520,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
         st.subheader("SISTEMA QUANTITATIVO DE Pair Trading E HEDGE DE MOEDAS" if lang == "PT" else ("QUANTITATIVE Pair Trading & FX HEDGE SYSTEM" if lang == "EN" else "SISTEMA CUANTITATIVO DE Pair Trading Y HEDGE DE MONEDAS"))
         st.write("Monitore e explore distorções extremas entre moedas altamente correlacionadas no mercado global. Este painel permite que você identifique desvios estatísticos de preços (Z-Score) em tempo real, calculando a paridade exata de lotes de hedge para obter lucros consistentes de reversão à média com risco de mercado direcional nulo." if lang == "PT" else ("Monitor and exploit extreme distortions between highly correlated currency pairs in the global market. This panel allows you to identify statistical price deviations (Z-Score) in real-time, calculating the exact hedge lot parity to extract consistent mean-reversion profits with zero directional market risk." if lang == "EN" else "Monitore y explote distorsiones extremas entre pares de divisas altamente correlacionados en el mercado global. Este panel le permite identificar desviaciones estadísticas de precios (Z-Score) en tiempo real, calculando la paridad exacta de lotes de cobertura para obtener ganancias consistentes de reversión a la media con riesgo direccional de mercado nulo."))
         
-        with st.expander("📖 GUIA DE OPERAÇÃO: COMO LUCRAR TODOS OS MESES COM AS DISTORÇÕES CAMBIAIS (PASSO A PASSO)" if lang == "PT" else ("📖 TRADING MANUAL: HOW TO PROFIT EVERY MONTH FROM FX DISTORTIONS (STEP-BY-STEP)" if lang == "EN" else "📖 MANUAL DE OPERACIÓN: CÓMO GANAR TODOS LOS MESES CON LAS DISTORSIONES CAMBIARIAS (PASO A PASO)")):
+        with st.expander(" GUIA DE OPERAÇÃO: COMO LUCRAR TODOS OS MESES COM AS DISTORÇÕES CAMBIAIS (PASSO A PASSO)" if lang == "PT" else (" TRADING MANUAL: HOW TO PROFIT EVERY MONTH FROM FX DISTORTIONS (STEP-BY-STEP)" if lang == "EN" else " MANUAL DE OPERACIÓN: CÓMO GANAR TODOS LOS MESES CON LAS DISTORSIONES CAMBIARIAS (PASO A PASO)")):
             st.markdown(f"""
             <div style="background-color: #161a23; border-left: 4px solid #bf953f; padding: 15px; border-radius: 4px; font-family: 'Inter';">
                 <h4 style="margin: 0 0 10px 0; color: #bf953f; font-size: 13px; font-weight: 700; text-transform: uppercase;">A FÓRMULA QUANTITATIVA DA REVERSÃO À MÉDIA</h4>
@@ -3622,9 +3622,9 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                     base_spread_val, using_live_data = float(mean_spread), True
                     
             if using_live_data:
-                st.success(f"📡 RADAR AO VIVO ATIVO! Z-Score: **{simulated_z:+.2f}**")
+                st.success(f" RADAR AO VIVO ATIVO! Z-Score: **{simulated_z:+.2f}**")
             else:
-                st.warning("⚠️ Dados reais indisponíveis. Usando último registro histórico seguro...")
+                st.warning("[!]  Dados reais indisponíveis. Usando último registro histórico seguro...")
                 simulated_z = 1.6
             
             corr_color = "#ff4b4b" if correlation_coeff < 0 else "#00ffa5"
@@ -3646,7 +3646,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             abs_z = abs(simulated_z)
             if abs_z >= 2.5:
                 # EXTREMA DISTORÇÃO (CONVICÇÃO MÁXIMA) - RED/GREEN NEON STYLE
-                header_alert = "🚨 EXTREMA DISTORÇÃO DETECTADA! (CONVICÇÃO MÁXIMA)" if lang == "PT" else ("🚨 EXTREME DISTORTION DETECTED! (MAX CONVICTION)" if lang == "EN" else "🚨 ¡EXTREMA DISTORSIÓN DETECTADA! (MÁXIMA CONVICCIÓN)")
+                header_alert = "[ALERTA]  EXTREMA DISTORÇÃO DETECTADA! (CONVICÇÃO MÁXIMA)" if lang == "PT" else ("[ALERTA]  EXTREME DISTORTION DETECTED! (MAX CONVICTION)" if lang == "EN" else "[ALERTA]  ¡EXTREMA DISTORSIÓN DETECTADA! (MÁXIMA CONVICCIÓN)")
                 bg_style = "background: linear-gradient(135deg, #3a0d14 0%, #161a23 100%) !important; border: 2px solid #ff4b4b !important; box-shadow: 0 0 25px rgba(255, 75, 75, 0.4) !important;"
                 
                 if is_inverse:
@@ -3676,7 +3676,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                     
             elif abs_z >= 1.5:
                 # DISTORÇÃO ELEVADA (OPORTUNIDADE TÁTICA ATIVA) - ORANGE STYLE
-                header_alert = "⚠️ ALERTA DE DISTORÇÃO ELEVADA (OPORTUNIDADE ATIVA)" if lang == "PT" else ("⚠️ HIGH DISTORTION ALERT (TACTICAL OPPORTUNITY)" if lang == "EN" else "⚠️ ALERTA DE DISTORSIÓN ELEVADA (OPORTUNIDAD ACTIVA)")
+                header_alert = "[!]  ALERTA DE DISTORÇÃO ELEVADA (OPORTUNIDADE ATIVA)" if lang == "PT" else ("[!]  HIGH DISTORTION ALERT (TACTICAL OPPORTUNITY)" if lang == "EN" else "[!]  ALERTA DE DISTORSIÓN ELEVADA (OPORTUNIDAD ACTIVA)")
                 bg_style = "background: linear-gradient(135deg, #2b1d0d 0%, #161a23 100%) !important; border: 1.5px solid #ff9900 !important; box-shadow: 0 0 20px rgba(255, 153, 0, 0.25) !important;"
                 
                 if is_inverse:
@@ -3704,7 +3704,7 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                         order_b = f"<span style='color: #ff4b4b; font-weight:900;'>VENDER (SHORT)</span> {hedge_lot} Lotes de {par_b}"
             else:
                 # EQUILÍBRIO (AGUARDAR SEM SINAL) - GRAY STYLE
-                header_alert = "⚪ MERCADO EM EQUILÍBRIO (AGUARDAR)" if lang == "PT" else ("⚪ BALANCED MARKET (STANDBY)" if lang == "EN" else "⚪ MERCADO EN EQUILIBRIO (AGUARDAR)")
+                header_alert = " MERCADO EM EQUILÍBRIO (AGUARDAR)" if lang == "PT" else (" BALANCED MARKET (STANDBY)" if lang == "EN" else " MERCADO EN EQUILIBRIO (AGUARDAR)")
                 bg_style = "background-color: #161a23 !important; border: 1px solid #ffffff15 !important;"
                 status_desc = f"A razão cambial está oscilando em **{simulated_z:.1f} desvios padrões** da sua média histórica, o que reflete uma zona neutra de equilíbrio de preços. A correlação está atuando de forma síncrona. Sem vantagens matemáticas de Pair Trading ativas no momento. Aguarde fora da montagem operacional." if lang == "PT" else (f"The currency ratio is hovering at **{simulated_z:.1f} standard deviations** from its historical mean. No Pair Trading mathematical edges active at this moment." if lang == "EN" else f"La relación de precios oscila a **{simulated_z:.1f} desviaciones estándar** de su promedio histórico. Sin ventajas matemáticas de Pair Trading activas de momento. Aguarde fuera.")
                 order_a = ""
@@ -3718,8 +3718,8 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             if abs_z >= 1.5:
                 html_card += '<div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 12px; margin-top: 5px;">'
                 html_card += '<span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display:block; margin-bottom:8px; font-family: monospace;">ORDENS EXECUTÁVEIS DO HEDGE</span>'
-                html_card += f'<p style="margin:3px 0; font-size:11.5px; color:#fff; font-family: monospace;">➡️ 1. {order_a}</p>'
-                html_card += f'<p style="margin:3px 0; font-size:11.5px; color:#fff; font-family: monospace;">➡️ 2. {order_b}</p>'
+                html_card += f'<p style="margin:3px 0; font-size:11.5px; color:#fff; font-family: monospace;">️ 1. {order_a}</p>'
+                html_card += f'<p style="margin:3px 0; font-size:11.5px; color:#fff; font-family: monospace;">️ 2. {order_b}</p>'
                 html_card += f'<p style="margin:10px 0 0 0; font-size:10px; color:#888; font-style:italic;">*Lotes calculados cientificamente para neutralidade de risco cambial direcional baseado em capital de $ {equity_usd:,.2f} USD.</p>'
                 html_card += '</div>'
                 
@@ -3798,57 +3798,57 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
         if lang == "PT":
             st.markdown("""
             <div style="background-color: #0d0f14; border: 1px solid rgba(191,149,63,0.15); border-radius: 6px; padding: 15px; font-family:'Inter'; text-align:left;">
-                <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">📈 COMO INTERPRETAR O GRÁFICO DE DESVIO TÉCNICO (Z-SCORE)</span>
+                <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">▲ COMO INTERPRETAR O GRÁFICO DE DESVIO TÉCNICO (Z-SCORE)</span>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 11px; color: #eeeeee; line-height: 1.45;">
                     <div>
-                        <p style="margin: 3px 0;"><strong style="color: #d4af37;">🔹 Linha Dourada (Spread):</strong> Representa o preço relativo atual entre os dois pares de moedas (Razão Cambial A / B) ao longo do tempo.</p>
-                        <p style="margin: 3px 0;"><strong style="color: #dddddd;">🔹 Linha Cinza Tracejada (Z = 0):</strong> A média histórica de longo prazo. É o ponto de equilíbrio perfeito onde a correlação atua em sincronia.</p>
+                        <p style="margin: 3px 0;"><strong style="color: #d4af37;"> Linha Dourada (Spread):</strong> Representa o preço relativo atual entre os dois pares de moedas (Razão Cambial A / B) ao longo do tempo.</p>
+                        <p style="margin: 3px 0;"><strong style="color: #dddddd;"> Linha Cinza Tracejada (Z = 0):</strong> A média histórica de longo prazo. É o ponto de equilíbrio perfeito onde a correlação atua em sincronia.</p>
                     </div>
                     <div>
-                        <p style="margin: 3px 0;"><strong style="color: #ff9900;">🔹 Linhas Laranja (+1.5 / -1.5):</strong> Bandas de Alerta Tático. O descolamento começa a ficar estatisticamente relevante (80% de chance de convergência).</p>
-                        <p style="margin: 3px 0;"><strong style="color: #ff4b4b;">🔹 Linhas Vermelhas (+2.5 / -2.5):</strong> Limite Extremo de Convicção. O spread atingiu um desvio raríssimo (97.5% de probabilidade de retorno imediato à média).</p>
+                        <p style="margin: 3px 0;"><strong style="color: #ff9900;"> Linhas Laranja (+1.5 / -1.5):</strong> Bandas de Alerta Tático. O descolamento começa a ficar estatisticamente relevante (80% de chance de convergência).</p>
+                        <p style="margin: 3px 0;"><strong style="color: #ff4b4b;"> Linhas Vermelhas (+2.5 / -2.5):</strong> Limite Extremo de Convicção. O spread atingiu um desvio raríssimo (97.5% de probabilidade de retorno imediato à média).</p>
                     </div>
                 </div>
                 <p style="margin: 10px 0 0 0; font-size: 10.5px; color: #dddddd; font-style: italic; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
-                    💡 <b>Dica Operacional:</b> O momento ideal de entrada ocorre quando o <b>Losango de Cotação Atual</b> toca ou ultrapassa as linhas vermelhas (+/- 2.5). O lucro é realizado quando a linha dourada retorna e cruza a linha cinza central (Z = 0).
+                     <b>Dica Operacional:</b> O momento ideal de entrada ocorre quando o <b>Losango de Cotação Atual</b> toca ou ultrapassa as linhas vermelhas (+/- 2.5). O lucro é realizado quando a linha dourada retorna e cruza a linha cinza central (Z = 0).
                 </p>
             </div>
             """, unsafe_allow_html=True)
         elif lang == "EN":
             st.markdown("""
             <div style="background-color: #0d0f14; border: 1px solid rgba(191,149,63,0.15); border-radius: 6px; padding: 15px; font-family:'Inter'; text-align:left;">
-                <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">📈 HOW TO INTERPRET THE Z-SCORE DEVIATION CHART</span>
+                <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">▲ HOW TO INTERPRET THE Z-SCORE DEVIATION CHART</span>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 11px; color: #eeeeee; line-height: 1.45;">
                     <div>
-                        <p style="margin: 3px 0;"><strong style="color: #d4af37;">🔹 Golden Line (Spread):</strong> Represents the current relative price ratio between both currency pairs (Ratio A / B) over time.</p>
-                        <p style="margin: 3px 0;"><strong style="color: #dddddd;">🔹 Gray Dashed Line (Z = 0):</strong> The long-term historical mean. Perfect equilibrium where correlation operates in full sync.</p>
+                        <p style="margin: 3px 0;"><strong style="color: #d4af37;"> Golden Line (Spread):</strong> Represents the current relative price ratio between both currency pairs (Ratio A / B) over time.</p>
+                        <p style="margin: 3px 0;"><strong style="color: #dddddd;"> Gray Dashed Line (Z = 0):</strong> The long-term historical mean. Perfect equilibrium where correlation operates in full sync.</p>
                     </div>
                     <div>
-                        <p style="margin: 3px 0;"><strong style="color: #ff9900;">🔹 Orange Lines (+1.5 / -1.5):</strong> Tactical Alert Bands. The divergence becomes statistically relevant (80% chance of convergence).</p>
-                        <p style="margin: 3px 0;"><strong style="color: #ff4b4b;">🔹 Red Lines (+2.5 / -2.5):</strong> Maximum Conviction Limits. Extremely rare deviation (97.5% statistical probability of immediate mean reversion).</p>
+                        <p style="margin: 3px 0;"><strong style="color: #ff9900;"> Orange Lines (+1.5 / -1.5):</strong> Tactical Alert Bands. The divergence becomes statistically relevant (80% chance of convergence).</p>
+                        <p style="margin: 3px 0;"><strong style="color: #ff4b4b;"> Red Lines (+2.5 / -2.5):</strong> Maximum Conviction Limits. Extremely rare deviation (97.5% statistical probability of immediate mean reversion).</p>
                     </div>
                 </div>
                 <p style="margin: 10px 0 0 0; font-size: 10.5px; color: #dddddd; font-style: italic; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
-                    💡 <b>Trading Tip:</b> The ideal entry occurs when the <b>Current Price Diamond</b> touches or crosses the red lines (+/- 2.5). Profits are locked when the golden line returns to the central gray line (Z = 0).
+                     <b>Trading Tip:</b> The ideal entry occurs when the <b>Current Price Diamond</b> touches or crosses the red lines (+/- 2.5). Profits are locked when the golden line returns to the central gray line (Z = 0).
                 </p>
             </div>
             """, unsafe_allow_html=True)
         else:
             st.markdown("""
             <div style="background-color: #0d0f14; border: 1px solid rgba(191,149,63,0.15); border-radius: 6px; padding: 15px; font-family:'Inter'; text-align:left;">
-                <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">📈 CÓMO INTERPRETAR EL GRÁFICO DE DESVIACIÓN TÉCNICA (Z-SCORE)</span>
+                <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 8px;">▲ CÓMO INTERPRETAR EL GRÁFICO DE DESVIACIÓN TÉCNICA (Z-SCORE)</span>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 11px; color: #eeeeee; line-height: 1.45;">
                     <div>
-                        <p style="margin: 3px 0;"><strong style="color: #dddddd;">🔹 Línea Dorada (Spread):</strong> Representa el precio relativo actual entre ambos pares de divisas (Relación Cambiaria A / B) en el tiempo.</p>
-                        <p style="margin: 3px 0;"><strong style="color: #dddddd;">🔹 Línea Gris Discontinua (Z = 0):</strong> Promedio histórico de largo plazo. Equilibrio perfecto donde la correlación está en sincronía.</p>
+                        <p style="margin: 3px 0;"><strong style="color: #dddddd;"> Línea Dorada (Spread):</strong> Representa el precio relativo actual entre ambos pares de divisas (Relación Cambiaria A / B) en el tiempo.</p>
+                        <p style="margin: 3px 0;"><strong style="color: #dddddd;"> Línea Gris Discontinua (Z = 0):</strong> Promedio histórico de largo plazo. Equilibrio perfecto donde la correlación está en sincronía.</p>
                     </div>
                     <div>
-                        <p style="margin: 3px 0;"><strong style="color: #ff9900;">🔹 Líneas Naranjas (+1.5 / -1.5):</strong> Bandas de Alerta Táctica. La desviación comienza a ser estadísticamente relevante (80% probabilidad).</p>
-                        <p style="margin: 3px 0;"><strong style="color: #ff4b4b;">🔹 Líneas Rojas (+2.5 / -2.5):</strong> Límite de Máxima Convicción. Desviación extremadamente rara (97.5% probabilidad de reversión).</p>
+                        <p style="margin: 3px 0;"><strong style="color: #ff9900;"> Líneas Naranjas (+1.5 / -1.5):</strong> Bandas de Alerta Táctica. La desviación comienza a ser estadísticamente relevante (80% probabilidad).</p>
+                        <p style="margin: 3px 0;"><strong style="color: #ff4b4b;"> Líneas Rojas (+2.5 / -2.5):</strong> Límite de Máxima Convicción. Desviación extremadamente rara (97.5% probabilidad de reversión).</p>
                     </div>
                 </div>
                 <p style="margin: 10px 0 0 0; font-size: 10.5px; color: #dddddd; font-style: italic; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 8px;">
-                    💡 <b>Consejo Operativo:</b> El momento de entrada ideal ocurre cuando el <b>Diamante de Cotización Actual</b> toca o cruza las líneas rojas (+/- 2.5). La ganancia se toma cuando la línea dorada regresa al promedio central (Z = 0).
+                     <b>Consejo Operativo:</b> El momento de entrada ideal ocurre cuando el <b>Diamante de Cotización Actual</b> toca o cruza las líneas rojas (+/- 2.5). La ganancia se toma cuando la línea dorada regresa al promedio central (Z = 0).
                 </p>
             </div>
             """, unsafe_allow_html=True)
@@ -3895,9 +3895,9 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             
             # Format matrix status cell
             if abs(z_val) >= 2.5:
-                matrix_status.append(f"🚨 EXTREMA (Z = {z_val:+.2f})")
+                matrix_status.append(f"[ALERTA]  EXTREMA (Z = {z_val:+.2f})")
             elif abs(z_val) >= 1.5:
-                matrix_status.append(f"🟢 ATIVA (Z = {z_val:+.2f})")
+                matrix_status.append(f"▲ ATIVA (Z = {z_val:+.2f})")
             else:
                 matrix_status.append(f"Aguardar Desvio (Z = {z_val:+.2f})")
                 
@@ -5011,7 +5011,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                         "manual_title": "Manual de Inteligência: Como Lucrar com Squeezes de Ações",
                         "manual_content": """
                         <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                            <h3 style='color:#bf953f; margin-top:0;'>💡 Estratégia Avançada: Identificando Short Squeezes</h3>
+                            <h3 style='color:#bf953f; margin-top:0;'> Estratégia Avançada: Identificando Short Squeezes</h3>
                             <p>O <b>Short Squeeze</b> ocorre quando uma ação que possui um grande volume de posições vendidas (alugadas) começa a subir rapidamente. Como os vendedores a descoberto têm perda ilimitada, eles são forçados a comprar as ações de volta para fechar suas posições, o que acelera ainda mais a alta.</p>
                             <h4 style='color:#ffffff;'>Como o Investidor Elite se Beneficia:</h4>
                             <ul>
@@ -5033,7 +5033,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                         "manual_title": "Intelligence Manual: How to Profit from Stock Squeezes",
                         "manual_content": """
                         <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                            <h3 style='color:#bf953f; margin-top:0;'>💡 Advanced Strategy: Spotting Short Squeezes</h3>
+                            <h3 style='color:#bf953f; margin-top:0;'> Advanced Strategy: Spotting Short Squeezes</h3>
                             <p>A <b>Short Squeeze</b> occurs when a stock with a heavy volume of short positions (borrowed shares) starts rising rapidly. Because short sellers face unlimited loss potential, they are forced to buy back shares to cover their positions, causing an exponential upward spiral.</p>
                             <h4 style='color:#ffffff;'>How the Elite Investor Profits:</h4>
                             <ul>
@@ -5055,7 +5055,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                         "manual_title": "Manual de Inteligencia: Cómo Lucrar con Squeezes de Acciones",
                         "manual_content": """
                         <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                            <h3 style='color:#bf953f; margin-top:0;'>💡 Estrategia Avanzada: Identificando Short Squeezes</h3>
+                            <h3 style='color:#bf953f; margin-top:0;'> Estrategia Avanzada: Identificando Short Squeezes</h3>
                             <p>El <b>Short Squeeze</b> ocurre cuando una acción que posee un gran volumen de posiciones vendidas (alquiladas) comienza a subir rápidamente. Como los vendedores en corto enfrentan pérdidas ilimitadas, se ven obligados a comprar las acciones de vuelta para cerrar sus posiciones, acelerando aún más el alza.</p>
                             <h4 style='color:#ffffff;'>Cómo se Beneficia el Inversor Elite:</h4>
                             <ul>
@@ -5193,7 +5193,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                         "manual_title": "Manual de Inteligência: O Poder das Recompras de Ações",
                         "manual_content": """
                         <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                            <h3 style='color:#bf953f; margin-top:0;'>📈 O Efeito Multiplicador de Riqueza das Recompras</h3>
+                            <h3 style='color:#bf953f; margin-top:0;'>▲ O Efeito Multiplicador de Riqueza das Recompras</h3>
                             <p>Quando uma empresa **recompra suas próprias ações** e as cancela no mercado, ela reduz o número total de ações em circulação. Isso cria um impacto imediato e automático na sua participação societária:</p>
                             <h4 style='color:#ffffff;'>Por que o Carlos deve monitorar Recompras:</h4>
                             <ul>
@@ -5216,7 +5216,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                         "manual_title": "Intelligence Manual: The Power of Share Buybacks",
                         "manual_content": """
                         <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                            <h3 style='color:#bf953f; margin-top:0;'>📈 The Wealth Multiplier Effect of Buybacks</h3>
+                            <h3 style='color:#bf953f; margin-top:0;'>▲ The Wealth Multiplier Effect of Buybacks</h3>
                             <p>When a corporation **buys back its own shares** and retires them, it reduces the total share count outstanding. This creates a powerful, automatic compounding effect on your equity:</p>
                             <h4 style='color:#ffffff;'>Why Carlos should track Buybacks:</h4>
                             <ul>
@@ -5239,7 +5239,7 @@ elif st.session_state.active_terminal == "balance_sheets":
                         "manual_title": "Manual de Inteligencia: El Poder de las Recompras de Acciones",
                         "manual_content": """
                         <div style='background-color:#161a23; padding:20px; border-radius:10px; border:1px solid #bf953f; color:#ffffff;'>
-                            <h3 style='color:#bf953f; margin-top:0;'>📈 El Efecto Multiplicador de Riqueza de las Recompras</h3>
+                            <h3 style='color:#bf953f; margin-top:0;'>▲ El Efecto Multiplicador de Riqueza de las Recompras</h3>
                             <p>Cuando una empresa **recompra sus propias acciones** y las cancela, reduce el número total de acciones en circulación. Esto crea un impacto inmediato y automático en su participación:</p>
                             <h4 style='color:#ffffff;'>Por qué Carlos debe monitorear las Recompras:</h4>
                             <ul>
@@ -8218,12 +8218,12 @@ elif st.session_state.active_terminal == "family_office_br":
             # --- CARD DE ANÁLISE OPERACIONAL CARLOS (CREDENCIAIS DE 23 ANOS & TELEGRAM VIP) ---
             st.markdown(f"""
             <div style='background-color:#0b0e14; padding:20px; border-radius:15px; border:1px solid #bf953f33; border-left:4px solid #bf953f; margin-bottom:20px;'>
-                <h5 style='margin:0 0 10px 0; color:#fff; font-size:15px; text-transform:uppercase; letter-spacing:0.5px;'>🎯 POR QUE ACOMPANHAR AS CARTEIRAS DOS SUPER-RICOS?</h5>
+                <h5 style='margin:0 0 10px 0; color:#fff; font-size:15px; text-transform:uppercase; letter-spacing:0.5px;'> POR QUE ACOMPANHAR AS CARTEIRAS DOS SUPER-RICOS?</h5>
                 <p style='font-size:12px; color:#ccc; line-height:1.6; margin-bottom:12px;'>
                     Seguir as pegadas do <b>"Smart Money"</b> (Dinheiro Inteligente) é o maior segredo dos investidores de elite. Grandes fundos possuem equipes inteiras de Ph.Ds, analistas dedicados e acesso privilegiado a dados que investidores comuns não têm. O portfólio deles revela onde a convicção fundamentalista de longo prazo está ancorada, evitando que você caia em boatos e no FOMO de mercado.
                 </p>
                 <hr style='border-top:1px solid #bf953f22; margin:12px 0;'>
-                <strong style='color:#bf953f; font-size:11px; text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:5px;'>💡 ANÁLISE TÁTICA & TIMING DE ENTRADA EXCLUSIVO</strong>
+                <strong style='color:#bf953f; font-size:11px; text-transform:uppercase; letter-spacing:1px; display:block; margin-bottom:5px;'> ANÁLISE TÁTICA & TIMING DE ENTRADA EXCLUSIVO</strong>
                 <p style='font-size:12px; color:#ccc; line-height:1.6; margin:0;'>
                     <i>"A análise fundamentalista do terminal nos mostra <b>O QUE</b> comprar. Mas o <b>TIMING exato</b> de quando entrar ou sair com máxima precisão gráfica é ditado pela Análise Técnica. Como <b>Analista Técnico Profissional com mais de 23 anos de experiência</b>, eu posto semanalmente <b>vídeos analíticos exclusivos e lives de gráficos dinâmicos</b> destas exatas ações das baleias no nosso <b>TELEGRAM VIP EXCLUSIVO</b>. Junte a inteligência dos tubarões com a precisão tática no nosso canal!"</i>
                 </p>
@@ -8331,7 +8331,7 @@ elif st.session_state.active_terminal == "family_office_br":
                 }
             }
 
-            sub_t1, sub_t2 = st.tabs(["📊 ALOCAÇÃO MACRO GLOBAL", "🇧🇷 CARTEIRA B3 DETALHADA"])
+            sub_t1, sub_t2 = st.tabs([" ALOCAÇÃO MACRO GLOBAL", " CARTEIRA B3 DETALHADA"])
 
             with sub_t1:
                 macro_data = MACRO_ALLOCATIONS.get(titan_key, MACRO_ALLOCATIONS["Verde Asset Management"])
@@ -8584,7 +8584,7 @@ elif st.session_state.active_terminal == "family_office_br":
             st.info(" **Inteligência Wealth Copilot:** Compras táticas por insiders corporativos historicamente superam o índice Bovespa nos 12 meses seguintes em mais de **8.4% Alpha**, pois esses diretores e controladores possuem acesso direto a projeções internas e fluxos futuros de lucros reais.")
 
         with fo_sub_tabs[3]:
-            st.markdown("### 📊 Mesa Quant & Timing de Ações (B3)" if lang == "PT" else ("### 📊 B3 Quant & Timing Desk" if lang == "EN" else "### 📊 Mesa Quant y Timing de Acciones (B3)"), unsafe_allow_html=True)
+            st.markdown("### Mesa Quant & Timing de Ações (B3)" if lang == "PT" else ("### B3 Quant & Timing Desk" if lang == "EN" else "### Mesa Quant y Timing de Acciones (B3)"), unsafe_allow_html=True)
             st.write("Análise quantitativa de altíssima precisão baseada em desvios estatísticos de médias móveis semanais e ciclos anuais, cruzada com fundamentos contábeis (Graham) e fluxo de compras de Insiders.")
             
             # Educational Box
@@ -8799,7 +8799,7 @@ elif st.session_state.active_terminal == "family_office_br":
             st.markdown(f"""
             <div class="conviction-card" style="border-left-color: #bf953f; background-color: #11151c; padding: 22px; border-radius: 8px; margin-top: 25px; border: 1px solid #bf953f33; font-family: 'Inter', sans-serif;">
                 <h4 style="margin: 0 0 15px 0; color: #bf953f; font-size: 15px; text-transform: uppercase; font-weight: 800; border: none; padding: 0; letter-spacing: 1px;">
-                    🎯 MANUAL DE EXECUÇÃO PRÁTICA & FLUXO DE ANÁLISE DE ELITE (B3)
+                     MANUAL DE EXECUÇÃO PRÁTICA & FLUXO DE ANÁLISE DE ELITE (B3)
                 </h4>
                 <p style="font-size: 13px; color: #dddddd; line-height: 1.6; margin-bottom: 12px;">
                     Para maximizar a precisão matemática e a segurança patrimonial das suas alocações na B3, siga rigorosamente este protocolo institucional:
@@ -8812,7 +8812,7 @@ elif st.session_state.active_terminal == "family_office_br":
                 </ol>
                 <div style="background-color: #161a23; border: 1px solid #bf953f22; border-radius: 6px; padding: 15px; margin-top: 15px;">
                     <p style="font-size: 12.5px; color: #cccccc; line-height: 1.6; margin: 0;">
-                        💡 <b>Mentoria Privada & Insights Exclusivos:</b> Como analista técnica sênior com <b>mais de 23 anos de experiência prática de mercado</b>, realizo varreduras constantes nas estruturas gráficas e tendências de ativos nacionais e internacionais. Todos os meus estudos detalhados e alertas de setups em tempo real são passados no nosso <b>Telegram VIP de Elite</b>. Use também o <b>WhatsApp de Suporte Privado</b> no menu lateral para esclarecer dúvidas diretamente comigo se necessário!
+                         <b>Mentoria Privada & Insights Exclusivos:</b> Como analista técnica sênior com <b>mais de 23 anos de experiência prática de mercado</b>, realizo varreduras constantes nas estruturas gráficas e tendências de ativos nacionais e internacionais. Todos os meus estudos detalhados e alertas de setups em tempo real são passados no nosso <b>Telegram VIP de Elite</b>. Use também o <b>WhatsApp de Suporte Privado</b> no menu lateral para esclarecer dúvidas diretamente comigo se necessário!
                     </p>
                 </div>
             </div>
@@ -8827,7 +8827,7 @@ elif st.session_state.active_terminal == "family_office_br":
         st.markdown(f"""
         <div style="background-color: #11151c; border: 1px solid #bf953f66; border-radius: 8px; padding: 18px 24px; margin-bottom: 25px;">
             <h4 style="margin:0 0 15px 0; color:#bf953f; font-size:14px; text-transform:uppercase; font-weight:800; border:none; padding:0; letter-spacing:1.5px; font-family:'Inter', sans-serif;">
-                ⚙️ {"AJUSTE DE PARÂMETROS PATRIMONIAIS" if lang == "PT" else ("WEALTH PARAMETER ADJUSTMENT" if lang == "EN" else "AJUSTE DE PARÁMETROS PATRIMONIALES")}
+                ️ {"AJUSTE DE PARÂMETROS PATRIMONIAIS" if lang == "PT" else ("WEALTH PARAMETER ADJUSTMENT" if lang == "EN" else "AJUSTE DE PARÁMETROS PATRIMONIALES")}
             </h4>
         """, unsafe_allow_html=True)
         
@@ -9224,26 +9224,26 @@ if "active_terminal" in st.session_state and st.session_state.active_terminal !=
     st.sidebar.markdown(f"""
     <div style="background-color: #11151c; border: 1px solid #bf953f66; border-radius: 8px; padding: 15px; margin-top: 15px; font-family: 'Inter', sans-serif;">
         <h4 style="margin: 0 0 10px 0; color: #bf953f; font-size: 13px; text-transform: uppercase; font-weight: 800; border: none; padding: 0; letter-spacing: 1px;">
-            📢 Canal VIP & Suporte Direto
+             Canal VIP & Suporte Direto
         </h4>
         <p style="font-size: 11px; color: #cccccc; line-height: 1.5; margin-bottom: 12px;">
             Acesso exclusivo aos canais de comunicação direta com nossa analista técnica sênior (+23 anos de experiência):
         </p>
         <a href="https://t.me/+d45_kiikjFw2NWM5" target="_blank" style="text-decoration: none; display: block; margin-bottom: 8px;">
             <div style="background: linear-gradient(135deg, #0088cc 0%, #00a2ed 100%); color: white; padding: 8px; text-align: center; border-radius: 6px; font-weight: bold; font-size: 11px; box-shadow: 0 4px 10px rgba(0, 136, 204, 0.25);">
-                ✈️ TELEGRAM VIP ELITE
+                ️ TELEGRAM VIP ELITE
             </div>
         </a>
         <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20tirar%20uma%20dúvida%20sobre%20as%20análises%20técnicas." target="_blank" style="text-decoration: none; display: block; margin-bottom: 12px;">
             <div style="background: linear-gradient(135deg, #25d366 0%, #20ba5a 100%); color: white; padding: 8px; text-align: center; border-radius: 6px; font-weight: bold; font-size: 11px; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.25);">
-                💬 WHATSAPP ANALISTA
+                 WHATSAPP ANALISTA
             </div>
         </a>
         <p style="font-size: 10px; color: #888888; margin: 0 0 10px 0; word-break: break-all; text-align: center;">
-            📧 <b>Contato:</b> paduagroup@gmail.com
+             <b>Contato:</b> paduagroup@gmail.com
         </p>
         <div style="font-size: 9.5px; color: #888888; line-height: 1.4; border-top: 1px solid #bf953f22; padding-top: 8px;">
-            💡 <b>Fluxo de Análise Recomendado:</b><br>
+             <b>Fluxo de Análise Recomendado:</b><br>
             1. Analise as carteiras e escolha os ativos do seu interesse.<br>
             2. Audite a saúde contábil profunda no <b>Módulo de Análise de Balanços (Módulo III)</b>.<br>
             3. Verifique a estrutura gráfica no semanal: Média Exponencial de 50 (EMA 50 W), inclinação, desvio e tendência.<br>
