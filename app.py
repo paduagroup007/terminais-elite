@@ -1020,15 +1020,20 @@ if "active_terminal" not in st.session_state:
     st.session_state.active_terminal = url_terminal
 
 # Seletor de Idiomas na Barra Lateral
-lang_options = {"Português (PT)": "PT", "English (EN)": "EN", "Español (ES)": "ES"}
+lang_options = {"Portugu" + chr(0xfffd) + "s (PT)": "PT", "English (EN)": "EN", "Espa" + chr(0xfffd) + "ol (ES)": "ES"}
 url_lang = st.query_params.get("lang", "PT").strip().upper()
-default_index = 0
-if url_lang == "EN":
-    default_index = 1
-elif url_lang == "ES":
-    default_index = 2
 
-selected_lang = st.sidebar.selectbox("IDIOMA / LANGUAGE", list(lang_options.keys()), index=default_index)
+if "prev_url_lang" not in st.session_state or st.session_state.prev_url_lang != url_lang:
+    st.session_state.prev_url_lang = url_lang
+    inv_map = {v: k for k, v in lang_options.items()}
+    if url_lang in inv_map:
+        st.session_state.selected_lang_key = inv_map[url_lang]
+
+if "selected_lang_key" not in st.session_state:
+    inv_map = {v: k for k, v in lang_options.items()}
+    st.session_state.selected_lang_key = inv_map.get(url_lang, "Portugu" + chr(0xfffd) + "s (PT)")
+
+selected_lang = st.sidebar.selectbox("IDIOMA / LANGUAGE", list(lang_options.keys()), key="selected_lang_key")
 lang = lang_options[selected_lang]
 st.session_state.language = lang
 t = TRANSLATIONS[lang]
