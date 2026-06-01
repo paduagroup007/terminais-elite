@@ -4116,9 +4116,9 @@ elif st.session_state.active_terminal == "balance_sheets":
     lang_key = lang if lang in ["PT", "EN", "ES"] else "PT"
     b3_t_active = b3_translations[lang_key]
 
-    if st.session_state.term_3_coverage == "USA":
+    if st.session_state.get("term_3_coverage", "B3") == "USA":
         try:
-            usa_fundamentals.render_us_fundamentals(lang_key, st.session_state.usa_ticker, st.session_state.usa_module, st.session_state.get('usa_risk_free', 4.4))
+            usa_fundamentals.render_us_fundamentals(lang_key, st.session_state.get("usa_ticker", "AAPL"), st.session_state.get("usa_module", "Valuation Intrínseco"), st.session_state.get('usa_risk_free', 4.4))
         except Exception as e:
             st.error(f"Erro Crítico no Módulo USA: {e}")
     elif selected_file:
