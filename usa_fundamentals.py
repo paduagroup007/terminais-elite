@@ -721,44 +721,32 @@ def render_us_fundamentals(lang, usa_ticker, active_module, risk_free_rate):
         
         # Multi-lingual dynamic explanation for Cérebro Elite IA
         if lang == "PT":
-            ia_desc = f"""
-            O valuation foi configurado de acordo com a taxa livre de risco de <b>{risk_free_rate:.1f}%</b> (Treasury de 10 anos americana). O multiplicador de Graham ajustado foi de <b>{graham_mult:.1f}x</b>.
-            <br><br>
-            {"<b>Alerta de Lucro Normalizado:</b> Como o Lucro consolidado foi negativo ou muito reduzido, realizamos uma normalização matemática para evitar distorções no valuation de longo prazo." if is_normalized else "A empresa mantém lucros estáveis, o que valida a aplicação clássica direta das equações de Benjamin Graham."}
-            <br><br>
-            <strong style="color: #bf953f; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Análise de Big Techs & Crescimento (Peter Lynch):</strong><br>
-            Modelos de múltiplos clássicos de Benjamin Graham (focados no século XX e ativos tangíveis industriais) frequentemente classificam gigantes tecnológicas famosas como Apple, Microsoft, Nvidia ou Tesla como "caras" e distantes do preço justo. No entanto, essas corporações modernas possuem fossos econômicos (*Economic Moats*) formidáveis, alta escalabilidade digital e margens líquidas absurdas que justificam múltiplos de PER mais elevados.
-            <br><br>
-            Para solucionar isso, integramos o <b>Modelo de Valuation Peter Lynch</b>. Ele estabelece que o P/E justo de uma empresa saudável de tecnologia/crescimento equivale à sua taxa de crescimento composto somada ao dividend yield: <i>Múltiplo Justo = CAGR ({growth_rate:.1f}%) + DY ({dy_atual:.1f}%) = {growth_rate + dy_atual:.1f}x</i>.
-            <br><br>
-            Com o seu <b>PEG Ratio atual de {peg_ratio:.2f}</b> (P/E de {pe_ratio:.1f}x dividido pelo crescimento de {growth_rate:.1f}%), o ativo é classificado como <span style="color:{peg_color}; font-weight:bold;">{peg_desc}</span> sob o modelo de Peter Lynch, ajudando você a diferenciar "value traps" de verdadeiras máquinas de composto de longo prazo.
-            """
+            ia_desc = (
+                f"O valuation foi configurado de acordo com a taxa livre de risco de <b>{risk_free_rate:.1f}%</b> (Treasury de 10 anos americana). O multiplicador de Graham ajustado foi de <b>{graham_mult:.1f}x</b>.<br><br>"
+                f"{'<b>Alerta de Lucro Normalizado:</b> Como o Lucro consolidado foi negativo ou muito reduzido, realizamos uma normalização matemática para evitar distorções no valuation de longo prazo.' if is_normalized else 'A empresa mantém lucros estáveis, o que valida a aplicação clássica direta das equações de Benjamin Graham.'}<br><br>"
+                f"<strong style='color: #bf953f; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;'>Análise de Big Techs & Crescimento (Peter Lynch):</strong><br>"
+                f"Modelos de múltiplos clássicos de Benjamin Graham (focados no século XX e ativos tangíveis industriais) frequentemente classificam gigantes tecnológicas famosas como Apple, Microsoft, Nvidia ou Tesla como 'caras' e distantes do preço justo. No entanto, essas corporações modernas possuem fossos econômicos (*Economic Moats*) formidáveis, alta escalabilidade digital e margens líquidas absurdas que justificam múltiplos de PER mais elevados.<br><br>"
+                f"Para solucionar isso, integramos o <b>Modelo de Valuation Peter Lynch</b>. Ele estabelece que o P/E justo de uma empresa saudável de tecnologia/crescimento equivale à sua taxa de crescimento composto somada ao dividend yield: <i>Múltiplo Justo = CAGR ({growth_rate:.1f}%) + DY ({dy_atual:.1f}%) = {growth_rate + dy_atual:.1f}x</i>.<br><br>"
+                f"Com o seu <b>PEG Ratio atual de {peg_ratio:.2f}</b> (P/E de {pe_ratio:.1f}x dividido pelo crescimento de {growth_rate:.1f}%), o ativo é classificado como <span style='color:{peg_color}; font-weight:bold;'>{peg_desc}</span> sob o modelo de Peter Lynch, ajudando você a diferenciar 'value traps' de verdadeiras máquinas de composto de longo prazo."
+            )
         elif lang == "EN":
-            ia_desc = f"""
-            The valuation was configured with a risk-free rate of <b>{risk_free_rate:.1f}%</b> (US 10-Year Treasury). The adjusted Graham multiplier is <b>{graham_mult:.1f}x</b>.
-            <br><br>
-            {"<b>Normalized Profit Alert:</b> Because consolidated Net Income was negative or very low, we performed a mathematical normalization to prevent valuation distortion." if is_normalized else "The company maintains stable earnings, validating the classical Benjamin Graham equations."}
-            <br><br>
-            <strong style="color: #bf953f; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Growth & Big Tech Analysis (Peter Lynch):</strong><br>
-            Benjamin Graham's classical multiples formulas (built in the 20th century with a focus on physical assets) often label tech leaders like Apple, Microsoft, Nvidia, or Tesla as "overvalued." However, modern tech leaders operate asset-light compounders with high margins and robust competitive moats that naturally support premium multiples.
-            <br><br>
-            To address this, we integrated the <b>Peter Lynch Valuation Model</b>. It assumes that a healthy growth company's fair P/E multiple is equal to its compound annual growth rate plus its dividend yield: <i>Fair Multiple = CAGR ({growth_rate:.1f}%) + DY ({dy_atual:.1f}%) = {growth_rate + dy_atual:.1f}x</i>.
-            <br><br>
-            With a current <b>PEG Ratio of {peg_ratio:.2f}</b> (P/E of {pe_ratio:.1f}x divided by growth of {growth_rate:.1f}%), this stock is rated as <span style="color:{peg_color}; font-weight:bold;">{peg_desc}</span> under Peter Lynch's framework, helping you distinguish cheap value traps from high-conviction compound growth.
-            """
+            ia_desc = (
+                f"The valuation was configured with a risk-free rate of <b>{risk_free_rate:.1f}%</b> (US 10-Year Treasury). The adjusted Graham multiplier is <b>{graham_mult:.1f}x</b>.<br><br>"
+                f"{'<b>Normalized Profit Alert:</b> Because consolidated Net Income was negative or very low, we performed a mathematical normalization to prevent valuation distortion.' if is_normalized else 'The company maintains stable earnings, validating the classical Benjamin Graham equations.'}<br><br>"
+                f"<strong style='color: #bf953f; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;'>Growth & Big Tech Analysis (Peter Lynch):</strong><br>"
+                f"Benjamin Graham's classical multiples formulas (built in the 20th century with a focus on physical assets) often label tech leaders like Apple, Microsoft, Nvidia, or Tesla as 'overvalued.' However, modern tech leaders operate asset-light compounders with high margins and robust competitive moats that naturally support premium multiples.<br><br>"
+                f"To address this, we integrated the <b>Peter Lynch Valuation Model</b>. It assumes that a healthy growth company's fair P/E multiple is equal to its compound annual growth rate plus its dividend yield: <i>Fair Multiple = CAGR ({growth_rate:.1f}%) + DY ({dy_atual:.1f}%) = {growth_rate + dy_atual:.1f}x</i>.<br><br>"
+                f"With a current <b>PEG Ratio of {peg_ratio:.2f}</b> (P/E of {pe_ratio:.1f}x divided by growth of {growth_rate:.1f}%), this stock is rated as <span style='color:{peg_color}; font-weight:bold;'>{peg_desc}</span> under Peter Lynch's framework, helping you distinguish cheap value traps from high-conviction compound growth."
+            )
         else: # ES
-            ia_desc = f"""
-            La valuación fue configurada según la tasa libre de riesgo del <b>{risk_free_rate:.1f}%</b> (Treasury a 10 años). El multiplicador de Graham ajustado es de <b>{graham_mult:.1f}x</b>.
-            <br><br>
-            {"<b>Alerta de Beneficio Normalizado:</b> Dado que el Beneficio Neto consolidado fue negativo o muy bajo, realizamos una normalización matemática para evitar distorsiones en la valuación a largo plazo." if is_normalized else "La empresa mantiene beneficios estables, lo que valida la aplicación clásica de Benjamin Graham."}
-            <br><br>
-            <strong style="color: #bf953f; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Análisis de Big Techs y Crecimiento (Peter Lynch):</strong><br>
-            Las fórmulas clásicas de Benjamin Graham (enfocadas en activos físicos e industrias tradicionales del siglo XX) suelen calificar a gigantes tecnológicas como Apple, Microsoft, Nvidia o Tesla como "caras." Sin embargo, las big techs operan con modelos ligeros de activos, alta escalabilidad y márgenes excepcionales que justifican múltiplos de PER premium.
-            <br><br>
-            Por ello, integramos el <b>Modelo de Valuación de Peter Lynch</b>. Este asume que el múltiplo PER justo para una empresa en expansión equivale a su tasa de crecimiento compuesto más su rentabilidad por dividendo: <i>Múltiplo Justo = CAGR ({growth_rate:.1f}%) + DY ({dy_atual:.1f}%) = {growth_rate + dy_atual:.1f}x</i>.
-            <br><br>
-            Con un <b>PEG Ratio actual de {peg_ratio:.2f}</b> (PER de {pe_ratio:.1f}x dividido por el crecimiento de {growth_rate:.1f}%), el activo está calificado como <span style="color:{peg_color}; font-weight:bold;">{peg_desc}</span> bajo el modelo de Peter Lynch, guiándole a separar las trampas de valor de los verdaderos compuestos de riqueza a largo plazo.
-            """
+            ia_desc = (
+                f"La valuación fue configurada según la tasa libre de riesgo del <b>{risk_free_rate:.1f}%</b> (Treasury a 10 años). El multiplicador de Graham ajustado es de <b>{graham_mult:.1f}x</b>.<br><br>"
+                f"{'<b>Alerta de Beneficio Normalizado:</b> Dado que el Beneficio Neto consolidado fue negativo o muy bajo, realizamos una normalización matemática para evitar distorsiones en la valuación a largo plazo.' if is_normalized else 'La empresa mantiene beneficios estables, lo que valida la aplicación clásica de Benjamin Graham.'}<br><br>"
+                f"<strong style='color: #bf953f; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;'>Análisis de Big Techs y Crecimiento (Peter Lynch):</strong><br>"
+                f"Las fórmulas clásicas de Benjamin Graham (enfocadas en activos físicos e industrias tradicionales del siglo XX) suelen calificar a gigantes tecnológicas como Apple, Microsoft, Nvidia o Tesla como 'caras.' Sin embargo, las big techs operan con modelos ligeros de activos, alta escalabilidad y márgenes excepcionales que justifican múltiplos de PER premium.<br><br>"
+                f"Por ello, integramos el <b>Modelo de Valuación de Peter Lynch</b>. Este asume que el múltiplo PER justo para una empresa en expansión equivale a su tasa de crecimiento compuesto más su rentabilidad por dividendo: <i>Múltiplo Justo = CAGR ({growth_rate:.1f}%) + DY ({dy_atual:.1f}%) = {growth_rate + dy_atual:.1f}x</i>.<br><br>"
+                f"Con un <b>PEG Ratio actual de {peg_ratio:.2f}</b> (PER de {pe_ratio:.1f}x dividido por el crecimiento de {growth_rate:.1f}%), el activo está calificado como <span style='color:{peg_color}; font-weight:bold;'>{peg_desc}</span> bajo el modelo de Peter Lynch, guiándole a separar las trampas de valor de los verdaderos compuestos de riqueza a largo plazo."
+            )
 
         st.markdown(f"""
         <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 25px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
