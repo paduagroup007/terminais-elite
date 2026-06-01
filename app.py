@@ -1032,6 +1032,17 @@ lang = lang_options[selected_lang]
 st.session_state.language = lang
 t = TRANSLATIONS[lang]
 
+# Sincronizar o idioma com o React parent do iframe
+import streamlit.components.v1 as components
+components.html(f"""
+<script>
+    window.parent.postMessage({{
+        type: 'language_changed',
+        lang: '{lang}'
+    }}, '*');
+</script>
+""", height=0, width=0)
+
 # Renderização do Logotipo na Sidebar
 logo_path = os.path.join(os.path.dirname(__file__), "logo.png")
 if os.path.exists(logo_path):
