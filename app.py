@@ -1020,7 +1020,14 @@ if "active_terminal" not in st.session_state:
 
 # Seletor de Idiomas na Barra Lateral
 lang_options = {"Português (PT)": "PT", "English (EN)": "EN", "Español (ES)": "ES"}
-selected_lang = st.sidebar.selectbox("IDIOMA / LANGUAGE", list(lang_options.keys()), index=0)
+url_lang = st.query_params.get("lang", "PT").strip().upper()
+default_index = 0
+if url_lang == "EN":
+    default_index = 1
+elif url_lang == "ES":
+    default_index = 2
+
+selected_lang = st.sidebar.selectbox("IDIOMA / LANGUAGE", list(lang_options.keys()), index=default_index)
 lang = lang_options[selected_lang]
 st.session_state.language = lang
 t = TRANSLATIONS[lang]
