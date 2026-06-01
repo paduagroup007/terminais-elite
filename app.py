@@ -11,6 +11,7 @@ from cache_manager import CacheManager, WHALES
 from financials_db import get_financials
 import importlib
 import yfinance_connector
+import usa_fundamentals
 importlib.reload(yfinance_connector)
 from yfinance_connector import LiveMarketManager
 
@@ -690,8 +691,8 @@ TRANSLATIONS = {
         "term_1_desc": "Mapeia o fluxo oficial SEC EDGAR 13F dos maiores holdings e bancos mundiais.",
         "term_2_title": "TERMINAL II: RADAR CAMBIAL FOREX",
         "term_2_desc": "Fluxos do Relatório CFTC COT semanal de bancos centrais e especuladores.",
-        "term_3_title": "TERMINAL III: BALANCETES E B3 (BRAZIL)",
-        "term_3_desc": "Mapeamento de balanços de mega-caps, múltiplos corporativos e Graham value.",
+        "term_3_title": "TERMINAL III: MÚLTIPLOS & BALANÇOS GLOBAIS (B3 & USA)",
+        "term_3_desc": "Análise fundamentalista profunda, Piotroski, Altman Z-Score e Graham Value de ações brasileiras e americanas.",
         "term_4_title": "TERMINAL IV: BIG PLAYERS CRIPTO",
         "term_4_desc": "Fluxo de grandes alocadores on-chain, stablecoins e aportes de Venture Capitals.",
         "term_5_title": "TERMINAL V: NÚMEROS GLOBAIS",
@@ -730,8 +731,8 @@ TRANSLATIONS = {
         "term_1_desc": "Maps official SEC EDGAR 13F flow of the largest global holdings and banks.",
         "term_2_title": "TERMINAL II: FOREX COT RADAR",
         "term_2_desc": "Weekly CFTC COT report flows of central G10 banks and hedge funds.",
-        "term_3_title": "TERMINAL III: CORPORATE BALANCES & B3 (BRAZIL)",
-        "term_3_desc": "Mega-caps balance sheets, corporate valuation, and Graham value mapping.",
+        "term_3_title": "TERMINAL III: GLOBAL FUNDAMENTALS & BALANCES (B3 & USA)",
+        "term_3_desc": "Deep fundamentalist analysis, Piotroski, Altman Z-Score, and Graham Value for Brazilian and American equities.",
         "term_4_title": "TERMINAL IV: CRYPTO BIG PLAYERS",
         "term_4_desc": "On-chain big players flow, stablecoins and Venture Capital investments.",
         "term_5_title": "TERMINAL V: GLOBAL MACRO NUMBERS",
@@ -770,8 +771,8 @@ TRANSLATIONS = {
         "term_1_desc": "Mapea el fluxo oficial SEC EDGAR 13F de las mayores holdings y bancos mundiales.",
         "term_2_title": "TERMINAL II: RADAR CAMBIARIO FOREX",
         "term_2_desc": "Flujos del reporte semanal CFTC COT de bancos centrales y hedge funds.",
-        "term_3_title": "TERMINAL III: BALANCES Y B3 (BRAZIL)",
-        "term_3_desc": "Balances de mega-caps, múltiplos corporativos y mapeo de valor de Graham.",
+        "term_3_title": "TERMINAL III: ANÁLISIS FUNDAMENTALISTA GLOBAL (B3 & USA)",
+        "term_3_desc": "Análisis fundamentalista profundo, Piotroski, Altman Z-Score y Valor de Graham de acciones brasileñas y estadounidenses.",
         "term_4_title": "TERMINAL IV: BIG PLAYERS CRIPTO",
         "term_4_desc": "Flujo de grandes inversores on-chain, stablecoins e inversiones de Venture Capital.",
         "term_5_title": "TERMINAL V: NÚMEROS GLOBALES",
@@ -4115,7 +4116,12 @@ elif st.session_state.active_terminal == "balance_sheets":
     lang_key = lang if lang in ["PT", "EN", "ES"] else "PT"
     b3_t_active = b3_translations[lang_key]
 
-    if selected_file:
+    if st.session_state.term_3_coverage == "USA":
+        try:
+            usa_fundamentals.render_us_fundamentals(lang_key, st.session_state.usa_ticker, st.session_state.usa_module, st.session_state.get('usa_risk_free', 4.4))
+        except Exception as e:
+            st.error(f"Erro Crítico no Módulo USA: {e}")
+    elif selected_file:
         try:
             df = b3_parser.parse_file(selected_file)
             
