@@ -31,6 +31,7 @@ usa_translations = {
         "price_now": "PREÇO ATUAL",
         "graham_price": "P. JUSTO (GRAHAM)",
         "fcd_price": "P. JUSTO (FCD)",
+        "lynch_price": "P. JUSTO (PETER LYNCH)",
         "earnings_yield": "EARNINGS YIELD",
         "dividend_yield": "DIVIDEND YIELD",
         "roe": "ROE ANUAL",
@@ -62,6 +63,7 @@ usa_translations = {
         "price_now": "CURRENT PRICE",
         "graham_price": "GRAHAM FAIR PRICE",
         "fcd_price": "DCF FAIR PRICE",
+        "lynch_price": "LYNCH FAIR PRICE",
         "earnings_yield": "EARNINGS YIELD",
         "dividend_yield": "DIVIDEND YIELD",
         "roe": "ANNUAL ROE",
@@ -86,13 +88,14 @@ usa_translations = {
         "ebitda": "EBITDA",
         "revenue": "Ingresos Netos",
         "long_term_overview": "Visión General de Largo Plazo",
-        "revenue_vs_ebitda": "Ingresos vs EBITDA (Generación de Caja)",
+        "revenue_vs_ebitda": "Ingresos vs EBITDA (Generación de Caixa)",
         "equity_evolution": "Evolución del Patrimonio Neto",
         "debt_vs_cash": "Deuda vs Caja (Liquidez)",
         "gross_debt": "Deuda Bruta",
         "price_now": "PRECIO ACTUAL",
         "graham_price": "P. JUSTO (GRAHAM)",
         "fcd_price": "P. JUSTO (FCD)",
+        "lynch_price": "P. JUSTO (PETER LYNCH)",
         "earnings_yield": "EARNINGS YIELD",
         "dividend_yield": "DIVIDEND YIELD",
         "roe": "ROE ANUAL",
@@ -619,21 +622,149 @@ def render_us_fundamentals(lang, usa_ticker, active_module, risk_free_rate):
         else:
             preco_justo_fcd, margem_fcd = 0.0, 0.0
             
-        # Metrics Display
-        col_m1, col_m2, col_m3 = st.columns(3)
-        with col_m1: st.metric(t["price_now"], f"$ {price_now:,.2f}")
-        with col_m2: st.metric(t["graham_price"], f"$ {preco_justo_graham:,.2f}", f"{margem_graham:+.1f}%")
-        with col_m3: st.metric(t["fcd_price"], f"$ {preco_justo_fcd:,.2f}", f"{margem_fcd:+.1f}%")
+        # --- Peter Lynch Valuation Model ---
+        n_years = len(df) - 1
+        eps_initial = df['Lucro'].iloc[0] / shares_total if (shares_total > 0 and len(df) > 1) else 0.0
+        eps_final = df['Lucro'].iloc[-1] / shares_total if shares_total > 0 else 0.0
+        
+        # Calculate dynamic compound growth rate (CAGR)
+        growth_rate = 15.0  # default fallback
+        if n_years > 0 and eps_initial > 0 and eps_final > 0:
+            try:
+                growth_rate = ((eps_final / eps_initial) ** (1 / n_years) - 1) * 100
+            except Exception:
+                pass
+        elif n_years > 0:
+            # fallback to Revenue CAGR if EPS growth isn't calculable due to negative/zero values
+            rev_initial = df['Receita'].iloc[0]
+            rev_final = df['Receita'].iloc[-1]
+            if rev_initial > 0 and rev_final > 0:
+                try:
+                    growth_rate = ((rev_final / rev_initial) ** (1 / n_years) - 1) * 100
+                except Exception:
+                    pass
+        
+        # Bound growth rate to stay realistic and avoid ridiculous extremes
+        growth_rate = max(5.0, min(30.0, growth_rate))
+        
+        # Calculate current P/E Ratio and PEG Ratio
+        pe_ratio = price_now / lpa_val if lpa_val > 0 else 0.0
+        peg_ratio = pe_ratio / growth_rate if growth_rate > 0 else 0.0
+        
+        # Peter Lynch Fair Value = (CAGR + Dividend Yield) * LPA
+        dy_atual = metadata.get('dy', 0.0)
+        fair_pe_multiple = growth_rate + dy_atual
+        preco_justo_lynch = fair_pe_multiple * lpa_val
+        margem_lynch = ((preco_justo_lynch / price_now) - 1) * 100 if price_now > 0 else 0.0
+        
+        # PEG rating and color indicators
+        if peg_ratio <= 0:
+            peg_desc = "N/A"
+            peg_color = "#8a8d93"
+        elif peg_ratio < 1.0:
+            peg_desc = "Subavaliada" if lang == "PT" else ("Undervalued" if lang == "EN" else "Subvaluada")
+            peg_color = "#00ffa5"
+        elif peg_ratio <= 2.0:
+            peg_desc = "Preço Justo" if lang == "PT" else ("Fair Value" if lang == "EN" else "Precio Justo")
+            peg_color = "#bf953f"
+        else:
+            peg_desc = "Sobreavaliada" if lang == "PT" else ("Overvalued" if lang == "EN" else "Sobrevaluada")
+            peg_color = "#ff4b4b"
+            
+        # Cohesive, responsive premium metric cards in Obsidian Carbon & Gold theme
+        def get_card_html(title, value, change_str="", change_pct=0.0, is_gold=False, extra_info=None):
+            border_color = "rgba(191, 149, 63, 0.5)" if is_gold else "rgba(255, 255, 255, 0.06)"
+            bg_color = "linear-gradient(135deg, rgba(191, 149, 63, 0.1) 0%, rgba(10, 10, 15, 0.8) 100%)" if is_gold else "rgba(10, 10, 14, 0.6)"
+            shadow = "0 8px 24px rgba(191, 149, 63, 0.12)" if is_gold else "0 8px 24px rgba(0, 0, 0, 0.25)"
+            title_color = "#bf953f" if is_gold else "#8a8d93"
+            
+            change_html = ""
+            if change_str:
+                color = "#00ffa5" if change_pct >= 0 else "#ff4b4b"
+                sign = "+" if change_pct >= 0 else ""
+                change_html = f'<div style="color: {color}; font-size: 13px; font-weight: 600; margin-top: 4px;">{sign}{change_pct:.1f}%</div>'
+                
+            extra_html = ""
+            if extra_info:
+                extra_html = f'<div style="color: #b0b3b8; font-size: 11px; margin-top: 4px; font-style: italic;">{extra_info}</div>'
+                
+            return f"""
+            <div style="background: {bg_color}; border: 1px solid {border_color}; border-radius: 12px; padding: 18px; text-align: left; box-shadow: {shadow}; min-height: 110px; display: flex; flex-direction: column; justify-content: center;">
+                <div style="color: {title_color}; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px;">{title}</div>
+                <div style="color: #ffffff; font-size: 21px; font-weight: 700; line-height: 1.1;">{value}</div>
+                {change_html}
+                {extra_html}
+            </div>
+            """
+            
+        # Metrics Display - 4 columns layout
+        col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+        with col_m1:
+            st.markdown(get_card_html(t["price_now"], f"$ {price_now:,.2f}"), unsafe_allow_html=True)
+        with col_m2:
+            st.markdown(get_card_html(t["graham_price"], f"$ {preco_justo_graham:,.2f}", change_str=f"{margem_graham:+.1f}%", change_pct=margem_graham), unsafe_allow_html=True)
+        with col_m3:
+            st.markdown(get_card_html(t["fcd_price"], f"$ {preco_justo_fcd:,.2f}", change_str=f"{margem_fcd:+.1f}%", change_pct=margem_fcd), unsafe_allow_html=True)
+        with col_m4:
+            peg_label = f"PEG: {peg_ratio:.2f} ({peg_desc})" if peg_ratio > 0 else "PEG: N/A"
+            st.markdown(get_card_html(
+                t["lynch_price"], 
+                f"$ {preco_justo_lynch:,.2f}", 
+                change_str=f"{margem_lynch:+.1f}%", 
+                change_pct=margem_lynch, 
+                is_gold=True, 
+                extra_info=peg_label
+            ), unsafe_allow_html=True)
         
         # Interactive Margin of Safety
         st.markdown("<br>", unsafe_allow_html=True)
+        
+        # Multi-lingual dynamic explanation for Cérebro Elite IA
+        if lang == "PT":
+            ia_desc = f"""
+            O valuation foi configurado de acordo com a taxa livre de risco de <b>{risk_free_rate:.1f}%</b> (Treasury de 10 anos americana). O multiplicador de Graham ajustado foi de <b>{graham_mult:.1f}x</b>.
+            <br><br>
+            {"<b>Alerta de Lucro Normalizado:</b> Como o Lucro consolidado foi negativo ou muito reduzido, realizamos uma normalização matemática para evitar distorções no valuation de longo prazo." if is_normalized else "A empresa mantém lucros estáveis, o que valida a aplicação clássica direta das equações de Benjamin Graham."}
+            <br><br>
+            <strong style="color: #bf953f; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Análise de Big Techs & Crescimento (Peter Lynch):</strong><br>
+            Modelos de múltiplos clássicos de Benjamin Graham (focados no século XX e ativos tangíveis industriais) frequentemente classificam gigantes tecnológicas famosas como Apple, Microsoft, Nvidia ou Tesla como "caras" e distantes do preço justo. No entanto, essas corporações modernas possuem fossos econômicos (*Economic Moats*) formidáveis, alta escalabilidade digital e margens líquidas absurdas que justificam múltiplos de PER mais elevados.
+            <br><br>
+            Para solucionar isso, integramos o <b>Modelo de Valuation Peter Lynch</b>. Ele estabelece que o P/E justo de uma empresa saudável de tecnologia/crescimento equivale à sua taxa de crescimento composto somada ao dividend yield: <i>Múltiplo Justo = CAGR ({growth_rate:.1f}%) + DY ({dy_atual:.1f}%) = {growth_rate + dy_atual:.1f}x</i>.
+            <br><br>
+            Com o seu <b>PEG Ratio atual de {peg_ratio:.2f}</b> (P/E de {pe_ratio:.1f}x dividido pelo crescimento de {growth_rate:.1f}%), o ativo é classificado como <span style="color:{peg_color}; font-weight:bold;">{peg_desc}</span> sob o modelo de Peter Lynch, ajudando você a diferenciar "value traps" de verdadeiras máquinas de composto de longo prazo.
+            """
+        elif lang == "EN":
+            ia_desc = f"""
+            The valuation was configured with a risk-free rate of <b>{risk_free_rate:.1f}%</b> (US 10-Year Treasury). The adjusted Graham multiplier is <b>{graham_mult:.1f}x</b>.
+            <br><br>
+            {"<b>Normalized Profit Alert:</b> Because consolidated Net Income was negative or very low, we performed a mathematical normalization to prevent valuation distortion." if is_normalized else "The company maintains stable earnings, validating the classical Benjamin Graham equations."}
+            <br><br>
+            <strong style="color: #bf953f; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Growth & Big Tech Analysis (Peter Lynch):</strong><br>
+            Benjamin Graham's classical multiples formulas (built in the 20th century with a focus on physical assets) often label tech leaders like Apple, Microsoft, Nvidia, or Tesla as "overvalued." However, modern tech leaders operate asset-light compounders with high margins and robust competitive moats that naturally support premium multiples.
+            <br><br>
+            To address this, we integrated the <b>Peter Lynch Valuation Model</b>. It assumes that a healthy growth company's fair P/E multiple is equal to its compound annual growth rate plus its dividend yield: <i>Fair Multiple = CAGR ({growth_rate:.1f}%) + DY ({dy_atual:.1f}%) = {growth_rate + dy_atual:.1f}x</i>.
+            <br><br>
+            With a current <b>PEG Ratio of {peg_ratio:.2f}</b> (P/E of {pe_ratio:.1f}x divided by growth of {growth_rate:.1f}%), this stock is rated as <span style="color:{peg_color}; font-weight:bold;">{peg_desc}</span> under Peter Lynch's framework, helping you distinguish cheap value traps from high-conviction compound growth.
+            """
+        else: # ES
+            ia_desc = f"""
+            La valuación fue configurada según la tasa libre de riesgo del <b>{risk_free_rate:.1f}%</b> (Treasury a 10 años). El multiplicador de Graham ajustado es de <b>{graham_mult:.1f}x</b>.
+            <br><br>
+            {"<b>Alerta de Beneficio Normalizado:</b> Dado que el Beneficio Neto consolidado fue negativo o muy bajo, realizamos una normalización matemática para evitar distorsiones en la valuación a largo plazo." if is_normalized else "La empresa mantiene beneficios estables, lo que valida la aplicación clásica de Benjamin Graham."}
+            <br><br>
+            <strong style="color: #bf953f; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Análisis de Big Techs y Crecimiento (Peter Lynch):</strong><br>
+            Las fórmulas clásicas de Benjamin Graham (enfocadas en activos físicos e industrias tradicionales del siglo XX) suelen calificar a gigantes tecnológicas como Apple, Microsoft, Nvidia o Tesla como "caras." Sin embargo, las big techs operan con modelos ligeros de activos, alta escalabilidad y márgenes excepcionales que justifican múltiplos de PER premium.
+            <br><br>
+            Por ello, integramos el <b>Modelo de Valuación de Peter Lynch</b>. Este asume que el múltiplo PER justo para una empresa en expansión equivale a su tasa de crecimiento compuesto más su rentabilidad por dividendo: <i>Múltiplo Justo = CAGR ({growth_rate:.1f}%) + DY ({dy_atual:.1f}%) = {growth_rate + dy_atual:.1f}x</i>.
+            <br><br>
+            Con un <b>PEG Ratio actual de {peg_ratio:.2f}</b> (PER de {pe_ratio:.1f}x dividido por el crecimiento de {growth_rate:.1f}%), el activo está calificado como <span style="color:{peg_color}; font-weight:bold;">{peg_desc}</span> bajo el modelo de Peter Lynch, guiándole a separar las trampas de valor de los verdaderos compuestos de riqueza a largo plazo.
+            """
+
         st.markdown(f"""
         <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 25px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
             <strong style="color: #bf953f; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">{t['insight_ai']} | Avaliação e Desconto de Mercado</strong>
             <p style="color: #e0e0e0; font-size: 12.5px; line-height: 1.6; margin: 10px 0 0 0;">
-                O valuation foi configurado de acordo com a taxa livre de risco de <b>{risk_free_rate:.1f}%</b> (Treasury de 10 anos americana). O multiplicador de Graham ajustado foi de <b>{graham_mult:.1f}x</b>. 
-                <br><br>
-                {"<b>Alerta de Lucro Normalizado:</b> Como o Lucro consolidado foi negativo ou muito reduzido, realizamos uma normalização matemática com base na média histórica operacional e patrimônio para evitar distorções no valuation de longo prazo." if is_normalized else "A empresa mantém lucros estáveis, o que valida a aplicação clássica direta das equações de Benjamin Graham."}
+                {ia_desc}
             </p>
         </div>
         """, unsafe_allow_html=True)
