@@ -1109,7 +1109,33 @@ if "selected_lang_key" not in st.session_state:
     inv_map = {v: k for k, v in lang_options.items()}
     st.session_state.selected_lang_key = inv_map.get(url_lang, "Portugu" + chr(0xfffd) + "s (PT)")
 
-selected_lang = st.sidebar.selectbox("IDIOMA / LANGUAGE", list(lang_options.keys()), key="selected_lang_key")
+# Detect viewport param passed from React parent
+is_mobile = st.query_params.get("mobile", "false").lower() == "true"
+
+if is_mobile:
+    # Ocultar completamente a sidebar no celular
+    st.markdown("""
+        <style>
+        [data-testid="stSidebar"], 
+        [data-testid="stSidebarCollapseButton"], 
+        [data-testid="collapsedControl"] {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+        }
+        .block-container {
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    target_lang = st.container()
+else:
+    target_lang = st.sidebar
+
+selected_lang = target_lang.selectbox("IDIOMA / LANGUAGE", list(lang_options.keys()), key="selected_lang_key")
 lang = lang_options[selected_lang]
 st.session_state.language = lang
 t = TRANSLATIONS[lang]
@@ -1125,24 +1151,39 @@ components.html(f"""
 </script>
 """, height=0, width=0)
 
-# Renderização do Logotipo na Sidebar
-logo_path = os.path.join(os.path.dirname(__file__), "logo.png")
-if os.path.exists(logo_path):
-    st.sidebar.image(logo_path, use_container_width=True)
-    st.sidebar.write("")
+# Inicializar target do painel de controle
+if is_mobile:
+    if st.session_state.active_terminal == "hub":
+        target = st.container()
+    else:
+        # Botão de retorno móvel no topo da página
+        if st.button("← " + t["btn_back"].upper(), key="mobile_back_btn", use_container_width=True):
+            st.session_state.active_terminal = "hub"
+            st.rerun()
+        
+        target = st.expander("⚙️ CONTROLES & PARÂMETROS" if lang == "PT" else ("⚙️ CONTROLS & PARAMETERS" if lang == "EN" else "⚙️ CONTROLES Y PARÁMETROS"), expanded=False)
 else:
-    st.sidebar.markdown("<h2 style='border:none; text-align:center; color:#bf953f; font-size:24px; padding:0; margin-bottom:5px; font-weight:900;'>PERFECT LIFE</h2><p style='text-align:center; color:#bf953f; font-size:12px; letter-spacing:3px; margin-top:0px; font-weight:700; opacity:0.8;'>ELITE INVESTORS</p>", unsafe_allow_html=True)
+    target = st.sidebar
 
-# Botão de Retorno no Sidebar
-if st.session_state.active_terminal != "hub":
-    if st.sidebar.button(t["btn_back"], key="sidebar_back_btn"):
+# Renderização do Logotipo (somente no desktop)
+if not is_mobile:
+    logo_path = os.path.join(os.path.dirname(__file__), "logo.png")
+    if os.path.exists(logo_path):
+        target.image(logo_path, use_container_width=True)
+        target.write("")
+    else:
+        target.markdown("<h2 style='border:none; text-align:center; color:#bf953f; font-size:24px; padding:0; margin-bottom:5px; font-weight:900;'>PERFECT LIFE</h2><p style='text-align:center; color:#bf953f; font-size:12px; letter-spacing:3px; margin-top:0px; font-weight:700; opacity:0.8;'>ELITE INVESTORS</p>", unsafe_allow_html=True)
+
+# Botão de Retorno (somente no desktop)
+if not is_mobile and st.session_state.active_terminal != "hub":
+    if target.button(t["btn_back"], key="sidebar_back_btn"):
         st.session_state.active_terminal = "hub"
         st.rerun()
-    st.sidebar.write("---")
+    target.write("---")
 
 # --- CONTROLES DA SIDEBAR EXCLUSIVOS DO TERMINAL B3 & USA ---
 if st.session_state.active_terminal == "balance_sheets":
-    st.sidebar.markdown(f"<h3 style='font-size:16px; border:none; padding:0; text-align:center; color:#bf953f; font-weight:bold; margin-bottom:15px;'>{t['term_3_title']}</h3>", unsafe_allow_html=True)
+    target.markdown(f"<h3 style='font-size:16px; border:none; padding:0; text-align:center; color:#bf953f; font-weight:bold; margin-bottom:15px;'>{t['term_3_title']}</h3>", unsafe_allow_html=True)
     
     # Seletor de Cobertura Global (B3 vs USA)
     coverage_options = {
@@ -1153,14 +1194,14 @@ if st.session_state.active_terminal == "balance_sheets":
     if "term_3_coverage" not in st.session_state:
         st.session_state.term_3_coverage = "B3"
         
-    selected_coverage_translated = st.sidebar.selectbox(
+    selected_coverage_translated = target.selectbox(
         "MERCADO / MARKET" if lang == "PT" else ("MARKET / COVERAGE" if lang == "EN" else "MERCADO / COBERTURA"),
         coverage_options[lang],
         index=0 if st.session_state.term_3_coverage == "B3" else 1
     )
     coverage_key = "B3" if selected_coverage_translated == coverage_options[lang][0] else "USA"
     st.session_state.term_3_coverage = coverage_key
-    st.sidebar.write("---")
+    target.write("---")
 
     if coverage_key == "B3":
         # Sincronizar as planilhas do usuário a partir do Firestore ao inicializar a sessão
@@ -1175,7 +1216,7 @@ if st.session_state.active_terminal == "balance_sheets":
         if "b3_upload_success" not in st.session_state:
             st.session_state.b3_upload_success = False
 
-        uploaded_file = st.sidebar.file_uploader(
+        uploaded_file = target.file_uploader(
             "IMPORTAR PLANILHA (B3)" if lang == "PT" else ("IMPORT SPREADSHEET (B3)" if lang == "EN" else "IMPORTAR PLANILLA (B3)"), 
             type=["xls", "xlsx"],
             key=f"b3_uploader_{st.session_state.b3_uploader_key}"
@@ -1210,33 +1251,33 @@ if st.session_state.active_terminal == "balance_sheets":
                 st.session_state.b3_upload_success = True
                 st.rerun()
             except Exception as e:
-                st.sidebar.error(f"Erro ao salvar planilha: {e}")
+                target.error(f"Erro ao salvar planilha: {e}")
                 
         if st.session_state.b3_upload_success:
-            st.sidebar.success("Arquivo Importado com Sucesso!" if lang == "PT" else ("Spreadsheet Imported Successfully!" if lang == "EN" else "¡Planilla Importada con Éxito!"))
+            target.success("Arquivo Importado com Sucesso!" if lang == "PT" else ("Spreadsheet Imported Successfully!" if lang == "EN" else "¡Planilla Importada con Éxito!"))
             st.session_state.b3_upload_success = False
         
-        st.sidebar.write("---")
+        target.write("---")
         
         # ENTRADA MANUAL DE DADOS (OVERRIDE)
-        st.sidebar.subheader("AJUSTE DE MERCADO" if lang == "PT" else ("MARKET ADJUSTMENT" if lang == "EN" else "AJUSTE DE MERCADO"))
-        manual_price = st.sidebar.number_input(
+        target.subheader("AJUSTE DE MERCADO" if lang == "PT" else ("MARKET ADJUSTMENT" if lang == "EN" else "AJUSTE DE MERCADO"))
+        manual_price = target.number_input(
             "Preço da Ação (R$)" if lang == "PT" else ("Stock Price (R$)" if lang == "EN" else "Precio de Acción (R$)"), 
             min_value=0.0, 
             value=float(app_b3_state.get("price", 0.0)), 
             step=0.01
         )
-        manual_shares_txt = st.sidebar.text_input(
+        manual_shares_txt = target.text_input(
             "Quantidade de Ações" if lang == "PT" else ("Shares Outstanding" if lang == "EN" else "Quantidade de Ações"), 
             value=str(app_b3_state.get("shares", "0"))
         )
-        manual_dy = st.sidebar.number_input(
+        manual_dy = target.number_input(
             "Dividend Yield Atual (%)" if lang == "PT" else ("Current Dividend Yield (%)" if lang == "EN" else "Dividend Yield Actual (%)"), 
             min_value=0.0, 
             value=float(app_b3_state.get("dy", 0.0)), 
             step=0.1
         )
-        manual_selic = st.sidebar.number_input(
+        manual_selic = target.number_input(
             "Taxa SELIC Atual (%)" if lang == "PT" else ("Current SELIC Rate (%)" if lang == "EN" else "Taxa SELIC Atual (%)"), 
             min_value=0.0, 
             value=float(app_b3_state.get("selic", 14.5)), 
@@ -1248,19 +1289,19 @@ if st.session_state.active_terminal == "balance_sheets":
         except:
             manual_shares = 0
             
-        st.sidebar.write("---")
+        target.write("---")
         
         # SELECIONAR A EMPRESA
         files_b3 = b3_parser.get_available_files()
         company_idx = files_b3.index(app_b3_state.get("company_name")) if app_b3_state.get("company_name") in files_b3 else 0
         
-        selected_file = st.sidebar.selectbox(
+        selected_file = target.selectbox(
             "SELECIONE A EMPRESA" if lang == "PT" else ("SELECT COMPANY" if lang == "EN" else "SELECCIONE LA EMPRESA"), 
             files_b3, 
             index=company_idx
         )
         
-        st.sidebar.write("---")
+        target.write("---")
         
         # SELECIONAR MÓDULO B3 (TRADUZIDO)
         b3_modules_list = {
@@ -1305,7 +1346,7 @@ if st.session_state.active_terminal == "balance_sheets":
         else:
             b3_idx = b3_modules_list[lang].index(default_translated_module)
             
-        selected_b3_mod_translated = st.sidebar.radio(
+        selected_b3_mod_translated = target.radio(
             "MÓDULOS ANALÍTICOS" if lang == "PT" else ("ANALYTICAL MODULES" if lang == "EN" else "MÓDULOS ANALÍTICOS"),
             b3_modules_list[lang],
             index=b3_idx
@@ -1331,7 +1372,7 @@ if st.session_state.active_terminal == "balance_sheets":
         if "usa_ticker" not in st.session_state:
             st.session_state.usa_ticker = "AAPL"
             
-        usa_ticker_input = st.sidebar.text_input(
+        usa_ticker_input = target.text_input(
             "TICKER DA AÇÃO (USA)" if lang == "PT" else ("STOCK TICKER (USA)" if lang == "EN" else "TICKER DE ACCIÓN (USA)"),
             value=st.session_state.usa_ticker
         ).strip().upper()
@@ -1341,7 +1382,7 @@ if st.session_state.active_terminal == "balance_sheets":
         if "usa_risk_free" not in st.session_state:
             st.session_state.usa_risk_free = 4.4
             
-        usa_rf = st.sidebar.number_input(
+        usa_rf = target.number_input(
             "Taxa Livre de Risco (EUA %)" if lang == "PT" else ("US Risk-Free Rate (%)" if lang == "EN" else "Tasa Livre de Riesgo (EEUU %)"),
             min_value=0.0,
             value=float(st.session_state.usa_risk_free),
@@ -1385,7 +1426,7 @@ if st.session_state.active_terminal == "balance_sheets":
         
         usa_idx = usa_modules_list[lang].index(default_usa_translated_module) if default_usa_translated_module in usa_modules_list[lang] else 4
         
-        selected_usa_mod_translated = st.sidebar.radio(
+        selected_usa_mod_translated = target.radio(
             "MÓDULOS ANALÍTICOS" if lang == "PT" else ("ANALYTICAL MODULES" if lang == "EN" else "MÓDULOS ANALÍTICOS"),
             usa_modules_list[lang],
             index=usa_idx
@@ -1413,7 +1454,7 @@ if st.session_state.active_terminal == "family_office_br":
     default_fo_mod_translated = reverse_fo_map.get(active_fo_mod, fo_modules_list[lang][0])
     
     fo_idx = fo_modules_list[lang].index(default_fo_mod_translated) if default_fo_mod_translated in fo_modules_list[lang] else 0
-    selected_fo_mod_translated = st.sidebar.radio(
+    selected_fo_mod_translated = target.radio(
         "MÓDULOS TEMÁTICOS" if lang == "PT" else ("THEMATIC MODULES" if lang == "EN" else "MÓDULOS TEMÁTICOS"),
         fo_modules_list[lang],
         index=fo_idx
@@ -1426,11 +1467,11 @@ if st.session_state.active_terminal == "family_office_br":
     fo_state_itcmd = app_fo_state.get("state_itcmd", "São Paulo (4%)")
     
     if fo_module == "Gestão Patrimonial & Holding":
-        st.sidebar.write("---")
-        st.sidebar.subheader("PARÂMETROS DE RIQUEZA" if lang == "PT" else ("WEALTH PARAMETERS" if lang == "EN" else "PARÁMETROS DE RIQUEZA"))
+        target.write("---")
+        target.subheader("PARÂMETROS DE RIQUEZA" if lang == "PT" else ("WEALTH PARAMETERS" if lang == "EN" else "PARÁMETROS DE RIQUEZA"))
         
         # Simulador de Patrimônio Líquido
-        fo_net_worth = st.sidebar.number_input(
+        fo_net_worth = target.number_input(
             "Patrimônio Líquido (R$)" if lang == "PT" else ("Net Worth (BRL)" if lang == "EN" else "Patrimonio Neto (BRL)"),
             min_value=10000.0,
             value=float(app_fo_state.get("net_worth", 1000000.0)),
@@ -1458,7 +1499,7 @@ if st.session_state.active_terminal == "family_office_br":
         default_state_translated = reverse_state_map.get(active_state, states_list[lang][0])
         
         state_idx = states_list[lang].index(default_state_translated) if default_state_translated in states_list[lang] else 0
-        selected_state_translated = st.sidebar.selectbox(
+        selected_state_translated = target.selectbox(
             "Estado de Residência" if lang == "PT" else ("State of Residence" if lang == "EN" else "Estado de Residencia"),
             states_list[lang],
             index=state_idx
@@ -1585,9 +1626,9 @@ if st.session_state.active_terminal == "hub":
             st.session_state.active_terminal = "family_office_br"
             st.rerun()
             
-    st.sidebar.caption(t["user_level"])
-    st.sidebar.caption(t["data_source"])
-    st.sidebar.caption(t["last_update"])
+    target.caption(t["user_level"])
+    target.caption(t["data_source"])
+    target.caption(t["last_update"])
 # --- RENDERIZAÇÃO DO TERMINAL I: RADAR DE BIG PLAYERS ---
 elif st.session_state.active_terminal == "whale_radar":
     # 0. PRE-FETCH INSTITUTIONAL DATA AND DYNAMIC CACHE CHECK (20-MINUTE REFRESH)
@@ -1595,7 +1636,7 @@ elif st.session_state.active_terminal == "whale_radar":
         market_data = live_market.fetch_all_data()
         t_data = market_data.get("tickers", {})
 
-    st.sidebar.markdown(f"<h3 style='font-size:16px; border:none; padding:0; text-align:center; color:#bf953f; font-weight:bold; margin-bottom:15px;'>{t['term_1_title']}</h3>", unsafe_allow_html=True)
+    target.markdown(f"<h3 style='font-size:16px; border:none; padding:0; text-align:center; color:#bf953f; font-weight:bold; margin-bottom:15px;'>{t['term_1_title']}</h3>", unsafe_allow_html=True)
     
     # Cabeçalho Principal Centralizado do Terminal I
     st.markdown(f"<h1 style='text-align:center;'>{t['term_1_title']}</h1>", unsafe_allow_html=True)
@@ -1607,7 +1648,7 @@ elif st.session_state.active_terminal == "whale_radar":
         "EN": ["Elite IA Brain (Wealth Copilot)", "Radar of Convictions", "Big Players Tracker", "YTD Gainers & Losers (Smart Money)", "SEC Synchronizer (EDGAR)", "Quant & Timing Desk (US)", "Borrowing Radar (Short Interest)", "Share Buybacks (Buybacks)"],
         "ES": ["Cerebro Elite IA (Wealth Copilot)", "Radar de Convicciones", "Rastreador de Big Players", "Altas y Bajas YTD (Smart Money)", "Sincronizador SEC (EDGAR)", "Análisis Quant y Timing (EEUU)", "Radar de Alquiler (Short Interest)", "Recompra de Acciones (Buybacks)"]
     }
-    selected_module = st.sidebar.radio("MÓDULOS DE ANÁLISE / MODULES", module_options[lang], index=2)
+    selected_module = target.radio("MÓDULOS DE ANÁLISE / MODULES", module_options[lang], index=2)
     
     # Mapeamento estático para garantir execução lógica em português
     module_map = {
@@ -5844,9 +5885,9 @@ elif st.session_state.active_terminal == "crypto_whales":
     st.write("Módulo de inteligência soberana focado em ativos digitais estruturados de alta performance. Rastreia em tempo real a alocação de capital de risco das 6 maiores holdings de Venture Capital do mundo, monitora baleias e fluxos líquidos on-chain nas principais blockchains e mapeia oportunidades privadas de geração de liquidez (DeFi Yield Pools) para Family Offices." if lang == "PT" else ("Sovereign intelligence module focused on high-performance structured digital assets. Tracks risk capital allocation of the 6 largest Venture Capital holdings globally in real-time, monitors whales and liquid on-chain flows across major blockchains, and maps private liquidity generation opportunities (DeFi Yield Pools) for Family Offices." if lang == "EN" else "Módulo de inteligencia soberana enfocado en activos digitales estructurados de alto rendimiento. Rastrea en tempo real la asignación de capital de riesgo de las 6 mayores holdings de Venture Capital del mundo, monitorea ballenas y flujos líquidos on-chain en las principales blockchains y mapea oportunidades privadas de generación de liquidez (DeFi Yield Pools) para Family Offices."))
 
     # Sidebar dedicated crypto controls
-    st.sidebar.markdown("---")
-    st.sidebar.markdown("<h3 style='color:#bf953f; font-size:13px; text-transform:uppercase;'> CONTROLES CRIPTO WEALTH</h3>" if lang == "PT" else ("<h3 style='color:#bf953f; font-size:13px; text-transform:uppercase;'> CRYPTO WEALTH CONTROLS</h3>" if lang == "EN" else "<h3 style='color:#bf953f; font-size:13px; text-transform:uppercase;'> CONTROLES CRIPTO WEALTH</h3>"), unsafe_allow_html=True)
-    crypto_capital = st.sidebar.number_input(
+    target.markdown("---")
+    target.markdown("<h3 style='color:#bf953f; font-size:13px; text-transform:uppercase;'> CONTROLES CRIPTO WEALTH</h3>" if lang == "PT" else ("<h3 style='color:#bf953f; font-size:13px; text-transform:uppercase;'> CRYPTO WEALTH CONTROLS</h3>" if lang == "EN" else "<h3 style='color:#bf953f; font-size:13px; text-transform:uppercase;'> CONTROLES CRIPTO WEALTH</h3>"), unsafe_allow_html=True)
+    crypto_capital = target.number_input(
         "Capital de Simulação Cripto (USD)" if lang == "PT" else ("Crypto Simulation Capital (USD)" if lang == "EN" else "Capital de Simulación Cripto (USD)"),
         min_value=100000.0,
         max_value=100000000.0,
@@ -7712,10 +7753,10 @@ Aloque a moeda estável captada diretamente nas estratégias reguladas de **Delt
 </p>
 </div>""", unsafe_allow_html=True)
     
-    st.sidebar.caption(t["user_level"])
-    st.sidebar.caption(t["data_source"])
-    st.sidebar.caption(t["data_source"])
-    st.sidebar.caption(t["last_update"])
+    target.caption(t["user_level"])
+    target.caption(t["data_source"])
+    target.caption(t["data_source"])
+    target.caption(t["last_update"])
 
 # --- TERMINAL V: NÚMEROS GLOBAIS (WALL STREET GLOBAL MACRO) ---
 elif st.session_state.active_terminal == "global_macro":
@@ -8117,13 +8158,13 @@ elif st.session_state.active_terminal == "global_macro":
     """, unsafe_allow_html=True)
 
     # Botão de atualização manual na sidebar
-    if st.sidebar.button(t["btn_sync_live"], key="term5_refresh_btn"):
+    if target.button(t["btn_sync_live"], key="term5_refresh_btn"):
         st.cache_data.clear()
         st.rerun()
 
-    st.sidebar.caption(t["user_level"])
-    st.sidebar.caption(t["data_source"])
-    st.sidebar.caption(t["last_update"])
+    target.caption(t["user_level"])
+    target.caption(t["data_source"])
+    target.caption(t["last_update"])
 
 # --- TERMINAL VI: FAMILY OFFICE & SOVEREIGN WEALTH (BRAZIL) ---
 elif st.session_state.active_terminal == "family_office_br":
@@ -9930,18 +9971,18 @@ elif st.session_state.active_terminal == "family_office_br":
         st.info("Nota de Investimento: Vinhos de reserva soberana devem ser adquiridos em caixas lacradas originais de madeira (OWC - Original Wooden Cases) e mantidos em armazéns alfandegados climatizados profissionais (bonded warehouses) em Londres ou Genebra para garantir a procedência impecável e liquidez mundial livre de taxas alfandegárias de importação." if lang == "PT" else "Investment Note: Fine wines must be purchased in original wooden cases (OWC) and kept in professional climatized bonded warehouses in London or Geneva to ensure pristine provenance and tax-free global liquidity.")
 
     # Botão de atualização na sidebar
-    if st.sidebar.button(t["btn_sync_live"], key="term6_refresh_btn"):
+    if target.button(t["btn_sync_live"], key="term6_refresh_btn"):
         st.cache_data.clear()
         st.rerun()
 
-    st.sidebar.caption(t["user_level"])
-    st.sidebar.caption(t["data_source"])
-    st.sidebar.caption(t["last_update"])
+    target.caption(t["user_level"])
+    target.caption(t["data_source"])
+    target.caption(t["last_update"])
 
 # --- GLOBAL VIP SUPPORT & CHANNEL SIDEBAR SECTION ---
 if "active_terminal" in st.session_state and st.session_state.active_terminal != "hub":
-    st.sidebar.write("---")
-    st.sidebar.markdown(f"""
+    target.write("---")
+    target.markdown(f"""
     <div style="background-color: #11151c; border: 1px solid #bf953f66; border-radius: 8px; padding: 15px; margin-top: 15px; font-family: 'Inter', sans-serif;">
         <h4 style="margin: 0 0 10px 0; color: #bf953f; font-size: 13px; text-transform: uppercase; font-weight: 800; border: none; padding: 0; letter-spacing: 1px;">
              Canal VIP & Suporte Direto
