@@ -52,13 +52,21 @@ st.markdown("""
     
     [data-testid="stHeader"] button,
     [data-testid="stHeader"] [data-testid="collapsedControl"],
+    [data-testid="stHeader"] [data-testid="stSidebarCollapseButton"],
     header button,
-    header [data-testid="collapsedControl"] {
+    header [data-testid="collapsedControl"],
+    header [data-testid="stSidebarCollapseButton"],
+    [data-testid="stSidebarCollapseButton"],
+    [data-testid="collapsedControl"] {
         pointer-events: auto !important;
+        display: inline-flex !important;
+        visibility: visible !important;
+        z-index: 999999 !important;
+        color: #bf953f !important;
     }
     
-    /* Forçar tema escuro global absoluto em todos os containers */
-    .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"], .main {
+    /* Forçar tema escuro global absoluto em todos os containers (exceto o header que deve ser transparente) */
+    .stApp, [data-testid="stAppViewContainer"], .main {
         background-color: #0b0e14 !important;
         color: #ffffff !important;
         font-family: 'Inter', sans-serif;
