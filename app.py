@@ -42,26 +42,41 @@ st.markdown("""
         height: 0 !important;
     }
 
-    /* Regras Gerais (Mobile-First): O cabeçalho fica transparente/click-through para que o botão de abrir a sidebar seja usável */
-    [data-testid="stHeader"], header {
+    /* Garantir visibilidade do cabeçalho e click-through no mobile */
+    html body [data-testid="stAppViewContainer"] [data-testid="stHeader"],
+    div.stApp [data-testid="stHeader"],
+    [data-testid="stHeader"],
+    header {
         display: flex !important;
+        visibility: visible !important;
         background-color: transparent !important;
         background: transparent !important;
         box-shadow: none !important;
         pointer-events: none !important;
+        height: 56px !important;
     }
 
     /* Habilitar clique e estilizar o botão de expandir/colapsar a sidebar no mobile */
-    [data-testid="stSidebarCollapseButton"],
-    [data-testid="collapsedControl"] {
+    html body [data-testid="stAppViewContainer"] [data-testid="collapsedControl"],
+    html body [data-testid="stAppViewContainer"] button[data-testid="stSidebarCollapseButton"],
+    div.stApp [data-testid="collapsedControl"],
+    div.stApp button[data-testid="stSidebarCollapseButton"],
+    [data-testid="collapsedControl"],
+    button[data-testid="stSidebarCollapseButton"] {
         pointer-events: auto !important;
         display: inline-flex !important;
         visibility: visible !important;
+        opacity: 1 !important;
         z-index: 999999 !important;
         color: #bf953f !important;
     }
-    [data-testid="stSidebarCollapseButton"] *,
-    [data-testid="collapsedControl"] * {
+    
+    html body [data-testid="stAppViewContainer"] [data-testid="collapsedControl"] *,
+    html body [data-testid="stAppViewContainer"] button[data-testid="stSidebarCollapseButton"] *,
+    div.stApp [data-testid="collapsedControl"] *,
+    div.stApp button[data-testid="stSidebarCollapseButton"] *,
+    [data-testid="collapsedControl"] *,
+    button[data-testid="stSidebarCollapseButton"] * {
         color: #bf953f !important;
         fill: #bf953f !important;
     }
@@ -69,15 +84,23 @@ st.markdown("""
     /* Regras específicas para DESKTOP (telas a partir de 768px de largura) */
     @media (min-width: 768px) {
         /* Ocultar cabeçalho por completo no desktop, já que a sidebar é fixa */
-        [data-testid="stHeader"], header {
+        html body [data-testid="stAppViewContainer"] [data-testid="stHeader"],
+        div.stApp [data-testid="stHeader"],
+        [data-testid="stHeader"],
+        header {
             display: none !important;
             visibility: hidden !important;
             height: 0 !important;
+            pointer-events: none !important;
         }
 
         /* Ocultar botão de colapso no desktop para travar a sidebar aberta */
-        [data-testid="stSidebarCollapseButton"],
-        [data-testid="collapsedControl"] {
+        html body [data-testid="stAppViewContainer"] [data-testid="collapsedControl"],
+        html body [data-testid="stAppViewContainer"] button[data-testid="stSidebarCollapseButton"],
+        div.stApp [data-testid="collapsedControl"],
+        div.stApp button[data-testid="stSidebarCollapseButton"],
+        [data-testid="collapsedControl"],
+        button[data-testid="stSidebarCollapseButton"] {
             display: none !important;
             visibility: hidden !important;
             pointer-events: none !important;
