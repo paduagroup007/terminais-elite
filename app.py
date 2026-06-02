@@ -28,7 +28,7 @@ def render_explanation_card(title, pt_text, en_text, es_text, lang_key):
 
 # Configuração da página - INSTITUCIONAL
 logo_path = os.path.join(os.path.dirname(__file__), "logo.png")
-st.set_page_config(page_title="PERFECT LIFE | ELITE INVESTORS", layout="wide", page_icon=logo_path if os.path.exists(logo_path) else "logo.png")
+st.set_page_config(page_title="PERFECT LIFE | ELITE INVESTORS", layout="wide", initial_sidebar_state="expanded", page_icon=logo_path if os.path.exists(logo_path) else "logo.png")
 
 # CSS Avançado para Visual de Terminal de Elite (Black & Gold / Carbon Theme)
 st.markdown("""
@@ -44,6 +44,7 @@ st.markdown("""
     
     /* Tornar o cabeçalho transparente e clicável apenas nos botões (como o toggle da sidebar) */
     [data-testid="stHeader"], header {
+        display: flex !important; /* Forçar exibição contra o display: none do embed=true do Streamlit */
         background-color: transparent !important;
         background: transparent !important;
         box-shadow: none !important;
@@ -63,6 +64,12 @@ st.markdown("""
         visibility: visible !important;
         z-index: 999999 !important;
         color: #bf953f !important;
+    }
+    
+    [data-testid="stSidebarCollapseButton"] *,
+    [data-testid="collapsedControl"] * {
+        color: #bf953f !important;
+        fill: #bf953f !important;
     }
     
     /* Forçar tema escuro global absoluto em todos os containers (exceto o header que deve ser transparente) */
