@@ -35,45 +35,22 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-    /* Ocultar elementos desnecessários da moldura nativa do Streamlit (barra de ferramentas e rodapé) */
-    footer, #MainMenu, [data-testid="stFooter"], [data-testid="stToolbar"] {
+    /* Ocultar completamente a moldura nativa do Streamlit (cabeçalho, barra de ferramentas e rodapé) */
+    header, footer, #MainMenu, [data-testid="stHeader"], [data-testid="stFooter"], [data-testid="stToolbar"] {
         display: none !important;
         visibility: hidden !important;
         height: 0 !important;
     }
     
-    /* Tornar o cabeçalho transparente e clicável apenas nos botões (como o toggle da sidebar) */
-    [data-testid="stHeader"], header {
-        display: flex !important; /* Forçar exibição contra o display: none do embed=true do Streamlit */
-        background-color: transparent !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        pointer-events: none !important;
-    }
-    
-    [data-testid="stHeader"] button,
-    [data-testid="stHeader"] [data-testid="collapsedControl"],
-    [data-testid="stHeader"] [data-testid="stSidebarCollapseButton"],
-    header button,
-    header [data-testid="collapsedControl"],
-    header [data-testid="stSidebarCollapseButton"],
+    /* Ocultar o botão de colapso/expansão da sidebar do Streamlit para torná-la fixa e permanente */
     [data-testid="stSidebarCollapseButton"],
     [data-testid="collapsedControl"] {
-        pointer-events: auto !important;
-        display: inline-flex !important;
-        visibility: visible !important;
-        z-index: 999999 !important;
-        color: #bf953f !important;
+        display: none !important;
+        visibility: hidden !important;
     }
     
-    [data-testid="stSidebarCollapseButton"] *,
-    [data-testid="collapsedControl"] * {
-        color: #bf953f !important;
-        fill: #bf953f !important;
-    }
-    
-    /* Forçar tema escuro global absoluto em todos os containers (exceto o header que deve ser transparente) */
-    .stApp, [data-testid="stAppViewContainer"], .main {
+    /* Forçar tema escuro global absoluto em todos os containers */
+    .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"], .main {
         background-color: #0b0e14 !important;
         color: #ffffff !important;
         font-family: 'Inter', sans-serif;
