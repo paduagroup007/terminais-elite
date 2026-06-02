@@ -35,22 +35,57 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-    /* Ocultar completamente a moldura nativa do Streamlit (cabeçalho, barra de ferramentas e rodapé) */
-    header, footer, #MainMenu, [data-testid="stHeader"], [data-testid="stFooter"], [data-testid="stToolbar"] {
+    /* Ocultar barra de ferramentas e rodapé nativos do Streamlit */
+    footer, #MainMenu, [data-testid="stFooter"], [data-testid="stToolbar"] {
         display: none !important;
         visibility: hidden !important;
         height: 0 !important;
     }
-    
-    /* Ocultar o botão de colapso/expansão da sidebar do Streamlit para torná-la fixa e permanente */
+
+    /* Regras Gerais (Mobile-First): O cabeçalho fica transparente/click-through para que o botão de abrir a sidebar seja usável */
+    [data-testid="stHeader"], header {
+        display: flex !important;
+        background-color: transparent !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        pointer-events: none !important;
+    }
+
+    /* Habilitar clique e estilizar o botão de expandir/colapsar a sidebar no mobile */
     [data-testid="stSidebarCollapseButton"],
     [data-testid="collapsedControl"] {
-        display: none !important;
-        visibility: hidden !important;
+        pointer-events: auto !important;
+        display: inline-flex !important;
+        visibility: visible !important;
+        z-index: 999999 !important;
+        color: #bf953f !important;
+    }
+    [data-testid="stSidebarCollapseButton"] *,
+    [data-testid="collapsedControl"] * {
+        color: #bf953f !important;
+        fill: #bf953f !important;
+    }
+
+    /* Regras específicas para DESKTOP (telas a partir de 768px de largura) */
+    @media (min-width: 768px) {
+        /* Ocultar cabeçalho por completo no desktop, já que a sidebar é fixa */
+        [data-testid="stHeader"], header {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+        }
+
+        /* Ocultar botão de colapso no desktop para travar a sidebar aberta */
+        [data-testid="stSidebarCollapseButton"],
+        [data-testid="collapsedControl"] {
+            display: none !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
     }
     
-    /* Forçar tema escuro global absoluto em todos os containers */
-    .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"], .main {
+    /* Forçar tema escuro global absoluto em todos os containers (exceto o header que deve ser transparente no mobile) */
+    .stApp, [data-testid="stAppViewContainer"], .main {
         background-color: #0b0e14 !important;
         color: #ffffff !important;
         font-family: 'Inter', sans-serif;
