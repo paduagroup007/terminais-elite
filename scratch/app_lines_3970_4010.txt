@@ -1,0 +1,40 @@
+3971:                 'border-color': '#bf953f15'
+3972:             }),
+3973:             use_container_width=True,
+3974:             hide_index=True
+3975:         )
+3976: 
+3977:     st.write("")
+3978: 
+3979: # --- TERMINAL III: RADAR DE EMPRESAS GLOBAIS & B3 (VALUATION) ---
+3980: elif st.session_state.active_terminal == "balance_sheets":
+3981:     st.markdown(f"<h1 style='text-align:center;'>{t['term_3_title']}</h1>", unsafe_allow_html=True)
+3982:     st.markdown(f"<p style='text-align:center; color:#bf953f; font-weight:600; letter-spacing:1px; font-size:13px; margin-bottom:30px;'>{t['term_3_desc'].upper()}</p>", unsafe_allow_html=True)
+3983:     
+3984:     # Dicionário de Tradução Interno e Localizado do Terminal B3
+3985:     b3_translations = {
+3986:         "PT": {
+3987:             "title_radar": "Radar de Comando | Elite Financeira",
+3988:             "title_efficiency": "Análise de Eficiência Operacional",
+3989:             "title_profitability": "Resultados e Margens Líquidas",
+3990:             "title_solvency": "Solvência e Estrutura de Capital",
+3991:             "title_valuation": "Relatório de Valuation",
+3992:             "title_data": "Dados Estruturados (Trimestral)",
+3993:             "revenue_ttm": "RECEITA (TTM)",
+3994:             "profit_ttm": "LUCRO LÍQUIDO (TTM)",
+3995:             "cash_current": "CAIXA ATUAL",
+3996:             "cash_liquidity": "CAIXA / LIQUIDEZ",
+3997:             "equity": "PATRIMÔNIO LÍQUIDO",
+3998:             "net_margin": "Margem Líquida %",
+3999:             "ebitda_margin": "Margem EBITDA %",
+4000:             "net_profit": "Lucro Líquido",
+4001:             "ebitda": "EBITDA",
+4002:             "revenue": "Receita Líquida",
+4003:             "long_term_overview": "Visão Geral de Longo Prazo",
+4004:             "revenue_vs_ebitda": "Receita vs EBITDA (Geração de Caixa)",
+4005:             "equity_evolution": "Evolução do Patrimônio Líquido",
+4006:             "funding_vs_cash": "Captação vs Caixa (Liquidez)",
+4007:             "debt_vs_cash": "Dívida vs Caixa (Liquidez)",
+4008:             "funding": "Captação (Funding)",
+4009:             "gross_debt": "Dívida Bruta",
+4010:             "price_now": "PREÇO ATUAL",

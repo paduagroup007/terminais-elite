@@ -4,6 +4,162 @@ import os
 import json
 import datetime
 
+# Comprehensive CUSIP to US Stock Ticker Mapping for Smart Money Radar
+US_TICKER_MAPPING = {
+    "037833100": "AAPL",  # APPLE INC
+    "02079K305": "GOOGL", # ALPHABET INC A
+    "02079K107": "GOOG",  # ALPHABET INC C
+    "060505104": "BAC",   # BANK AMERICA CORP
+    "191216100": "KO",    # COCA COLA CO
+    "025816109": "AXP",   # AMERICAN EXPRESS CO
+    "166764100": "CVX",   # CHEVRON CORP
+    "67066G104": "NVDA",  # NVIDIA CORP
+    "594918104": "MSFT",  # MICROSOFT CORP
+    "023135106": "AMZN",  # AMAZON COM INC
+    "11135F101": "AVGO",  # BROADCOM INC
+    "30303M102": "META",  # META PLATFORMS INC
+    "88160R101": "TSLA",  # TESLA INC
+    "532457108": "LLY",   # ELI LILLY & CO
+    "46625H100": "JPM",   # JPMORGAN CHASE & CO
+    "084670702": "BRK-B", # BERKSHIRE HATHAWAY
+    "92826C839": "V",     # VISA INC
+    "30231G102": "XOM",   # EXXON MOBIL CORP
+    "478160104": "JNJ",   # JOHNSON & JOHNSON
+    "57636Q104": "MA",    # MASTERCARD INC
+    "931142103": "WMT",   # WALMART INC
+    "22160K105": "COST",  # COSTCO WHSL CORP
+    "00287Y109": "ABBV",  # ABBVIE INC
+    "91324P102": "UNH",   # UNITEDHEALTH GROUP
+    "64110L106": "NFLX",  # NETFLIX INC
+    "742718109": "PG",    # PROCTER & GAMBLE
+    "437076102": "HD",    # HOME DEPOT INC
+    "007903107": "AMD",   # ADVANCED MICRO DEVICES
+    "58933Y105": "MRK",   # MERCK & CO
+    "68389X105": "ORCL",  # ORACLE CORP
+    "17275R102": "CSCO",  # CISCO SYS INC
+    "595112103": "MU",    # MICRON TECHNOLOGY
+    "79466L302": "CRM",   # SALESFORCE INC
+    "949746101": "WFC",   # WELLS FARGO & CO
+    "369604301": "GE",    # GE AEROSPACE
+    "459200101": "IBM",   # IBM
+    "149123101": "CAT",   # CATERPILLAR INC
+    "038222105": "AMAT",  # APPLIED MATLS INC
+    "713448108": "PEP",   # PEPSICO INC
+    "883556102": "TMO",   # THERMO FISHER SCIENTIFIC
+    "747525103": "QCOM",  # QUALCOMM INC
+    "580135101": "MCD",   # MCDONALDS CORP
+    "G54950103": "LIN",   # LINDE PLC
+    "75513E101": "RTX",   # RTX CORP
+    "002824100": "ABT",   # ABBOTT LABS
+    "031162100": "AMGN",  # AMGEN INC
+    "461202103": "INTU",  # INTUIT INC
+    "718172109": "PM",    # PHILIP MORRIS INTL
+    "46120E602": "ISRG",  # INTUITIVE SURGICAL
+    "882508104": "TXN",   # TEXAS INSTRUMENTS
+    "65339F101": "NEE",   # NEXTERA ENERGY
+    "G1151C101": "ACN",   # ACCENTURE PLC
+    "92343V104": "VZ",    # VERIZON COMMUNICATIONS
+    "172967424": "C",     # CITIGROUP INC
+    "90353T100": "UBER",  # UBER TECHNOLOGIES
+    "78409V104": "SPGI",  # S&P GLOBAL INC
+    "872540109": "TJX",   # TJX COMPANIES
+    "482480100": "KLAC",  # KLA CORP
+    "00206R102": "T",     # AT&T INC
+    "458140100": "INTC",  # INTEL CORP
+    "717081103": "PFE",   # PFIZER INC
+    "09857L108": "BKNG",  # BOOKING HOLDINGS
+    "907818108": "UNP",   # UNION PACIFIC CORP
+    "375558103": "GILD",  # GILEAD SCIENCES
+    "G29183103": "ETN",   # EATON CORP PLC
+    "697435105": "PANW",  # PALO ALTO NETWORKS
+    "032095101": "APH",   # AMPHENOL CORP
+    "438516106": "HON",   # HONEYWELL INTL
+    "032654105": "ADI",   # ANALOG DEVICES
+    "20825C104": "COP",   # CONOCOPHILLIPS
+    "548661107": "LOW",   # LOWES COMPANIES
+    "808513105": "SCHW",  # CHARLES SCHWAB
+    "244199105": "DE",    # DEERE & CO
+    "872590104": "TMUS",  # T-MOBILE US INC
+    "12572Q105": "CME",   # CME GROUP INC
+    "69608A108": "PLTR",  # PALANTIR TECHNOLOGIES
+    "254687106": "DIS",   # WALT DISNEY CO
+    "38141G104": "GS",    # GOLDMAN SACHS GROUP
+    "617446448": "MS",    # MORGAN STANLEY
+    "81762P102": "NOW",   # SERVICENOW INC
+    "H1467J104": "CB",    # CHUBB LTD
+    "512807306": "LRCX",  # LAM RESEARCH CORP
+    "235851102": "DHR",   # DANAHER CORP
+    "74340W103": "PLD",   # PROLOGIS INC
+    "20030N101": "CMCSA", # COMCAST CORP
+    "95040Q104": "WELL",  # WELLTOWER INC
+    "101137107": "BSX",   # BOSTON SCIENTIFIC
+    "097023105": "BA",    # BOEING CO
+    "615369105": "MCO",   # MOODYS CORP
+    "36828A101": "GEV",   # GE VERNOVA INC
+    "863667101": "SYK",   # STRYKER CORP
+    "92532F100": "VRTX",  # VERTEX PHARMACEUTICALS
+    "539830109": "LMT",   # LOCKHEED MARTIN
+    "22788C105": "CRWD",  # CROWDSTRIKE HOLDINGS
+    "09260D107": "BX",    # BLACKSTONE INC
+    "03831W108": "APP",   # APPLOVIN CORP
+    "09290D101": "BLK",   # BLACKROCK INC
+    "127387108": "CDNS",  # CADENCE DESIGN SYSTEMS
+    "855244109": "SBUX",  # STARBUCUX CORP
+    "58155Q103": "MCK",   # MCKESSON CORP
+    "871607107": "SNPS",  # SYNOPSYS INC
+    "45866F104": "ICE",   # INTERCONTINENTAL EXCHANGE
+    "040413205": "ANET",  # ARISTA NETWORKS
+    "14040H105": "COF",   # CAPITAL ONE FINANCIAL
+    "620076307": "MSI",   # MOTOROLA SOLUTIONS
+    "82509L107": "SHOP",  # SHOPIFY INC
+    "219350105": "GLW",   # CORNING INC
+    "00724F101": "ADBE",  # ADOBE INC
+    "743315103": "PGR",   # PROGRESSIVE CORP
+    "G5960L103": "MDT",   # MEDTRONIC PLC
+    "036752103": "ELV",   # ELEVANCE HEALTH
+    "053015103": "ADP",   # AUTOMATIC DATA PROCESSING
+    "03027X100": "AMT",   # AMERICAN TOWER CORP
+    "651639106": "NEM",   # NEWMONT CORP
+    "29444U700": "EQIX",  # EQUINIX INC
+    "571748102": "MMC",   # MARSH & MCLENNAN
+    "110122108": "BMY",   # BRISTOL-MYERS SQUIBB
+    "21037T109": "CEG",   # CONSTELLATION ENERGY
+    "126650100": "CVS",   # CVS HEALTH CORP
+    "842587107": "SO",    # SOUTHERN CO
+    "94106L109": "WM",    # WASTE MANAGEMENT
+    "26441C204": "DUK",   # DUKE ENERGY
+    "02209S103": "MO",    # ALTRIA GROUP
+    "893641100": "TDG",   # TRANSDIGM GROUP
+    "37045V100": "GM",    # GENERAL MOTORS
+    "828806109": "SPG",   # SIMON PROPERTY GROUP
+    "253868103": "DLR",   # DIGITAL REALTY TRUST
+    "874039100": "TSM",   # TAIWAN SEMICONDUCTOR
+    "701094104": "PH",    # PARKER-HANNIFIN CORP
+    "25809K105": "DASH",  # DOORDASH INC
+    "969457100": "WMB",   # WILLIAMS COMPANIES
+    "666807102": "NOC",   # NORTHROP GRUMMAN
+    "75886F107": "REGN",  # REGENERON PHARMACEUTICALS
+    "G8994E103": "TT",    # TRANE TECHNOLOGIES
+    "934423104": "WBD",   # WARNER BROS DISCOVERY
+    "806857108": "SLB",   # SLB LTD
+    "816851109": "SRE",   # SEMPRA
+    "278865100": "ECL",   # ECOLAB INC
+    "L8681T102": "SPOT",  # SPOTIFY TECHNOLOGY
+    "958102105": "WDC",   # WESTERN DIGITAL
+    "N07059210": "ASML",  # ASML HOLDING
+}
+
+# Unique B3 stock tickers from Brazilian institutional portfolios
+BR_TICKERS = [
+    "PETR3.SA", "PETR4.SA", "SRNA3.SA", "CSMG3.SA", "CSAN3.SA", "BBDC3.SA", "BBDC4.SA", 
+    "EQTL3.SA", "ENGI11.SA", "ELET3.SA", "ENEV3.SA", "ITSA4.SA", "RDOR3.SA", "RENT3.SA", 
+    "VBBR3.SA", "ITUB4.SA", "NATU3.SA", "SUZB3.SA", "MOTV3.SA", "WEGE3.SA", "LREN3.SA", 
+    "STBP3.SA", "ALOS3.SA", "TUPY3.SA", "PRIO3.SA", "ABEV3.SA", "BPAC11.SA", "RADL3.SA", 
+    "COGN3.SA", "RAPT4.SA", "SBSP3.SA", "VALE3.SA", "BBAS3.SA", "JBSS3.SA", "CPLE6.SA", 
+    "TRPL4.SA", "TAEE11.SA", "UNIP6.SA", "AURE3.SA", "KLAB4.SA", "CMIG4.SA", "KEPL3.SA", 
+    "TASA4.SA", "RANI3.SA", "ETER3.SA"
+]
+
 class LiveMarketManager:
     def __init__(self):
         self.cache_dir = os.path.join(os.path.dirname(__file__), "cache")
@@ -107,6 +263,14 @@ class LiveMarketManager:
                 if ticker not in self.all_tickers:
                     self.all_tickers.append(ticker)
             
+        # Add mapped US and B3 tickers for accurate YTD calculations
+        for ticker in US_TICKER_MAPPING.values():
+            if ticker not in self.all_tickers:
+                self.all_tickers.append(ticker)
+        for ticker in BR_TICKERS:
+            if ticker not in self.all_tickers:
+                self.all_tickers.append(ticker)
+
         # VIX and other helpers
         if "^VIX" not in self.all_tickers:
             self.all_tickers.append("^VIX")
@@ -193,6 +357,51 @@ class LiveMarketManager:
             if data.empty:
                 return self.get_fallback_data()
                 
+            # Load and manage Year Start Prices Cache
+            ys_cache_path = os.path.join(self.cache_dir, "year_start_prices.json")
+            current_year = datetime.datetime.now().year
+            ys_cache = {"year": current_year, "prices": {}}
+            if os.path.exists(ys_cache_path):
+                try:
+                    with open(ys_cache_path, 'r', encoding='utf-8') as f:
+                        loaded_ys = json.load(f)
+                        if loaded_ys.get("year") == current_year:
+                            ys_cache = loaded_ys
+                except Exception:
+                    pass
+            
+            # Fetch missing year-start prices from Yahoo Finance
+            missing_tickers = [t for t in self.all_tickers if t not in ys_cache["prices"]]
+            if missing_tickers:
+                try:
+                    start_date = f"{current_year - 1}-12-25"
+                    end_date = f"{current_year}-01-10"
+                    hist_data = yf.download(missing_tickers, start=start_date, end=end_date, group_by='ticker', progress=False)
+                    
+                    if not hist_data.empty:
+                        for t in missing_tickers:
+                            try:
+                                if len(missing_tickers) == 1:
+                                    col = hist_data['Close'].dropna() if 'Close' in hist_data else pd.Series()
+                                else:
+                                    col = hist_data[t]['Close'].dropna() if (t in hist_data.columns.levels[0] if hasattr(hist_data.columns, 'levels') else t in hist_data.columns) else pd.Series()
+                                
+                                if not col.empty:
+                                    prev_year_rows = col[col.index.year == current_year - 1]
+                                    if not prev_year_rows.empty:
+                                        ys_price = float(prev_year_rows.iloc[-1])
+                                    else:
+                                        ys_price = float(col.iloc[0])
+                                    ys_cache["prices"][t] = ys_price
+                            except Exception:
+                                pass
+                        
+                        # Save updated year start prices
+                        with open(ys_cache_path, 'w', encoding='utf-8') as f:
+                            json.dump(ys_cache, f, ensure_ascii=False, indent=4)
+                except Exception as e:
+                    print(f"Error fetching year-start prices: {e}")
+
             parsed = {
                 "metadata": {"last_update": now_str, "status": "LIVE REAL-TIME FEED"},
                 "tickers": {}
@@ -200,7 +409,7 @@ class LiveMarketManager:
             
             for t in self.all_tickers:
                 try:
-                    if t in data.columns.levels[0]:
+                    if t in data.columns.levels[0] if hasattr(data.columns, 'levels') else t in data.columns:
                         close_data = data[t]['Close'].dropna()
                         if len(close_data) >= 2:
                             prev = close_data.iloc[-2]
@@ -208,18 +417,34 @@ class LiveMarketManager:
                             diff = curr - prev
                             pct = (diff / prev) * 100
                             
+                            # Calculate real YTD return using start of year price
+                            ytd_val = 0.0
+                            if t in ys_cache["prices"]:
+                                start_price = ys_cache["prices"][t]
+                                if start_price > 0.0:
+                                    ytd_val = ((curr - start_price) / start_price) * 100
+                            
                             parsed["tickers"][t] = {
                                 "price": float(curr),
                                 "change": float(diff),
                                 "pct_change": float(pct),
+                                "ytd_return": float(ytd_val),
                                 "timestamp": now_str
                             }
                         elif len(close_data) == 1:
                             curr = close_data.iloc[-1]
+                            
+                            ytd_val = 0.0
+                            if t in ys_cache["prices"]:
+                                start_price = ys_cache["prices"][t]
+                                if start_price > 0.0:
+                                    ytd_val = ((curr - start_price) / start_price) * 100
+                                    
                             parsed["tickers"][t] = {
                                 "price": float(curr),
                                 "change": 0.0,
                                 "pct_change": 0.0,
+                                "ytd_return": float(ytd_val),
                                 "timestamp": now_str
                             }
                 except Exception:
@@ -230,6 +455,10 @@ class LiveMarketManager:
             for t in self.all_tickers:
                 if t not in parsed["tickers"] and t in fallback["tickers"]:
                     parsed["tickers"][t] = fallback["tickers"][t]
+                
+                # Make sure there is a ytd_return key even in fallback
+                if t in parsed["tickers"] and "ytd_return" not in parsed["tickers"][t]:
+                    parsed["tickers"][t]["ytd_return"] = 0.0
             
             # Save parsed to cache file
             with open(self.cache_file, 'w', encoding='utf-8') as f:

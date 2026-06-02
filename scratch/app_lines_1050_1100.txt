@@ -1,0 +1,50 @@
+1051: else:
+1052:     st.sidebar.markdown("<h2 style='border:none; text-align:center; color:#bf953f; font-size:24px; padding:0; margin-bottom:5px; font-weight:900;'>PERFECT LIFE</h2><p style='text-align:center; color:#bf953f; font-size:12px; letter-spacing:3px; margin-top:0px; font-weight:700; opacity:0.8;'>ELITE INVESTORS</p>", unsafe_allow_html=True)
+1053: 
+1054: # Botão de Retorno no Sidebar
+1055: if st.session_state.active_terminal != "hub":
+1056:     if st.sidebar.button(t["btn_back"], key="sidebar_back_btn"):
+1057:         st.session_state.active_terminal = "hub"
+1058:         st.rerun()
+1059:     st.sidebar.write("---")
+1060: 
+1061: # --- CONTROLES DA SIDEBAR EXCLUSIVOS DO TERMINAL B3 ---
+1062: if st.session_state.active_terminal == "balance_sheets":
+1063:     # Sincronizar as planilhas do usuário a partir do Firestore ao inicializar a sessão
+1064:     if user_email and id_token and not st.session_state.get("b3_synced", False):
+1065:         with st.spinner("Sincronizando suas planilhas salvas..." if lang == "PT" else ("Syncing your saved spreadsheets..." if lang == "EN" else "Sincronizando suas planilhas...")):
+1066:             sync_user_spreadsheets_from_firestore(user_email, id_token, base_path_b3)
+1067:             st.session_state.b3_synced = True
+1068: 
+1069:     st.sidebar.markdown(f"<h3 style='font-size:16px; border:none; padding:0; text-align:center; color:#bf953f; font-weight:bold; margin-bottom:15px;'>{t['term_3_title']}</h3>", unsafe_allow_html=True)
+1070:     # UPLOAD DE NOVO ARQUIVO B3
+1071:     if "b3_uploader_key" not in st.session_state:
+1072:         st.session_state.b3_uploader_key = 0
+1073:     if "b3_upload_success" not in st.session_state:
+1074:         st.session_state.b3_upload_success = False
+1075: 
+1076:     uploaded_file = st.sidebar.file_uploader(
+1077:         "IMPORTAR PLANILHA (B3)" if lang == "PT" else ("IMPORT SPREADSHEET (B3)" if lang == "EN" else "IMPORTAR PLANILLA (B3)"), 
+1078:         type=["xls", "xlsx"],
+1079:         key=f"b3_uploader_{st.session_state.b3_uploader_key}"
+1080:     )
+1081:     if uploaded_file:
+1082:         try:
+1083:             with open(os.path.join(base_path_b3, uploaded_file.name), "wb") as f:
+1084:                 f.write(uploaded_file.getbuffer())
+1085:                 
+1086:             # Salvar backup permanente no Firestore do usuário
+1087:             if user_email and id_token:
+1088:                 import requests
+1089:                 import base64
+1090:                 file_bytes = uploaded_file.getvalue()
+1091:                 base64_content = base64.b64encode(file_bytes).decode("utf-8")
+1092:                 safe_doc_id = uploaded_file.name.replace(".", "_")
+1093:                 
+1094:                 firestore_url = f"https://firestore.googleapis.com/v1/projects/perfect-life-82065/databases/(default)/documents/users/{user_email}/spreadsheets/{safe_doc_id}?updateMask.fieldPaths=filename&updateMask.fieldPaths=content"
+1095:                 headers = {
+1096:                     "Authorization": f"Bearer {id_token}",
+1097:                     "Content-Type": "application/json"
+1098:                 }
+1099:                 payload = {
+1100:                     "fields": {

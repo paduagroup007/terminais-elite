@@ -1699,6 +1699,12 @@ elif st.session_state.active_terminal == "whale_radar":
                 fin = get_financials(item["cusip"], item["name"])
                 enriched_item = item.copy()
                 enriched_item.update(fin)
+                
+                # Dynamic override with real-time live YTD return if available
+                ticker = yfinance_connector.US_TICKER_MAPPING.get(item["cusip"])
+                if ticker and ticker in t_data and "ytd_return" in t_data[ticker]:
+                    enriched_item["ytd_return"] = t_data[ticker]["ytd_return"]
+                    
                 enriched_overlaps.append(enriched_item)
                 
             # Grid de 10 botões de Inteligência Quantitativa
@@ -2381,33 +2387,18 @@ elif st.session_state.active_terminal == "whale_radar":
                         all_us_holdings[cusip]["whales"].append(w_name)
                         
         # Calculate YTD return dynamically
-        import hashlib
         ytd_list = []
         for cusip, item in all_us_holdings.items():
-            # Known live stocks map
-            mapping = {
-                "APPLE INC": "AAPL", "MICROSOFT CORP": "MSFT", "AMAZON COM INC": "AMZN",
-                "NVIDIA CORP": "NVDA", "META PLATFORMS INC": "META", "ALPHABET INC": "GOOGL",
-                "ELI LILLY & CO": "LLY", "BROADCOM INC": "AVGO", "BERKSHIRE HATHAWAY INC": "BRK-B",
-                "JPMORGAN CHASE & CO": "JPM", "TESLA INC": "TSLA"
-            }
-            ticker = mapping.get(item["name"])
-            if ticker and ticker in t_data:
-                day_chg = t_data[ticker].get("pct_change", 0.0)
-                ytd_val = day_chg * 12.0 + 10.5
-            else:
-                h_val = int(hashlib.md5((cusip + "ytd_us").encode()).hexdigest(), 16)
-                ytd_val = -38.0 + (h_val % 1060) / 10.0
-                seed_offset = (int(time.time() / 1200) % 50 - 25) * 0.05
-                ytd_val += seed_offset
-                
-            ytd_list.append({
-                "cusip": cusip,
-                "name": item["name"],
-                "value": item["value"],
-                "whales": item["whales"],
-                "ytd": ytd_val
-            })
+            ticker = yfinance_connector.US_TICKER_MAPPING.get(cusip)
+            if ticker and ticker in t_data and "ytd_return" in t_data[ticker]:
+                ytd_val = t_data[ticker]["ytd_return"]
+                ytd_list.append({
+                    "cusip": cusip,
+                    "name": item["name"],
+                    "value": item["value"],
+                    "whales": item["whales"],
+                    "ytd": ytd_val
+                })
             
         # Top 20 Gainers
         gainers = sorted(ytd_list, key=lambda x: x["ytd"], reverse=True)[:20]
@@ -9493,25 +9484,17 @@ elif st.session_state.active_terminal == "family_office_br":
                             all_br_holdings[clean_ticker]["funds"].append(fund_name)
                             
             # Calculate YTD return dynamically
-            import hashlib
             ytd_br_list = []
             for clean_ticker, item in all_br_holdings.items():
                 sa_ticker = f"{clean_ticker}.SA"
-                if sa_ticker in t_data:
-                    day_chg = t_data[sa_ticker].get("pct_change", 0.0)
-                    ytd_val = day_chg * 10.0 + 8.5
-                else:
-                    h_val = int(hashlib.md5((clean_ticker + "ytd_br").encode()).hexdigest(), 16)
-                    ytd_val = -40.0 + (h_val % 1100) / 10.0
-                    seed_offset = (int(time.time() / 1200) % 40 - 20) * 0.04
-                    ytd_val += seed_offset
-                    
-                ytd_br_list.append({
-                    "ticker": clean_ticker,
-                    "value": item["value"],
-                    "funds": item["funds"],
-                    "ytd": ytd_val
-                })
+                if sa_ticker in t_data and "ytd_return" in t_data[sa_ticker]:
+                    ytd_val = t_data[sa_ticker]["ytd_return"]
+                    ytd_br_list.append({
+                        "ticker": clean_ticker,
+                        "value": item["value"],
+                        "funds": item["funds"],
+                        "ytd": ytd_val
+                    })
                 
             # Top 20 Gainers
             br_gainers = sorted(ytd_br_list, key=lambda x: x["ytd"], reverse=True)[:20]

@@ -1,0 +1,80 @@
+4601:                 divida_inicial = df['Divida'].iloc[0]
+4602:                 divida_final = last['Divida']
+4603:                 var_divida = ((divida_final / divida_inicial) - 1) * 100 if divida_inicial > 0 else 0
+4604:                 var_ebitda = ((ebitda_ttm / df['EBITDA'].iloc[0]) - 1) * 100 if df['EBITDA'].iloc[0] > 0 else 0
+4605:                 
+4606:                 patrimonio_inicial = df['Patrimonio'].iloc[0]
+4607:                 var_patrimonio = ((last['Patrimonio'] / patrimonio_inicial) - 1) * 100 if patrimonio_inicial > 0 else 0
+4608:                 
+4609:                 pl_ratio = (price_now / lpa) if lpa > 0 else 999.0
+4610:                 
+4611:                 # Preço Teto de Décio Bazin (Retorno Mágico de 6%)
+4612:                 dividendo_pago_rs = (dy_atual / 100) * price_now
+4613:                 preco_teto_bazin = dividendo_pago_rs / 0.06 if dividendo_pago_rs > 0 else 0.0
+4614:                 
+4615:                 # Piotroski F-Score (Saúde Fundamentalista) - Comparação YoY Real (TTM vs 12M Anteriores)
+4616:                 f_score = 0
+4617:                 if lucro_ttm > 0: 
+4618:                     f_score += 1
+4619:                 
+4620:                 # Caixa (trimestre atual vs mesmo trimestre do ano anterior, ex: index -5)
+4621:                 caixa_anterior = df['Caixa'].iloc[-5] if len(df) >= 5 else df['Caixa'].iloc[0]
+4622:                 if last['Caixa'] > caixa_anterior: 
+4623:                     f_score += 1
+4624:                 
+4625:                 # ROE (TTM vs 12M anteriores)
+4626:                 lucro_ano_anterior = df['Lucro'].iloc[-8:-4].sum() if len(df) >= 8 else df['Lucro'].iloc[0]
+4627:                 patrimonio_ano_anterior = df['Patrimonio'].iloc[-5] if len(df) >= 5 else patrimonio_inicial
+4628:                 roe_anterior = (lucro_ano_anterior / patrimonio_ano_anterior) * 100 if patrimonio_ano_anterior > 0 else 0
+4629:                 if roe > roe_anterior: 
+4630:                     f_score += 1
+4631:                 
+4632:                 # Alavancagem Dívida Líquida / EBITDA (TTM vs 12M anteriores)
+4633:                 divida_liq_anterior = (df['Divida'].iloc[-5] - df['Caixa'].iloc[-5]) if len(df) >= 5 else (df['Divida'].iloc[0] - df['Caixa'].iloc[0])
+4634:                 ebitda_anterior = df['EBITDA'].iloc[-8:-4].sum() if len(df) >= 8 else df['EBITDA'].iloc[0]
+4635:                 alavancagem_anterior = divida_liq_anterior / ebitda_anterior if ebitda_anterior > 0 else 999.0
+4636:                 if alavancagem < alavancagem_anterior: 
+4637:                     f_score += 1
+4638:                 
+4639:                 # Margem EBITDA (TTM vs 12M anteriores)
+4640:                 receita_anterior = df['Receita'].iloc[-8:-4].sum() if len(df) >= 8 else df['Receita'].iloc[0]
+4641:                 margem_anterior = (ebitda_anterior / receita_anterior) * 100 if receita_anterior > 0 else 0
+4642:                 if margem_ebitda_atual > margem_anterior: 
+4643:                     f_score += 1
+4644:                 
+4645:                 # Diagnósticos Textuais Localizados e Inteligentes
+4646:                 if lang_key == "PT":
+4647:                     # Receita
+4648:                     if crescimento_receita > 5:
+4649:                         texto_receita = f"▲ <b>Expansão Operacional:</b> A receita cresceu <b>{crescimento_receita:.1f}%</b> nos últimos 12 meses."
+4650:                     elif crescimento_receita < -5:
+4651:                         texto_receita = f"[!]  <b>Retração Operacional:</b> A receita caiu <b>{abs(crescimento_receita):.1f}%</b> recentemente."
+4652:                     else:
+4653:                         texto_receita = f"◆ <b>Estabilidade Operacional:</b> A receita encontra-se estabilizada (variação de {crescimento_receita:.1f}%)."
+4654:                     texto_receita += f" A Margem EBITDA atual é de {margem_ebitda_atual:.1f}%."
+4655: 
+4656:                     # Lucro
+4657:                     if lucro_ttm < 0:
+4658:                         texto_lucro = "[ALERTA]  A empresa operou com <b>prejuízo líquido</b> no acumulado (TTM), zere expectativas de dividendos sustentáveis no momento."
+4659:                     else:
+4660:                         if lucro_trend > 10:
+4661:                             texto_lucro = f" Houve um belo salto de <b>{lucro_trend:.1f}% no Lucro Líquido</b>, entregando um ROE forte de {roe:.1f}%."
+4662:                         else:
+4663:                             texto_lucro = f" A empresa mantém lucros consistentes de {format_val(lucro_ttm)}, com um ROE de {roe:.1f}%."
+4664: 
+4665:                     # Perfil
+4666:                     if lucro_ttm > 0 and lucro_prev_ttm < 0:
+4667:                         perfil = " <b>Perfil Detectado: TURNAROUND (Recuperação).</b> A empresa estava dando prejuízo e voltou a lucrar. Alto risco, mas pode oferecer retornos explosivos se a reestruturação seguir firme."
+4668:                     elif crescimento_receita > 15:
+4669:                         perfil = " <b>Perfil Detectado: GROWTH (Crescimento Acelerado).</b> A receita está voando (>15% a.a). O foco aqui é ganho de capital e expansão de mercado, não necessariamente dividendos."
+4670:                     elif dy_atual > 6.0 and lucro_ttm > 0:
+4671:                         perfil = " <b>Perfil Detectado: VACA LEITEIRA (Renda).</b> Negócio estável, maduro e focado em distribuir lucros fartos (dividendos) aos acionistas."
+4672:                     else:
+4673:                         perfil = "◆ <b>Perfil Detectado: VALUE (Valor Estável).</b> Empresa madura, de crescimento moderado e distribuição de lucro equilibrada."
+4674: 
+4675:                     # Payout e Dividendos
+4676:                     if dy_atual > 0 and lucro_ttm > 0:
+4677:                         total_dividends_paid = (dy_atual / 100) * price_now * shares_total
+4678:                         payout = (total_dividends_paid / lucro_ttm) * 100
+4679:                         if payout <= 60:
+4680:                             texto_payout = f"[OK]  <b>Dividendos Seguros:</b> A empresa distribuiu apenas {payout:.1f}% do que lucrou (Payout). O dividendo atual de {dy_atual:.1f}% é sustentável e tem folga para crescer."
