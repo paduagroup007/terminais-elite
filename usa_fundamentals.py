@@ -120,6 +120,17 @@ def format_usd(val):
     else:
         return f"{sign}$ {val:,.2f}"
 
+def render_explanation_card(title, pt_text, en_text, es_text, lang_key):
+    desc = pt_text if lang_key == "PT" else (en_text if lang_key == "EN" else es_text)
+    st.markdown(f"""
+    <div class="conviction-card" style="border-left-color: #bf953f; background-color: #11151c; padding: 18px; border-radius: 8px; margin-bottom: 20px; border-top: 1px solid rgba(255,255,255,0.03); border-right: 1px solid rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.03);">
+        <strong style="color: #bf953f; font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">{title}</strong>
+        <p style="font-size: 12.5px; color: #cccccc; line-height: 1.5; margin: 8px 0 0 0;">
+            {desc}
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
 # --- LIVE YFINANCE STOCK PARSER ---
 @st.cache_data(ttl=1800)
 def fetch_us_company_financials(ticker_symbol):
@@ -293,6 +304,13 @@ def render_us_fundamentals(lang, usa_ticker, active_module, risk_free_rate):
     # --- 1. RADAR DE COMANDO (USA) ---
     if active_module == "Radar de Comando":
         st.markdown(f"<h2>{t['title_radar']}</h2>", unsafe_allow_html=True)
+        render_explanation_card(
+            "Radar de Comando (USA)" if lang == "PT" else ("Command Radar (USA)" if lang == "EN" else "Radar de Mando (USA)"),
+            "Exibe a telemetria geral fundamentalista da companhia americana selecionada, reunindo os principais KPIs de Receita Anual (LTM), Lucro Líquido, Caixa e Evolução Patrimonial de longo prazo.",
+            "Displays the general fundamental telemetry of the selected US company, gathering key KPIs for Annual Revenue (LTM), Net Income, Cash, and Long-Term Equity Evolution.",
+            "Muestra la telemetría fundamental general de la empresa estadounidense seleccionada, reuniendo los principales KPIs de Ingresos Anuales (LTM), Beneficio Neto, Caja y Evolución del Patrimonio Neto a largo plazo.",
+            lang
+        )
         col1, col2, col3, col4 = st.columns(4)
         
         with col1: st.metric(t["revenue_ttm"], format_usd(receita_ttm), f"{grow_rec:+.1f}%")
@@ -320,6 +338,13 @@ def render_us_fundamentals(lang, usa_ticker, active_module, risk_free_rate):
     # --- 2. EFICIÊNCIA OPERACIONAL (USA) ---
     elif active_module == "Eficiência Operacional":
         st.markdown(f"<h2>{t['title_efficiency']}</h2>", unsafe_allow_html=True)
+        render_explanation_card(
+            "Eficiência Operacional (USA)" if lang == "PT" else ("Operational Efficiency (USA)" if lang == "EN" else "Eficiencia Operacional (USA)"),
+            "Analisa a capacidade operacional da empresa em converter faturamento bruto em lucro operacional antes de juros, impostos, depreciação e amortização (EBITDA), destacando as margens históricas.",
+            "Analyzes the company's operating capacity to convert gross revenue into operating profit before interest, taxes, depreciation, and amortization (EBITDA), highlighting historical margins.",
+            "Analiza la capacidad operativa de la empresa para convertir la facturación bruta en beneficio operativo antes de intereses, impuestos, depreciación y amortización (EBITDA), destacando los márgenes históricos.",
+            lang
+        )
         c1, c2 = st.columns([2, 1])
         with c1:
             fig = go.Figure()
@@ -397,6 +422,13 @@ def render_us_fundamentals(lang, usa_ticker, active_module, risk_free_rate):
     # --- 3. ANÁLISE DE LUCRATIVIDADE (USA) ---
     elif active_module == "Análise de Lucratividade":
         st.markdown(f"<h2>{t['title_profitability']}</h2>", unsafe_allow_html=True)
+        render_explanation_card(
+            "Análise de Lucratividade (USA)" if lang == "PT" else ("Profitability Analysis (USA)" if lang == "EN" else "Análisis de Rentabilidad (USA)"),
+            "Avalia o retorno final entregue ao acionista através da margem líquida e do ROE (Retorno sobre o Patrimônio), medindo a lucratividade líquida após todas as despesas corporativas e impostos americanos.",
+            "Evaluates the final return delivered to shareholders through net margin and ROE (Return on Equity), measuring net profitability after all corporate expenses and US taxes.",
+            "Evalúa el retorno final entregado al accionista a través del margen neto y del ROE (Retorno sobre el Patrimonio), midiendo la rentabilidad neta después de todos los gastos corporativos e impuestos estadounidenses.",
+            lang
+        )
         fig2 = go.Figure()
         fig2.add_trace(go.Scatter(x=df['Data'], y=df['Lucro'], name=t["net_profit"], fill='tozeroy', line=dict(color='#bf953f')))
         fig2.add_trace(go.Scatter(x=df['Data'], y=df['Margem_Liquida'], name=t["net_margin"], yaxis='y2', line=dict(color='#ffffff', dash='dot')))
@@ -442,6 +474,13 @@ def render_us_fundamentals(lang, usa_ticker, active_module, risk_free_rate):
     # --- 4. SOLVÊNCIA PATRIMONIAL & ALTMAN Z-SCORE (USA) ---
     elif active_module == "Solvência Patrimonial":
         st.markdown(f"<h2>{t['title_solvency']}</h2>", unsafe_allow_html=True)
+        render_explanation_card(
+            "Solvência & Altman Z-Score (USA)" if lang == "PT" else ("Solvency & Altman Z-Score (USA)" if lang == "EN" else "Solvencia y Altman Z-Score (USA)"),
+            "Analisa a estrutura de endividamento da empresa americana selecionada através do Altman Z-Score (probabilidade de insolvência) e do Piotroski F-Score (força de saúde fundamental).",
+            "Analyzes the debt structure of the selected US company using the Altman Z-Score (insolvency probability) and the Piotroski F-Score (fundamental health strength).",
+            "Analiza la estructura de endeudamiento de la empresa estadounidense seleccionada a través del Altman Z-Score (probabilidad de insolvencia) y el Piotroski F-Score (fuerza de salud fundamental).",
+            lang
+        )
         col_a, col_b = st.columns(2)
         with col_a:
             fig3 = go.Figure()
@@ -580,6 +619,13 @@ def render_us_fundamentals(lang, usa_ticker, active_module, risk_free_rate):
     # --- 5. VALUATION INTRÍNSECO (USA) ---
     elif active_module == "Valuation Intrínseco":
         st.markdown(f"<h2>{t['title_valuation']}</h2>", unsafe_allow_html=True)
+        render_explanation_card(
+            "Valuation Intrínseco (USA)" if lang == "PT" else ("Intrinsic Valuation (USA)" if lang == "EN" else "Valuación Intrínseca (USA)"),
+            "Calculadora de Preço Justo e Margem de Segurança através de múltiplos modelos matemáticos de mercado: Benjamin Graham (ativos tangíveis), Fluxo de Caixa Descontado (FCD) e Peter Lynch (Big Techs e crescimento).",
+            "Fair Price and Margin of Safety calculator using multiple market mathematical models: Benjamin Graham (tangible assets), Discounted Cash Flow (DCF), and Peter Lynch (Big Techs & growth compounders).",
+            "Calculadora de Precio Justo y Margen de Seguridad mediante múltiples modelos matemáticos del mercado: Benjamin Graham (activos tangibles), Flujo de Caja Descontado (FCD) y Peter Lynch (Big Techs y crecimiento).",
+            lang
+        )
         
         # Graham Formula
         # Price = sqrt(22.5 * LPA * VPA) adjusted by US Yields
@@ -760,6 +806,13 @@ def render_us_fundamentals(lang, usa_ticker, active_module, risk_free_rate):
     # --- 6. TABELA DE DADOS (USA) ---
     elif active_module == "Tabela de Dados":
         st.markdown(f"<h2>{t['title_data']}</h2>", unsafe_allow_html=True)
+        render_explanation_card(
+            "Tabela de Dados Estruturados (USA)" if lang == "PT" else ("Structured Data Table (USA)" if lang == "EN" else "Tabla de Datos Estructurados (USA)"),
+            "Apresenta os dados financeiros brutos históricos compilados anualmente diretamente dos relatórios oficiais arquivados pelas empresas americanas na SEC.",
+            "Presents raw historical financial data compiled annually directly from official reports filed by US companies with the SEC.",
+            "Presenta los datos financieros brutos históricos recopilados anualmente directamente de los informes oficiales presentados por las empresas estadounidenses ante la SEC.",
+            lang
+        )
         # Format DataFrame nicely
         st.dataframe(
             df.style.format(precision=2).highlight_max(axis=0, color='#bf953f33'),

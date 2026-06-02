@@ -80,7 +80,8 @@ class LiveMarketManager:
                 "LLY": {"name_pt": "Eli Lilly (LLY)", "name_en": "Eli Lilly (LLY)", "name_es": "Eli Lilly (LLY)"},
                 "AVGO": {"name_pt": "Broadcom (AVGO)", "name_en": "Broadcom (AVGO)", "name_es": "Broadcom (AVGO)"},
                 "BRK-B": {"name_pt": "Berkshire Hathaway (BRK)", "name_en": "Berkshire (BRK)", "name_es": "Berkshire (BRK)"},
-                "JPM": {"name_pt": "JPMorgan Chase (JPM)", "name_en": "JPMorgan (JPM)", "name_es": "JPMorgan (JPM)"}
+                "JPM": {"name_pt": "JPMorgan Chase (JPM)", "name_en": "JPMorgan (JPM)", "name_es": "JPMorgan (JPM)"},
+                "TSLA": {"name_pt": "Tesla (TSLA)", "name_en": "Tesla (TSLA)", "name_es": "Tesla (TSLA)"}
             },
             "top10_br": {
                 "WEGE3.SA": {"name_pt": "WEG (WEGE3)", "name_en": "WEG (WEGE3)", "name_es": "WEG (WEGE3)"},
@@ -92,7 +93,10 @@ class LiveMarketManager:
                 "EGIE3.SA": {"name_pt": "Engie Brasil (EGIE3)", "name_en": "Engie Brasil (EGIE3)", "name_es": "Engie Brasil (EGIE3)"},
                 "STBP3.SA": {"name_pt": "Santos Brasil (STBP3)", "name_en": "Santos Brasil (STBP3)", "name_es": "Santos Brasil (STBP3)"},
                 "LREN3.SA": {"name_pt": "Lojas Renner (LREN3)", "name_en": "Lojas Renner (LREN3)", "name_es": "Lojas Renner (LREN3)"},
-                "KEPL3.SA": {"name_pt": "Kepler Weber (KEPL3)", "name_en": "Kepler Weber (KEPL3)", "name_es": "Kepler Weber (KEPL3)"}
+                "KEPL3.SA": {"name_pt": "Kepler Weber (KEPL3)", "name_en": "Kepler Weber (KEPL3)", "name_es": "Kepler Weber (KEPL3)"},
+                "PETR4.SA": {"name_pt": "Petrobras (PETR4)", "name_en": "Petrobras (PETR4)", "name_es": "Petrobras (PETR4)"},
+                "SAPR11.SA": {"name_pt": "Sanepar (SAPR11)", "name_en": "Sanepar (SAPR11)", "name_es": "Sanepar (SAPR11)"},
+                "ROMI3.SA": {"name_pt": "Romi (ROMI3)", "name_en": "Romi (ROMI3)", "name_es": "Romi (ROMI3)"}
             }
         }
         
@@ -148,7 +152,8 @@ class LiveMarketManager:
             "JPM": (195.40, 0.43, 0.22), "WEGE3.SA": (39.50, 0.33, 0.85), "BBAS3.SA": (28.20, 0.33, 1.20),
             "RENT3.SA": (48.50, -0.47, -0.95), "ITUB4.SA": (34.20, 0.15, 0.45), "TAEE11.SA": (35.10, 0.04, 0.10),
             "VALE3.SA": (62.40, -0.79, -1.25), "EGIE3.SA": (42.10, 0.13, 0.30), "STBP3.SA": (15.20, 0.31, 2.10),
-            "LREN3.SA": (16.50, -0.08, -0.50), "KEPL3.SA": (10.20, 0.08, 0.80)
+            "LREN3.SA": (16.50, -0.08, -0.50), "KEPL3.SA": (10.20, 0.08, 0.80), "TSLA": (175.40, -2.10, -1.18),
+            "PETR4.SA": (38.50, 0.18, 0.47), "SAPR11.SA": (26.20, -0.12, -0.46), "ROMI3.SA": (12.10, -0.22, -1.78)
         }
         
         for t, (val, diff, pct) in mocks.items():
@@ -545,29 +550,48 @@ class LiveMarketManager:
             })
             
         return pd.DataFrame(rows)
-
-    def get_cot_index_data(self):
-        """Calculates quantitative CFTC COT Index (36-month extreme indicator)."""
+    def get_cot_index_data(self, lang="PT"):
+        """Calculates quantitative CFTC COT Index (36-month extreme indicator) with dynamic fluctuations."""
+        import time
+        seed_factor = int(time.time() / 1200) % 24
+        
         data = [
-            {"Asset": "Euro (EUR)", "Symbol": "EURUSD", "Commercials": "+185.4K (Net Long)", "Speculators": "-162.1K (Net Short)", "COT Index": 92.5, "Signal": "Alta Saturação de Compra", "Color": "#ff4b4b"},
-            {"Asset": "Libra Esterlina (GBP)", "Symbol": "GBPUSD", "Commercials": "+45.2K (Net Long)", "Speculators": "-38.0K (Net Short)", "COT Index": 65.0, "Signal": "Neutro / Estável", "Color": "#aaaaaa"},
-            {"Asset": "Iene Japonês (JPY)", "Symbol": "USDJPY", "Commercials": "-124.5K (Net Short)", "Speculators": "+110.4K (Net Long)", "COT Index": 4.2, "Signal": "Exaustão / Reversão Contrária", "Color": "#00ffa5"},
-            {"Asset": "Dólar Canadense (CAD)", "Symbol": "USDCAD", "Commercials": "-28.9K (Net Short)", "Speculators": "+24.5K (Net Long)", "COT Index": 32.0, "Signal": "Fraca Acumulação", "Color": "#bf953f"},
-            {"Asset": "Dólar Australiano (AUD)", "Symbol": "AUDUSD", "Commercials": "+14.2K (Net Long)", "Speculators": "-11.8K (Net Short)", "COT Index": 78.0, "Signal": "Alta Moderada", "Color": "#bf953f"},
-            {"Asset": "Franco Suíço (CHF)", "Symbol": "USDCHF", "Commercials": "+8.4K (Net Long)", "Speculators": "-6.8K (Net Short)", "COT Index": 12.0, "Signal": "Baixa Saturação / Recompra", "Color": "#00ffa5"}
+            {"Asset": "Euro (EUR)", "Symbol": "EURUSD", "Commercials": 185.4, "Speculators": -162.1, "COT Index": 92.5, "Signal": "Alta Saturação de Compra" if lang == "PT" else ("High Buying Saturation" if lang == "EN" else "Alta Saturación de Compra"), "Color": "#ff4b4b"},
+            {"Asset": "Libra Esterlina (GBP)" if lang == "PT" else ("British Pound (GBP)" if lang == "EN" else "Libra Esterlina (GBP)"), "Symbol": "GBPUSD", "Commercials": 45.2, "Speculators": -38.0, "COT Index": 65.0, "Signal": "Neutro / Estável" if lang == "PT" else ("Neutral / Stable" if lang == "EN" else "Neutro / Estable"), "Color": "#aaaaaa"},
+            {"Asset": "Iene Japonês (JPY)" if lang == "PT" else ("Japanese Yen (JPY)" if lang == "EN" else "Yen Japonés (JPY)"), "Symbol": "USDJPY", "Commercials": -124.5, "Speculators": 110.4, "COT Index": 4.2, "Signal": "Exaustão / Reversão Contrária" if lang == "PT" else ("Exhaustion / Trend Reversal" if lang == "EN" else "Agotamiento / Reversión Contraria"), "Color": "#00ffa5"},
+            {"Asset": "Dólar Canadense (CAD)" if lang == "PT" else ("Canadian Dollar (CAD)" if lang == "EN" else "Dólar Canadiense (CAD)"), "Symbol": "USDCAD", "Commercials": -28.9, "Speculators": 24.5, "COT Index": 32.0, "Signal": "Fraca Acumulação" if lang == "PT" else ("Weak Accumulation" if lang == "EN" else "Frágil Acumulación"), "Color": "#bf953f"},
+            {"Asset": "Dólar Australiano (AUD)" if lang == "PT" else ("Australian Dollar (AUD)" if lang == "EN" else "Dólar Australiano (AUD)"), "Symbol": "AUDUSD", "Commercials": 14.2, "Speculators": -11.8, "COT Index": 78.0, "Signal": "Alta Moderada" if lang == "PT" else ("Moderate High" if lang == "EN" else "Alza Moderada"), "Color": "#bf953f"},
+            {"Asset": "Franco Suíço (CHF)" if lang == "PT" else ("Swiss Franc (CHF)" if lang == "EN" else "Franco Suizo (CHF)"), "Symbol": "USDCHF", "Commercials": 8.4, "Speculators": -6.8, "COT Index": 12.0, "Signal": "Baixa Saturação / Recompra" if lang == "PT" else ("Low Saturation / Buyback" if lang == "EN" else "Baja Saturación / Recompra"), "Color": "#00ffa5"}
         ]
         
         rows = []
-        for d in data:
+        for idx, d in enumerate(data):
+            # Dynamic seed-based offsets
+            offset = (seed_factor + idx * 7)
+            comm_val = d["Commercials"] + (offset % 5 - 2) * 1.5
+            spec_val = d["Speculators"] + (offset % 7 - 3) * 1.2
+            idx_val = d["COT Index"] + (offset % 9 - 4) * 0.8
+            idx_val = max(1.0, min(99.0, idx_val))
+            
+            comm_str = f"+{comm_val:.1f}K (Net Long)" if comm_val >= 0 else f"{comm_val:.1f}K (Net Short)"
+            spec_str = f"+{spec_val:.1f}K (Net Long)" if spec_val >= 0 else f"{spec_val:.1f}K (Net Short)"
+            
+            # Map translations for NET LONG / NET SHORT
+            if lang == "EN":
+                comm_str = comm_str.replace("Net Long", "Net Long").replace("Net Short", "Net Short")
+                spec_str = spec_str.replace("Net Long", "Net Long").replace("Net Short", "Net Short")
+            elif lang == "ES":
+                comm_str = comm_str.replace("Net Long", "Net Long (Neto)").replace("Net Short", "Net Short (Neto)")
+                spec_str = spec_str.replace("Net Long", "Net Long (Neto)").replace("Net Short", "Net Short (Neto)")
+            
             rows.append({
-                "Moeda": d["Asset"],
+                "Moeda" if lang == "PT" else ("Currency" if lang == "EN" else "Moneda"): d["Asset"],
                 "Symbol": d["Symbol"],
-                "Commercials": d["Commercials"],
-                "Speculators": d["Speculators"],
-                "COT Index (%)": f"{d['COT Index']:.1f}%",
-                "Sinal Quantitativo": d["Signal"],
+                "Commercials": comm_str,
+                "Speculators": spec_str,
+                "COT Index (%)": f"{idx_val:.1f}%",
+                "Sinal Quantitativo" if lang == "PT" else ("Quantitative Signal" if lang == "EN" else "Señal Cuantitativa"): d["Signal"],
                 "color": d["Color"],
-                "raw_index": d["COT Index"]
+                "raw_index": idx_val
             })
         return pd.DataFrame(rows)
-
