@@ -35,11 +35,26 @@ st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-    /* Ocultar completamente a moldura nativa do Streamlit (cabecalho, barra de ferramentas e rodape) */
-    header, footer, #MainMenu, [data-testid="stHeader"], [data-testid="stFooter"], [data-testid="stToolbar"] {
+    /* Ocultar elementos desnecessários da moldura nativa do Streamlit (barra de ferramentas e rodapé) */
+    footer, #MainMenu, [data-testid="stFooter"], [data-testid="stToolbar"] {
         display: none !important;
         visibility: hidden !important;
         height: 0 !important;
+    }
+    
+    /* Tornar o cabeçalho transparente e clicável apenas nos botões (como o toggle da sidebar) */
+    [data-testid="stHeader"], header {
+        background-color: transparent !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        pointer-events: none !important;
+    }
+    
+    [data-testid="stHeader"] button,
+    [data-testid="stHeader"] [data-testid="collapsedControl"],
+    header button,
+    header [data-testid="collapsedControl"] {
+        pointer-events: auto !important;
     }
     
     /* Forçar tema escuro global absoluto em todos os containers */
@@ -3755,9 +3770,9 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
     with t_arbitrage:
         render_explanation_card(
             "Arbitragem Cambial & Correlações" if lang == "PT" else ("FX Arbitrage & Correlations" if lang == "EN" else "Arbitraje Cambiario y Correlaciones"),
-            "Mecanismo de arbitragem estatística e correlações históricas. Compara o DXY com commodities físicas e taxas de rendimento soberanas para mapear pontos de inversão estrutural de fluxo cambial.",
-            "Statistical arbitrage engine and historical correlations desk. Compares the DXY index with physical commodities and sovereign yields to map structural currency flow reversals.",
-            "Mecanismo de arbitraje estadístico y correlaciones históricas. Compara el índice DXY con materias primas físicas y rendimientos soberanos para mapear puntos de inversión estructural de flujos cambiarios.",
+            "Mecanismo de arbitragem estatística e correlações históricas. A IA cruza a matemática de curto prazo com fundamentos macroeconômicos globais para filtrar falsas distorções:<br><br><b>1. Correlação com Commodities Físicas:</b> Moedas como o Dólar Canadense (CAD) e o Dólar Australiano (AUD) são fortemente ligadas ao Petróleo e ao Ouro/Metais. A IA compara essas matérias-primas para entender se um desvio no par (ex: USD/CAD vs AUD/USD) é apenas ruído temporário ou uma mudança real nos preços das commodities.<br><b>2. Monitoramento do DXY:</b> O Índice do Dólar indica a força global da moeda americana. Como operamos pares contra o USD, o DXY serve para identificar se há uma fuga de capitais global para o dólar ou um desequilíbrio local.<br><b>3. Rendimento de Títulos Soberanos (Juros):</b> O fluxo global de capital busca os maiores juros soberanos (Treasuries). A IA monitora esses yields para antecipar pontos de virada cambial estrutural.<br><br><i><b>Filtro de Segurança:</b> Operar apenas o desvio matemático (Z-Score) sem essa inteligência pode ser perigoso se a correlação quebrar devido a fatores estruturais. A IA valida as oportunidades cruzando essas variáveis.</i>",
+            "Statistical arbitrage engine and historical correlations desk. The AI matches short-term statistical math with global macroeconomic fundamentals to filter out false signals:<br><br><b>1. Physical Commodities Correlation:</b> Currencies like the Canadian Dollar (CAD) and Australian Dollar (AUD) are tightly bound to Crude Oil and Gold/Metals. The AI compares physical commodities to determine if a pair deviation (e.g., USD/CAD vs AUD/USD) is just temporary market noise or a structural commodities trend.<br><b>2. DXY Dollar Index Filter:</b> The Dollar Index measures greenback strength. Since we trade pairs against USD, the DXY helps identify whether there is a global capital flight to safety or just a local imbalance.<br><b>3. Sovereign Yields (Interest Rates):</b> Global money chases the highest and safest sovereign returns (Treasuries). The AI monitors yield spreads to anticipate structural flow inflection points.<br><br><i><b>Risk Shield:</b> Trading purely mathematical deviations (Z-Score) without this overlay can lead to traps if the correlation breaks permanently due to fundamentals. The AI validates setups by cross-referencing these core macro drivers.</i>",
+            "Mecanismo de arbitraje estadístico y correlaciones históricas. La IA cruza la matemática de corto plazo con fundamentos macroeconómicos globales para filtrar falsas distorciones:<br><br><b>1. Correlación con Materias Primas Físicas:</b> Monedas como el Dólar Canadiense (CAD) y el Dólar Australiano (AUD) están estrechamente ligadas al Petróleo y al Oro/Metales. La IA compara estas materias primas para entender si un desvío en el par (ej: USD/CAD vs AUD/USD) es solo ruido temporal o un cambio real en los precios de los productos básicos.<br><b>2. Monitoreo del DXY:</b> El índice del dólar indica la fuerza global de la divisa estadounidense. Como operamos pares contra el USD, el DXY sirve para identificar si hay una fuga de capitales global hacia el dólar o un desequilibrio local.<br><b>3. Rendimientos de Bonos Soberanos (Intereses):</b> El flujo global de capital busca las tasas soberanas más altas (Treasuries). La IA monitorea estos rendimientos para anticipar puntos de giro cambiario estructural.<br><br><i><b>Filtro de Seguridad:</b> Operar solo el desvío matemático (Z-Score) sin esta inteligencia puede ser peligroso si la correlación se rompe por factores estructurales. La IA valida las oportunidades cruzando estas variables.</i>",
             lang
         )
         # Cache data for 20 minutes (1200 seconds) to avoid API limits and guarantee instant load times
