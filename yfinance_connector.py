@@ -160,6 +160,8 @@ BR_TICKERS = [
     "TASA4.SA", "RANI3.SA", "ETER3.SA"
 ]
 
+IS_UPDATING = False
+
 class LiveMarketManager:
     def __init__(self):
         self.cache_dir = os.path.join(os.path.dirname(__file__), "cache")
@@ -330,25 +332,58 @@ class LiveMarketManager:
         return fallback
 
     def fetch_all_data(self):
-        """Downloads current real-time data from Yahoo Finance and updates cache. Falls back if fails."""
-        # 20-minute smart caching check
-        if os.path.exists(self.cache_file):
-            try:
-                mtime = os.path.getmtime(self.cache_file)
-                last_update = datetime.datetime.fromtimestamp(mtime)
-                now = datetime.datetime.now()
-                delta = now - last_update
-                if delta.total_seconds() < 1200:  # 20 minutes = 1200 seconds
-                    with open(self.cache_file, 'r', encoding='utf-8') as f:
-                        cache_data = json.load(f)
-                    
-                    # Update status dynamically to show time until next update
-                    remaining = int((1200 - delta.total_seconds()) / 60)
-                    cache_data["metadata"]["status"] = f"LIVE CACHED FEED (Expires in {remaining}m)"
-                    return cache_data
-            except Exception:
-                pass
+        """Returns current cached data immediately, and spawns a background thread to update it if expired."""
+        global IS_UPDATING
+        
+        # 1. If cache file doesn't exist, we must do a synchronous download the first time
+        if not os.path.exists(self.cache_file):
+            return self._fetch_and_save_data_sync()
+            
+        # 2. Cache file exists. Load it.
+        try:
+            with open(self.cache_file, 'r', encoding='utf-8') as f:
+                cache_data = json.load(f)
+        except Exception:
+            return self._fetch_and_save_data_sync()
+            
+        # 3. Check if cache is expired (older than 20 minutes)
+        try:
+            mtime = os.path.getmtime(self.cache_file)
+            last_update = datetime.datetime.fromtimestamp(mtime)
+            now = datetime.datetime.now()
+            delta = now - last_update
+            
+            # If expired and not already updating in background, spawn background update
+            if delta.total_seconds() >= 1200 and not IS_UPDATING:
+                import threading
+                IS_UPDATING = True
+                
+                def bg_update():
+                    global IS_UPDATING
+                    try:
+                        self._fetch_and_save_data_sync()
+                    except Exception:
+                        pass
+                    finally:
+                        IS_UPDATING = False
+                        
+                thread = threading.Thread(target=bg_update)
+                thread.daemon = True
+                thread.start()
+                
+            # Update status dynamically to show it's live/cached
+            remaining = max(0, int((1200 - delta.total_seconds()) / 60))
+            if remaining > 0:
+                cache_data["metadata"]["status"] = f"LIVE CACHED FEED (Expires in {remaining}m)"
+            else:
+                cache_data["metadata"]["status"] = "LIVE CACHED FEED (Updating in background...)"
+        except Exception:
+            pass
+            
+        return cache_data
 
+    def _fetch_and_save_data_sync(self):
+        """Downloads fresh data from Yahoo Finance and updates cache synchronously."""
         now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         try:
             # Download 5 days of history for all tickers in a single concurrent batch
