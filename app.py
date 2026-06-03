@@ -7000,7 +7000,7 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
                 
                 *   **Capital Inicial (Margem):** US$ 10.000 (depositados na corretora).
                 *   **Exposição Total:** US$ 20.000 comprados no mercado à vista (ou perpétuo) e US$ 20.000 vendidos no mercado futuro trimestral.
-                *   **Rendimento Médio Estimado:** **34.0% a 37.0% a.a.** (capturando a taxa de financiamento + prêmio do vencimento trimestral). Isso equivale a aproximadamente **US$ 300.00 por mês** (cerca de R$ 1.500+ na cotação atual).
+                *   **Rendimento Médio Estimado:** **34.0% a 37.0% a.a.** (capturando a taxa de financiamento + prêmio do vencimento trimestral). Isso equivale a aproximadamente **US$ 600.00 por mês** (cerca de R$ 3.000+ na cotação atual).
                 
                 ---
 
@@ -7064,7 +7064,7 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
                 
                 *   **Initial Capital (Margin):** $10,000 (deposited at the exchange).
                 *   **Total Exposure:** $20,000 long in the spot (or perp) market and $20,000 short in the quarterly futures market.
-                *   **Estimated Average Yield:** **34.0% to 37.0% p.a.** (capturing funding rates + quarterly basis premium). This equals approximately **$300.00 per month**.
+                *   **Estimated Average Yield:** **34.0% to 37.0% p.a.** (capturing funding rates + quarterly basis premium). This equals approximately **$600.00 per month** (about BRL 3,000+ in current conversion).
                 
                 ---
 
@@ -7128,7 +7128,7 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
                 
                 *   **Capital Inicial (Margen):** US$ 10.000 (depositados en el exchange).
                 *   **Exposición Total:** US$ 20.000 comprados en el mercado al contado (o perpetuo) y US$ 20.000 vendidos en el mercado de futuros trimestrales.
-                *   **Rendimiento Promedio Estimado:** **34.0% a 37.0% anual** (capturando tasas de financiación + prima de futuros trimestrales). Esto equivale a aproximadamente **US$ 300.00 al mes**.
+                *   **Rendimiento Promedio Estimado:** **34.0% a 37.0% anual** (capturando tasas de financiación + prima de futuros trimestrales). Esto equivale a aproximadamente **US$ 600.00 al mes** (cerca de BRL 3.000+ en la conversión actual).
                 
                 ---
 
