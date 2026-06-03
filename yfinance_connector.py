@@ -3,6 +3,9 @@ import pandas as pd
 import os
 import json
 import datetime
+import requests
+import re
+import concurrent.futures
 
 # Comprehensive CUSIP to US Stock Ticker Mapping for Smart Money Radar
 US_TICKER_MAPPING = {
@@ -410,16 +413,241 @@ class LiveMarketManager:
             
         return cache_data
 
+    def _clean_float(self, val):
+        if not val:
+            return 0.0
+        val = str(val).strip()
+        val = re.sub(r'[A-Za-z\$\s]', '', val)
+        if ',' in val and '.' in val:
+            if val.find('.') < val.find(','):
+                val = val.replace('.', '').replace(',', '.')
+            else:
+                val = val.replace(',', '')
+        elif ',' in val:
+            parts = val.split(',')
+            if len(parts) == 2 and len(parts[1]) <= 2:
+                val = val.replace(',', '.')
+            else:
+                val = val.replace(',', '')
+        try:
+            return float(val)
+        except ValueError:
+            return 0.0
+
+    def _scrape_google_finance(self, ticker_symbol):
+        url = f"https://www.google.com/finance/quote/{ticker_symbol}"
+        try:
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+            res = requests.get(url, headers=headers, timeout=5)
+            html = res.text
+            
+            idx = html.find('class="N6SYTe"')
+            if idx == -1:
+                return None, 0.0, 0.0
+                
+            snippet = html[idx:idx+1200]
+            
+            m_price = re.search(r'jsname="Pdsbrc"[^>]*>\s*<span>\s*(?:[A-Z\$]+\s*)?([\d,\.-]+)\s*</span>', snippet)
+            if not m_price:
+                return None, 0.0, 0.0
+                
+            price = self._clean_float(m_price.group(1))
+            
+            change = 0.0
+            m_change = re.search(r'jsname="xnruHf"[^>]*>\s*<span>\s*([+-]?[\d,\.]+)\s*</span>', snippet)
+            if m_change:
+                change = self._clean_float(m_change.group(1))
+                
+            pct = 0.0
+            m_pct = re.search(r'jsname="vY9t3b"[^>]*>\s*<span[^>]*>\s*([+-]?[\d,\.]+)%\s*</span>', snippet)
+            if m_pct:
+                pct = self._clean_float(m_pct.group(1))
+                
+            return price, change, pct
+        except Exception:
+            return None, 0.0, 0.0
+
+    def _fetch_binance_crypto(self, ticker):
+        binance_map = {
+            "BTC-USD": "BTCUSDT",
+            "ETH-USD": "ETHUSDT",
+            "SOL-USD": "SOLUSDT",
+            "BNB-USD": "BNBUSDT",
+            "XRP-USD": "XRPUSDT",
+            "ADA-USD": "ADAUSDT"
+        }
+        symbol = binance_map.get(ticker)
+        if not symbol:
+            return None, 0.0, 0.0
+        url = f"https://api.binance.com/api/v3/ticker/24hr?symbol={symbol}"
+        try:
+            res = requests.get(url, timeout=5)
+            data = res.json()
+            price = float(data["lastPrice"])
+            change = float(data["priceChange"])
+            pct = float(data["priceChangePercent"])
+            return price, change, pct
+        except Exception:
+            return None, 0.0, 0.0
+
+    def _fetch_exchangerate_backup(self):
+        try:
+            res = requests.get("https://open.er-api.com/v6/latest/USD", timeout=5)
+            data = res.json()
+            if data.get("result") == "success":
+                return data.get("rates", {})
+        except Exception:
+            pass
+        return {}
+
+    def _fetch_iron_ore(self):
+        url = "https://tradingeconomics.com/commodity/iron-ore"
+        try:
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+            res = requests.get(url, headers=headers, timeout=5)
+            html = res.text
+            
+            desc_match = re.search(r'name="description"\s+content="([^"]+)"', html, re.IGNORECASE)
+            if not desc_match:
+                desc_match = re.search(r'content="([^"]+)"\s+name="description"', html, re.IGNORECASE)
+                
+            if desc_match:
+                desc = desc_match.group(1)
+                price = None
+                p_m = re.search(r'Iron Ore [a-zA-Z\s]+ ([\d\.]+) USD/T', desc, re.IGNORECASE)
+                if p_m:
+                    price = float(p_m.group(1))
+                    
+                pct = 0.0
+                pct_m = re.search(r'(up|down)\s+([\d\.]+)%', desc, re.IGNORECASE)
+                if pct_m:
+                    direction = pct_m.group(1).lower()
+                    val = float(pct_m.group(2))
+                    pct = val if direction == "up" else -val
+                    
+                change = 0.0
+                if price and pct:
+                    prev_price = price / (1.0 + pct / 100.0)
+                    change = price - prev_price
+                    
+                return price, change, pct
+        except Exception:
+            pass
+        return None, 0.0, 0.0
+
+    def _fetch_single_ticker_fallback(self, ticker):
+        # 1. Cryptos
+        if ticker in ["BTC-USD", "ETH-USD", "SOL-USD", "BNB-USD", "XRP-USD", "ADA-USD"]:
+            p, c, pct = self._fetch_binance_crypto(ticker)
+            if p is not None:
+                return ticker, p, c, pct
+                
+        # 2. Currencies
+        currency_map = {
+            "EURUSD=X": "EUR-USD",
+            "GBPUSD=X": "GBP-USD",
+            "JPY=X": "USD-JPY",
+            "BRL=X": "USD-BRL",
+            "CAD=X": "USD-CAD",
+            "AUDUSD=X": "AUD-USD",
+            "CHF=X": "USD-CHF",
+            "USDSEK=X": "USD-SEK"
+        }
+        
+        if ticker in currency_map:
+            gf_sym = currency_map[ticker]
+            p, c, pct = self._scrape_google_finance(gf_sym)
+            if p is not None:
+                return ticker, p, c, pct
+                
+        # 3. Commodities
+        commodity_map = {
+            "GC=F": "GCW00:COMEX",
+            "SI=F": "SIW00:COMEX",
+            "BZ=F": "BZW00:NYMEX",
+            "CL=F": "CLW00:NYMEX",
+            "NG=F": "NGW00:NYMEX",
+            "HG=F": "HGW00:COMEX",
+            "ZS=F": "ZSW00:CBOT",
+            "ZC=F": "ZCW00:CBOT"
+        }
+        
+        if ticker == "TIO=F":
+            p, c, pct = self._fetch_iron_ore()
+            if p is not None:
+                return ticker, p, c, pct
+                
+        if ticker in commodity_map:
+            gf_sym = commodity_map[ticker]
+            p, c, pct = self._scrape_google_finance(gf_sym)
+            if p is not None:
+                return ticker, p, c, pct
+                
+        # 4. Yields
+        yield_map = {
+            "^IRX": "IRX:INDEXCBOE",
+            "^FVX": "FVX:INDEXCBOE",
+            "^TNX": "TNX:INDEXCBOE",
+            "^TYX": "TYX:INDEXCBOE"
+        }
+        
+        if ticker in yield_map:
+            gf_sym = yield_map[ticker]
+            p, c, pct = self._scrape_google_finance(gf_sym)
+            if p is not None:
+                return ticker, p / 10.0, c / 10.0, pct
+                
+        # 5. Indices
+        index_map = {
+            "^GSPC": ".INX:INDEXSP",
+            "^NDX": "NDX:INDEXNASDAQ",
+            "^DJI": ".DJI:INDEXDJX",
+            "^RUT": "RUT:INDEXRUSSELL",
+            "^BVSP": "IBOV:INDEXBVMF",
+            "^STOXX50E": "SX5E:INDEXSTOXX",
+            "^GDAXI": "DAX:INDEXDB",
+            "^FTSE": "UKX:INDEXFTSE",
+            "^N225": "NI225:INDEXNIKKEI",
+            "000001.SS": "000001:SHA",
+            "^VIX": "VIX:INDEXCBOE",
+            "^SOX": "SOX:INDEXNASDAQ"
+        }
+        
+        if ticker in index_map:
+            gf_sym = index_map[ticker]
+            p, c, pct = self._scrape_google_finance(gf_sym)
+            if p is not None:
+                return ticker, p, c, pct
+                
+        # 6. B3 Stocks
+        if ticker.endswith(".SA"):
+            symbol = ticker.split(".")[0]
+            gf_sym = f"{symbol}:BVMF"
+            p, c, pct = self._scrape_google_finance(gf_sym)
+            if p is not None:
+                return ticker, p, c, pct
+                
+        # 7. US Stocks
+        clean_ticker = ticker.replace("-", ".")
+        if clean_ticker.replace(".", "").isalpha() and clean_ticker.isupper():
+            NASDAQ_SET = {"AAPL", "GOOGL", "GOOG", "NVDA", "MSFT", "AMZN", "AVGO", "META", "TSLA", "COST", "NFLX", "AMD", "CSCO", "MU", "AMAT", "PEP", "QCOM", "AMGN", "INTU", "ISRG", "TXN", "KLAC", "INTC", "BKNG", "GILD", "PANW", "ADI", "TMUS", "CME", "LRCX", "CMCSA", "VRTX", "CRWD", "APP", "CDNS", "SBUX", "SNPS", "ADBE", "ADP", "EQIX", "CEG", "DASH", "REGN", "WBD", "WDC", "ASML"}
+            if ticker in NASDAQ_SET:
+                exchanges = ["NASDAQ", "NYSE"]
+            else:
+                exchanges = ["NYSE", "NASDAQ"]
+                
+            for exchange in exchanges:
+                gf_sym = f"{clean_ticker}:{exchange}"
+                p, c, pct = self._scrape_google_finance(gf_sym)
+                if p is not None:
+                    return ticker, p, c, pct
+                    
+        return ticker, None, 0.0, 0.0
+
     def _fetch_and_save_data_sync(self):
         """Downloads fresh data from Yahoo Finance and updates cache synchronously."""
         now_str = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
         try:
-            # Download 5 days of history for all tickers in a single concurrent batch
-            data = yf.download(self.all_tickers, period='5d', group_by='ticker', progress=False)
-            
-            if data.empty:
-                return self.get_fallback_data()
-                
             # Load and manage Year Start Prices Cache
             ys_cache_path = os.path.join(self.cache_dir, "year_start_prices.json")
             current_year = datetime.datetime.now().year
@@ -432,105 +660,158 @@ class LiveMarketManager:
                             ys_cache = loaded_ys
                 except Exception:
                     pass
-            
-            # Fetch missing year-start prices from Yahoo Finance
-            missing_tickers = [t for t in self.all_tickers if t not in ys_cache["prices"]]
-            if missing_tickers:
-                try:
-                    start_date = f"{current_year - 1}-12-25"
-                    end_date = f"{current_year}-01-10"
-                    hist_data = yf.download(missing_tickers, start=start_date, end=end_date, group_by='ticker', progress=False)
-                    
-                    if not hist_data.empty:
-                        for t in missing_tickers:
-                            try:
-                                if len(missing_tickers) == 1:
-                                    col = hist_data['Close'].dropna() if 'Close' in hist_data else pd.Series()
-                                else:
-                                    col = hist_data[t]['Close'].dropna() if (t in hist_data.columns.levels[0] if hasattr(hist_data.columns, 'levels') else t in hist_data.columns) else pd.Series()
-                                
-                                if not col.empty:
-                                    prev_year_rows = col[col.index.year == current_year - 1]
-                                    if not prev_year_rows.empty:
-                                        ys_price = float(prev_year_rows.iloc[-1])
-                                    else:
-                                        ys_price = float(col.iloc[0])
-                                    ys_cache["prices"][t] = ys_price
-                            except Exception:
-                                pass
-                        
-                        # Save updated year start prices
-                        with open(ys_cache_path, 'w', encoding='utf-8') as f:
-                            json.dump(ys_cache, f, ensure_ascii=False, indent=4)
-                except Exception as e:
-                    print(f"Error fetching year-start prices: {e}")
+
+            # Try Yahoo Finance first
+            data = pd.DataFrame()
+            try:
+                data = yf.download(self.all_tickers, period='5d', group_by='ticker', progress=False)
+            except Exception as e:
+                print(f"yfinance download failed: {e}")
 
             parsed = {
                 "metadata": {"last_update": now_str, "status": "LIVE REAL-TIME FEED"},
                 "tickers": {}
             }
             
+            # If yfinance returned data, parse it
+            if not data.empty:
+                for t in self.all_tickers:
+                    try:
+                        if t in data.columns.levels[0] if hasattr(data.columns, 'levels') else t in data.columns:
+                            close_data = data[t]['Close'].dropna()
+                            if len(close_data) >= 2:
+                                prev = close_data.iloc[-2]
+                                curr = close_data.iloc[-1]
+                                diff = curr - prev
+                                pct = (diff / prev) * 100
+                                parsed["tickers"][t] = {
+                                    "price": float(curr),
+                                    "change": float(diff),
+                                    "pct_change": float(pct),
+                                    "timestamp": now_str
+                                }
+                            elif len(close_data) == 1:
+                                curr = close_data.iloc[-1]
+                                parsed["tickers"][t] = {
+                                    "price": float(curr),
+                                    "change": 0.0,
+                                    "pct_change": 0.0,
+                                    "timestamp": now_str
+                                }
+                    except Exception:
+                        pass
+
+            # Fetch any missing tickers using fallbacks in parallel
+            missing_tickers = [t for t in self.all_tickers if t not in parsed["tickers"]]
+            if missing_tickers:
+                fetch_tickers = list(missing_tickers)
+                if "USDSEK=X" not in fetch_tickers:
+                    fetch_tickers.append("USDSEK=X")
+                    
+                fallback_results = {}
+                with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+                    future_to_ticker = {executor.submit(self._fetch_single_ticker_fallback, t): t for t in fetch_tickers}
+                    for future in concurrent.futures.as_completed(future_to_ticker):
+                        t = future_to_ticker[future]
+                        try:
+                            ticker, p, c, pct = future.result()
+                            if p is not None:
+                                fallback_results[ticker] = {
+                                    "price": p,
+                                    "change": c,
+                                    "pct_change": pct,
+                                    "timestamp": now_str
+                                }
+                        except Exception as e:
+                            print(f"Error executing fallback for {t}: {e}")
+                            
+                for t in missing_tickers:
+                    if t in fallback_results:
+                        parsed["tickers"][t] = fallback_results[t]
+                        
+                # Calculate DXY dynamically if it is missing or contains 0.0
+                if "DX-Y.NYB" not in parsed["tickers"] or parsed["tickers"]["DX-Y.NYB"]["price"] == 0.0:
+                    def get_rate(sym):
+                        if sym in parsed["tickers"]:
+                            return parsed["tickers"][sym]["price"], parsed["tickers"][sym]["change"]
+                        if sym in fallback_results:
+                            return fallback_results[sym]["price"], fallback_results[sym]["change"]
+                        return None, 0.0
+                        
+                    eurusd, eurusd_chg = get_rate("EURUSD=X")
+                    usdjpy, usdjpy_chg = get_rate("JPY=X")
+                    gbpusd, gbpusd_chg = get_rate("GBPUSD=X")
+                    usdcad, usdcad_chg = get_rate("CAD=X")
+                    usdchf, usdchf_chg = get_rate("CHF=X")
+                    usdsek, usdsek_chg = get_rate("USDSEK=X")
+                    
+                    if not all([eurusd, usdjpy, gbpusd, usdcad, usdchf, usdsek]):
+                        rates = self._fetch_exchangerate_backup()
+                        if rates:
+                            eurusd = eurusd or (1.0 / rates.get("EUR", 0.92))
+                            usdjpy = usdjpy or rates.get("JPY", 155.0)
+                            gbpusd = gbpusd or (1.0 / rates.get("GBP", 0.79))
+                            usdcad = usdcad or rates.get("CAD", 1.36)
+                            usdchf = usdchf or rates.get("CHF", 0.90)
+                            usdsek = usdsek or rates.get("SEK", 10.5)
+                            
+                    if all([eurusd, usdjpy, gbpusd, usdcad, usdchf, usdsek]):
+                        dxy_curr = 50.14348112 * (eurusd**-0.576) * (usdjpy**0.136) * (gbpusd**-0.119) * (usdcad**0.091) * (usdsek**0.042) * (usdchf**0.036)
+                        
+                        eurusd_prev = eurusd - (eurusd_chg or 0.0)
+                        usdjpy_prev = usdjpy - (usdjpy_chg or 0.0)
+                        gbpusd_prev = gbpusd - (gbpusd_chg or 0.0)
+                        usdcad_prev = usdcad - (usdcad_chg or 0.0)
+                        usdchf_prev = usdchf - (usdchf_chg or 0.0)
+                        usdsek_prev = usdsek - (usdsek_chg or 0.0)
+                        
+                        dxy_prev = 50.14348112 * (eurusd_prev**-0.576) * (usdjpy_prev**0.136) * (gbpusd_prev**-0.119) * (usdcad_prev**0.091) * (usdsek_prev**0.042) * (usdchf_prev**0.036)
+                        
+                        dxy_chg = dxy_curr - dxy_prev
+                        dxy_pct = (dxy_chg / dxy_prev) * 100 if dxy_prev > 0 else 0.0
+                        
+                        parsed["tickers"]["DX-Y.NYB"] = {
+                            "price": float(dxy_curr),
+                            "change": float(dxy_chg),
+                            "pct_change": float(dxy_pct),
+                            "timestamp": now_str
+                        }
+
+            # Calculate and append YTD returns and clean fields
             for t in self.all_tickers:
-                try:
-                    if t in data.columns.levels[0] if hasattr(data.columns, 'levels') else t in data.columns:
-                        close_data = data[t]['Close'].dropna()
-                        if len(close_data) >= 2:
-                            prev = close_data.iloc[-2]
-                            curr = close_data.iloc[-1]
-                            diff = curr - prev
-                            pct = (diff / prev) * 100
-                            
-                            # Calculate real YTD return using start of year price
-                            ytd_val = 0.0
-                            if t in ys_cache["prices"]:
-                                start_price = ys_cache["prices"][t]
-                                if start_price > 0.0:
-                                    ytd_val = ((curr - start_price) / start_price) * 100
-                            
-                            parsed["tickers"][t] = {
-                                "price": float(curr),
-                                "change": float(diff),
-                                "pct_change": float(pct),
-                                "ytd_return": float(ytd_val),
-                                "timestamp": now_str
-                            }
-                        elif len(close_data) == 1:
-                            curr = close_data.iloc[-1]
-                            
-                            ytd_val = 0.0
-                            if t in ys_cache["prices"]:
-                                start_price = ys_cache["prices"][t]
-                                if start_price > 0.0:
-                                    ytd_val = ((curr - start_price) / start_price) * 100
-                                    
-                            parsed["tickers"][t] = {
-                                "price": float(curr),
-                                "change": 0.0,
-                                "pct_change": 0.0,
-                                "ytd_return": float(ytd_val),
-                                "timestamp": now_str
-                            }
-                except Exception:
-                    pass
-            
-            # Merge with fallback for any missing tickers in live feed
-            fallback = self.get_fallback_data()
-            for t in self.all_tickers:
-                if t not in parsed["tickers"] and t in fallback["tickers"]:
-                    parsed["tickers"][t] = fallback["tickers"][t]
-                
-                # Make sure there is a ytd_return key even in fallback
+                if t in parsed["tickers"]:
+                    curr = parsed["tickers"][t]["price"]
+                    ytd_val = 0.0
+                    if t in ys_cache["prices"]:
+                        start_price = ys_cache["prices"][t]
+                        if start_price > 0.0:
+                            ytd_val = ((curr - start_price) / start_price) * 100
+                    parsed["tickers"][t]["ytd_return"] = float(ytd_val)
+                else:
+                    # Ticker completely failed, merge from fallback mocks to avoid crashes
+                    fallback_mocks = self.get_fallback_data()
+                    if t in fallback_mocks["tickers"]:
+                        parsed["tickers"][t] = fallback_mocks["tickers"][t]
+                    
                 if t in parsed["tickers"] and "ytd_return" not in parsed["tickers"][t]:
                     parsed["tickers"][t]["ytd_return"] = 0.0
-            
-            # Save parsed to cache file
+
+            # Save parsed data to cache file
             with open(self.cache_file, 'w', encoding='utf-8') as f:
                 json.dump(parsed, f, ensure_ascii=False, indent=4)
                 
             return parsed
             
         except Exception:
-            return self.get_fallback_data()
+            # Fall back to writing standard mock database if everything crashed
+            fallback = self.get_fallback_data()
+            try:
+                with open(self.cache_file, 'w', encoding='utf-8') as f:
+                    json.dump(fallback, f, ensure_ascii=False, indent=4)
+            except Exception:
+                pass
+            return fallback
+
 
     def get_structured_tables(self, parsed_data, lang="PT"):
         """Formats the parsed data into user-friendly pandas DataFrames for layout rendering."""
