@@ -6984,198 +6984,200 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
         with sub_t_arbitrage:
             if lang == "PT":
                 st.markdown("""
-                ### 🚀 GUIA PRÁTICO: ARBITRAGEM DELTA-NEUTRAL ALAVANCADA 2:1 (SEM EMPRÉSTIMO)
+                ### GUIA PRÁTICO: ARBITRAGEM DELTA-NEUTRAL ALAVANCADA 2:1 (SEM EMPRÉSTIMO)
                 
                 Este tutorial explica em detalhes como rentabilizar dólares sintéticos (ou USDT) através de arbitragem de taxas de *carry trade* em derivativos, **sem risco direcional** (se o mercado subir ou cair, não afeta o capital) e **sem taxas de empréstimo/financiamento de margem**.
                 
                 ---
                 
-                #### 💡 Por que acumular Ethereum (ETH) é o combustível ideal?
+                #### Por que acumular Ethereum (ETH) é o combustível ideal?
                 Antes de iniciar, compreenda um princípio de geração de riqueza: **esta estratégia serve para justificar o acúmulo e carregamento de Ethereum (ETH) como investimento de longo prazo**. 
                 Em vez de apenas deixar seu ETH parado, você pode utilizá-lo como colateral gerador de rendimentos constantes (via Liquid Staking) e usar a arbitragem delta-neutral para extrair renda passiva em dólar todo mês, permitindo que você compre mais ETH com os lucros e aumente a bola de neve.
                 
                 ---
 
-                #### 📊 O Exemplo Prático: De US$ 10.000 para US$ 20.000 (Exposição 2:1)
-                Pense que você tem **US$ 10.000** em capital inicial. Com alavancagem 2:1, você terá uma exposição de **US$ 20.000** gerando rendimentos, dobrando seu retorno mensal sem precisar pedir dinheiro emprestado nas plataformas DeFi (evitando juros de 5% a 15% a.a.).
+                #### O Exemplo Prático: De US\$ 10.000 para US\$ 20.000 (Exposição 2:1)
+                Pense que você tem **US\$ 10.000** em capital inicial. Com alavancagem 2:1, você terá uma exposição de **US\$ 20.000** gerando rendimentos, dobrando seu retorno mensal sem precisar pedir dinheiro emprestado nas plataformas DeFi (evitando juros de 5% a 15% a.a.).
                 
-                *   **Capital Inicial (Margem):** US$ 10.000 (depositados na corretora).
-                *   **Exposição Total:** US$ 20.000 comprados no mercado à vista (ou perpétuo) e US$ 20.000 vendidos no mercado futuro trimestral.
-                *   **Rendimento Médio Estimado:** **34.0% a 37.0% a.a.** (capturando a taxa de financiamento + prêmio do vencimento trimestral). Isso equivale a aproximadamente **US$ 300.00 por mês** (cerca de R$ 1.500+ na cotação atual).
+                *   **Capital Inicial (Margem):** US\$ 10.000 (depositados na corretora).
+                *   **Exposição Total:** US\$ 20.000 comprados no mercado de perpétuos e US\$ 20.000 vendidos no mercado futuro trimestral.
+                *   **Rendimento Médio Estimado:** **34.0% a 37.0% a.a.** sobre o seu capital inicial de US\$ 10.000 (capturando o prêmio da convergência trimestral descontado do custo de funding rate). Isso equivale a aproximadamente **US\$ 300.00 por mês** (cerca de R\$ 1.500+ na cotação atual).
                 
                 ---
 
-                #### ⚙️ Passo a Passo de Configuração na Corretora (Bitget ou Binance)
+                #### Passo a Passo de Configuração na Corretora (Bitget ou Binance)
                 
                 1.  **Habilite a Margem Cruzada Unificada (Unified Cross Margin):**
                     *   *Regra de Ouro:* **NUNCA utilize Margem Isolada**. Em momentos de volatilidade extrema, uma das posições pode ser liquidada individualmente antes que o lucro da outra compense. A Margem Cruzada garante que os lucros de uma perna cubram as perdas temporárias da outra perna.
                     *   Na **Bitget**, ative o modo *Unified Account* (Conta Unificada). Na **Binance**, utilize a *Portfolio Margin Account*.
                 
                 2.  **Deposite o Colateral:**
-                    *   Envie seus **US$ 10.000** em USDT ou USDC para a carteira de Futuros.
+                    *   Envie seus **US\$ 10.000** em USDT ou USDC para a carteira de Futuros.
                 
-                3.  **Abra a Posição Longa (Compra - Spot ou Perpétuo):**
-                    *   Abra uma posição de **Compra (Long)** no contrato **Futuro Perpétuo (Perp)** de BTC ou ETH no valor nominal de **US$ 20.000** (alavancagem de 2x sobre seus US$ 10.000).
+                3.  **Abra a Posição Longa (Compra - Perpétuo):**
+                    *   Abra uma posição de **Compra (Long)** no contrato **Futuro Perpétuo (Perp)** de BTC ou ETH no valor nominal de **US\$ 20.000** (alavancagem de 2x sobre seus US\$ 10.000).
                 
                 4.  **Abra a Posição Curta (Venda - Futuro Trimestral de 3 Meses):**
-                    *   No mesmo instante, abra uma posição de **Venda (Short)** no contrato **Futuro Trimestral (Quarterly / Delivery)** de vencimento de 3 meses mais próximo no valor nominal de **US$ 20.000**.
+                    *   No mesmo instante, abra uma posição de **Venda (Short)** no contrato **Futuro Trimestral (Quarterly / Delivery)** de vencimento de 3 meses mais próximo no valor nominal de **US\$ 20.000**.
                     *   *Exemplo de Ticker:* `BTCUSDT0925` (Futuro Trimestral de Setembro).
                 
                 5.  **Confirmação do Delta-Neutral:**
-                    *   Você tem US$ 20k comprados e US$ 20k vendidos. O Delta é zero. Se o preço do Bitcoin subir 100% ou cair 90%, o valor líquido total do seu portfólio permanece inalterado.
+                    *   Você tem US\$ 20.000 comprados no perpétuo e US\$ 20.000 vendidos no trimestral. O Delta é zero. Se o preço do Bitcoin subir 100% ou cair 90%, o valor líquido total do seu portfólio permanece inalterado.
                 
                 ---
 
-                #### 💵 Como a Renda Entra na sua Conta e Como Sacar?
+                #### Como a Renda Entra na sua Conta e Como Sacar?
                 
                 1.  **Funding Rates (Taxa de Financiamento):**
-                    *   O contrato perpétuo paga/cobra taxas a cada 8 horas para alinhar o preço do futuro com o preço à vista.
-                    *   Como o mercado é historicamente otimista (comprado), as taxas de financiamento (Funding Rates) são geralmente positivas, o que significa que quem está comprado (Long) paga e quem está vendido (Short) recebe. (Nota: Nesta estratégia específica onde você está Long no Perpétuo e Short no Trimestral para capturar o ágio, você pagará a taxa de financiamento do Perpétuo, mas ela é superada pelo prêmio maior da convergência do Trimestral).
+                    *   O contrato perpétuo paga/cobra taxas a cada 8 horas para alinear o preço do futuro com o preço à vista.
+                    *   Como o mercado é historicamente otimista (comprado), a taxa de financiamento é geralmente positiva, o que significa que quem está comprado (Long) paga e quem está vendido (Short) recebe. (Nota: Nesta estratégia específica onde você está Long no Perpétuo e Short no Trimestral para capturar o ágio, você pagará a taxa de financiamento do Perpétuo, mas ela é superada pelo prêmio maior da convergência do Trimestral).
                 
                 2.  **Diferença de Prêmio (Basis Convergence):**
-                    *   O contrato futuro trimestral de 3 meses geralmente é negociado com ágio (ex: Bitcoin a $60.000 no spot e a $61.500 no trimestral).
-                    *   Como você vendeu o trimestral por $61.500 e comprou o perpétuo por $60.000, ao longo dos 3 meses a diferença de $1.500 vai encolher até virar **ZERO** na data de vencimento. Esse valor é seu lucro líquido.
+                    *   O contrato futuro trimestral de 3 meses geralmente é negociado com ágio devido ao valor do dinheiro no tempo (ex: Bitcoin a US\$ 60.000 no perpétuo e a US\$ 61.500 no trimestral).
+                    *   Como você vendeu o trimestral por US\$ 61.500 e comprou o perpétuo por US\$ 60.000, ao longo dos 3 meses a diferença de US\$ 1.500 vai encolher até virar **ZERO** na data de vencimento. Esse ganho é seu lucro de arbitragem.
+                    *   **A Beleza da Alavancagem 2:1 (Como você ganha o dobro):** Sem alavancagem, você precisaria comprar US\$ 10.000 no mercado à vista para vender US\$ 10.000 no trimestral. O retorno de 2,5% de prêmio renderia apenas US\$ 250 sobre o seu capital de US\$ 10.000. No entanto, ao usar Futuros nas duas pontas com margem de 50%, você consegue manter US\$ 20.000 expostos a essa diferença de preço de 2,5% usando os mesmos US\$ 10.000 de margem livre. Assim, o lucro final de convergência passa a ser de US\$ 500, o que **dobra o seu retorno sobre o capital real** para 5,0% no período de 3 meses (o que equivale a cerca de 20% a.a. líquidos do custo de funding rate). Esse retorno, somado às taxas de financiamento positivas históricas recebidas, possibilita alcançar a estimativa líquida de ~3% ao mês.
                 
                 3.  **Realizando e Sacando os Lucros Mensalmente:**
                     *   À medida que as taxas de financiamento e a convergência do preço acumulam lucros, a sua "Margem Livre/Disponível" na corretora vai aumentando.
-                    *   Você pode transferir essa renda gerada diretamente da carteira de Futuros para a carteira Spot e realizar o saque mensal para viver de renda, sem precisar fechar a operação principal de US$ 10.000.
+                    *   Você pode transferir essa renda gerada diretamente da carteira de Futuros para a carteira Spot e realizar o saque mensal para viver de renda, sem precisar fechar a operação principal de US\$ 10.000.
                 
                 ---
 
-                #### ⚠️ Riscos e Monitoramento Crítico
+                #### Riscos e Monitoramento Crítico
                 *   **Risco de Liquidação por Descolamento Temporário (Basis Risk):** Em dias de pânico extremo, a diferença entre o contrato trimestral e o perpétuo pode alargar temporariamente antes de convergir. Manter a alavancagem em no máximo 2:1 garante margem de segurança de sobra para evitar liquidações.
                 *   **Rolagem de Contrato (Rollover):** A cada 3 meses, o contrato trimestral expira. Perto do vencimento, você deve fechar a sua posição short trimestral que está expirando e abrir no contrato trimestral do período seguinte (Rollover), capturando um novo prêmio.
                 """)
             elif lang == "EN":
                 st.markdown("""
-                ### 🚀 PRACTICAL GUIDE: 2:1 LEVERAGED DELTA-NEUTRAL ARBITRAGE (WITHOUT BORROWING)
+                ### PRACTICAL GUIDE: 2:1 LEVERAGED DELTA-NEUTRAL ARBITRAGE (WITHOUT BORROWING)
                 
                 This tutorial explains in detail how to monetize synthetic dollars (or USDT) through funding/carry rate arbitrage on derivatives, **with zero directional risk** (market movements do not affect your capital) and **without paying margin borrow fees**.
                 
                 ---
                 
-                #### 💡 Why Accumulating Ethereum (ETH) is the Ideal Fuel
+                #### Why Accumulating Ethereum (ETH) is the Ideal Fuel
                 Before starting, understand a core wealth generation principle: **this strategy serves to justify accumulating and holding Ethereum (ETH) as a long-term investment**. 
                 Instead of leaving your ETH idle, you can use it as yield-generating collateral (via Liquid Staking) and use delta-neutral arbitrage to extract monthly passive income in USD, enabling you to buy more ETH with the profits and grow the snowball.
                 
                 ---
 
-                #### 📊 Practical Example: From $10,000 to $20,000 (2:1 Exposure)
-                Imagine you have **$10,000** in initial capital. With 2:1 leverage, you will have a **$20,000** exposure yielding returns, doubling your monthly return without needing to borrow funds on DeFi platforms (avoiding 5% to 15% annual interest).
+                #### Practical Example: From \$10,000 to \$20,000 (2:1 Exposure)
+                Imagine you have **\$10,000** in initial capital. With 2:1 leverage, you will have a **\$20,000** exposure yielding returns, doubling your monthly return without needing to borrow funds on DeFi platforms (avoiding 5% to 15% annual interest).
                 
-                *   **Initial Capital (Margin):** $10,000 (deposited at the exchange).
-                *   **Total Exposure:** $20,000 long in the spot (or perp) market and $20,000 short in the quarterly futures market.
-                *   **Estimated Average Yield:** **34.0% to 37.0% p.a.** (capturing funding rates + quarterly basis premium). This equals approximately **$300.00 per month**.
+                *   **Initial Capital (Margin):** \$10,000 (deposited at the exchange).
+                *   **Total Exposure:** \$20,000 long in the spot (or perp) market and \$20,000 short in the quarterly futures market.
+                *   **Estimated Average Yield:** **34.0% to 37.0% p.a.** (capturing funding rates + quarterly basis premium). This equals approximately **\$300.00 per month**.
                 
                 ---
 
-                #### ⚙️ Step-by-Step Exchange Setup (Bitget or Binance)
+                #### Step-by-Step Exchange Setup (Bitget or Binance)
                 
                 1.  **Enable Unified Cross Margin:**
                     *   *Golden Rule:* **NEVER use Isolated Margin**. In extreme volatility, one position could be liquidated individually before the profit on the other compensates. Cross Margin ensures that profits on one leg cover temporary losses on the other leg.
                     *   On **Bitget**, enable *Unified Account* mode. On **Binance**, use *Portfolio Margin Account*.
                 
                 2.  **Deposit Collateral:**
-                    *   Transfer your **$10,000** in USDT or USDC to the Futures wallet.
+                    *   Transfer your **\$10,000** in USDT or USDC to the Futures wallet.
                 
-                3.  **Open the Long Position (Buy - Spot or Perpetual):**
-                    *   Open a **Long** position on the **Perpetual Future (Perp)** contract of BTC or ETH for a nominal value of **$20,000** (2x leverage on your $10,000).
+                3.  **Open the Long Position (Buy - Perpetual):**
+                    *   Open a **Long** position on the **Perpetual Future (Perp)** contract of BTC or ETH for a nominal value of **\$20,000** (2x leverage on your \$10,000).
                 
                 4.  **Open the Short Position (Sell - 3-Month Quarterly Future):**
-                    *   At the exact same time, open a **Short** position on the **Quarterly Future** contract of the nearest 3-month expiry for a nominal value of **$20,000**.
+                    *   At the exact same time, open a **Short** position on the **Quarterly Future** contract of the nearest 3-month expiry for a nominal value of **\$20,000**.
                     *   *Example Ticker:* `BTCUSDT0925` (September Quarterly Future).
                 
                 5.  **Confirm Delta-Neutrality:**
-                    *   You have $20k long and $20k short. Delta is zero. If BTC price doubles or drops 90%, your net portfolio value remains unchanged.
+                    *   You have \$20,000 long and \$20,000 short. Delta is zero. If BTC price doubles or drops 90%, your net portfolio value remains unchanged.
                 
                 ---
 
-                #### 💵 How Profits Accrue and How to Withdraw
+                #### How Profits Accrue and How to Withdraw
                 
                 1.  **Funding Rates:**
                     *   The perpetual contract pays/collects fees every 8 hours to align the futures price with the spot price.
                     *   Since the market is historically bullish, funding rates are usually positive, meaning longs pay and shorts **receive funding rates**. (Note: In this specific strategy, since you are Long Perp and Short Quarterly, you will pay the perpetual funding fee, which is offset and exceeded by the quarterly basis premium convergence).
                 
                 2.  **Basis Convergence:**
-                    *   The 3-month quarterly futures contract usually trades at a premium (e.g. BTC at $60,000 spot and $61,500 quarterly).
-                    *   Since you sold the quarterly at $61,500 and bought the perp at $60,000, over 3 months the $1,500 gap will shrink to **ZERO** at expiry. This difference is your net profit.
+                    *   The 3-month quarterly futures contract usually trades at a premium (e.g. BTC at \$60,000 spot and \$61,500 quarterly).
+                    *   Since you sold the quarterly at \$61,500 and bought the perp at \$60,000, over 3 months the \$1,500 gap will shrink to **ZERO** at expiry. This difference is your net profit.
+                    *   **The Beauty of 2:1 Leverage (How you earn double):** Without leverage, you would need \$10,000 in cash to buy spot and sell \$10,000 quarterly futures. The 2.5% premium yield would net you only \$250. Using Futures on both legs with a 50% margin allows you to keep \$20,000 exposed to this 2.5% price gap with the same \$10,000 margin. This yields \$500 on your actual \$10,000 capital, **doubling your return on actual capital** to 5.0% for the 3-month period (~20% p.a. net of funding costs). Combined with historical positive funding rates on the long leg, this makes the ~3% monthly passive income target achievable.
                 
                 3.  **Withdrawing Monthly Profits:**
                     *   As funding rates and price convergence accumulate profits, your "Available Margin" increases.
-                    *   You can transfer these profits directly to your Spot wallet and withdraw monthly to fund your lifestyle, without closing the main $10,000 position.
+                    *   You can transfer these profits directly to your Spot wallet and withdraw monthly to fund your lifestyle, without closing the main \$10,000 position.
                 
                 ---
 
-                #### ⚠️ Risks and Critical Monitoring
+                #### Risks and Critical Monitoring
                 *   **Risk of Liquidation by Temporary Divergence (Basis Risk):** In times of extreme panic, the gap between the quarterly and perpetual contracts can widen temporarily. Keeping leverage at 2:1 maximum ensures a massive safety buffer to avoid liquidation.
                 *   **Rollover:** Every 3 months, the quarterly contract expires. Near expiration, you must close your expiring quarterly short position and open one in the next quarterly contract (Rollover), capturing a new premium.
-                """)
+                """
             else:
                 st.markdown("""
-                ### 🚀 GUÍA PRÁCTICA: ARBITRAJE DELTA-NEUTRAL APALANCADO 2:1 (SIN PRÉSTAMO)
+                ### GUÍA PRÁCTICA: ARBITRAJE DELTA-NEUTRAL APALANCADO 2:1 (SIN PRÉSTAMO)
                 
                 Este tutorial explica en detalle cómo rentabilizar dólares sintéticos (o USDT) a través del arbitraje de tasas de *carry trade* en derivados, **sin riesgo direcional** (si el mercado sube o baja, no afecta su capital) y **sin pagar tasas de interés por préstamos de margen**.
                 
                 ---
                 
-                #### 💡 ¿Por qué acumular Ethereum (ETH) es el combustible ideal?
+                #### ¿Por qué acumular Ethereum (ETH) es el combustible ideal?
                 Antes de comenzar, comprenda un principio clave de generación de riqueza: **esta estrategia sirve para justificar la acumulación y tenencia de Ethereum (ETH) como inversión a largo plazo**.
                 En lugar de dejar su ETH ocioso, puede utilizarlo como colateral que genera rendimientos constantes (vía Liquid Staking) y utilizar el arbitraje delta-neutral para extraer ingresos pasivos mensuales en dólares, lo que le permite comprar más ETH con las ganancias y hacer crecer la bola de nieve.
                 
                 ---
 
-                #### 📊 El Ejemplo Práctico: De US$ 10.000 a US$ 20.000 (Exposición 2:1)
-                Imagine que tiene **US$ 10.000** en capital inicial. Con un apalancamiento de 2:1, tendrá una exposición de **US$ 20.000** generando rendimientos, duplicando su retorno mensual sin necesidad de pedir dinero prestado en plataformas DeFi (evitando intereses del 5% al 15% anual).
+                #### El Ejemplo Práctico: De US\$ 10.000 a US\$ 20.000 (Exposición 2:1)
+                Imagine que tiene **US\$ 10.000** en capital inicial. Con un apalancamiento de 2:1, tendrá una exposición de **US\$ 20.000** generando rendimientos, duplicando su retorno mensual sin necesidad de pedir dinero prestado en plataformas DeFi (evitando intereses del 5% al 15% anual).
                 
-                *   **Capital Inicial (Margen):** US$ 10.000 (depositados en el exchange).
-                *   **Exposición Total:** US$ 20.000 comprados en el mercado al contado (o perpetuo) y US$ 20.000 vendidos en el mercado de futuros trimestrales.
-                *   **Rendimiento Promedio Estimado:** **34.0% a 37.0% anual** (capturando tasas de financiación + prima de futuros trimestrales). Esto equivale a aproximadamente **US$ 300.00 al mes**.
+                *   **Capital Inicial (Margen):** US\$ 10.000 (depositados en el exchange).
+                *   **Exposición Total:** US\$ 20.000 comprados en el mercado de perpetuos y US\$ 20.000 vendidos en el mercado de futuros trimestrales.
+                *   **Rendimiento Promedio Estimado:** **34.0% a 37.0% anual** (capturando tasas de financiación + prima de futuros trimestrales). Esto equivale a aproximadamente **US\$ 300.00 al mes**.
                 
                 ---
 
-                #### ⚙️ Passo a Passo de Configuración en el Exchange (Bitget o Binance)
+                #### Paso a Paso de Configuración en el Exchange (Bitget o Binance)
                 
                 1.  **Habilite el Margen Cruzado Unificado (Unified Cross Margin):**
                     *   *Regla de Oro:* **NUNCA use Margen Aislado**. En momentos de volatilidad extrema, una posición puede ser liquidada individualmente antes de que la ganancia de la otra compense. El Margen Cruzado garantiza que las ganancias de un lado cubran las pérdidas temporales del otro.
                     *   En **Bitget**, active el modo de *Unified Account*. En **Binance**, use *Portfolio Margin Account*.
                 
                 2.  **Deposite el Colateral:**
-                    *   Deposite sus **US$ 10.000** en USDT o USDC en la billetera de Futuros.
+                    *   Deposite sus **US\$ 10.000** en USDT o USDC en la billetera de Futuros.
                 
-                3.  **Abra la Posición Larga (Compra - Spot o Perpetuo):**
-                    *   Abra una posición de **Compra (Long)** en el contrato **Futuro Perpetuo (Perp)** de BTC or ETH por un valor nominal de **US$ 20.000** (apalancamiento 2x sobre sus US$ 10.000).
+                3.  **Abra la Posición Larga (Compra - Perpetuo):**
+                    *   Abra una posición de **Compra (Long)** en el contrato **Futuro Perpetuo (Perp)** de BTC o ETH por un valor nominal de **US\$ 20.000** (apalancamiento de 2x sobre sus US\$ 10.000).
                 
                 4.  **Abra la Posición Corta (Venda - Futuro Trimestral de 3 Meses):**
-                    *   Al mesmo instante, abra una posición de **Venta (Short)** en el contrato **Futuro Trimestral** del vencimiento de 3 meses más cercano por un valor nominal de **US$ 20.000**.
+                    *   Al mismo instante, abra una posición de **Venta (Short)** en el contrato **Futuro Trimestral (Quarterly / Delivery)** de vencimiento de 3 meses más cercano por un valor nominal de **US\$ 20.000**.
                     *   *Ejemplo de Ticker:* `BTCUSDT0925` (Futuro Trimestral de Septiembre).
                 
-                5.  **Confirme la Neutralidad del Delta:**
-                    *   Tiene US$ 20k comprados y US$ 20k vendidos. El Delta es cero. Si el precio de BTC se duplica o cae 90%, el valor neto de su portafolio no cambia.
+                5.  **Confirmación del Delta-Neutral:**
+                    *   Tiene US\$ 20.000 comprados en el perpétuo y US\$ 20.000 vendidos en el trimestral. El Delta es cero. Si el precio de BTC se duplica o cae 90%, el valor neto de su portafolio no cambia.
                 
                 ---
 
-                #### 💵 ¿Cómo se Obtienen los Beneficios y Cómo Retirar?
+                #### ¿Cómo se Obtienen los Beneficios y Cómo Retirar?
                 
                 1.  **Tasas de Financiación (Funding Rates):**
                     *   El contrato perpetuo paga/cobra tasas cada 8 horas para alinear el precio de futuros con el precio de contado.
                     *   Dado que el mercado es históricamente optimista (alcista), las tasas suelen ser positivas, lo que significa que los compradores (Longs) pagan y los vendedores (Shorts) **reciben las tasas de financiación**. (Nota: En esta estrategia específica, al estar Long en el Perpetuo y Short en el Trimestral, usted pagará la tasa de financiación del Perpetuo, la cual es compensada y superada por la ganancia de la convergencia del Trimestral).
                 
                 2.  **Convergencia de la Base (Prima de Futuros):**
-                    *   El contrato de futuros trimestrales de 3 meses suele cotizar con prima (ej. BTC a $60,000 spot y $61,500 trimestral).
-                    *   Dado que vendió el trimestral a $61,500 y compró el perp a $60,000, durante los 3 meses la brecha de $1,500 se reducirá a **CERO** al vencimiento. Esta diferencia es su ganancia neta.
+                    *   El contrato de futuros trimestrales de 3 meses suele cotizar con prima (ej. BTC a US\$ 60.000 en el perpétuo y US\$ 61.500 en el trimestral).
+                    *   Dado que vendió el trimestral a US\$ 61.500 y compró el perpétuo a US\$ 60.000, durante los 3 meses la brecha de US\$ 1.500 se reducirá a **CERO** al vencimiento. Esta diferencia es su ganancia neta.
+                    *   **La Belleza del Apalancamiento 2:1 (Cómo gana el doble):** Sin apalancamiento, necesitaría depositar US\$ 10.000 en efectivo en spot para comprar 1 BTC y vender US\$ 10.000 futuros. La diferencia del 2,5% le daría solo US\$ 250. Al usar Futuros con un margen del 50%, puede mantener US\$ 20.000 expuestos a esa diferencia de precio del 2,5% usando los mismos US\$ 10.000 de margen. Esto le otorga US\$ 500 de beneficio neto sobre su capital de US\$ 10.000, **duplicando su rendimiento porcentual** al 5,0% en los 3 meses (~20% anual neto). Junto con las tasas de financiación históricamente positivas acumuladas en la pierna larga, esto permite alcanzar el objetivo del ~3% mensual de renta pasiva.
                 
                 3.  **Retirar Beneficios Mensualmente:**
                     *   A medida que se acumulan las tasas de financiación y la convergencia de precios, su "Margen Disponible" aumenta.
-                    *   Puede transferir estas ganancias directamente a su billetera Spot y retirar mensualmente como renta, sin cerrar la posición principal de US$ 10.000.
+                    *   Puede transferir estas ganancias directamente a su billetera Spot y retirar mensualmente como renta, sin cerrar la posición principal de US\$ 10.000.
                 
                 ---
 
-                #### ⚠️ Riesgos y Monitoreo Crítico
-                *   **Risco de Liquidação por Descolamento Temporal (Basis Risk):** En momentos de pánico extremo, la brecha entre el contrato trimestral y el perpetuo puede ensancharse temporalmente. Mantener el apalancamiento en un máximo de 2:1 proporciona un colchón de seguridad masivo para evitar la liquidación.
-                *   **Rolación de Contrato (Rollover):** Cada 3 meses, el contrato trimestral expira. Cerca del vencimiento, debe cerrar su posición short trimestral que expira y abrir una en el contrato trimestral del siguiente período (Rollover), capturando una nueva prima.
+                #### Riesgos y Monitoreo Crítico
+                *   **Riesgo de Liquidación por Divergencia Temporal (Basis Risk):** En momentos de pánico extremo, la brecha entre el contrato trimestral y el perpetuo puede ensancharse temporalmente. Mantener el apalancamiento en un máximo de 2:1 proporciona un colchón de seguridad masivo para evitar la liquidación.
+                *   **Rotación de Contrato (Rollover):** Cada 3 meses, el contrato trimestral expira. Cerca del vencimiento, debe cerrar su posición short trimestral que expira y abrir una en el contrato trimestral del siguiente período (Rollover), capturando una nueva prima.
                 """)
-
-
+        
         with sub_t_dca:
             if lang == "PT":
                 st.markdown("""
