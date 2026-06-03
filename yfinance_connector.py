@@ -160,7 +160,8 @@ BR_TICKERS = [
     "TASA4.SA", "RANI3.SA", "ETER3.SA"
 ]
 
-IS_UPDATING = False
+UPDATE_PROCESS = None
+LAST_SPAWN_TIME = 0.0
 
 class LiveMarketManager:
     def __init__(self):
@@ -331,20 +332,62 @@ class LiveMarketManager:
             }
         return fallback
 
-    def fetch_all_data(self):
-        """Returns current cached data immediately, and spawns a background thread to update it if expired."""
-        global IS_UPDATING
+    def _trigger_background_update(self):
+        """Spawns the background subprocess to fetch and update market cache."""
+        global UPDATE_PROCESS, LAST_SPAWN_TIME
+        import time
+        import subprocess
+        import sys
+        import os
         
-        # 1. If cache file doesn't exist, we must do a synchronous download the first time
+        is_running = False
+        if UPDATE_PROCESS is not None:
+            if UPDATE_PROCESS.poll() is None:
+                # Process is running. Kill if hung (older than 180 seconds)
+                if time.time() - LAST_SPAWN_TIME > 180:
+                    try:
+                        UPDATE_PROCESS.terminate()
+                        UPDATE_PROCESS.wait(timeout=5)
+                    except Exception:
+                        pass
+                    UPDATE_PROCESS = None
+                else:
+                    is_running = True
+            else:
+                UPDATE_PROCESS = None
+                
+        if not is_running:
+            project_dir = os.path.dirname(os.path.abspath(__file__))
+            cmd = [
+                sys.executable, "-c",
+                f"import sys; sys.path.insert(0, r'{project_dir}'); import yfinance_connector; yfinance_connector.LiveMarketManager()._fetch_and_save_data_sync()"
+            ]
+            try:
+                UPDATE_PROCESS = subprocess.Popen(
+                    cmd,
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    close_fds=True,
+                    cwd=project_dir
+                )
+                LAST_SPAWN_TIME = time.time()
+            except Exception:
+                pass
+
+    def fetch_all_data(self):
+        """Returns current cached data immediately, and spawns a background subprocess to update it if expired or missing."""
+        # 1. If cache file doesn't exist, trigger background update and return fallback data immediately (no blocking!)
         if not os.path.exists(self.cache_file):
-            return self._fetch_and_save_data_sync()
+            self._trigger_background_update()
+            return self.get_fallback_data()
             
         # 2. Cache file exists. Load it.
         try:
             with open(self.cache_file, 'r', encoding='utf-8') as f:
                 cache_data = json.load(f)
         except Exception:
-            return self._fetch_and_save_data_sync()
+            self._trigger_background_update()
+            return self.get_fallback_data()
             
         # 3. Check if cache is expired (older than 20 minutes)
         try:
@@ -353,23 +396,8 @@ class LiveMarketManager:
             now = datetime.datetime.now()
             delta = now - last_update
             
-            # If expired and not already updating in background, spawn background update
-            if delta.total_seconds() >= 1200 and not IS_UPDATING:
-                import threading
-                IS_UPDATING = True
-                
-                def bg_update():
-                    global IS_UPDATING
-                    try:
-                        self._fetch_and_save_data_sync()
-                    except Exception:
-                        pass
-                    finally:
-                        IS_UPDATING = False
-                        
-                thread = threading.Thread(target=bg_update)
-                thread.daemon = True
-                thread.start()
+            if delta.total_seconds() >= 1200:
+                self._trigger_background_update()
                 
             # Update status dynamically to show it's live/cached
             remaining = max(0, int((1200 - delta.total_seconds()) / 60))

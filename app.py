@@ -10,10 +10,8 @@ import re
 from parser import EliteB3Parser
 from cache_manager import CacheManager, WHALES
 from financials_db import get_financials
-import importlib
 import yfinance_connector
 import usa_fundamentals
-importlib.reload(yfinance_connector)
 from yfinance_connector import LiveMarketManager
 def render_explanation_card(title, pt_text, en_text, es_text, lang_key):
     desc = pt_text if lang_key == "PT" else (en_text if lang_key == "EN" else es_text)
@@ -948,25 +946,18 @@ def format_val(val):
 def get_market_data(ticker):
     price, shares = 0.0, 0
     clean_tk = ticker.replace('.SA', '').lower().strip()
+    yf_ticker = None
     
     # --- 1. BUSCA DE PREÇO (Multi-Fonte) ---
-    # A. YFinance
+    # A. Status Invest (Robust Scraper - Mais rápido)
     try:
-        t = yf.Ticker(ticker)
-        h = t.history(period="5d")
-        if not h.empty: price = float(h['Close'].iloc[-1])
+        url = f"https://statusinvest.com.br/acoes/{clean_tk}"
+        res = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=5)
+        m = re.search(r'title="Valor atual do ativo".*?<strong.*?>([\d,.]+)</strong>', res.text, re.DOTALL)
+        if m: price = float(m.group(1).replace('.', '').replace(',', '.'))
     except: pass
-    
-    # B. Status Invest (Robust Scraper)
-    if price == 0:
-        try:
-            url = f"https://statusinvest.com.br/acoes/{clean_tk}"
-            res = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=5)
-            m = re.search(r'title="Valor atual do ativo".*?<strong.*?>([\d,.]+)</strong>', res.text, re.DOTALL)
-            if m: price = float(m.group(1).replace('.', '').replace(',', '.'))
-        except: pass
         
-    # C. Google Finance (Fallback 2)
+    # B. Google Finance (Fallback 1)
     if price == 0:
         try:
             url = f"https://www.google.com/finance/quote/{clean_tk.upper()}:BVMF"
@@ -975,25 +966,26 @@ def get_market_data(ticker):
             if m: price = float(m.group(1).replace('.', '').replace(',', '.'))
         except: pass
 
-    # --- 2. BUSCA DE NÚMERO DE AÇÕES ---
-    # A. YFinance
-    try:
-        t = yf.Ticker(ticker)
-        shares = int(t.info.get('sharesOutstanding', 0))
-    except: pass
-    
-    # B. Fundamentus Scraper (Shares)
-    if shares == 0:
+    # C. YFinance (Fallback 2)
+    if price == 0:
         try:
-            url = f"https://www.fundamentus.com.br/detalhes.php?papel={clean_tk.upper()}"
-            res = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=5)
-            m = re.search(r'Nro\. A.es.*?([\d.]+)', res.text, re.DOTALL | re.IGNORECASE)
-            if m:
-                shares_str = m.group(1).replace('.', '')
-                if len(shares_str) > 6: shares = int(shares_str)
+            if yf_ticker is None: yf_ticker = yf.Ticker(ticker)
+            h = yf_ticker.history(period="5d")
+            if not h.empty: price = float(h['Close'].iloc[-1])
         except: pass
 
-    # C. Status Invest Scraper (Shares)
+    # --- 2. BUSCA DE NÚMERO DE AÇÕES ---
+    # A. Fundamentus Scraper (Shares - Rápido)
+    try:
+        url = f"https://www.fundamentus.com.br/detalhes.php?papel={clean_tk.upper()}"
+        res = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=5)
+        m = re.search(r'Nro\. A.es.*?([\d.]+)', res.text, re.DOTALL | re.IGNORECASE)
+        if m:
+            shares_str = m.group(1).replace('.', '')
+            if len(shares_str) > 6: shares = int(shares_str)
+    except: pass
+
+    # B. Status Invest Scraper (Shares)
     if shares == 0:
         try:
             url = f"https://statusinvest.com.br/acoes/{clean_tk}"
@@ -1004,20 +996,29 @@ def get_market_data(ticker):
                 if len(shares_str) > 6: shares = int(shares_str)
         except: pass
             
+    # C. YFinance (Fallback)
+    if shares == 0:
+        try:
+            if yf_ticker is None: yf_ticker = yf.Ticker(ticker)
+            shares = int(yf_ticker.info.get('sharesOutstanding', 0))
+        except: pass
+            
     dy = 0.0
     # --- 3. BUSCA DE DIVIDEND YIELD ---
+    # A. Status Invest Scraper (Mais rápido)
     try:
-        t = yf.Ticker(ticker)
-        dy = float(t.info.get('dividendYield', 0) * 100)
+        url = f"https://statusinvest.com.br/acoes/{clean_tk}"
+        res = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=5)
+        m = re.search(r'title="Dividend Yield".*?<strong.*?>\s*([\d,.]+)\s*%?\s*</strong>', res.text, re.DOTALL | re.IGNORECASE)
+        if m:
+            dy = float(m.group(1).replace('.', '').replace(',', '.'))
     except: pass
     
+    # B. YFinance (Fallback)
     if dy == 0:
         try:
-            url = f"https://statusinvest.com.br/acoes/{clean_tk}"
-            res = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=5)
-            m = re.search(r'title="Dividend Yield".*?<strong.*?>\s*([\d,.]+)\s*%?\s*</strong>', res.text, re.DOTALL | re.IGNORECASE)
-            if m:
-                dy = float(m.group(1).replace('.', '').replace(',', '.'))
+            if yf_ticker is None: yf_ticker = yf.Ticker(ticker)
+            dy = float(yf_ticker.info.get('dividendYield', 0) * 100)
         except: pass
 
     return price, shares, dy
@@ -7029,7 +7030,7 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
                 
                 1.  **Funding Rates (Taxa de Financiamento):**
                     *   O contrato perpétuo paga/cobra taxas a cada 8 horas para alinhar o preço do futuro com o preço à vista.
-                    *   Como o mercado é historicamente otimista (comprado), quem está com posição Long Perpétuo **recebe as taxas de financiamento** pagas pelos shorts. Esse rendimento é creditado diretamente no seu saldo disponível em tempo real.
+                    *   Como o mercado é historicamente otimista (comprado), as taxas de financiamento (Funding Rates) são geralmente positivas, o que significa que quem está comprado (Long) paga e quem está vendido (Short) recebe. (Nota: Nesta estratégia específica onde você está Long no Perpétuo e Short no Trimestral para capturar o ágio, você pagará a taxa de financiamento do Perpétuo, mas ela é superada pelo prêmio maior da convergência do Trimestral).
                 
                 2.  **Diferença de Prêmio (Basis Convergence):**
                     *   O contrato futuro trimestral de 3 meses geralmente é negociado com ágio (ex: Bitcoin a $60.000 no spot e a $61.500 no trimestral).
@@ -7093,7 +7094,7 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
                 
                 1.  **Funding Rates:**
                     *   The perpetual contract pays/collects fees every 8 hours to align the futures price with the spot price.
-                    *   Since the market is historically bullish, longs **receive funding rates** paid by shorts. This yield is credited directly to your available margin in real-time.
+                    *   Since the market is historically bullish, funding rates are usually positive, meaning longs pay and shorts **receive funding rates**. (Note: In this specific strategy, since you are Long Perp and Short Quarterly, you will pay the perpetual funding fee, which is offset and exceeded by the quarterly basis premium convergence).
                 
                 2.  **Basis Convergence:**
                     *   The 3-month quarterly futures contract usually trades at a premium (e.g. BTC at $60,000 spot and $61,500 quarterly).
@@ -7157,7 +7158,7 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
                 
                 1.  **Tasas de Financiación (Funding Rates):**
                     *   El contrato perpetuo paga/cobra tasas cada 8 horas para alinear el precio de futuros con el precio de contado.
-                    *   Dado que el mercado es históricamente optimista (comprado), las posiciones Long Perpetuo **reciben las tasas de financiación** pagadas por los shorts. Este rendimiento se acredita directamente a su margen disponible en tiempo real.
+                    *   Dado que el mercado es históricamente optimista (alcista), las tasas suelen ser positivas, lo que significa que los compradores (Longs) pagan y los vendedores (Shorts) **reciben las tasas de financiación**. (Nota: En esta estrategia específica, al estar Long en el Perpetuo y Short en el Trimestral, usted pagará la tasa de financiación del Perpetuo, la cual es compensada y superada por la ganancia de la convergencia del Trimestral).
                 
                 2.  **Convergencia de la Base (Prima de Futuros):**
                     *   El contrato de futuros trimestrales de 3 meses suele cotizar con prima (ej. BTC a $60,000 spot y $61,500 trimestral).
