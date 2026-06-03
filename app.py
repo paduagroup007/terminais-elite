@@ -3110,6 +3110,7 @@ elif st.session_state.active_terminal == "forex_cot":
         market_data = live_market.fetch_all_data()
         df_carry = live_market.get_carry_trade_matrix(market_data)
         df_ppa = live_market.get_ppp_valuation(market_data)
+        df_cross_ppa = live_market.get_cross_ppp_valuation(market_data, lang)
         df_cot_index = live_market.get_cot_index_data(lang)
 
     # Dynamic metrics extraction
@@ -3587,6 +3588,45 @@ Acesso direto às mesas de estruturação Private de grandes bancos suíços. O 
             )
         )
         st.plotly_chart(fig_ppa, use_container_width=True)
+
+        # --- MATRIZ CRUZADA DE DESVIOS PPA & JUROS CARRY ---
+        st.write("")
+        with st.expander(
+            "🔄 MATRIZ CRUZADA DE DESVIOS PPA & JUROS CARRY" if lang == "PT" else ("🔄 CROSS-PPP DEVIATION & CARRY INTEREST MATRIX" if lang == "EN" else "🔄 MATRIZ CRUZADA DE DESVIACIONES PPA Y JUROS CARRY"),
+            expanded=False
+        ):
+            st.markdown(
+                "Esta tabela interativa exibe a matriz completa de cruzamento de taxas de câmbio nominais e valores justos PPA entre as 9 principais moedas globais. Pares com desvios significativos (>3%) oferecem oportunidades de arbitragem cambial. A coluna **Ação & Alinhamento de Juros** destaca se o diferencial de taxas de juros (carrego) favorece (✅) ou joga contra (❌) a direção da convergência para o valor justo PPA (compra de moeda barata com juros altos ou venda de moeda cara com juros baixos)." if lang == "PT" else (
+                "This interactive table displays the complete cross-rate matrix of nominal exchange rates and PPP fair values among the 9 major global currencies. Pairs with significant deviations (>3%) offer currency arbitrage opportunities. The **Action & Interest Carry Alignment** column highlights whether the interest rate differential (carry) favors (✅) or works against (❌) the direction of convergence towards the PPP fair value (buying undervalued high-yielding currencies or selling overvalued low-yielding currencies)." if lang == "EN" else
+                "Esta tabla interactiva muestra la matriz cruzada completa de tipos de cambio nominales y valores justos de PPA entre las 9 principales monedas globales. Los pares con desviaciones significativas (>3%) ofrecen oportunidades de arbitraje cambiario. La columna **Acción y Alineación de Tasas Carry** destaca si el diferencial de tasas de interés (carry) favorece (✅) o va en contra (❌) de la dirección de convergencia hacia el valor justo de PPA (comprar monedas subvaluadas con tasas altas o vender monedas sobrevaluadas con tasas bajas)."
+                )
+            )
+            
+            df_display = df_cross_ppa.copy()
+            if lang == "EN":
+                df_display = df_display.rename(columns={
+                    "Par": "Pair",
+                    "Preço Mercado": "Market Price",
+                    "Valor Justo PPA": "PPP Fair Value",
+                    "Desvio PPA": "PPP Deviation",
+                    "Ação & Alinhamento de Juros": "Action & Interest Alignment"
+                })
+            elif lang == "ES":
+                df_display = df_display.rename(columns={
+                    "Par": "Par",
+                    "Preço Mercado": "Precio de Mercado",
+                    "Valor Justo PPA": "Valor Justo PPA",
+                    "Desvio PPA": "Desviación PPA",
+                    "Ação & Alinhamento de Juros": "Acción y Alineación de Intereses"
+                })
+            
+            df_display = df_display.drop(columns=["raw_dev", "color"], errors="ignore")
+            
+            st.dataframe(
+                df_display,
+                use_container_width=True,
+                height=450
+            )
 
         # --- PLANEJADOR DE POSIÇÃO E GESTÃO DE RISCO PPA ---
         st.write("")

@@ -1209,6 +1209,180 @@ class LiveMarketManager:
             })
             
         return pd.DataFrame(rows)
+
+    def get_cross_ppp_valuation(self, parsed_data, lang="PT"):
+        """Calculates cross-PPP exchange rate valuations, deviations and carry alignment for 36 global currency pairs."""
+        t_data = parsed_data.get("tickers", {})
+        
+        # Current prices from feeds
+        eur = t_data.get("EURUSD=X", {}).get("price", None)
+        gbp = t_data.get("GBPUSD=X", {}).get("price", None)
+        jpy = t_data.get("JPY=X", {}).get("price", None)
+        brl = t_data.get("BRL=X", {}).get("price", None)
+        cad = t_data.get("CAD=X", {}).get("price", None)
+        aud = t_data.get("AUDUSD=X", {}).get("price", None)
+        chf = t_data.get("CHF=X", {}).get("price", None)
+        
+        # Load ExchangeRate API cache
+        import os
+        import json
+        proj_dir = os.path.dirname(os.path.abspath(__file__))
+        ppa_cache_file = os.path.join(proj_dir, "cache", "ppa_forex_cache.json")
+        rates = {}
+        if os.path.exists(ppa_cache_file):
+            try:
+                with open(ppa_cache_file, 'r', encoding='utf-8') as f:
+                    rates = json.load(f)
+            except Exception:
+                pass
+                
+        # If rates cache exists and prices are None, use cache
+        if rates:
+            eur = eur or ((1.0 / rates.get("EUR")) if rates.get("EUR") else 1.1630)
+            gbp = gbp or ((1.0 / rates.get("GBP")) if rates.get("GBP") else 1.3463)
+            jpy = jpy or (rates.get("JPY") if rates.get("JPY") else 159.87)
+            brl = brl or (rates.get("BRL") if rates.get("BRL") else 5.02)
+            cad = cad or (rates.get("CAD") if rates.get("CAD") else 1.3838)
+            aud = aud or ((1.0 / rates.get("AUD")) if rates.get("AUD") else 0.7175)
+            chf = chf or (rates.get("CHF") if rates.get("CHF") else 0.7873)
+        else:
+            # Absolute fallbacks
+            eur = eur or 1.1630
+            gbp = gbp or 1.3463
+            jpy = jpy or 159.87
+            brl = brl or 5.02
+            cad = cad or 1.3838
+            aud = aud or 0.7175
+            chf = chf or 0.7873
+            
+        nzd_rate = rates.get("NZD") if (rates and rates.get("NZD")) else 1.6878
+        nzd = 1.0 / nzd_rate
+        
+        # Direct quote prices in USD
+        usd_prices = {
+            "USD": 1.0,
+            "EUR": eur,
+            "GBP": gbp,
+            "JPY": 1.0 / jpy,
+            "CAD": 1.0 / cad,
+            "AUD": aud,
+            "CHF": 1.0 / chf,
+            "BRL": 1.0 / brl,
+            "NZD": nzd
+        }
+        
+        # Direct quote PPP fair values in USD
+        usd_ppps = {
+            "USD": 1.0,
+            "EUR": 1.25,
+            "GBP": 1.42,
+            "JPY": 1.0 / 112.5,
+            "CAD": 1.0 / 1.25,
+            "AUD": 0.76,
+            "CHF": 1.0 / 0.88,
+            "BRL": 1.0 / 4.65,
+            "NZD": 0.68
+        }
+        
+        # Interest rates for carry alignment
+        interest_rates = {
+            "USD": 3.62,
+            "EUR": 2.15,
+            "GBP": 3.75,
+            "JPY": 0.25,
+            "CHF": 0.00,
+            "CAD": 3.75,
+            "AUD": 4.10,
+            "BRL": 14.50,
+            "NZD": 4.75
+        }
+        
+        currencies = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "BRL", "NZD"]
+        priority = ["EUR", "GBP", "AUD", "NZD", "USD", "CAD", "CHF", "JPY", "BRL"]
+        
+        rows = []
+        for i in range(len(currencies)):
+            for j in range(i + 1, len(currencies)):
+                c1 = currencies[i]
+                c2 = currencies[j]
+                
+                # Arrange by market convention priority
+                if priority.index(c1) < priority.index(c2):
+                    base, quote = c1, c2
+                else:
+                    base, quote = c2, c1
+                    
+                # Nominal Rate: Base / Quote (how many Quote per 1 Base)
+                price_base = usd_prices[base]
+                price_quote = usd_prices[quote]
+                nominal = price_base / price_quote
+                
+                # PPP Fair Value: PPP_USD(Base) / PPP_USD(Quote)
+                ppp_base = usd_ppps[base]
+                ppp_quote = usd_ppps[quote]
+                ppp_val = ppp_base / ppp_quote
+                
+                # PPP Deviation: (Nominal - PPP) / PPP * 100
+                deviation = ((nominal - ppp_val) / ppp_val) * 100
+                
+                # Carry differential
+                int_base = interest_rates[base]
+                int_quote = interest_rates[quote]
+                
+                # Suggestions based on deviation and carry alignment
+                if deviation < -3.0:
+                    # Suggested: BUY Base / SELL Quote
+                    carry_diff = int_base - int_quote
+                    if carry_diff > 0.5:
+                        carry_icon = "✅"
+                        carry_text = "Carrego Positivo" if lang == "PT" else ("Positive Carry" if lang == "EN" else "Carry Positivo")
+                    elif carry_diff < -0.5:
+                        carry_icon = "❌"
+                        carry_text = "Carrego Negativo" if lang == "PT" else ("Negative Carry" if lang == "EN" else "Carry Negativo")
+                    else:
+                        carry_icon = "⚪"
+                        carry_text = "Neutro"
+                    
+                    action = f"COMPRA (LONG) | {carry_icon} {carry_text}" if lang == "PT" else (f"BUY (LONG) | {carry_icon} {carry_text}" if lang == "EN" else f"COMPRA (LONG) | {carry_icon} {carry_text}")
+                    color = "#00ffa5"
+                elif deviation > 3.0:
+                    # Suggested: SELL Base / BUY Quote
+                    carry_diff = int_quote - int_base
+                    if carry_diff > 0.5:
+                        carry_icon = "✅"
+                        carry_text = "Carrego Positivo" if lang == "PT" else ("Positive Carry" if lang == "EN" else "Carry Positivo")
+                    elif carry_diff < -0.5:
+                        carry_icon = "❌"
+                        carry_text = "Carrego Negativo" if lang == "PT" else ("Negative Carry" if lang == "EN" else "Carry Negativo")
+                    else:
+                        carry_icon = "⚪"
+                        carry_text = "Neutro"
+                        
+                    action = f"VENDA (SHORT) | {carry_icon} {carry_text}" if lang == "PT" else (f"SELL (SHORT) | {carry_icon} {carry_text}" if lang == "EN" else f"VENTA (SHORT) | {carry_icon} {carry_text}")
+                    color = "#ff4b4b"
+                else:
+                    action = "Neutro" if lang == "PT" else ("Neutral" if lang == "EN" else "Neutro")
+                    color = "#aaaaaa"
+                
+                # Formatting decimals logically based on size
+                decimals = 4 if nominal < 5.0 else 2
+                
+                rows.append({
+                    "Par": f"{base}/{quote}",
+                    "Preço Mercado": f"{nominal:.{decimals}f}",
+                    "Valor Justo PPA": f"{ppp_val:.{decimals}f}",
+                    "Desvio PPA": f"{deviation:+.2f}%",
+                    "Ação & Alinhamento de Juros": action,
+                    "raw_dev": deviation,
+                    "color": color
+                })
+                
+        # Sort by deviation magnitude descending
+        df = pd.DataFrame(rows)
+        df["abs_dev"] = df["raw_dev"].abs()
+        df = df.sort_values(by="abs_dev", ascending=False).drop(columns=["abs_dev"])
+        return df
+
     def get_cot_index_data(self, lang="PT"):
         """Calculates quantitative CFTC COT Index (36-month extreme indicator) with dynamic fluctuations."""
         import time
