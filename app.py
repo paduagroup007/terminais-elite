@@ -7111,7 +7111,7 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
                 #### Risks and Critical Monitoring
                 *   **Risk of Liquidation by Temporary Divergence (Basis Risk):** In times of extreme panic, the gap between the quarterly and perpetual contracts can widen temporarily. Keeping leverage at 2:1 maximum ensures a massive safety buffer to avoid liquidation.
                 *   **Rollover:** Every 3 months, the quarterly contract expires. Near expiration, you must close your expiring quarterly short position and open one in the next quarterly contract (Rollover), capturing a new premium.
-                """
+                """)
             else:
                 st.markdown("""
                 ### GUÍA PRÁCTICA: ARBITRAJE DELTA-NEUTRAL APALANCADO 2:1 (SIN PRÉSTAMO)
