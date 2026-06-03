@@ -3682,6 +3682,11 @@ Acesso direto às mesas de estruturação Private de grandes bancos suíços. O 
         p2 = p1 + (grid_dist_pips * pip_unit * direction_sign)
         p3 = p2 + (grid_dist_pips * pip_unit * direction_sign)
         
+        # Formatted prices for display
+        p1_str = f"{p1:.4f}" if pip_unit == 0.0001 else f"{p1:.2f}"
+        p2_str = f"{p2:.4f}" if pip_unit == 0.0001 else f"{p2:.2f}"
+        p3_str = f"{p3:.4f}" if pip_unit == 0.0001 else f"{p3:.2f}"
+        
         # Margin usage and pip buffer calculation
         avg_pip_value_usd = 10.0
         drawdown_1000_pips = (total_lots * 1000 * avg_pip_value_usd)
@@ -3730,9 +3735,9 @@ Acesso direto às mesas de estruturação Private de grandes bancos suíços. O 
                 <h5 style="margin: 0 0 12px 0; color: #bf953f; font-size: 13px; font-weight: 700; border-bottom: 1px solid #222; padding-bottom: 6px; text-transform: uppercase; text-align: left;">{calc_title}</h5>
                 <p style="margin: 0 0 10px 0; font-size: 11px; color: #ccc;">Par de Operação: <strong style="color:#fff;">{pair_ticker}</strong> | Ação sugerida: <strong style="color:{color_trade};">{trade_type_label}</strong></p>
                 <div style="background-color: #161a23; padding: 10px; border-radius: 6px; margin-bottom: 12px; text-align: left; font-size: 11px; line-height: 1.5;">
-                    • <b>{lbl_lev1}:</b> Preço {p1:.4f if pip_unit == 0.0001 else p1:.2f} | {lbl_lots}: <strong style="color:#fff;">{lot1}</strong><br>
-                    • <b>{lbl_lev2}:</b> Preço {p2:.4f if pip_unit == 0.0001 else p2:.2f} | {lbl_lots}: <strong style="color:#fff;">{lot2}</strong><br>
-                    • <b>{lbl_lev3}:</b> Preço {p3:.4f if pip_unit == 0.0001 else p3:.2f} | {lbl_lots}: <strong style="color:#fff;">{lot3}</strong>
+                    • <b>{lbl_lev1}:</b> Preço {p1_str} | {lbl_lots}: <strong style="color:#fff;">{lot1}</strong><br>
+                    • <b>{lbl_lev2}:</b> Preço {p2_str} | {lbl_lots}: <strong style="color:#fff;">{lot2}</strong><br>
+                    • <b>{lbl_lev3}:</b> Preço {p3_str} | {lbl_lots}: <strong style="color:#fff;">{lot3}</strong>
                 </div>
                 <div style="background-color: #11151e; border: 1px solid rgba(0, 255, 165, 0.15); padding: 12px; border-radius: 6px; margin-bottom: 12px; text-align: left;">
                     <p style="margin: 0; font-size: 10px; color: #888; text-transform: uppercase; font-weight:700;">{lbl_metrics}</p>
