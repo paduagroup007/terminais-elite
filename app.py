@@ -4570,22 +4570,22 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                     lbl_dd = "Riesgo (Drawdown por Desvío de 500 Pips)"
                     
                 st.markdown(f"""
-                <div style="background-color: #0b0e14; border: 1px solid #333; padding: 15px; border-radius: 8px; font-family: 'Inter';">
-                    <h5 style="margin: 0 0 12px 0; color: #bf953f; font-size: 13px; font-weight: 700; border-bottom: 1px solid #222; padding-bottom: 6px; text-transform: uppercase; text-align: left;">{carry_title}</h5>
-                    <div style="background-color: #161a23; padding: 10px; border-radius: 6px; margin-bottom: 12px; text-align: left; font-size: 11px; line-height: 1.5;">
-                        <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display: block; margin-bottom: 5px;">{lbl_ops}</span>
-                        • <b>COMPRAR (LONG) USD/JPY:</b> Lotes: <strong style="color:#fff;">{lot_usdjpy}</strong><br>
-                        • <b>COMPRAR (LONG) AUD/JPY:</b> Lotes: <strong style="color:#fff;">{lot_audjpy}</strong><br>
-                        • <b>VENDER (SHORT) EUR/USD:</b> Lotes: <strong style="color:#fff;">{lot_eurusd}</strong>
-                    </div>
-                    <div style="background-color: #11151e; border: 1px solid rgba(0, 255, 165, 0.15); padding: 12px; border-radius: 6px; text-align: left; font-size: 11.5px; line-height: 1.6;">
-                        • {lbl_yld}: <strong style="color: #00ffa5;">\\$ {annual_carry_usd:,.2f} / ano</strong> (~{(annual_carry_usd/carry_equity)*100:.2f}% a.a.)<br>
-                        • {lbl_mth}: <strong style="color: #00ffa5;">\\$ {monthly_carry_usd:,.2f} / mês</strong><br>
-                        • {lbl_mgn}: <strong style="color: #aaa;">\\$ {margin_used:,.2f}</strong> (Margem Livre: \\$ {margin_free:,.2f})<br>
-                        • {lbl_dd}: <strong style="color: #ff4b4b;">\\$ {drawdown_500_pips:,.2f}</strong> (~{(drawdown_500_pips/carry_equity)*100:.1f}% da conta)
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+<div style="background-color: #0b0e14; border: 1px solid #333; padding: 15px; border-radius: 8px; font-family: 'Inter';">
+<h5 style="margin: 0 0 12px 0; color: #bf953f; font-size: 13px; font-weight: 700; border-bottom: 1px solid #222; padding-bottom: 6px; text-transform: uppercase; text-align: left;">{carry_title}</h5>
+<div style="background-color: #161a23; padding: 10px; border-radius: 6px; margin-bottom: 12px; text-align: left; font-size: 11px; line-height: 1.5;">
+<span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display: block; margin-bottom: 5px;">{lbl_ops}</span>
+• <b>COMPRAR (LONG) USD/JPY:</b> Lotes: <strong style="color:#fff;">{lot_usdjpy}</strong><br>
+• <b>COMPRAR (LONG) AUD/JPY:</b> Lotes: <strong style="color:#fff;">{lot_audjpy}</strong><br>
+• <b>VENDER (SHORT) EUR/USD:</b> Lotes: <strong style="color:#fff;">{lot_eurusd}</strong>
+</div>
+<div style="background-color: #11151e; border: 1px solid rgba(0, 255, 165, 0.15); padding: 12px; border-radius: 6px; text-align: left; font-size: 11.5px; line-height: 1.6;">
+• {lbl_yld}: <strong style="color: #00ffa5;">\\$ {annual_carry_usd:,.2f} / ano</strong> (~{(annual_carry_usd/carry_equity)*100:.2f}% a.a.)<br>
+• {lbl_mth}: <strong style="color: #00ffa5;">\\$ {monthly_carry_usd:,.2f} / mês</strong><br>
+• {lbl_mgn}: <strong style="color: #aaa;">\\$ {margin_used:,.2f}</strong> (Margem Livre: \\$ {margin_free:,.2f})<br>
+• {lbl_dd}: <strong style="color: #ff4b4b;">\\$ {drawdown_500_pips:,.2f}</strong> (~{(drawdown_500_pips/carry_equity)*100:.1f}% da conta)
+</div>
+</div>
+""", unsafe_allow_html=True)
                 
             if lang == "PT":
                 st.markdown("""
@@ -4696,22 +4696,20 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                     lbl_dd_gsr = "Drawdown Histórico de Estrés"
                     
                 st.markdown(f"""
-                <div style="background-color: #0b0e14; border: 1px solid #333; padding: 15px; border-radius: 8px; font-family: 'Inter';">
-                    <h5 style="margin: 0 0 12px 0; color: #bf953f; font-size: 13px; font-weight: 700; border-bottom: 1px solid #222; padding-bottom: 6px; text-transform: uppercase; text-align: left;">{gsr_title}</h5>
-                    <p style="margin: 0 0 10px 0; font-size: 11px; color: #ccc;">{lbl_cond}: <strong style="color:{color_gsr};">{status_gsr}</strong></p>
-                    
-                    <div style="background-color: #161a23; padding: 10px; border-radius: 6px; margin-bottom: 12px; text-align: left; font-size: 11px; line-height: 1.5;">
-                        <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display: block; margin-bottom: 5px;">{lbl_ops_gsr}</span>
-                        • <b>OURO (GC=F):</b> {action_gold} | Lotes: <strong style="color:#fff;">{lot_gold}</strong> (~\\$ {lot_gold*gold_price*100:,.2f})<br>
-                        • <b>PRATA (SI=F):</b> {action_silver} | Lotes: <strong style="color:#fff;">{lot_silver}</strong> (~\\$ {lot_silver*silver_price*5000:,.2f})
-                    </div>
-                    
-                    <div style="background-color: #11151e; border: 1px solid rgba(0, 255, 165, 0.15); padding: 12px; border-radius: 6px; text-align: left; font-size: 11.5px; line-height: 1.6;">
-                        • {lbl_mgn_gsr}: <strong style="color: #aaa;">\\$ {est_margin_gsr:,.2f}</strong><br>
-                        • {lbl_dd_gsr}: <strong style="color: #ff4b4b;">\\$ {drawdown_metals:,.2f}</strong> (~{(drawdown_metals/gsr_equity)*100:.1f}% da conta)
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+<div style="background-color: #0b0e14; border: 1px solid #333; padding: 15px; border-radius: 8px; font-family: 'Inter';">
+<h5 style="margin: 0 0 12px 0; color: #bf953f; font-size: 13px; font-weight: 700; border-bottom: 1px solid #222; padding-bottom: 6px; text-transform: uppercase; text-align: left;">{gsr_title}</h5>
+<p style="margin: 0 0 10px 0; font-size: 11px; color: #ccc;">{lbl_cond}: <strong style="color:{color_gsr};">{status_gsr}</strong></p>
+<div style="background-color: #161a23; padding: 10px; border-radius: 6px; margin-bottom: 12px; text-align: left; font-size: 11px; line-height: 1.5;">
+<span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display: block; margin-bottom: 5px;">{lbl_ops_gsr}</span>
+• <b>OURO (GC=F):</b> {action_gold} | Lotes: <strong style="color:#fff;">{lot_gold}</strong> (~\\$ {lot_gold*gold_price*100:,.2f})<br>
+• <b>PRATA (SI=F):</b> {action_silver} | Lotes: <strong style="color:#fff;">{lot_silver}</strong> (~\\$ {lot_silver*silver_price*5000:,.2f})
+</div>
+<div style="background-color: #11151e; border: 1px solid rgba(0, 255, 165, 0.15); padding: 12px; border-radius: 6px; text-align: left; font-size: 11.5px; line-height: 1.6;">
+• {lbl_mgn_gsr}: <strong style="color: #aaa;">\\$ {est_margin_gsr:,.2f}</strong><br>
+• {lbl_dd_gsr}: <strong style="color: #ff4b4b;">\\$ {drawdown_metals:,.2f}</strong> (~{(drawdown_metals/gsr_equity)*100:.1f}% da conta)
+</div>
+</div>
+""", unsafe_allow_html=True)
                 
             if lang == "PT":
                 st.markdown("""
