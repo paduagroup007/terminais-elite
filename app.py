@@ -6674,302 +6674,600 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
             "Mapea pools descentralizadas de liquidez (DeFi Yield Pools) y estrategias estructuradas delta-neutras (arbitraje de tasa de carry y staking líquido institucional) para la generación de ingresos pasivos robustos en monedas fuertes (USD).",
             lang
         )
-        st.subheader("OPORTUNIDADES DE DEFI YIELDS E GERADORES DE JUROS PRIVADOS DE WEB3" if lang == "PT" else ("OPPORTUNITIES FOR DEFI YIELDS & PRIVATE INTEREST GENERATORS IN WEB3" if lang == "EN" else "OPORTUNIDADES DE DEFI YIELDS Y GENERADORES DE INTERESES PRIVADOS DE WEB3"))
-        st.write("Family Offices e investidores corporativos de alta renda de cripto utilizam estratégias descentralizadas reguladas para extrair retornos líquidos elevados (yields) de forma sistêmica, prestando liquidez ou validando blocos, evitando flutuações direcionais:" if lang == "PT" else ("Family Offices and corporate high-net-worth crypto investors utilize regulated decentralized strategies to systematically extract high net returns (yields), providing liquidity or validating blocks, avoiding directional fluctuations:" if lang == "EN" else "Los Family Offices y los inversores corporativos de alto rendimiento de cripto utilizan estrategias descentralizadas reguladas para extraer rendimientos netos elevados (yields) de forma sistémica, proporcionando liquidez o validando bloques, evitando fluctuaciones direccionales:"))
-        
-        st.markdown("""<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
-<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: 'Inter', sans-serif; text-align: left;">
-<span style="background-color: rgba(0, 255, 165, 0.1); color: #00ffa5; border: 1px solid rgba(0, 255, 165, 0.3); padding: 1px 6px; border-radius: 3px; font-size: 9.5px; font-weight: 800; text-transform: uppercase;">Alto Rendimento Sintético</span>
-<h4 style="margin: 8px 0 2px 0; color: #fff; font-size: 15px; font-weight: 700;">DELTA-NEUTRAL CARRY ARBITRAGE</h4>
-<span style="font-size: 11px; color: #cccccc;">Protocolo: Ethena (USDe Synthetic Dollar)</span>
-<div style="margin: 12px 0; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
-<p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Rendimento Tático (APY): <strong style="color: #00ffa5; font-size: 13.5px;">15.0% - 28.0% a.a.</strong></p>
-<p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mecanismo: <strong style="color: #fff;">Carry Sintético Spot-Future</strong></p>
-<p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mínimo de Entrada: <strong style="color: #fff;">US$ 100,000.00</strong></p>
-<p style="margin: 0; font-size: 11.5px; color: #cccccc; line-height: 1.4;"><i>Compra ativos à vista (BTC/ETH) e vende contratos futuros equivalentes na mesma proporção, capturando a taxa de financiamento (Funding Rate) sem qualquer exposure direcional de preços.</i></p>
-</div>
-</div>
-<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: 'Inter', sans-serif; text-align: left;">
-<span style="background-color: rgba(191, 149, 63, 0.1); color: #bf953f; border: 1px solid rgba(191, 149, 63, 0.3); padding: 1px 6px; border-radius: 3px; font-size: 9.5px; font-weight: 800; text-transform: uppercase;">Liquid Staking de Elite</span>
-<h4 style="margin: 8px 0 2px 0; color: #fff; font-size: 15px; font-weight: 700;">LIQUID RESTAKING MULTI-LAYERS</h4>
-<span style="font-size: 11px; color: #cccccc;">Protocolo: EigenLayer & Ether.fi (eETH)</span>
-<div style="margin: 12px 0; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
-<p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Rendimento Tático (APY): <strong style="color: #00ffa5; font-size: 13.5px;">3.5% - 5.5% a.a. + Points</strong></p>
-<p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mecanismo: <strong style="color: #fff;">Consenso Ethereum + Validação AVS</strong></p>
-<p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mínimo de Entrada: <strong style="color: #fff;">US$ 250,000.00</strong></p>
-<p style="margin: 0; font-size: 11.5px; color: #cccccc; line-height: 1.4;"><i>Gera rendimentos pela validação básica da rede Ethereum (Staking) e simultaneamente re-empenha o colateral para validar microsserviços e pontes, otimizando os airdrops.</i></p>
-</div>
-</div>
-<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: 'Inter', sans-serif; text-align: left;">
-<span style="background-color: rgba(191, 149, 63, 0.1); color: #bf953f; border: 1px solid rgba(191, 149, 63, 0.3); padding: 1px 6px; border-radius: 3px; font-size: 9.5px; font-weight: 800; text-transform: uppercase;">Validação de Alta Velocidade</span>
-<h4 style="margin: 8px 0 2px 0; color: #fff; font-size: 15px; font-weight: 700;">SOLANA MEV-BOOSTED STAKING</h4>
-<span style="font-size: 11px; color: #cccccc;">Protocolo: Jito Network (JitoSOL)</span>
-<div style="margin: 12px 0; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
-<p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Rendimento Tático (APY): <strong style="color: #00ffa5; font-size: 13.5px;">7.0% - 8.5% a.a.</strong></p>
-<p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mecanismo: <strong style="color: #fff;">Consenso L1 + Captura MEV</strong></p>
-<p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mínimo de Entrada: <strong style="color: #fff;">US$ 50,000.00</strong></p>
-<p style="margin: 0; font-size: 11.5px; color: #cccccc; line-height: 1.4;"><i>Delega ativos para validadores de alta eficiência no ecossistema Solana que redistribuem as taxas de MEV (Maximum Extractable Value) diretamente ao detentor de JitoSOL.</i></p>
-</div>
-</div>
-</div>""", unsafe_allow_html=True)
 
-        st.write("---")
+        sub_t_dashboard, sub_t_arbitrage, sub_t_dca = st.tabs([
+            "Painel de Yields & Simulador" if lang == "PT" else ("Yields Dashboard & Simulator" if lang == "EN" else "Panel de Yields y Simulador"),
+            "Tutorial: Arbitragem Delta-Neutral 2:1" if lang == "PT" else ("Tutorial: 2:1 Delta-Neutral Arbitrage" if lang == "EN" else "Tutorial: Arbitraje Delta-Neutral 2:1"),
+            "Preço Médio (DCA) & Realização de Lucro" if lang == "PT" else ("DCA & Profit Realization" if lang == "EN" else "Precio Medio (DCA) y Realización de Lucro")
+        ])
         
-        # --- SIMULADOR DE CAPITALIZAÇÃO E RENDIMENTOS DEFI ---
-        st.subheader("️ SIMULADOR DE CO-ALOCAÇÃO E ACUMULAÇÃO DE RENDIMENTOS DEFI" if lang == "PT" else ("️ CO-ALLOCATION & DEFI YIELD ACCUMULATION SIMULATOR" if lang == "EN" else "️ SIMULADOR DE CO-ALOCACIÓN Y ACUMULACIÓN DE RENDIMIENTOS DEFI"))
-        st.write("Simule a capitalização mensal, anual e o efeito bola de neve dos juros compostos baseando-se em aportes estruturados nas principais pools privadas de Web3:" if lang == "PT" else ("Simulate monthly, annual capitalization, and the compounding snowball effect based on structured stakes in key private Web3 pools:" if lang == "EN" else "Simule la capitalización mensal, anual y el efecto bola de nieve del interés compuesto basado en aportaciones estructuradas en las principales piscinas privadas de Web3:"))
+        with sub_t_dashboard:
+
+                st.subheader("OPORTUNIDADES DE DEFI YIELDS E GERADORES DE JUROS PRIVADOS DE WEB3" if lang == "PT" else ("OPPORTUNITIES FOR DEFI YIELDS & PRIVATE INTEREST GENERATORS IN WEB3" if lang == "EN" else "OPORTUNIDADES DE DEFI YIELDS Y GENERADORES DE INTERESES PRIVADOS DE WEB3"))
+                st.write("Family Offices e investidores corporativos de alta renda de cripto utilizam estratégias descentralizadas reguladas para extrair retornos líquidos elevados (yields) de forma sistêmica, prestando liquidez ou validando blocos, evitando flutuações direcionais:" if lang == "PT" else ("Family Offices and corporate high-net-worth crypto investors utilize regulated decentralized strategies to systematically extract high net returns (yields), providing liquidity or validating blocks, avoiding directional fluctuations:" if lang == "EN" else "Los Family Offices y los inversores corporativos de alto rendimiento de cripto utilizan estrategias descentralizadas reguladas para extraer rendimientos netos elevados (yields) de forma sistémica, proporcionando liquidez o validando bloques, evitando fluctuaciones direccionales:"))
         
-        yield_strategies = {
-            "DELTA-NEUTRAL CARRY ARBITRAGE (Ethena USDe) - APY ~22.0%": 22.0,
-            "SOLANA MEV-BOOSTED STAKING (JitoSOL) - APY ~7.5%": 7.5,
-            "LIQUID RESTAKING MULTI-LAYERS (eETH) - APY ~4.5%": 4.5,
-            "PORTFÓLIO CRIPTO WEALTH BLEND (Consolidado) - APY ~11.2%": 11.2
-        }
+                st.markdown("""<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
+        <div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: 'Inter', sans-serif; text-align: left;">
+        <span style="background-color: rgba(0, 255, 165, 0.1); color: #00ffa5; border: 1px solid rgba(0, 255, 165, 0.3); padding: 1px 6px; border-radius: 3px; font-size: 9.5px; font-weight: 800; text-transform: uppercase;">Alto Rendimento Sintético</span>
+        <h4 style="margin: 8px 0 2px 0; color: #fff; font-size: 15px; font-weight: 700;">DELTA-NEUTRAL CARRY ARBITRAGE</h4>
+        <span style="font-size: 11px; color: #cccccc;">Protocolo: Ethena (USDe Synthetic Dollar)</span>
+        <div style="margin: 12px 0; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+        <p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Rendimento Tático (APY): <strong style="color: #00ffa5; font-size: 13.5px;">15.0% - 28.0% a.a.</strong></p>
+        <p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mecanismo: <strong style="color: #fff;">Carry Sintético Spot-Future</strong></p>
+        <p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mínimo de Entrada: <strong style="color: #fff;">US$ 100,000.00</strong></p>
+        <p style="margin: 0; font-size: 11.5px; color: #cccccc; line-height: 1.4;"><i>Compra ativos à vista (BTC/ETH) e vende contratos futuros equivalentes na mesma proporção, capturando a taxa de financiamento (Funding Rate) sem qualquer exposure direcional de preços.</i></p>
+        </div>
+        </div>
+        <div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: 'Inter', sans-serif; text-align: left;">
+        <span style="background-color: rgba(191, 149, 63, 0.1); color: #bf953f; border: 1px solid rgba(191, 149, 63, 0.3); padding: 1px 6px; border-radius: 3px; font-size: 9.5px; font-weight: 800; text-transform: uppercase;">Liquid Staking de Elite</span>
+        <h4 style="margin: 8px 0 2px 0; color: #fff; font-size: 15px; font-weight: 700;">LIQUID RESTAKING MULTI-LAYERS</h4>
+        <span style="font-size: 11px; color: #cccccc;">Protocolo: EigenLayer & Ether.fi (eETH)</span>
+        <div style="margin: 12px 0; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+        <p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Rendimento Tático (APY): <strong style="color: #00ffa5; font-size: 13.5px;">3.5% - 5.5% a.a. + Points</strong></p>
+        <p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mecanismo: <strong style="color: #fff;">Consenso Ethereum + Validação AVS</strong></p>
+        <p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mínimo de Entrada: <strong style="color: #fff;">US$ 250,000.00</strong></p>
+        <p style="margin: 0; font-size: 11.5px; color: #cccccc; line-height: 1.4;"><i>Gera rendimentos pela validação básica da rede Ethereum (Staking) e simultaneamente re-empenha o colateral para validar microsserviços e pontes, otimizando os airdrops.</i></p>
+        </div>
+        </div>
+        <div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: 'Inter', sans-serif; text-align: left;">
+        <span style="background-color: rgba(191, 149, 63, 0.1); color: #bf953f; border: 1px solid rgba(191, 149, 63, 0.3); padding: 1px 6px; border-radius: 3px; font-size: 9.5px; font-weight: 800; text-transform: uppercase;">Validação de Alta Velocidade</span>
+        <h4 style="margin: 8px 0 2px 0; color: #fff; font-size: 15px; font-weight: 700;">SOLANA MEV-BOOSTED STAKING</h4>
+        <span style="font-size: 11px; color: #cccccc;">Protocolo: Jito Network (JitoSOL)</span>
+        <div style="margin: 12px 0; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px;">
+        <p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Rendimento Tático (APY): <strong style="color: #00ffa5; font-size: 13.5px;">7.0% - 8.5% a.a.</strong></p>
+        <p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mecanismo: <strong style="color: #fff;">Consenso L1 + Captura MEV</strong></p>
+        <p style="margin: 0 0 5px 0; font-size: 12px; color: #aaa;">Mínimo de Entrada: <strong style="color: #fff;">US$ 50,000.00</strong></p>
+        <p style="margin: 0; font-size: 11.5px; color: #cccccc; line-height: 1.4;"><i>Delega ativos para validadores de alta eficiência no ecossistema Solana que redistribuem as taxas de MEV (Maximum Extractable Value) diretamente ao detentor de JitoSOL.</i></p>
+        </div>
+        </div>
+        </div>""", unsafe_allow_html=True)
+
+                st.write("---")
         
-        col_sim1, col_sim2 = st.columns([1, 1])
-        with col_sim1:
-            # Selector for DeFi strategy
-            strategy_options = list(yield_strategies.keys())
-            default_strat_idx = strategy_options.index(app_crypto_state.get("yield_strategy")) if app_crypto_state.get("yield_strategy") in strategy_options else 0
-            selected_strategy = st.selectbox(
-                "Selecione a Estratégia de Rendimento DeFi" if lang == "PT" else ("Select DeFi Yield Strategy" if lang == "EN" else "Seleccione Estrategia de Rendimiento DeFi"),
-                strategy_options,
-                index=default_strat_idx
-            )
-            if selected_strategy != app_crypto_state.get("yield_strategy"):
-                app_crypto_state["yield_strategy"] = selected_strategy
-                save_crypto_state(app_crypto_state)
+                # --- SIMULADOR DE CAPITALIZAÇÃO E RENDIMENTOS DEFI ---
+                st.subheader("️ SIMULADOR DE CO-ALOCAÇÃO E ACUMULAÇÃO DE RENDIMENTOS DEFI" if lang == "PT" else ("️ CO-ALLOCATION & DEFI YIELD ACCUMULATION SIMULATOR" if lang == "EN" else "️ SIMULADOR DE CO-ALOCACIÓN Y ACUMULACIÓN DE RENDIMIENTOS DEFI"))
+                st.write("Simule a capitalização mensal, anual e o efeito bola de neve dos juros compostos baseando-se em aportes estruturados nas principais pools privadas de Web3:" if lang == "PT" else ("Simulate monthly, annual capitalization, and the compounding snowball effect based on structured stakes in key private Web3 pools:" if lang == "EN" else "Simule la capitalización mensal, anual y el efecto bola de nieve del interés compuesto basado en aportaciones estructuradas en las principales piscinas privadas de Web3:"))
+        
+                yield_strategies = {
+                    "DELTA-NEUTRAL CARRY ARBITRAGE (Ethena USDe) - APY ~22.0%": 22.0,
+                    "SOLANA MEV-BOOSTED STAKING (JitoSOL) - APY ~7.5%": 7.5,
+                    "LIQUID RESTAKING MULTI-LAYERS (eETH) - APY ~4.5%": 4.5,
+                    "PORTFÓLIO CRIPTO WEALTH BLEND (Consolidado) - APY ~11.2%": 11.2
+                }
+        
+                col_sim1, col_sim2 = st.columns([1, 1])
+                with col_sim1:
+                    # Selector for DeFi strategy
+                    strategy_options = list(yield_strategies.keys())
+                    default_strat_idx = strategy_options.index(app_crypto_state.get("yield_strategy")) if app_crypto_state.get("yield_strategy") in strategy_options else 0
+                    selected_strategy = st.selectbox(
+                        "Selecione a Estratégia de Rendimento DeFi" if lang == "PT" else ("Select DeFi Yield Strategy" if lang == "EN" else "Seleccione Estrategia de Rendimiento DeFi"),
+                        strategy_options,
+                        index=default_strat_idx
+                    )
+                    if selected_strategy != app_crypto_state.get("yield_strategy"):
+                        app_crypto_state["yield_strategy"] = selected_strategy
+                        save_crypto_state(app_crypto_state)
                 
-            yield_rate = yield_strategies[selected_strategy]
+                    yield_rate = yield_strategies[selected_strategy]
             
-            # Accumulation timeline slider
-            accum_years = st.slider(
-                "Prazo de Acumulação / Reinvestimento (Anos)" if lang == "PT" else ("Accumulation / Reinvestment Term (Years)" if lang == "EN" else "Plazo de Acumulación / Reinversión (Años)"),
-                min_value=1,
-                max_value=10,
-                value=int(app_crypto_state.get("yield_years", 5)),
-                step=1
-            )
-            if accum_years != app_crypto_state.get("yield_years"):
-                app_crypto_state["yield_years"] = accum_years
-                save_crypto_state(app_crypto_state)
+                    # Accumulation timeline slider
+                    accum_years = st.slider(
+                        "Prazo de Acumulação / Reinvestimento (Anos)" if lang == "PT" else ("Accumulation / Reinvestment Term (Years)" if lang == "EN" else "Plazo de Acumulación / Reinversión (Años)"),
+                        min_value=1,
+                        max_value=10,
+                        value=int(app_crypto_state.get("yield_years", 5)),
+                        step=1
+                    )
+                    if accum_years != app_crypto_state.get("yield_years"):
+                        app_crypto_state["yield_years"] = accum_years
+                        save_crypto_state(app_crypto_state)
                 
-        with col_sim2:
-            # Calculations based on the capital in sidebar compounding over the years
-            accumulated_value = crypto_capital * ((1 + (yield_rate / 100)) ** accum_years)
-            monthly_yield = accumulated_value * (yield_rate / 12 / 100)
-            annual_yield = accumulated_value * (yield_rate / 100)
+                with col_sim2:
+                    # Calculations based on the capital in sidebar compounding over the years
+                    accumulated_value = crypto_capital * ((1 + (yield_rate / 100)) ** accum_years)
+                    monthly_yield = accumulated_value * (yield_rate / 12 / 100)
+                    annual_yield = accumulated_value * (yield_rate / 100)
             
-            st.markdown(f"""<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: 'Inter', sans-serif; text-align: left; height: 100%;">
-<strong style="color: #bf953f; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 12px;"> PROJEÇÃO CO-PATRIMONIAL DE FILETE</strong>
-<div style="display: flex; flex-direction: column; gap: 8px;">
-<div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 6px;">
-<span style="color: #cccccc; font-size: 11.5px;">Rendimento Mensal Esperado:</span>
-<strong style="color: #00ffa5; font-size: 12px;">$ {monthly_yield:,.2f} USD</strong>
-</div>
-<div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 6px;">
-<span style="color: #cccccc; font-size: 11.5px;">Rendimento Anual Esperado:</span>
-<strong style="color: #00ffa5; font-size: 12px;">$ {annual_yield:,.2f} USD</strong>
-</div>
-<div style="display: flex; justify-content: space-between;">
-<span style="color: #cccccc; font-size: 11.5px;">Patrimônio Acumulado ({accum_years} Anos):</span>
-<strong style="color: #ffffff; font-size: 12px;">$ {accumulated_value:,.2f} USD</strong>
-</div>
-</div>
-<p style="color: #aaaaaa; font-size: 10px; line-height: 1.4; margin: 10px 0 0 0;">
-Esta estimativa calcula o reinvestimento automático total de todos os juros mensais sob regime de capitalização composta líquida, livre de impostos nacionais devido ao diferimento legal de Holding/Offshore.
-</p>
-</div>""", unsafe_allow_html=True)
+                    st.markdown(f"""<div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); font-family: 'Inter', sans-serif; text-align: left; height: 100%;">
+        <strong style="color: #bf953f; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 12px;"> PROJEÇÃO CO-PATRIMONIAL DE FILETE</strong>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 6px;">
+        <span style="color: #cccccc; font-size: 11.5px;">Rendimento Mensal Esperado:</span>
+        <strong style="color: #00ffa5; font-size: 12px;">$ {monthly_yield:,.2f} USD</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.03); padding-bottom: 6px;">
+        <span style="color: #cccccc; font-size: 11.5px;">Rendimento Anual Esperado:</span>
+        <strong style="color: #00ffa5; font-size: 12px;">$ {annual_yield:,.2f} USD</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+        <span style="color: #cccccc; font-size: 11.5px;">Patrimônio Acumulado ({accum_years} Anos):</span>
+        <strong style="color: #ffffff; font-size: 12px;">$ {accumulated_value:,.2f} USD</strong>
+        </div>
+        </div>
+        <p style="color: #aaaaaa; font-size: 10px; line-height: 1.4; margin: 10px 0 0 0;">
+        Esta estimativa calcula o reinvestimento automático total de todos os juros mensais sob regime de capitalização composta líquida, livre de impostos nacionais devido ao diferimento legal de Holding/Offshore.
+        </p>
+        </div>""", unsafe_allow_html=True)
 
-        st.write("")
+                st.write("")
         
-        # Compounding growth plot vs linear vs treasuries
-        years_list = list(range(accum_years + 1))
-        comp_values = [crypto_capital * ((1 + (yield_rate / 100)) ** y) for y in years_list]
+                # Compounding growth plot vs linear vs treasuries
+                years_list = list(range(accum_years + 1))
+                comp_values = [crypto_capital * ((1 + (yield_rate / 100)) ** y) for y in years_list]
         
-        # Calculate correct simple annual yield based on initial capital for the linear comparison
-        simple_annual_yield = crypto_capital * (yield_rate / 100)
-        linear_values = [crypto_capital + (simple_annual_yield * y) for y in years_list]
+                # Calculate correct simple annual yield based on initial capital for the linear comparison
+                simple_annual_yield = crypto_capital * (yield_rate / 100)
+                linear_values = [crypto_capital + (simple_annual_yield * y) for y in years_list]
         
-        treasury_values = [crypto_capital * ((1 + 0.045) ** y) for y in years_list] # 4.5% US Treasury
+                treasury_values = [crypto_capital * ((1 + 0.045) ** y) for y in years_list] # 4.5% US Treasury
         
-        fig_sim = go.Figure()
-        fig_sim.add_trace(go.Scatter(x=years_list, y=comp_values, mode='lines+markers', name='Juros Compostos DeFi' if lang == "PT" else ('DeFi Compounded' if lang == "EN" else 'Interés Compuesto DeFi'), line=dict(color='#00ffa5', width=3)))
-        fig_sim.add_trace(go.Scatter(x=years_list, y=linear_values, mode='lines', name='Linear (Sem Reinvestir)' if lang == "PT" else ('Linear (No Reinvestment)' if lang == "EN" else 'Lineal (Sin Reinvertir)'), line=dict(color='#bf953f', width=2, dash='dash')))
-        fig_sim.add_trace(go.Scatter(x=years_list, y=treasury_values, mode='lines', name='Risk-Free US 10Y (4.5% APY)', line=dict(color='#888888', width=2, dash='dot')))
+                fig_sim = go.Figure()
+                fig_sim.add_trace(go.Scatter(x=years_list, y=comp_values, mode='lines+markers', name='Juros Compostos DeFi' if lang == "PT" else ('DeFi Compounded' if lang == "EN" else 'Interés Compuesto DeFi'), line=dict(color='#00ffa5', width=3)))
+                fig_sim.add_trace(go.Scatter(x=years_list, y=linear_values, mode='lines', name='Linear (Sem Reinvestir)' if lang == "PT" else ('Linear (No Reinvestment)' if lang == "EN" else 'Lineal (Sin Reinvertir)'), line=dict(color='#bf953f', width=2, dash='dash')))
+                fig_sim.add_trace(go.Scatter(x=years_list, y=treasury_values, mode='lines', name='Risk-Free US 10Y (4.5% APY)', line=dict(color='#888888', width=2, dash='dot')))
         
-        fig_sim.update_layout(
-            template='plotly_dark',
-            paper_bgcolor='rgba(0,0,0,0)',
-            plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(color='#ffffff'),
-            legend=dict(
-                font=dict(color='#ffffff', size=11),
-                bgcolor='rgba(0,0,0,0)'
-            ),
-            height=260,
-            margin=dict(t=10, b=10, l=10, r=10),
-            xaxis=dict(gridcolor='rgba(255,255,255,0.03)', title="Linha de Tempo (Anos)" if lang == "PT" else ("Timeline (Years)" if lang == "EN" else "Línea de Tiempo (Años)")),
-            yaxis=dict(gridcolor='rgba(255,255,255,0.03)', title="Patrimônio Consolidado (USD)", tickformat="$")
-        )
-        st.plotly_chart(fig_sim, use_container_width=True, theme=None)
+                fig_sim.update_layout(
+                    template='plotly_dark',
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    font=dict(color='#ffffff'),
+                    legend=dict(
+                        font=dict(color='#ffffff', size=11),
+                        bgcolor='rgba(0,0,0,0)'
+                    ),
+                    height=260,
+                    margin=dict(t=10, b=10, l=10, r=10),
+                    xaxis=dict(gridcolor='rgba(255,255,255,0.03)', title="Linha de Tempo (Anos)" if lang == "PT" else ("Timeline (Years)" if lang == "EN" else "Línea de Tiempo (Años)")),
+                    yaxis=dict(gridcolor='rgba(255,255,255,0.03)', title="Patrimônio Consolidado (USD)", tickformat="$")
+                )
+                st.plotly_chart(fig_sim, use_container_width=True, theme=None)
 
-        st.write("")
-        st.markdown("### CO-PILOTO EXPLICA: COMO CADA UMA DESSAS ESTRATÉGIAS GERA RIQUEZA NA PRÁTICA?" if lang == "PT" else ("### CO-PILOT EXPLAINS: HOW DO THESE STRATEGIES GENERATE WEALTH IN PRACTICE?" if lang == "EN" else "### CO-PILOTO EXPLICA: ¿CÓMO CADA UNA DE ESTAS ESTRATEGIAS GENERA RIQUEZA EN LA PRÁCTICA?"))
-        exp_col1, exp_col2, exp_col3 = st.columns(3)
-        with exp_col1:
-            with st.expander(" Entender Delta-Neutral" if lang == "PT" else (" Understand Delta-Neutral" if lang == "EN" else " Entender Delta-Neutral")):
-                if lang == "PT":
-                    st.markdown("""
-                    **O que é em termos simples?**
-                    É como comprar um carro no mercado físico e vendê-lo no mesmo segundo por um preço pré-acordado em um contrato futuro, ganhando uma taxa garantida sem risco do carro desvalorizar.
+                st.write("")
+                st.markdown("### CO-PILOTO EXPLICA: COMO CADA UMA DESSAS ESTRATÉGIAS GERA RIQUEZA NA PRÁTICA?" if lang == "PT" else ("### CO-PILOT EXPLAINS: HOW DO THESE STRATEGIES GENERATE WEALTH IN PRACTICE?" if lang == "EN" else "### CO-PILOTO EXPLICA: ¿CÓMO CADA UNA DE ESTAS ESTRATEGIAS GENERA RIQUEZA EN LA PRÁCTICA?"))
+                exp_col1, exp_col2, exp_col3 = st.columns(3)
+                with exp_col1:
+                    with st.expander(" Entender Delta-Neutral" if lang == "PT" else (" Understand Delta-Neutral" if lang == "EN" else " Entender Delta-Neutral")):
+                        if lang == "PT":
+                            st.markdown("""
+                            **O que é em termos simples?**
+                            É como comprar um carro no mercado físico e vendê-lo no mesmo segundo por um preço pré-acordado em um contrato futuro, ganhando uma taxa garantida sem risco do carro desvalorizar.
                     
-                    **Como gera dinheiro?**
-                    1. Compra a criptomoeda (BTC/ETH) no mercado à vista.
-                    2. Vende a mesma proporção em contratos futuros de derivativos.
-                    3. Como as corretoras cobram taxa de quem aposta na alta e pagam a quem está na baixa (*Funding Rate*), você embolsa essa taxa 3 vezes ao dia, livre de oscilações de preço.
+                            **Como gera dinheiro?**
+                            1. Compra a criptomoeda (BTC/ETH) no mercado à vista.
+                            2. Vende a mesma proporção em contratos futuros de derivativos.
+                            3. Como as corretoras cobram taxa de quem aposta na alta e pagam a quem está na baixa (*Funding Rate*), você embolsa essa taxa 3 vezes ao dia, livre de oscilações de preço.
                     
-                    **Qual é o risco real?**
-                    A integridade do código do protocolo emissor da stablecoin e o colateral que sustenta a paridade do dólar sintético (USDe).
+                            **Qual é o risco real?**
+                            A integridade do código do protocolo emissor da stablecoin e o colateral que sustenta a paridade do dólar sintético (USDe).
                     
-                    **Capital Mínimo Recomendado**:
-                    A partir de **R$ 500.000,00 ($100k USD)** para cobrir os custos operacionais de hedge e swap cambial com eficiência.
-                    """)
-                elif lang == "EN":
-                    st.markdown("""
-                    **What is it in simple terms?**
-                    It's like buying a car in the physical market and selling it in the same second for a pre-agreed price in a futures contract, earning a guaranteed rate without the risk of the car depreciating.
+                            **Capital Mínimo Recomendado**:
+                            A partir de **R$ 500.000,00 ($100k USD)** para cobrir os custos operacionais de hedge e swap cambial com eficiência.
+                            """)
+                        elif lang == "EN":
+                            st.markdown("""
+                            **What is it in simple terms?**
+                            It's like buying a car in the physical market and selling it in the same second for a pre-agreed price in a futures contract, earning a guaranteed rate without the risk of the car depreciating.
                     
-                    **How does it generate money?**
-                    1. Buy the cryptocurrency (BTC/ETH) in the spot market.
-                    2. Sell the exact same proportion in derivative futures contracts.
-                    3. Since exchanges charge funding fees to those betting on price increases and pay those who are short (*Funding Rate*), you pocket this fee 3 times a day, completely isolated from price fluctuations.
+                            **How does it generate money?**
+                            1. Buy the cryptocurrency (BTC/ETH) in the spot market.
+                            2. Sell the exact same proportion in derivative futures contracts.
+                            3. Since exchanges charge funding fees to those betting on price increases and pay those who are short (*Funding Rate*), you pocket this fee 3 times a day, completely isolated from price fluctuations.
                     
-                    **What is the real risk?**
-                    The code integrity of the stablecoin issuer protocol and the collateral supporting the peg of the synthetic dollar (USDe).
+                            **What is the real risk?**
+                            The code integrity of the stablecoin issuer protocol and the collateral supporting the peg of the synthetic dollar (USDe).
                     
-                    **Recommended Minimum Capital**:
-                    Starting from **BRL 500,000.00 ($100k USD)** to cover operational costs of hedging and currency swaps efficiently.
-                    """)
-                else:
-                    st.markdown("""
-                    **¿Qué es en términos simples?**
-                    Es como comprar un coche en el mercado físico y venderlo en el mismo segundo por un precio preacordado en un contrato de futuros, ganando una tasa garantizada sin riesgo de que el coche se devalúe.
+                            **Recommended Minimum Capital**:
+                            Starting from **BRL 500,000.00 ($100k USD)** to cover operational costs of hedging and currency swaps efficiently.
+                            """)
+                        else:
+                            st.markdown("""
+                            **¿Qué es en términos simples?**
+                            Es como comprar un coche en el mercado físico y venderlo en el mismo segundo por un precio preacordado en un contrato de futuros, ganando una tasa garantizada sin riesgo de que el coche se devalúe.
                     
-                    **¿Cómo genera dinero?**
-                    1. Compra la criptomoneda (BTC/ETH) en el mercado al contado.
-                    2. Vende la misma proporción en contratos de futuros de derivados.
-                    3. Dado que los exchanges cobran comisiones de financiación a quienes apuestan por la subida y pagan a quienes están a la baja (*Funding Rate*), usted se embolsa esta tasa 3 veces al día, libre de oscilaciones de precio.
+                            **¿Cómo genera dinero?**
+                            1. Compra la criptomoneda (BTC/ETH) en el mercado al contado.
+                            2. Vende la misma proporción en contratos de futuros de derivados.
+                            3. Dado que los exchanges cobran comisiones de financiación a quienes apuestan por la subida y pagan a quienes están a la baja (*Funding Rate*), usted se embolsa esta tasa 3 veces al día, libre de oscilaciones de precio.
                     
-                    **¿Cuál es el riesgo real?**
-                    La integridad del código del protocolo emisor de la stablecoin y el colateral que sustenta la paridad del dólar sintético (USDe).
+                            **¿Cuál es el riesgo real?**
+                            La integridad del código del protocolo emisor de la stablecoin y el colateral que sustenta la paridad del dólar sintético (USDe).
                     
-                    **Capital Mínimo Recomendado**:
-                    A partir de **BRL 500.000,00 ($100k USD)** para cubrir los costos operativos de cobertura y swap de divisas con eficiencia.
-                    """)
-        with exp_col2:
-            with st.expander(" Entender Liquid Restaking" if lang == "PT" else (" Understand Liquid Restaking" if lang == "EN" else " Entender Liquid Restaking")):
-                if lang == "PT":
-                    st.markdown("""
-                    **O que é em termos simples?**
-                    É como colocar seu dinheiro em um CDB de banco que paga juros (Staking), e o banco lhe entregar um "título/recibo" (eETH) que você pode usar para ganhar ainda mais juros em outros investimentos ao mesmo tempo.
+                            **Capital Mínimo Recomendado**:
+                            A partir de **BRL 500.000,00 ($100k USD)** para cubrir los costos operativos de cobertura y swap de divisas con eficiencia.
+                            """)
+                with exp_col2:
+                    with st.expander(" Entender Liquid Restaking" if lang == "PT" else (" Understand Liquid Restaking" if lang == "EN" else " Entender Liquid Restaking")):
+                        if lang == "PT":
+                            st.markdown("""
+                            **O que é em termos simples?**
+                            É como colocar seu dinheiro em um CDB de banco que paga juros (Staking), e o banco lhe entregar um "título/recibo" (eETH) que você pode usar para ganhar ainda mais juros em outros investimentos ao mesmo tempo.
                     
-                    **Como gera dinheiro?**
-                    1. Você bloqueia Ethereum para validar a rede central e ganha juros da própria blockchain.
-                    2. O sistema re-empenha (restake) esse Ethereum em serviços de validação adicionais (AVSs).
-                    3. Você acumula rendimentos extras e ganha "pontos" de campanhas de marketing de novos projetos que são convertidos em valiosos tokens grátis (*Airdrops*).
+                            **Como gera dinheiro?**
+                            1. Você bloqueia Ethereum para validar a rede central e ganha juros da própria blockchain.
+                            2. O sistema re-empenha (restake) esse Ethereum em serviços de validação adicionais (AVSs).
+                            3. Você acumula rendimentos extras e ganha "pontos" de campanhas de marketing de novos projetos que são convertidos em valiosos tokens grátis (*Airdrops*).
                     
-                    **Qual é o risco real?**
-                    *Slashing* (penalização se os computadores validadores falharem de forma crítica) ou bugs nos contratos inteligentes do protocolo.
+                            **Qual é o risco real?**
+                            *Slashing* (penalização se os computadores validadores falharem de forma crítica) ou bugs nos contratos inteligentes do protocolo.
                     
-                    **Capital Mínimo Recomendado**:
-                    Acessível de forma imediata a partir de **R$ 200.000,00** para ter escala relevante nos airdrops.
-                    """)
-                elif lang == "EN":
-                    st.markdown("""
-                    **What is it in simple terms?**
-                    It's like placing your money in a bank CD that pays interest (Staking), and the bank handing you a "receipt/token" (eETH) that you can use to earn even more interest in other investments at the same time.
+                            **Capital Mínimo Recomendado**:
+                            Acessível de forma imediata a partir de **R$ 200.000,00** para ter escala relevante nos airdrops.
+                            """)
+                        elif lang == "EN":
+                            st.markdown("""
+                            **What is it in simple terms?**
+                            It's like placing your money in a bank CD that pays interest (Staking), and the bank handing you a "receipt/token" (eETH) that you can use to earn even more interest in other investments at the same time.
                     
-                    **How does it generate money?**
-                    1. You lock Ethereum to validate the core network and earn interest from the blockchain itself.
-                    2. The system re-stakes this Ethereum into additional validation services (AVSs).
-                    3. You accumulate extra yields and earn "points" from marketing campaigns of new projects, which are later converted into valuable free tokens (*Airdrops*).
+                            **How does it generate money?**
+                            1. You lock Ethereum to validate the core network and earn interest from the blockchain itself.
+                            2. The system re-stakes this Ethereum into additional validation services (AVSs).
+                            3. You accumulate extra yields and earn "points" from marketing campaigns of new projects, which are later converted into valuable free tokens (*Airdrops*).
                     
-                    **What is the real risk?**
-                    *Slashing* (penalization if validator computers fail critically) or smart contract bugs in the protocol.
+                            **What is the real risk?**
+                            *Slashing* (penalization if validator computers fail critically) or smart contract bugs in the protocol.
                     
-                    **Recommended Minimum Capital**:
-                    Accessible starting from **BRL 200,000.00** to have relevant scale in airdrops.
-                    """)
-                else:
-                    st.markdown("""
-                    **¿Qué es en términos simples?**
-                    Es como colocar su dinero en un depósito bancario que paga intereses (Staking), y el banco le entrega un "recibo/token" (eETH) que puede usar para ganar aún más intereses en otras inversiones al mismo tiempo.
+                            **Recommended Minimum Capital**:
+                            Accessible starting from **BRL 200,000.00** to have relevant scale in airdrops.
+                            """)
+                        else:
+                            st.markdown("""
+                            **¿Qué es en términos simples?**
+                            Es como colocar su dinero en un depósito bancario que paga intereses (Staking), y el banco le entrega un "recibo/token" (eETH) que puede usar para ganar aún más intereses en otras inversiones al mismo tiempo.
                     
-                    **¿Cómo genera dinero?**
-                    1. Bloquea Ethereum para validar la red central y gana intereses de la propia blockchain.
-                    2. El sistema vuelve a empeñar (restake) este Ethereum en servicios de validación adicionales (AVSs).
-                    3. Acumula rendimientos adicionales y gana "puntos" de campañas de marketing de nuevos proyectos que se convierten en valiosos tokens gratuitos (*Airdrops*).
+                            **¿Cómo genera dinero?**
+                            1. Bloquea Ethereum para validar la red central y gana intereses de la propia blockchain.
+                            2. El sistema vuelve a empeñar (restake) este Ethereum en servicios de validación adicionales (AVSs).
+                            3. Acumula rendimientos adicionales y gana "puntos" de campañas de marketing de nuevos proyectos que se convierten en valiosos tokens gratuitos (*Airdrops*).
                     
-                    **¿Cuál es el riesgo real?**
-                    *Slashing* (penalización si las computadoras validadoras fallan de manera crítica) o errores en los contratos inteligentes del protocolo.
+                            **¿Cuál es el riesgo real?**
+                            *Slashing* (penalización si las computadoras validadoras fallan de manera crítica) o errores en los contratos inteligentes del protocolo.
                     
-                    **Capital Mínimo Recomendado**:
-                    Accesible de forma inmediata a partir de **BRL 200.000,00** para tener una escala relevante en los airdrops.
-                    """)
-        with exp_col3:
-            with st.expander(" Entender MEV Staking" if lang == "PT" else (" Understand MEV Staking" if lang == "EN" else " Entender MEV Staking")):
-                if lang == "PT":
-                    st.markdown("""
-                    **O que é em termos simples?**
-                    Pense em ser dono de um "pedágio expresso" em uma rodovia movimentada. Os carros normais pagam a tarifa padrão, mas robôs de fundos pagam fortunas extras para "passar na frente" de transações financeiras, e esse lucro de pedágio vai direto para você.
+                            **Capital Mínimo Recomendado**:
+                            Accesible de forma inmediata a partir de **BRL 200.000,00** para tener una escala relevante en los airdrops.
+                            """)
+                with exp_col3:
+                    with st.expander(" Entender MEV Staking" if lang == "PT" else (" Understand MEV Staking" if lang == "EN" else " Entender MEV Staking")):
+                        if lang == "PT":
+                            st.markdown("""
+                            **O que é em termos simples?**
+                            Pense em ser dono de um "pedágio expresso" em uma rodovia movimentada. Os carros normais pagam a tarifa padrão, mas robôs de fundos pagam fortunas extras para "passar na frente" de transações financeiras, e esse lucro de pedágio vai direto para você.
                     
-                    **Como gera dinheiro?**
-                    1. Delega moedas Solana para computadores validadores de alta performance da rede Jito.
-                    2. Esses validadores leiloam a prioridade das ordens para robôs de arbitragem corporativa.
-                    3. Todo esse lucro de processamento especial (MEV) é convertido em rendimentos diários e creditado à sua carteira.
+                            **Como gera dinheiro?**
+                            1. Delega moedas Solana para computadores validadores de alta performance da rede Jito.
+                            2. Esses validadores leiloam a prioridade das ordens para robôs de arbitragem corporativa.
+                            3. Todo esse lucro de processamento especial (MEV) é convertido em rendimentos diários e creditado à sua carteira.
                     
-                    **Qual é o risco real?**
-                    Risco cambial direcional da flutuação da moeda Solana no mercado e estabilidade operacional da blockchain.
+                            **Qual é o risco real?**
+                            Risco cambial direcional da flutuação da moeda Solana no mercado e estabilidade operacional da blockchain.
                     
-                    **Capital Mínimo Recomendado**:
-                    Estratégia flexível e imediata, recomendada a partir de qualquer capital de **R$ 50.000,00**.
-                    """)
-                elif lang == "EN":
-                    st.markdown("""
-                    **What is it in simple terms?**
-                    Think of being the owner of an "express toll booth" on a busy highway. Normal cars pay the standard toll, but hedge fund bots pay extra fortunes to "jump the line" for financial transactions, and that toll profit goes straight to you.
+                            **Capital Mínimo Recomendado**:
+                            Estratégia flexível e imediata, recomendada a partir de qualquer capital de **R$ 50.000,00**.
+                            """)
+                        elif lang == "EN":
+                            st.markdown("""
+                            **What is it in simple terms?**
+                            Think of being the owner of an "express toll booth" on a busy highway. Normal cars pay the standard toll, but hedge fund bots pay extra fortunes to "jump the line" for financial transactions, and that toll profit goes straight to you.
                     
-                    **How does it generate money?**
-                    1. Delegate Solana coins to high-performance validator computers on the Jito network.
-                    2. These validators auction transaction ordering priority to corporate arbitrage bots.
-                    3. All of this special processing profit (MEV) is converted into daily yields and credited to your wallet.
+                            **How does it generate money?**
+                            1. Delegate Solana coins to high-performance validator computers on the Jito network.
+                            2. These validators auction transaction ordering priority to corporate arbitrage bots.
+                            3. All of this special processing profit (MEV) is converted into daily yields and credited to your wallet.
                     
-                    **What is the real risk?**
-                    Directional currency risk from Solana price fluctuations in the market and blockchain operational stability.
+                            **What is the real risk?**
+                            Directional currency risk from Solana price fluctuations in the market and blockchain operational stability.
                     
-                    **Recommended Minimum Capital**:
-                    Flexible and immediate strategy, recommended starting from any capital of **BRL 50,000.00**.
-                    """)
-                else:
-                    st.markdown("""
-                    **¿Qué es en términos simples?**
-                    Piese en ser el propietario de un "peaje exprés" en una autopista muy transitada. Los coches normales pagan la tarifa estándar, pero los bots de fondos pagan fortunas adicionales para "adelantarse" a las transacciones financieras, y ese beneficio del peaje va directo a usted.
+                            **Recommended Minimum Capital**:
+                            Flexible and immediate strategy, recommended starting from any capital of **BRL 50,000.00**.
+                            """)
+                        else:
+                            st.markdown("""
+                            **¿Qué es en términos simples?**
+                            Piese en ser el propietario de un "peaje exprés" en una autopista muy transitada. Los coches normales pagan la tarifa estándar, pero los bots de fondos pagan fortunas adicionales para "adelantarse" a las transacciones financieras, y ese beneficio del peaje va directo a usted.
                     
-                    **¿Cómo genera dinero?**
-                    1. Delega monedas Solana a computadoras validadoras de alto rendimiento de la red Jito.
-                    2. Estos validadores subastan la prioridad del orden de las transacciones a bots de arbitraje corporativo.
-                    3. Todo este beneficio de procesamiento especial (MEV) se convierte en rendimientos diarios y se acredita a su billetera.
+                            **¿Cómo genera dinero?**
+                            1. Delega monedas Solana a computadoras validadoras de alto rendimiento de la red Jito.
+                            2. Estos validadores subastan la prioridad del orden de las transacciones a bots de arbitraje corporativo.
+                            3. Todo este beneficio de procesamiento especial (MEV) se convierte en rendimientos diarios y se acredita a su billetera.
                     
-                    **¿Cuál es el riesgo real?**
-                    Riesgo cambiario direccional por la fluctuación de la moneda Solana en el mercado y estabilidad operativa de la blockchain.
+                            **¿Cuál es el riesgo real?**
+                            Riesgo cambiario direccional por la fluctuación de la moneda Solana en el mercado y estabilidad operativa de la blockchain.
                     
-                    **Capital Mínimo Recomendado**:
-                    Estrategia flexible e inmediata, recomendada a partir de cualquier capital de **BRL 50.000,00**.
-                    """)
+                            **Capital Mínimo Recomendado**:
+                            Estrategia flexible e inmediata, recomendada a partir de cualquier capital de **BRL 50.000,00**.
+                            """)
 
 
-    # --- ABA 4: BLINDAGEM DIGITAL E CUSTÓDIA SEGURA ---
+    
+
+        with sub_t_arbitrage:
+            if lang == "PT":
+                st.markdown("""
+                ### 🚀 GUIA PRÁTICO: ARBITRAGEM DELTA-NEUTRAL ALAVANCADA 2:1 (SEM EMPRÉSTIMO)
+                
+                Este tutorial explica em detalhes como rentabilizar dólares sintéticos (ou USDT) através de arbitragem de taxas de *carry trade* em derivativos, **sem risco direcional** (se o mercado subir ou cair, não afeta o capital) e **sem taxas de empréstimo/financiamento de margem**.
+                
+                ---
+                
+                #### 💡 Por que acumular Ethereum (ETH) é o combustível ideal?
+                Antes de iniciar, compreenda um princípio de geração de riqueza: **esta estratégia serve para justificar o acúmulo e carregamento de Ethereum (ETH) como investimento de longo prazo**. 
+                Em vez de apenas deixar seu ETH parado, você pode utilizá-lo como colateral gerador de rendimentos constantes (via Liquid Staking) e usar a arbitragem delta-neutral para extrair renda passiva em dólar todo mês, permitindo que você compre mais ETH com os lucros e aumente a bola de neve.
+                
+                ---
+
+                #### 📊 O Exemplo Prático: De US$ 10.000 para US$ 20.000 (Exposição 2:1)
+                Pense que você tem **US$ 10.000** em capital inicial. Com alavancagem 2:1, você terá uma exposição de **US$ 20.000** gerando rendimentos, dobrando seu retorno mensal sem precisar pedir dinheiro emprestado nas plataformas DeFi (evitando juros de 5% a 15% a.a.).
+                
+                *   **Capital Inicial (Margem):** US$ 10.000 (depositados na corretora).
+                *   **Exposição Total:** US$ 20.000 comprados no mercado à vista (ou perpétuo) e US$ 20.000 vendidos no mercado futuro trimestral.
+                *   **Rendimento Médio Estimado:** **34.0% a 37.0% a.a.** (capturando a taxa de financiamento + prêmio do vencimento trimestral). Isso equivale a aproximadamente **US$ 300.00 por mês** (cerca de R$ 1.500+ na cotação atual).
+                
+                ---
+
+                #### ⚙️ Passo a Passo de Configuração na Corretora (Bitget ou Binance)
+                
+                1.  **Habilite a Margem Cruzada Unificada (Unified Cross Margin):**
+                    *   *Regra de Ouro:* **NUNCA utilize Margem Isolada**. Em momentos de volatilidade extrema, uma das posições pode ser liquidada individualmente antes que o lucro da outra compense. A Margem Cruzada garante que os lucros de uma perna cubram as perdas temporárias da outra perna.
+                    *   Na **Bitget**, ative o modo *Unified Account* (Conta Unificada). Na **Binance**, utilize a *Portfolio Margin Account*.
+                
+                2.  **Deposite o Colateral:**
+                    *   Envie seus **US$ 10.000** em USDT ou USDC para a carteira de Futuros.
+                
+                3.  **Abra a Posição Longa (Compra - Spot ou Perpétuo):**
+                    *   Abra uma posição de **Compra (Long)** no contrato **Futuro Perpétuo (Perp)** de BTC ou ETH no valor nominal de **US$ 20.000** (alavancagem de 2x sobre seus US$ 10.000).
+                
+                4.  **Abra a Posição Curta (Venda - Futuro Trimestral de 3 Meses):**
+                    *   No mesmo instante, abra uma posição de **Venda (Short)** no contrato **Futuro Trimestral (Quarterly / Delivery)** de vencimento de 3 meses mais próximo no valor nominal de **US$ 20.000**.
+                    *   *Exemplo de Ticker:* `BTCUSDT0925` (Futuro Trimestral de Setembro).
+                
+                5.  **Confirmação do Delta-Neutral:**
+                    *   Você tem US$ 20k comprados e US$ 20k vendidos. O Delta é zero. Se o preço do Bitcoin subir 100% ou cair 90%, o valor líquido total do seu portfólio permanece inalterado.
+                
+                ---
+
+                #### 💵 Como a Renda Entra na sua Conta e Como Sacar?
+                
+                1.  **Funding Rates (Taxa de Financiamento):**
+                    *   O contrato perpétuo paga/cobra taxas a cada 8 horas para alinhar o preço do futuro com o preço à vista.
+                    *   Como o mercado é historicamente otimista (comprado), quem está com posição Long Perpétuo **recebe as taxas de financiamento** pagas pelos shorts. Esse rendimento é creditado diretamente no seu saldo disponível em tempo real.
+                
+                2.  **Diferença de Prêmio (Basis Convergence):**
+                    *   O contrato futuro trimestral de 3 meses geralmente é negociado com ágio (ex: Bitcoin a $60.000 no spot e a $61.500 no trimestral).
+                    *   Como você vendeu o trimestral por $61.500 e comprou o perpétuo por $60.000, ao longo dos 3 meses a diferença de $1.500 vai encolher até virar **ZERO** na data de vencimento. Esse valor é seu lucro líquido.
+                
+                3.  **Realizando e Sacando os Lucros Mensalmente:**
+                    *   À medida que as taxas de financiamento e a convergência do preço acumulam lucros, a sua "Margem Livre/Disponível" na corretora vai aumentando.
+                    *   Você pode transferir essa renda gerada diretamente da carteira de Futuros para a carteira Spot e realizar o saque mensal para viver de renda, sem precisar fechar a operação principal de US$ 10.000.
+                
+                ---
+
+                #### ⚠️ Riscos e Monitoramento Crítico
+                *   **Risco de Liquidação por Descolamento Temporário (Basis Risk):** Em dias de pânico extremo, a diferença entre o contrato trimestral e o perpétuo pode alargar temporariamente antes de convergir. Manter a alavancagem em no máximo 2:1 garante margem de segurança de sobra para evitar liquidações.
+                *   **Rolagem de Contrato (Rollover):** A cada 3 meses, o contrato trimestral expira. Perto do vencimento, você deve fechar a sua posição short trimestral que está expirando e abrir no contrato trimestral do período seguinte (Rollover), capturando um novo prêmio.
+                """)
+            elif lang == "EN":
+                st.markdown("""
+                ### 🚀 PRACTICAL GUIDE: 2:1 LEVERAGED DELTA-NEUTRAL ARBITRAGE (WITHOUT BORROWING)
+                
+                This tutorial explains in detail how to monetize synthetic dollars (or USDT) through funding/carry rate arbitrage on derivatives, **with zero directional risk** (market movements do not affect your capital) and **without paying margin borrow fees**.
+                
+                ---
+                
+                #### 💡 Why Accumulating Ethereum (ETH) is the Ideal Fuel
+                Before starting, understand a core wealth generation principle: **this strategy serves to justify accumulating and holding Ethereum (ETH) as a long-term investment**. 
+                Instead of leaving your ETH idle, you can use it as yield-generating collateral (via Liquid Staking) and use delta-neutral arbitrage to extract monthly passive income in USD, enabling you to buy more ETH with the profits and grow the snowball.
+                
+                ---
+
+                #### 📊 Practical Example: From $10,000 to $20,000 (2:1 Exposure)
+                Imagine you have **$10,000** in initial capital. With 2:1 leverage, you will have a **$20,000** exposure yielding returns, doubling your monthly return without needing to borrow funds on DeFi platforms (avoiding 5% to 15% annual interest).
+                
+                *   **Initial Capital (Margin):** $10,000 (deposited at the exchange).
+                *   **Total Exposure:** $20,000 long in the spot (or perp) market and $20,000 short in the quarterly futures market.
+                *   **Estimated Average Yield:** **34.0% to 37.0% p.a.** (capturing funding rates + quarterly basis premium). This equals approximately **$300.00 per month**.
+                
+                ---
+
+                #### ⚙️ Step-by-Step Exchange Setup (Bitget or Binance)
+                
+                1.  **Enable Unified Cross Margin:**
+                    *   *Golden Rule:* **NEVER use Isolated Margin**. In extreme volatility, one position could be liquidated individually before the profit on the other compensates. Cross Margin ensures that profits on one leg cover temporary losses on the other leg.
+                    *   On **Bitget**, enable *Unified Account* mode. On **Binance**, use *Portfolio Margin Account*.
+                
+                2.  **Deposit Collateral:**
+                    *   Transfer your **$10,000** in USDT or USDC to the Futures wallet.
+                
+                3.  **Open the Long Position (Buy - Spot or Perpetual):**
+                    *   Open a **Long** position on the **Perpetual Future (Perp)** contract of BTC or ETH for a nominal value of **$20,000** (2x leverage on your $10,000).
+                
+                4.  **Open the Short Position (Sell - 3-Month Quarterly Future):**
+                    *   At the exact same time, open a **Short** position on the **Quarterly Future** contract of the nearest 3-month expiry for a nominal value of **$20,000**.
+                    *   *Example Ticker:* `BTCUSDT0925` (September Quarterly Future).
+                
+                5.  **Confirm Delta-Neutrality:**
+                    *   You have $20k long and $20k short. Delta is zero. If BTC price doubles or drops 90%, your net portfolio value remains unchanged.
+                
+                ---
+
+                #### 💵 How Profits Accrue and How to Withdraw
+                
+                1.  **Funding Rates:**
+                    *   The perpetual contract pays/collects fees every 8 hours to align the futures price with the spot price.
+                    *   Since the market is historically bullish, longs **receive funding rates** paid by shorts. This yield is credited directly to your available margin in real-time.
+                
+                2.  **Basis Convergence:**
+                    *   The 3-month quarterly futures contract usually trades at a premium (e.g. BTC at $60,000 spot and $61,500 quarterly).
+                    *   Since you sold the quarterly at $61,500 and bought the perp at $60,000, over 3 months the $1,500 gap will shrink to **ZERO** at expiry. This difference is your net profit.
+                
+                3.  **Withdrawing Monthly Profits:**
+                    *   As funding rates and price convergence accumulate profits, your "Available Margin" increases.
+                    *   You can transfer these profits directly to your Spot wallet and withdraw monthly to fund your lifestyle, without closing the main $10,000 position.
+                
+                ---
+
+                #### ⚠️ Risks and Critical Monitoring
+                *   **Risk of Liquidation by Temporary Divergence (Basis Risk):** In times of extreme panic, the gap between the quarterly and perpetual contracts can widen temporarily. Keeping leverage at 2:1 maximum ensures a massive safety buffer to avoid liquidation.
+                *   **Rollover:** Every 3 months, the quarterly contract expires. Near expiration, you must close your expiring quarterly short position and open one in the next quarterly contract (Rollover), capturing a new premium.
+                """)
+            else:
+                st.markdown("""
+                ### 🚀 GUÍA PRÁCTICA: ARBITRAJE DELTA-NEUTRAL APALANCADO 2:1 (SIN PRÉSTAMO)
+                
+                Este tutorial explica en detalle cómo rentabilizar dólares sintéticos (o USDT) a través del arbitraje de tasas de *carry trade* en derivados, **sin riesgo direcional** (si el mercado sube o baja, no afecta su capital) y **sin pagar tasas de interés por préstamos de margen**.
+                
+                ---
+                
+                #### 💡 ¿Por qué acumular Ethereum (ETH) es el combustible ideal?
+                Antes de comenzar, comprenda un principio clave de generación de riqueza: **esta estrategia sirve para justificar la acumulación y tenencia de Ethereum (ETH) como inversión a largo plazo**.
+                En lugar de dejar su ETH ocioso, puede utilizarlo como colateral que genera rendimientos constantes (vía Liquid Staking) y utilizar el arbitraje delta-neutral para extraer ingresos pasivos mensuales en dólares, lo que le permite comprar más ETH con las ganancias y hacer crecer la bola de nieve.
+                
+                ---
+
+                #### 📊 El Ejemplo Práctico: De US$ 10.000 a US$ 20.000 (Exposición 2:1)
+                Imagine que tiene **US$ 10.000** en capital inicial. Con un apalancamiento de 2:1, tendrá una exposición de **US$ 20.000** generando rendimientos, duplicando su retorno mensual sin necesidad de pedir dinero prestado en plataformas DeFi (evitando intereses del 5% al 15% anual).
+                
+                *   **Capital Inicial (Margen):** US$ 10.000 (depositados en el exchange).
+                *   **Exposición Total:** US$ 20.000 comprados en el mercado al contado (o perpetuo) y US$ 20.000 vendidos en el mercado de futuros trimestrales.
+                *   **Rendimiento Promedio Estimado:** **34.0% a 37.0% anual** (capturando tasas de financiación + prima de futuros trimestrales). Esto equivale a aproximadamente **US$ 300.00 al mes**.
+                
+                ---
+
+                #### ⚙️ Passo a Passo de Configuración en el Exchange (Bitget o Binance)
+                
+                1.  **Habilite el Margen Cruzado Unificado (Unified Cross Margin):**
+                    *   *Regla de Oro:* **NUNCA use Margen Aislado**. En momentos de volatilidad extrema, una posición puede ser liquidada individualmente antes de que la ganancia de la otra compense. El Margen Cruzado garantiza que las ganancias de un lado cubran las pérdidas temporales del otro.
+                    *   En **Bitget**, active el modo de *Unified Account*. En **Binance**, use *Portfolio Margin Account*.
+                
+                2.  **Deposite el Colateral:**
+                    *   Deposite sus **US$ 10.000** en USDT o USDC en la billetera de Futuros.
+                
+                3.  **Abra la Posición Larga (Compra - Spot o Perpetuo):**
+                    *   Abra una posición de **Compra (Long)** en el contrato **Futuro Perpetuo (Perp)** de BTC or ETH por un valor nominal de **US$ 20.000** (apalancamiento 2x sobre sus US$ 10.000).
+                
+                4.  **Abra la Posición Corta (Venda - Futuro Trimestral de 3 Meses):**
+                    *   Al mesmo instante, abra una posición de **Venta (Short)** en el contrato **Futuro Trimestral** del vencimiento de 3 meses más cercano por un valor nominal de **US$ 20.000**.
+                    *   *Ejemplo de Ticker:* `BTCUSDT0925` (Futuro Trimestral de Septiembre).
+                
+                5.  **Confirme la Neutralidad del Delta:**
+                    *   Tiene US$ 20k comprados y US$ 20k vendidos. El Delta es cero. Si el precio de BTC se duplica o cae 90%, el valor neto de su portafolio no cambia.
+                
+                ---
+
+                #### 💵 ¿Cómo se Obtienen los Beneficios y Cómo Retirar?
+                
+                1.  **Tasas de Financiación (Funding Rates):**
+                    *   El contrato perpetuo paga/cobra tasas cada 8 horas para alinear el precio de futuros con el precio de contado.
+                    *   Dado que el mercado es históricamente optimista (comprado), las posiciones Long Perpetuo **reciben las tasas de financiación** pagadas por los shorts. Este rendimiento se acredita directamente a su margen disponible en tiempo real.
+                
+                2.  **Convergencia de la Base (Prima de Futuros):**
+                    *   El contrato de futuros trimestrales de 3 meses suele cotizar con prima (ej. BTC a $60,000 spot y $61,500 trimestral).
+                    *   Dado que vendió el trimestral a $61,500 y compró el perp a $60,000, durante los 3 meses la brecha de $1,500 se reducirá a **CERO** al vencimiento. Esta diferencia es su ganancia neta.
+                
+                3.  **Retirar Beneficios Mensualmente:**
+                    *   A medida que se acumulan las tasas de financiación y la convergencia de precios, su "Margen Disponible" aumenta.
+                    *   Puede transferir estas ganancias directamente a su billetera Spot y retirar mensualmente como renta, sin cerrar la posición principal de US$ 10.000.
+                
+                ---
+
+                #### ⚠️ Riesgos y Monitoreo Crítico
+                *   **Risco de Liquidação por Descolamento Temporal (Basis Risk):** En momentos de pánico extremo, la brecha entre el contrato trimestral y el perpetuo puede ensancharse temporalmente. Mantener el apalancamiento en un máximo de 2:1 proporciona un colchón de seguridad masivo para evitar la liquidación.
+                *   **Rolación de Contrato (Rollover):** Cada 3 meses, el contrato trimestral expira. Cerca del vencimiento, debe cerrar su posición short trimestral que expira y abrir una en el contrato trimestral del siguiente período (Rollover), capturando una nueva prima.
+                """)
+
+
+        with sub_t_dca:
+            if lang == "PT":
+                st.markdown("""
+                ### 📈 MÉTODO DE PREÇO MÉDIO (DCA) DE ELITE & CAPTURA DE RENDA DINÂMICA
+                
+                Investidores institucionais de alto calibre não tentam adivinhar o fundo exato do mercado. Eles utilizam a metodologia de **Dollar-Cost Averaging (DCA)** focada em ativos de altíssima convicção tecnológica e governança corporativa.
+                
+                ---
+
+                #### 🎯 Os Filtros de Seleção de Ativos
+                Para construir sua carteira de acumulação, utilize os dados em tempo real fornecidos pelos outros módulos deste terminal:
+                1.  **O Portfólio dos Gigantes (Módulo 1):** Selecione criptoativos que estejam nas carteiras dos 6 maiores fundos de Venture Capital (ex: *a16z, Paradigm, Polychain, Multicoin*). Isso garante governança, auditoria institucional e liquidez.
+                2.  **Oportunidades Tecnológicas (Módulo 2):** Escolha projetos com métricas on-chain saudáveis, em setores como Oráculos Ultra-rápidos, Infraestrutura L1 de alta velocidade, DePIN ou Web3 Consumidor.
+                
+                ---
+
+                #### 🛠️ A Estratégia de Preço Médio (DCA) Passo a Passo
+                
+                1.  **Aportes Fracionados Constantes:**
+                    *   Divida seu capital mensal destinado a investimentos (ex: 20% do seu lucro mensal da arbitragem delta-neutral) em compras semanais ou quinzenais.
+                    *   *Exemplo:* Em vez de comprar US$ 2.000 de Ethereum de uma vez, compre US$ 500 toda segunda-feira. Isso remove o peso psicológico da volatilidade e reduz o preço médio de aquisição.
+                
+                2.  **A Regra da Realização Dinâmica (Zerar Parte como Renda):**
+                    *   Defina alvos de valorização pontuais baseados no seu preço médio (ex: a cada 30% ou 50% de alta de um determinado ativo).
+                    *   Quando o ativo atingir esse alvo, aplique a técnica de **realização parcial de lucros**: venda apenas a valorização excedente.
+                    *   *Exemplo:* Você acumulou Solana (SOL) com preço médio de US$ 100. A SOL sobe para US$ 150 (alta de 50%). Você vende o lucro correspondente (ou 20% da posição), realiza essa fatia em USDT e saca diretamente para o seu bolso como renda de curto prazo. O capital principal continua correndo.
+                
+                3.  **Rebalanceamento e Reinvestimento na Base (Ethereum):**
+                    *   Parte do lucro realizado nas altcoins de oportunidade tecnológica pode ser redirecionada para a sua base sólida de **Ethereum (ETH)**.
+                    *   Foi justamente por causa de estratégias como a Arbitragem Delta-Neutral e Liquid Staking que **vale a pena sempre estar comprando Ethereum como investimento**. Isso permite crescer constantemente a sua base de garantia e multiplicar a sua renda mensal dolarizada ao longo do tempo.
+                """, unsafe_allow_html=True)
+            elif lang == "EN":
+                st.markdown("""
+                ### 📈 ELITE DOLLAR-COST AVERAGING (DCA) & DYNAMIC PROFIT REALIZATION
+                
+                High-net-worth institutional investors do not try to time the exact market bottom. They use a systematic **Dollar-Cost Averaging (DCA)** methodology focused on high-conviction technological assets and institutional backing.
+                
+                ---
+                
+                #### 🎯 Asset Selection Filters
+                To build your accumulation portfolio, leverage the real-time data provided by other modules in this terminal:
+                1.  **Venture Capital Portfolios (Module 1):** Select crypto assets held by the top 6 VC funds (e.g. *a16z, Paradigm, Polychain, Multicoin*). This ensures governance, audit trails, and institutional liquidity.
+                2.  **Technological Opportunities (Module 2):** Select projects with healthy on-chain metrics in high-growth sectors like Ultra-fast Oracles, High-throughput L1s, DePIN, or Consumer Web3.
+                
+                ---
+                
+                #### 🛠️ Step-by-Step DCA Strategy
+                
+                1.  **Fractional Purchases:**
+                    *   Split your monthly investment capital (e.g. 20% of your delta-neutral arbitrage monthly profits) into weekly or bi-weekly purchases.
+                    *   *Example:* Instead of buying $2,000 of Ethereum all at once, buy $500 every Monday. This removes psychological pressure and lowers your average acquisition price.
+                
+                2.  **Dynamic Profit Taking Rule (Extracting Profit as Income):**
+                    *   Define target profit targets relative to your average cost (e.g. at 30% or 50% appreciation).
+                    *   Once the asset hits this target, execute a **partial profit taking**: sell only the profit portion.
+                    *   *Example:* You accumulated Solana (SOL) at an average cost of $100. SOL rises to $150 (a 50% gain). You sell the profit portion, convert it to USDT, and withdraw it as short-term income. The core position continues to run.
+                
+                3.  **Rebalancing and Reinvesting in Core Assets (Ethereum):**
+                    *   Redirect a portion of the profits realized from high-growth altcoins back into your solid core of **Ethereum (ETH)**.
+                    *   It is precisely because of strategies like Delta-Neutral Arbitrage and Liquid Staking that **it is always worth buying Ethereum as a long-term investment**. This allows you to constantly grow your collateral base and multiply your monthly dollarized income over time.
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown("""
+                ### 📈 PRECIO MEDIO (DCA) DE ÉLITE Y REALIZACIÓN DINÁMICA DE BENEFICIOS
+                
+                Los inversores institucionales de alto nivel no intentan predecir el suelo exacto del mercado. Utilizan la metodología de **Dollar-Cost Averaging (DCA)** enfocada en activos tecnológicos de alta convicción y respaldo corporativo.
+                
+                ---
+                
+                #### 🎯 Filtros de Selección de Activos
+                Para construir su cartera de acumulación, utilice los datos en tiempo real proporcionados por los otros módulos de este terminal:
+                1.  **Portafolios de Gigantes (Módulo 1):** Seleccione criptoactivos en las carteras de los 6 principales fondos de Venture Capital (ej. *a16z, Paradigm, Polychain, Multicoin*). Esto garantiza gobernanza y liquidez institucional.
+                2.  **Oportunidades Tecnológicas (Módulo 2):** Elija proyectos con métricas on-chain saludables en sectores de alto crecimiento como Oráculos Ultrarrápidos, L1s de alta velocidad, DePIN o Web3 de Consumidor.
+                
+                ---
+                
+                #### 🛠️ Estrategia de Precio Medio (DCA) Paso a Paso
+                
+                1.  **Compras Fraccionadas Constantes:**
+                    *   Divida su capital mensual de inversión (ej. el 20% de sus ganancias mensuales de arbitraje delta-neutral) en compras semanales o quincenales.
+                    *   *Ejemplo:* En lugar de comprar US$ 2.000 de Ethereum de golpe, compre US$ 500 todos los lunes. Esto reduce el impacto psicológico y baja su precio medio de compra.
+                
+                2.  **Regla de Toma de Ganancias Dinámica (Retirar Beneficio como Renta):**
+                    *   Establezca objetivos de beneficio en función de su coste medio (ej. a cada 30% o 50% de apreciación).
+                    *   Cuando el activo alcance este objetivo, realice una **toma de ganancias parcial**: venda únicamente la parte de la ganancia.
+                    *   *Ejemplo:* Acumuló Solana (SOL) a un precio medio de US$ 100. SOL sube a US$ 150 (ganancia del 50%). Venda la parte del beneficio, conviértala a USDT y retírela como renta a corto plazo. La posición principal continúa activa.
+                
+                3.  **Rebalanceo y Reinversión en Activos Base (Ethereum):**
+                    *   Redirija una parte de los beneficios realizados en altcoins hacia su base sólida de **Ethereum (ETH)**.
+                    *   Es precisamente debido a estrategias como el Arbitraje Delta-Neutral y Liquid Staking que **siempre vale la pena comprar Ethereum como inversión**. Esto le permite aumentar constantemente su base de garantía y multiplicar sus ingresos mensuales dolarizados a lo largo del tiempo.
+                """, unsafe_allow_html=True)
+
+# --- ABA 4: BLINDAGEM DIGITAL E CUSTÓDIA SEGURA ---
     with t_custody:
         render_explanation_card(
             "Blindagem Digital & Custódia Segura" if lang == "PT" else ("Digital Shielding & Secure Custody" if lang == "EN" else "Blindaje Digital y Custodia Segura"),
