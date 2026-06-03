@@ -559,6 +559,30 @@ class LiveMarketManager:
             p, c, pct = self._scrape_google_finance(gf_sym)
             if p is not None:
                 return ticker, p, c, pct
+            
+            # Fallback to ExchangeRate API
+            rates = self._fetch_exchangerate_backup()
+            if rates:
+                val = None
+                if ticker == "EURUSD=X":
+                    val = (1.0 / rates.get("EUR")) if rates.get("EUR") else None
+                elif ticker == "GBPUSD=X":
+                    val = (1.0 / rates.get("GBP")) if rates.get("GBP") else None
+                elif ticker == "JPY=X":
+                    val = rates.get("JPY")
+                elif ticker == "BRL=X":
+                    val = rates.get("BRL")
+                elif ticker == "CAD=X":
+                    val = rates.get("CAD")
+                elif ticker == "AUDUSD=X":
+                    val = (1.0 / rates.get("AUD")) if rates.get("AUD") else None
+                elif ticker == "CHF=X":
+                    val = rates.get("CHF")
+                elif ticker == "USDSEK=X":
+                    val = rates.get("SEK")
+                
+                if val is not None:
+                    return ticker, val, 0.0, 0.0
                 
         # 3. Commodities
         commodity_map = {
@@ -1062,14 +1086,76 @@ class LiveMarketManager:
         """Calculates Purchasing Power Parity fundamental valuation and mispricing."""
         t_data = parsed_data.get("tickers", {})
         
-        # Current prices from feeds or defaults
-        eur = t_data.get("EURUSD=X", {}).get("price", 1.1644)
-        gbp = t_data.get("GBPUSD=X", {}).get("price", 1.3504)
-        jpy = t_data.get("JPY=X", {}).get("price", 158.88)
-        brl = t_data.get("BRL=X", {}).get("price", 5.0086)
-        cad = t_data.get("CAD=X", {}).get("price", 1.3792)
-        aud = t_data.get("AUDUSD=X", {}).get("price", 0.7177)
-        chf = t_data.get("CHF=X", {}).get("price", 0.9080)
+        # Current prices from feeds or backup API or modern defaults
+        eur = t_data.get("EURUSD=X", {}).get("price", None)
+        gbp = t_data.get("GBPUSD=X", {}).get("price", None)
+        jpy = t_data.get("JPY=X", {}).get("price", None)
+        brl = t_data.get("BRL=X", {}).get("price", None)
+        cad = t_data.get("CAD=X", {}).get("price", None)
+        aud = t_data.get("AUDUSD=X", {}).get("price", None)
+        chf = t_data.get("CHF=X", {}).get("price", None)
+
+        # Try to get live prices from ExchangeRate API with a local 20-minute cache
+        import os
+        import json
+        import time
+        import requests
+        
+        proj_dir = os.path.dirname(os.path.abspath(__file__))
+        ppa_cache_file = os.path.join(proj_dir, "cache", "ppa_forex_cache.json")
+        rates = None
+        
+        # Ensure the cache folder exists
+        os.makedirs(os.path.dirname(ppa_cache_file), exist_ok=True)
+        
+        # Check if local cache is fresh (less than 20 minutes old)
+        if os.path.exists(ppa_cache_file):
+            try:
+                mtime = os.path.getmtime(ppa_cache_file)
+                if time.time() - mtime < 1200:
+                    with open(ppa_cache_file, 'r', encoding='utf-8') as f:
+                        rates = json.load(f)
+            except Exception:
+                pass
+                
+        if not rates:
+            try:
+                res = requests.get("https://open.er-api.com/v6/latest/USD", timeout=5)
+                data = res.json()
+                if data.get("result") == "success":
+                    rates = data.get("rates", {})
+                    # Save to cache
+                    with open(ppa_cache_file, 'w', encoding='utf-8') as f:
+                        json.dump(rates, f, ensure_ascii=False)
+            except Exception:
+                pass
+                
+        # If rates are available, overwrite t_data values to use the real rates!
+        if rates:
+            eur = (1.0 / rates.get("EUR")) if rates.get("EUR") else eur
+            gbp = (1.0 / rates.get("GBP")) if rates.get("GBP") else gbp
+            jpy = rates.get("JPY") if rates.get("JPY") else jpy
+            brl = rates.get("BRL") if rates.get("BRL") else brl
+            cad = rates.get("CAD") if rates.get("CAD") else cad
+            aud = (1.0 / rates.get("AUD")) if rates.get("AUD") else aud
+            chf = rates.get("CHF") if rates.get("CHF") else chf
+
+        if None in [eur, gbp, jpy, brl, cad, aud, chf]:
+            backup_rates = self._fetch_exchangerate_backup()
+            if eur is None:
+                eur = (1.0 / backup_rates.get("EUR")) if backup_rates.get("EUR") else 1.0850
+            if gbp is None:
+                gbp = (1.0 / backup_rates.get("GBP")) if backup_rates.get("GBP") else 1.2640
+            if jpy is None:
+                jpy = backup_rates.get("JPY") if backup_rates.get("JPY") else 155.40
+            if brl is None:
+                brl = backup_rates.get("BRL") if backup_rates.get("BRL") else 5.2500
+            if cad is None:
+                cad = backup_rates.get("CAD") if backup_rates.get("CAD") else 1.3650
+            if aud is None:
+                aud = (1.0 / backup_rates.get("AUD")) if backup_rates.get("AUD") else 0.6620
+            if chf is None:
+                chf = backup_rates.get("CHF") if backup_rates.get("CHF") else 0.9080
         
         # Historical PPP fair values based on long-term cumulative inflation differentials (Big Mac + CPI models)
         ppp_models = [

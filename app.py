@@ -3588,6 +3588,192 @@ Acesso direto às mesas de estruturação Private de grandes bancos suíços. O 
         )
         st.plotly_chart(fig_ppa, use_container_width=True)
 
+        # --- PLANEJADOR DE POSIÇÃO E GESTÃO DE RISCO PPA ---
+        st.write("")
+        st.subheader("📊 PLANEJADOR DE GRADE E RISCO PPA (CONTA EXEMPLO: $10,000)" if lang == "PT" else ("📊 PPP POSITION GRID & RISK PLANNER (EXAMPLE: $10,000 ACCOUNT)" if lang == "EN" else "📊 PLANIFICADOR DE CUADRÍCULA Y RIESGO PPA (EJEMPLO: CUENTA DE $10,000)"))
+        
+        col_calc1, col_calc2 = st.columns([1, 1.2])
+        with col_calc1:
+            account_size = st.number_input(
+                "Tamanho da Conta (USD)" if lang == "PT" else ("Account Size (USD)" if lang == "EN" else "Tamaño de la Cuenta (USD)"),
+                min_value=1000.0,
+                max_value=1000000.0,
+                value=10000.0,
+                step=1000.0,
+                key="ppa_calc_account_size"
+            )
+            
+            # Select target currency to trade based on deviations
+            trade_options = [
+                "Iene Japonês (JPY - Venda USD/JPY)" if lang == "PT" else "Japanese Yen (JPY - Sell USD/JPY)",
+                "Dólar Canadense (CAD - Venda USD/CAD)" if lang == "PT" else "Canadian Dollar (CAD - Sell USD/CAD)",
+                "Franco Suíço (CHF - Compra USD/CHF)" if lang == "PT" else "Swiss Franc (CHF - Buy USD/CHF)",
+                "Real Brasileiro (BRL - Venda USD/BRL)" if lang == "PT" else "Brazilian Real (BRL - Sell USD/BRL)",
+                "Euro (EUR - Compra EUR/USD)" if lang == "PT" else "Euro (EUR - Buy EUR/USD)",
+                "Libra Esterlina (GBP - Compra GBP/USD)" if lang == "PT" else "British Pound (GBP - Buy GBP/USD)",
+                "Dólar Australiano (AUD - Compra AUD/USD)" if lang == "PT" else "Australian Dollar (AUD - Buy AUD/USD)"
+            ]
+            
+            selected_trade_opt = st.selectbox(
+                "Moeda e Par de Alocação" if lang == "PT" else ("Allocation Currency & Pair" if lang == "EN" else "Moneda y Par de Asignación"),
+                trade_options,
+                index=0,
+                key="ppa_calc_trade_pair"
+            )
+            
+            # Distance multiplier (ATR units or pip units)
+            grid_dist_pips = st.slider(
+                "Distância entre Níveis (Pips)" if lang == "PT" else ("Distance between Levels (Pips)" if lang == "EN" else "Distancia entre Niveles (Pips)"),
+                min_value=50,
+                max_value=400,
+                value=150,
+                step=50,
+                key="ppa_calc_grid_dist"
+            )
+
+        # Extract current prices from df_ppa dynamically to prevent any KeyError or missing data
+        prices_dict = {}
+        for _, row in df_ppa.iterrows():
+            prices_dict[row["Pair"]] = float(row["Price"])
+            
+        eur_p = prices_dict.get("EUR/USD", 1.0850)
+        gbp_p = prices_dict.get("GBP/USD", 1.2640)
+        jpy_p = prices_dict.get("USD/JPY", 155.40)
+        cad_p = prices_dict.get("USD/CAD", 1.3650)
+        aud_p = prices_dict.get("AUD/USD", 0.6620)
+        chf_p = prices_dict.get("USD/CHF", 0.9080)
+        brl_p = prices_dict.get("USD/BRL", 5.2500)
+
+        # Parse inputs and get current prices
+        pair_ticker = "USD/JPY"
+        current_price_val = 160.03
+        ppp_fair_val = 112.50
+        is_direct_quote = False
+        is_buy_trade = False
+        
+        if "Iene" in selected_trade_opt or "Yen" in selected_trade_opt:
+            pair_ticker = "USD/JPY"; current_price_val = jpy_p; ppp_fair_val = 112.50; is_direct_quote = False; is_buy_trade = False
+        elif "Canadense" in selected_trade_opt or "Canadian" in selected_trade_opt:
+            pair_ticker = "USD/CAD"; current_price_val = cad_p; ppp_fair_val = 1.2500; is_direct_quote = False; is_buy_trade = False
+        elif "Suíço" in selected_trade_opt or "Swiss" in selected_trade_opt:
+            pair_ticker = "USD/CHF"; current_price_val = chf_p; ppp_fair_val = 0.8800; is_direct_quote = False; is_buy_trade = True
+        elif "Real" in selected_trade_opt or "Brazilian" in selected_trade_opt:
+            pair_ticker = "USD/BRL"; current_price_val = brl_p; ppp_fair_val = 4.6500; is_direct_quote = False; is_buy_trade = False
+        elif "Euro" in selected_trade_opt:
+            pair_ticker = "EUR/USD"; current_price_val = eur_p; ppp_fair_val = 1.2500; is_direct_quote = True; is_buy_trade = True
+        elif "Libra" in selected_trade_opt or "British" in selected_trade_opt:
+            pair_ticker = "GBP/USD"; current_price_val = gbp_p; ppp_fair_val = 1.4200; is_direct_quote = True; is_buy_trade = True
+        else:
+            pair_ticker = "AUD/USD"; current_price_val = aud_p; ppp_fair_val = 0.7600; is_direct_quote = True; is_buy_trade = True
+
+        # Calculate position lots dynamically based on account size (Scale-in grid 0.02, 0.03, 0.05 on 10k account)
+        scale_factor = account_size / 10000.0
+        lot1 = max(0.01, round(0.02 * scale_factor, 2))
+        lot2 = max(0.01, round(0.03 * scale_factor, 2))
+        lot3 = max(0.01, round(0.05 * scale_factor, 2))
+        total_lots = lot1 + lot2 + lot3
+        
+        # Calculate level price entries
+        p1 = current_price_val
+        pip_unit = 0.0001 if not any(x in pair_ticker for x in ["JPY", "HUF", "BRL"]) else 0.01
+        
+        # Grid price directions
+        direction_sign = -1 if is_buy_trade else 1
+        p2 = p1 + (grid_dist_pips * pip_unit * direction_sign)
+        p3 = p2 + (grid_dist_pips * pip_unit * direction_sign)
+        
+        # Margin usage and pip buffer calculation
+        avg_pip_value_usd = 10.0
+        drawdown_1000_pips = (total_lots * 1000 * avg_pip_value_usd)
+        liquidation_pips = (account_size / (total_lots * avg_pip_value_usd))
+        
+        with col_calc2:
+            if lang == "PT":
+                calc_title = "CONFIGURAÇÃO DA GRADE DE CONVERGÊNCIA PPA"
+                lbl_lots = "Lote Recomendado"
+                lbl_lev1 = "Entrada 1 (Imediata)"
+                lbl_lev2 = "Entrada 2 (Preço Médio)"
+                lbl_lev3 = "Entrada 3 (Preço Médio)"
+                lbl_metrics = "Métricas de Risco & Segurança"
+                lbl_max_drawdown = "Drawdown Estimado p/ desvio de 1000 Pips"
+                lbl_liq_pips = "Margem de Segurança (Pips até Liquidação)"
+                lbl_status = "Status da Grade"
+                val_status = "ALTA PROBABILIDADE (DIVERGÊNCIA PPA EXTREMA)" if abs(current_price_val - ppp_fair_val)/ppp_fair_val > 0.15 else "CONVERGÊNCIA MODERADA"
+            elif lang == "EN":
+                calc_title = "PPA CONVERGENCE GRID CONFIGURATION"
+                lbl_lots = "Recommended Lot"
+                lbl_lev1 = "Entry 1 (Immediate)"
+                lbl_lev2 = "Entry 2 (Scale-in)"
+                lbl_lev3 = "Entry 3 (Scale-in)"
+                lbl_metrics = "Risk & Safety Metrics"
+                lbl_max_drawdown = "Est. Drawdown per 1000 Pips deviation"
+                lbl_liq_pips = "Safety Buffer (Pips to Liquidation)"
+                lbl_status = "Grid Status"
+                val_status = "HIGH PROBABILITY (EXTREME PPP DIVERGENCY)" if abs(current_price_val - ppp_fair_val)/ppp_fair_val > 0.15 else "MODERATE CONVERGENCE"
+            else:
+                calc_title = "CONFIGURACIÓN DE CUADRÍCULA PPA"
+                lbl_lots = "Lote Recomendado"
+                lbl_lev1 = "Entrada 1 (Inmediata)"
+                lbl_lev2 = "Entrada 2 (Escalonada)"
+                lbl_lev3 = "Entrada 3 (Escalonada)"
+                lbl_metrics = "Métricas de Riesgo y Seguridad"
+                lbl_max_drawdown = "Drawdown Est. por 1000 Pips de desvío"
+                lbl_liq_pips = "Margen de Seguridad (Pips hasta Liquidación)"
+                lbl_status = "Estado de la Cuadrícula"
+                val_status = "ALTA PROBABILIDAD (DIVERGENCIA PPA EXTREMA)" if abs(current_price_val - ppp_fair_val)/ppp_fair_val > 0.15 else "CONVERGENCIA MODERADA"
+
+            trade_type_label = ("COMPRAR (LONG)" if is_buy_trade else "VENDER (SHORT)") if lang == "PT" else (("BUY (LONG)" if is_buy_trade else "SELL (SHORT)") if lang == "EN" else ("COMPRAR (LONG)" if is_buy_trade else "VENDER (SHORT)"))
+            color_trade = "#00ffa5" if is_buy_trade else "#ff4b4b"
+
+            st.markdown(f"""
+            <div style="background-color: #0b0e14; border: 1px solid #333; padding: 15px; border-radius: 8px; font-family: 'Inter';">
+                <h5 style="margin: 0 0 12px 0; color: #bf953f; font-size: 13px; font-weight: 700; border-bottom: 1px solid #222; padding-bottom: 6px; text-transform: uppercase; text-align: left;">{calc_title}</h5>
+                <p style="margin: 0 0 10px 0; font-size: 11px; color: #ccc;">Par de Operação: <strong style="color:#fff;">{pair_ticker}</strong> | Ação sugerida: <strong style="color:{color_trade};">{trade_type_label}</strong></p>
+                <div style="background-color: #161a23; padding: 10px; border-radius: 6px; margin-bottom: 12px; text-align: left; font-size: 11px; line-height: 1.5;">
+                    • <b>{lbl_lev1}:</b> Preço {p1:.4f if pip_unit == 0.0001 else p1:.2f} | {lbl_lots}: <strong style="color:#fff;">{lot1}</strong><br>
+                    • <b>{lbl_lev2}:</b> Preço {p2:.4f if pip_unit == 0.0001 else p2:.2f} | {lbl_lots}: <strong style="color:#fff;">{lot2}</strong><br>
+                    • <b>{lbl_lev3}:</b> Preço {p3:.4f if pip_unit == 0.0001 else p3:.2f} | {lbl_lots}: <strong style="color:#fff;">{lot3}</strong>
+                </div>
+                <div style="background-color: #11151e; border: 1px solid rgba(0, 255, 165, 0.15); padding: 12px; border-radius: 6px; margin-bottom: 12px; text-align: left;">
+                    <p style="margin: 0; font-size: 10px; color: #888; text-transform: uppercase; font-weight:700;">{lbl_metrics}</p>
+                    <p style="margin: 5px 0 3px 0; font-size: 11px; color: #aaa;">• {lbl_max_drawdown}: <strong style="color: #ff4b4b;">\\$ {drawdown_1000_pips:,.2f}</strong> (~{(drawdown_1000_pips/account_size)*100:.1f}% da conta)</p>
+                    <p style="margin: 0; font-size: 11px; color: #aaa;">• {lbl_liq_pips}: <strong style="color: #00ffa5;">{liquidation_pips:,.0f} Pips</strong> (Margem extremamente segura)</p>
+                </div>
+                <div style="font-size: 11px; color: #aaa; text-align: left;">
+                    • {lbl_status}: <strong style="color: #00ffa5;">{val_status}</strong>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        # RISK DISCLAIMER FOR PPA
+        if lang == "PT":
+            st.markdown(f"""
+            <div style="background-color: #2c161a; border-left: 4px solid #ff4b4b; padding: 12px; border-radius: 4px; font-family: 'Inter'; margin-top: 15px; text-align: left;">
+                <h5 style="margin: 0 0 6px 0; color: #ff4b4b; font-size: 11px; font-weight: 700; text-transform: uppercase;">⚠️ AVISO DE RISCO E DECLARAÇÃO DE RESPONSABILIDADE</h5>
+                <p style="font-size: 10.5px; color: #eccbc8; line-height: 1.4; margin: 0;">
+                    <b>Atenção:</b> A Paridade do Poder de Compra (PPA) é um modelo de equilíbrio de longo prazo e as moedas podem permanecer desviadas do valor justo por meses ou anos. A montagem de grades e preço médio envolve risco real de perda de capital. A <b>Perfect Life Elite Investors</b> atua apenas com fins educacionais e quantitativos e não se responsabiliza por perdas financeiras ou liquidação de contas. Mantenha sempre a margem livre acima de 200%.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        elif lang == "EN":
+            st.markdown(f"""
+            <div style="background-color: #2c161a; border-left: 4px solid #ff4b4b; padding: 12px; border-radius: 4px; font-family: 'Inter'; margin-top: 15px; text-align: left;">
+                <h5 style="margin: 0 0 6px 0; color: #ff4b4b; font-size: 11px; font-weight: 700; text-transform: uppercase;">⚠️ RISK WARNING & LIABILITY DISCLAIMER</h5>
+                <p style="font-size: 10.5px; color: #eccbc8; line-height: 1.4; margin: 0;">
+                    <b>Attention:</b> Purchasing Power Parity (PPP) is a long-term equilibrium model, and currency pairs can remain decoupled from their fair value for months or even years. Position scaling (grid trading/dollar-cost averaging) carries a high risk of capital loss. <b>Perfect Life Elite Investors</b> provides purely quantitative and educational tools and is not liable for any trading losses or account liquidations. Always maintain a free margin above 200%.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+            <div style="background-color: #2c161a; border-left: 4px solid #ff4b4b; padding: 12px; border-radius: 4px; font-family: 'Inter'; margin-top: 15px; text-align: left;">
+                <h5 style="margin: 0 0 6px 0; color: #ff4b4b; font-size: 11px; font-weight: 700; text-transform: uppercase;">⚠️ ADVERTENCIA DE RIESGO Y DESCARGO DE RESPONSABILIDAD</h5>
+                <p style="font-size: 10.5px; color: #eccbc8; line-height: 1.4; margin: 0;">
+                    <b>Atención:</b> La Paridad de Poder Adquisitivo (PPA) es un modelo de equilibrio a largo plazo y las monedas pueden permanecer desviadas de su valor justo durante meses o años. El escalonamiento de posiciones (cuadrículas/precios promedio) implica un riesgo real de pérdida de capital. <b>Perfect Life Elite Investors</b> proporciona herramientas exclusivamente educativas y cuantitativas y no se responsabiliza por pérdidas financieras o liquidación de cuentas. Mantenga siempre el margen libre por encima de 200%.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
     # --- ABA 3: SENTIMENTO INSTITUCIONAL (COT INDEX) ---
     with t_cot:
         render_explanation_card(
@@ -4309,6 +4495,246 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             use_container_width=True,
             hide_index=True
         )
+
+        # --- ESTRATÉGIAS AVANÇADAS DE HEDGE E RENDIMENTO FOREX (Delta-Neutral Carry Basket & Gold/Silver Spread Arbitrage) ---
+        st.write("")
+        st.subheader("🚀 ESTRATÉGIAS DE RENDIMENTO AVANÇADAS" if lang == "PT" else ("🚀 ADVANCED YIELD STRATEGIES" if lang == "EN" else "🚀 ESTRATEGIAS DE RENDIMIENTO AVANZADAS"))
+        
+        # Expandidor 1: Cesta de Carry Trade Delta-Neutro
+        with st.expander("💼 CESTA DE CARRY TRADE DELTA-NEUTRO (DELTA-NEUTRAL CARRY BASKET)" if lang == "PT" else ("💼 DELTA-NEUTRAL CARRY BASKET" if lang == "EN" else "💼 CESTA DE CARRY TRADE DELTA-NEUTRO")):
+            st.write("Explore o diferencial de taxas de juros globais de forma market-neutral (sem direção). Esta estratégia consiste em comprar moedas de alta taxa de juros (ex: BRL, MXN, USD) e vender moedas de juros baixos (ex: JPY, CHF, EUR) combinando posições para anular o risco de oscilação cambial direta." if lang == "PT" else ("Exploit global interest rate differentials in a market-neutral fashion. This strategy goes long on high-yielding currencies (e.g., BRL, MXN, USD) and shorts low-yielding ones (e.g., JPY, CHF, EUR), combining positions to neutralize direct exchange rate fluctuations." if lang == "EN" else "Explote el diferencial de tasas de interés globales de forma neutral al mercado. Esta estrategia consiste en comprar monedas de alto rendimiento (ej: BRL, MXN, USD) y vender monedas de bajo rendimiento (ej: JPY, CHF, EUR) combinando posiciones para anular el riesgo cambial."))
+            
+            col_carry1, col_carry2 = st.columns([1, 1.2])
+            with col_carry1:
+                carry_equity = st.number_input(
+                    "Tamanho da Conta (USD)" if lang == "PT" else ("Account Size (USD)" if lang == "EN" else "Tamaño de la Cuenta (USD)"),
+                    min_value=1000.0,
+                    max_value=1000000.0,
+                    value=10000.0,
+                    step=1000.0,
+                    key="carry_equity_input"
+                )
+                carry_leverage = st.slider(
+                    "Alavancagem Recomendada" if lang == "PT" else ("Target Leverage" if lang == "EN" else "Apalancamiento Sugerido"),
+                    min_value=1,
+                    max_value=5,
+                    value=3,
+                    step=1,
+                    key="carry_leverage_input"
+                )
+            
+            # Calculate dynamic lots and metrics based on $10,000 baseline
+            carry_scale = (carry_equity / 10000.0) * (carry_leverage / 3.0)
+            lot_usdjpy = max(0.01, round(0.10 * carry_scale, 2))
+            lot_audjpy = max(0.01, round(0.10 * carry_scale, 2))
+            lot_eurusd = max(0.01, round(0.10 * carry_scale, 2))
+            
+            total_exposure = (lot_usdjpy + lot_audjpy + lot_eurusd) * 100000.0
+            actual_leverage = total_exposure / carry_equity
+            
+            # Estimate gross annual carry yield
+            annual_carry_usd = total_exposure * 0.035
+            monthly_carry_usd = annual_carry_usd / 12.0
+            
+            # Risk metrics
+            margin_used = total_exposure * 0.01
+            margin_free = carry_equity - margin_used
+            drawdown_500_pips = total_exposure * 0.05
+            
+            with col_carry2:
+                if lang == "PT":
+                    carry_title = "ESTRUTURAÇÃO DA CESTA DELTA-NEUTRA"
+                    lbl_ops = "Ordens Simultâneas Recomendadas"
+                    lbl_yld = "Rendimento Anual Estimado (Carry)"
+                    lbl_mth = "Rendimento Mensal Estimado"
+                    lbl_mgn = "Margem Alocada (Garantia)"
+                    lbl_dd = "Risco (Drawdown p/ Desvio de 500 Pips)"
+                elif lang == "EN":
+                    carry_title = "DELTA-NEUTRAL BASKET STRUCTURE"
+                    lbl_ops = "Recommended Simultaneous Orders"
+                    lbl_yld = "Estimated Annual Yield (Carry)"
+                    lbl_mth = "Estimated Monthly Yield"
+                    lbl_mgn = "Allocated Margin (Collateral)"
+                    lbl_dd = "Risk (Drawdown per 500 Pips Deviation)"
+                else:
+                    carry_title = "ESTRUCTURA DE CESTA DELTA-NEUTRAL"
+                    lbl_ops = "Órdenes Simultáneas Recomendadas"
+                    lbl_yld = "Rendimiento Anual Estimado (Carry)"
+                    lbl_mth = "Rendimiento Mensal Estimado"
+                    lbl_mgn = "Margen Asignado (Garantía)"
+                    lbl_dd = "Riesgo (Drawdown por Desvío de 500 Pips)"
+                    
+                st.markdown(f"""
+                <div style="background-color: #0b0e14; border: 1px solid #333; padding: 15px; border-radius: 8px; font-family: 'Inter';">
+                    <h5 style="margin: 0 0 12px 0; color: #bf953f; font-size: 13px; font-weight: 700; border-bottom: 1px solid #222; padding-bottom: 6px; text-transform: uppercase; text-align: left;">{carry_title}</h5>
+                    <div style="background-color: #161a23; padding: 10px; border-radius: 6px; margin-bottom: 12px; text-align: left; font-size: 11px; line-height: 1.5;">
+                        <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display: block; margin-bottom: 5px;">{lbl_ops}</span>
+                        • <b>COMPRAR (LONG) USD/JPY:</b> Lotes: <strong style="color:#fff;">{lot_usdjpy}</strong><br>
+                        • <b>COMPRAR (LONG) AUD/JPY:</b> Lotes: <strong style="color:#fff;">{lot_audjpy}</strong><br>
+                        • <b>VENDER (SHORT) EUR/USD:</b> Lotes: <strong style="color:#fff;">{lot_eurusd}</strong>
+                    </div>
+                    <div style="background-color: #11151e; border: 1px solid rgba(0, 255, 165, 0.15); padding: 12px; border-radius: 6px; text-align: left; font-size: 11.5px; line-height: 1.6;">
+                        • {lbl_yld}: <strong style="color: #00ffa5;">\\$ {annual_carry_usd:,.2f} / ano</strong> (~{(annual_carry_usd/carry_equity)*100:.2f}% a.a.)<br>
+                        • {lbl_mth}: <strong style="color: #00ffa5;">\\$ {monthly_carry_usd:,.2f} / mês</strong><br>
+                        • {lbl_mgn}: <strong style="color: #aaa;">\\$ {margin_used:,.2f}</strong> (Margem Livre: \\$ {margin_free:,.2f})<br>
+                        • {lbl_dd}: <strong style="color: #ff4b4b;">\\$ {drawdown_500_pips:,.2f}</strong> (~{(drawdown_500_pips/carry_equity)*100:.1f}% da conta)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+            if lang == "PT":
+                st.markdown("""
+                <div style="background-color: #2c161a; border-left: 4px solid #ff4b4b; padding: 12px; border-radius: 4px; font-family: 'Inter'; margin-top: 10px; text-align: left;">
+                    <h5 style="margin: 0 0 6px 0; color: #ff4b4b; font-size: 11px; font-weight: 700; text-transform: uppercase;">⚠️ AVISO DE RISCO E GARANTIAS DE MARGEM</h5>
+                    <p style="font-size: 10.5px; color: #eccbc8; line-height: 1.4; margin: 0;">
+                        <b>Atenção:</b> O Carry Trade Delta-Neutro busca neutralidade cambial, mas as correlações de mercado não são perfeitas e podem se desviar em momentos de pânico financeiro. Posições alavancadas exigem monitoramento diário. A variação nas taxas de swap diárias aplicadas pelas corretoras forex pode afetar a lucratividade líquida. Não operamos com fins de recomendação direta de investimento e não somos responsáveis por perdas financeiras.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+            elif lang == "EN":
+                st.markdown("""
+                <div style="background-color: #2c161a; border-left: 4px solid #ff4b4b; padding: 12px; border-radius: 4px; font-family: 'Inter'; margin-top: 10px; text-align: left;">
+                    <h5 style="margin: 0 0 6px 0; color: #ff4b4b; font-size: 11px; font-weight: 700; text-transform: uppercase;">⚠️ RISK WARNING & MARGIN COLLATERAL WARN</h5>
+                    <p style="font-size: 10.5px; color: #eccbc8; line-height: 1.4; margin: 0;">
+                        <b>Attention:</b> Delta-Neutral Carry Trade aims for currency neutrality, but market correlations are dynamic and can decouple during market stress. Leveraged portfolios require daily supervision. Changes in daily rollover/swap rates charged by brokers can directly impact net yields. Perfect Life Elite Investors acts solely with quantitative education intent and assumes no liability for capital loss.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown("""
+                <div style="background-color: #2c161a; border-left: 4px solid #ff4b4b; padding: 12px; border-radius: 4px; font-family: 'Inter'; margin-top: 10px; text-align: left;">
+                    <h5 style="margin: 0 0 6px 0; color: #ff4b4b; font-size: 11px; font-weight: 700; text-transform: uppercase;">⚠️ ADVERTENCIA DE RIESGO Y COBERTURAS DE MARGEN</h5>
+                    <p style="font-size: 10.5px; color: #eccbc8; line-height: 1.4; margin: 0;">
+                        <b>Atención:</b> El Carry Trade Delta-Neutral busca neutralidad cambiaria, pero las correlaciones de mercado son dinámicas y pueden diferir en momentos de pánico financiero. Las carteras apalancadas requieren supervisión diaria. La variación de tasas swap cobradas por el broker puede afectar el rendimiento neto. Esta herramienta es exclusivamente cuantitativa y educativa. No somos responsables por pérdidas.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+
+        # Expandidor 2: Arbitragem de Spread Ouro vs. Prata
+        with st.expander("⚖️ ARBITRAGEM DE SPREAD OURO VS. PRATA (GOLD-SILVER SPREAD ARBITRAGE)" if lang == "PT" else ("⚖️ GOLD-SILVER SPREAD ARBITRAGE" if lang == "EN" else "⚖️ ARBITRAJE DE SPREAD ORO VS. PLATA")):
+            t_data = market_data.get("tickers", {})
+            gold_price = float(t_data.get("GC=F", {}).get("price", 2380.50))
+            silver_price = float(t_data.get("SI=F", {}).get("price", 28.20))
+            
+            # Current Gold-to-Silver Ratio
+            current_gsr = gold_price / silver_price
+            historical_gsr_mean = 80.0
+            historical_gsr_std = 8.0
+            gsr_zscore = (current_gsr - historical_gsr_mean) / historical_gsr_std
+            
+            st.write(f"Explore a correlação de longo prazo entre metais preciosos. Historicamente, a relação de preço entre Ouro e Prata (GSR) tende a oscilar em torno de **80.0**. Atualmente, com o Ouro a **\\$ {gold_price:,.2f}** e a Prata a **\\$ {silver_price:,.2f}**, a proporção está em **{current_gsr:.2f}** (Z-Score: **{gsr_zscore:+.2f}**)." if lang == "PT" else (f"Exploit the long-term cointegration between precious metals. Historically, the Gold-to-Silver Ratio (GSR) hovers around **80.0**. Currently, with Gold at **\\$ {gold_price:,.2f}** and Silver at **\\$ {silver_price:,.2f}**, the ratio sits at **{current_gsr:.2f}** (Z-Score: **{gsr_zscore:+.2f}**)." if lang == "EN" else f"Monitoree la cointegración histórica entre metales preciosos. El ratio Oro/Plata (GSR) tiende a oscilar en torno a **80.0**. Con el Oro a **\\$ {gold_price:,.2f}** y la Plata a **\\$ {silver_price:,.2f}**, la relación actual es **{current_gsr:.2f}** (Z-Score: **{gsr_zscore:+.2f}**)."))
+            
+            col_gs1, col_gs2 = st.columns([1, 1.2])
+            with col_gs1:
+                gsr_equity = st.number_input(
+                    "Tamanho da Conta (USD)" if lang == "PT" else ("Account Size (USD)" if lang == "EN" else "Tamaño de la Cuenta (USD)"),
+                    min_value=1000.0,
+                    max_value=1000000.0,
+                    value=10000.0,
+                    step=1000.0,
+                    key="gsr_equity_input"
+                )
+                gsr_leverage = st.slider(
+                    "Alavancagem Recomendada" if lang == "PT" else ("Target Leverage" if lang == "EN" else "Apalancamiento Sugerido"),
+                    min_value=1,
+                    max_value=5,
+                    value=2,
+                    step=1,
+                    key="gsr_leverage_input"
+                )
+                
+            abs_z_gsr = abs(gsr_zscore)
+            target_exposure_each = gsr_equity * gsr_leverage * 0.5
+            lot_gold_raw = target_exposure_each / (gold_price * 100.0)
+            lot_gold = max(0.01, round(lot_gold_raw, 2))
+            lot_silver_raw = (lot_gold * gold_price * 100.0) / (silver_price * 5000.0)
+            lot_silver = max(0.01, round(lot_silver_raw, 2))
+            
+            if gsr_zscore > 1.0:
+                action_gold = "VENDER (SHORT)" if lang == "PT" else ("SELL (SHORT)" if lang == "EN" else "VENDER (SHORT)")
+                action_silver = "COMPRAR (LONG)" if lang == "PT" else ("BUY (LONG)" if lang == "EN" else "COMPRAR (LONG)")
+                color_gsr = "#ff4b4b"
+                status_gsr = "OURO VALORIZADO VS PRATA" if lang == "PT" else ("GOLD OVERVALUED VS SILVER" if lang == "EN" else "ORO VALORADO VS PLATA")
+            elif gsr_zscore < -1.0:
+                action_gold = "COMPRAR (LONG)" if lang == "PT" else ("BUY (LONG)" if lang == "EN" else "COMPRAR (LONG)")
+                action_silver = "VENDER (SHORT)" if lang == "PT" else ("SELL (SHORT)" if lang == "EN" else "VENDER (SHORT)")
+                color_gsr = "#00ffa5"
+                status_gsr = "PRATA VALORIZADA VS OURO" if lang == "PT" else ("SILVER OVERVALUED VS GOLD" if lang == "EN" else "PLATA VALORADA VS ORO")
+            else:
+                action_gold = "AGUARDAR" if lang == "PT" else ("STANDBY" if lang == "EN" else "AGUARDAR")
+                action_silver = "AGUARDAR" if lang == "PT" else ("STANDBY" if lang == "EN" else "AGUARDAR")
+                color_gsr = "#aaaaaa"
+                status_gsr = "RELAÇÃO EM EQUILÍBRIO" if lang == "PT" else ("RATIO IN EQUILIBRIUM" if lang == "EN" else "RATIO EN EQUILIBRIO")
+            
+            total_gsr_exposure = (lot_gold * gold_price * 100.0) + (lot_silver * silver_price * 5000.0)
+            est_margin_gsr = total_gsr_exposure * 0.05
+            drawdown_metals = total_gsr_exposure * 0.08
+            
+            with col_gs2:
+                if lang == "PT":
+                    gsr_title = "COCKPIT DE ARBITRAGEM DE METAIS"
+                    lbl_cond = "Status do Spread"
+                    lbl_ops_gsr = "Posicionamento Simétrico"
+                    lbl_mgn_gsr = "Margem de Garantia Estimada"
+                    lbl_dd_gsr = "Drawdown Histórico de Estresse"
+                elif lang == "EN":
+                    gsr_title = "METALS ARBITRAGE COCKPIT"
+                    lbl_cond = "Spread Status"
+                    lbl_ops_gsr = "Symmetrical Positioning"
+                    lbl_mgn_gsr = "Estimated Collateral Margin"
+                    lbl_dd_gsr = "Historical Stress Drawdown"
+                else:
+                    gsr_title = "CABINA DE ARBITRAJE DE METALES"
+                    lbl_cond = "Estado del Spread"
+                    lbl_ops_gsr = "Posicionamiento Simétrico"
+                    lbl_mgn_gsr = "Margen de Garantía Estimado"
+                    lbl_dd_gsr = "Drawdown Histórico de Estrés"
+                    
+                st.markdown(f"""
+                <div style="background-color: #0b0e14; border: 1px solid #333; padding: 15px; border-radius: 8px; font-family: 'Inter';">
+                    <h5 style="margin: 0 0 12px 0; color: #bf953f; font-size: 13px; font-weight: 700; border-bottom: 1px solid #222; padding-bottom: 6px; text-transform: uppercase; text-align: left;">{gsr_title}</h5>
+                    <p style="margin: 0 0 10px 0; font-size: 11px; color: #ccc;">{lbl_cond}: <strong style="color:{color_gsr};">{status_gsr}</strong></p>
+                    
+                    <div style="background-color: #161a23; padding: 10px; border-radius: 6px; margin-bottom: 12px; text-align: left; font-size: 11px; line-height: 1.5;">
+                        <span style="color: #bf953f; font-weight: 700; font-size: 9.5px; text-transform: uppercase; display: block; margin-bottom: 5px;">{lbl_ops_gsr}</span>
+                        • <b>OURO (GC=F):</b> {action_gold} | Lotes: <strong style="color:#fff;">{lot_gold}</strong> (~\\$ {lot_gold*gold_price*100:,.2f})<br>
+                        • <b>PRATA (SI=F):</b> {action_silver} | Lotes: <strong style="color:#fff;">{lot_silver}</strong> (~\\$ {lot_silver*silver_price*5000:,.2f})
+                    </div>
+                    
+                    <div style="background-color: #11151e; border: 1px solid rgba(0, 255, 165, 0.15); padding: 12px; border-radius: 6px; text-align: left; font-size: 11.5px; line-height: 1.6;">
+                        • {lbl_mgn_gsr}: <strong style="color: #aaa;">\\$ {est_margin_gsr:,.2f}</strong><br>
+                        • {lbl_dd_gsr}: <strong style="color: #ff4b4b;">\\$ {drawdown_metals:,.2f}</strong> (~{(drawdown_metals/gsr_equity)*100:.1f}% da conta)
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+            if lang == "PT":
+                st.markdown("""
+                <div style="background-color: #2c161a; border-left: 4px solid #ff4b4b; padding: 12px; border-radius: 4px; font-family: 'Inter'; margin-top: 10px; text-align: left;">
+                    <h5 style="margin: 0 0 6px 0; color: #ff4b4b; font-size: 11px; font-weight: 700; text-transform: uppercase;">⚠️ AVISO DE RISCO - ARBITRAGEM DE METAIS</h5>
+                    <p style="font-size: 10.5px; color: #eccbc8; line-height: 1.4; margin: 0;">
+                        <b>Atenção:</b> O Ouro e a Prata possuem forte co-integração histórica, porém o spread de GSR pode se estender indefinidamente em cenários de quebra de liquidez internacional ou 'Margin Call' sistêmico. O tamanho físico dos contratos de commodities pode variar em diferentes corretoras. Mantenha garantia suficiente em conta para suportar a volatilidade de curto prazo.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+            elif lang == "EN":
+                st.markdown("""
+                <div style="background-color: #2c161a; border-left: 4px solid #ff4b4b; padding: 12px; border-radius: 4px; font-family: 'Inter'; margin-top: 10px; text-align: left;">
+                    <h5 style="margin: 0 0 6px 0; color: #ff4b4b; font-size: 11px; font-weight: 700; text-transform: uppercase;">⚠️ RISK WARNING - METALS ARBITRAGE</h5>
+                    <p style="font-size: 10.5px; color: #eccbc8; line-height: 1.4; margin: 0;">
+                        <b>Attention:</b> Gold and Silver have robust long-term cointegration, but the GSR spread can widen significantly during global liquidity events or systemic shocks. CFD contract specifications (lot values) vary widely among brokers. Make sure your account maintains sufficient capital margin buffer to handle short-term price divergence.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
+            else:
+                st.markdown("""
+                <div style="background-color: #2c161a; border-left: 4px solid #ff4b4b; padding: 12px; border-radius: 4px; font-family: 'Inter'; margin-top: 10px; text-align: left;">
+                    <h5 style="margin: 0 0 6px 0; color: #ff4b4b; font-size: 11px; font-weight: 700; text-transform: uppercase;">⚠️ ADVERTENCIA DE RIESGO - ARBITRAJE DE METALES</h5>
+                    <p style="font-size: 10.5px; color: #eccbc8; line-height: 1.4; margin: 0;">
+                        <b>Atención:</b> El Oro y la Plata tienen una co-integración histórica fuerte, sin embargo, el ratio GSR puede expandirse indefinidamente en eventos de pánico de liquidez global. Los tamaños de lote CFD pueden diferir por corredor. Mantenga un colchón financiero sólido en cuenta para tolerar desviaciones a corto plazo.
+                    </p>
+                </div>
+                """, unsafe_allow_html=True)
 
     st.write("")
 
