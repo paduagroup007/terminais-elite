@@ -858,18 +858,22 @@ class LiveMarketManager:
                             "timestamp": now_str
                         }
 
-            # 2. Only download non-B3 tickers via Yahoo Finance to save massive memory!
-            non_b3_tickers = [t for t in self.all_tickers if not t.endswith(".SA")]
-            if non_b3_tickers:
+            # 2. Download non-B3 tickers + B3 tickers that failed to preload from Fundamentus
+            tickers_to_download = [t for t in self.all_tickers if not t.endswith(".SA")]
+            for t in self.all_tickers:
+                if t.endswith(".SA") and t not in parsed["tickers"]:
+                    tickers_to_download.append(t)
+                    
+            if tickers_to_download:
                 data = pd.DataFrame()
                 try:
-                    data = yf.download(non_b3_tickers, period='5d', group_by='ticker', progress=False)
+                    data = yf.download(tickers_to_download, period='5d', group_by='ticker', progress=False)
                 except Exception as e:
                     print(f"yfinance download failed: {e}")
 
-                # Parse non-B3 Yahoo Finance data
+                # Parse Yahoo Finance data
                 if not data.empty:
-                    for t in non_b3_tickers:
+                    for t in tickers_to_download:
                         try:
                             if t in data.columns.levels[0] if hasattr(data.columns, 'levels') else t in data.columns:
                                 close_data = data[t]['Close'].dropna()
