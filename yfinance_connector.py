@@ -155,7 +155,7 @@ US_TICKER_MAPPING = {
 # Unique B3 stock tickers from Brazilian institutional portfolios
 BR_TICKERS = [
     "PETR3.SA", "PETR4.SA", "SRNA3.SA", "CSMG3.SA", "CSAN3.SA", "BBDC3.SA", "BBDC4.SA", 
-    "EQTL3.SA", "ENGI11.SA", "ELET3.SA", "ENEV3.SA", "ITSA4.SA", "RDOR3.SA", "RENT3.SA", 
+    "EQTL3.SA", "ENGI11.SA", "AXIA3.SA", "ENEV3.SA", "ITSA4.SA", "RDOR3.SA", "RENT3.SA", 
     "VBBR3.SA", "ITUB4.SA", "NATU3.SA", "SUZB3.SA", "MOTV3.SA", "WEGE3.SA", "LREN3.SA", 
     "STBP3.SA", "ALOS3.SA", "TUPY3.SA", "PRIO3.SA", "ABEV3.SA", "BPAC11.SA", "RADL3.SA", 
     "COGN3.SA", "RAPT4.SA", "SBSP3.SA", "VALE3.SA", "BBAS3.SA", "JBSS3.SA", "CPLE6.SA", 
@@ -399,11 +399,15 @@ class LiveMarketManager:
                 pass
 
     def fetch_all_data(self):
-        """Returns current cached data immediately, and spawns a background subprocess to update it if expired or missing."""
-        # 1. If cache file doesn't exist, trigger background update and return fallback data immediately (no blocking!)
+        """Returns current cached data immediately, or fetches it synchronously if cache is missing to ensure zero fake data."""
+        # 1. If cache file doesn't exist, run the update synchronously so the user NEVER sees fake numbers!
         if not os.path.exists(self.cache_file):
-            self._trigger_background_update()
-            return self.get_fallback_data()
+            try:
+                self._fetch_and_save_data_sync()
+            except Exception:
+                pass
+            if not os.path.exists(self.cache_file):
+                return self.get_fallback_data()
             
         # 2. Cache file exists. Load it.
         try:
@@ -715,47 +719,76 @@ class LiveMarketManager:
                 except Exception:
                     pass
 
-            # Try Yahoo Finance first
-            data = pd.DataFrame()
-            try:
-                data = yf.download(self.all_tickers, period='5d', group_by='ticker', progress=False)
-            except Exception as e:
-                print(f"yfinance download failed: {e}")
-
             parsed = {
                 "metadata": {"last_update": now_str, "status": "LIVE REAL-TIME FEED"},
                 "tickers": {}
             }
-            
-            # If yfinance returned data, parse it
-            if not data.empty:
-                for t in self.all_tickers:
-                    try:
-                        if t in data.columns.levels[0] if hasattr(data.columns, 'levels') else t in data.columns:
-                            close_data = data[t]['Close'].dropna()
-                            if len(close_data) >= 2:
-                                prev = close_data.iloc[-2]
-                                curr = close_data.iloc[-1]
-                                diff = curr - prev
-                                pct = (diff / prev) * 100
-                                parsed["tickers"][t] = {
-                                    "price": float(curr),
-                                    "change": float(diff),
-                                    "pct_change": float(pct),
-                                    "timestamp": now_str
-                                }
-                            elif len(close_data) == 1:
-                                curr = close_data.iloc[-1]
-                                parsed["tickers"][t] = {
-                                    "price": float(curr),
-                                    "change": 0.0,
-                                    "pct_change": 0.0,
-                                    "timestamp": now_str
-                                }
-                    except Exception:
-                        pass
 
-            # Fetch any missing tickers using fallbacks in parallel (limit concurrency to 3 to prevent memory limits/rate limits)
+            # 1. Preload B3 prices from Fundamentus in a single lightweight request
+            fundamentus_prices = {}
+            try:
+                f_url = "https://www.fundamentus.com.br/resultado.php"
+                f_res = requests.get(f_url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=8)
+                if f_res.status_code == 200:
+                    matches = re.findall(r'papel=([A-Z0-9]+)">[A-Z0-9]+</a></span></td>\s*<td>([\d,\.]+)</td>', f_res.text)
+                    for ticker_sym, price_str in matches:
+                        try:
+                            val = price_str.replace('.', '').replace(',', '.')
+                            fundamentus_prices[f"{ticker_sym}.SA"] = float(val)
+                        except ValueError:
+                            pass
+            except Exception as e:
+                print(f"Fundamentus preload failed: {e}")
+
+            # Populate B3 tickers from preloaded Fundamentus data
+            for t in self.all_tickers:
+                if t.endswith(".SA"):
+                    if t in fundamentus_prices:
+                        parsed["tickers"][t] = {
+                            "price": fundamentus_prices[t],
+                            "change": 0.0,
+                            "pct_change": 0.0,
+                            "timestamp": now_str
+                        }
+
+            # 2. Only download non-B3 tickers via Yahoo Finance to save massive memory!
+            non_b3_tickers = [t for t in self.all_tickers if not t.endswith(".SA")]
+            if non_b3_tickers:
+                data = pd.DataFrame()
+                try:
+                    data = yf.download(non_b3_tickers, period='5d', group_by='ticker', progress=False)
+                except Exception as e:
+                    print(f"yfinance download failed: {e}")
+
+                # Parse non-B3 Yahoo Finance data
+                if not data.empty:
+                    for t in non_b3_tickers:
+                        try:
+                            if t in data.columns.levels[0] if hasattr(data.columns, 'levels') else t in data.columns:
+                                close_data = data[t]['Close'].dropna()
+                                if len(close_data) >= 2:
+                                    prev = close_data.iloc[-2]
+                                    curr = close_data.iloc[-1]
+                                    diff = curr - prev
+                                    pct = (diff / prev) * 100
+                                    parsed["tickers"][t] = {
+                                        "price": float(curr),
+                                        "change": float(diff),
+                                        "pct_change": float(pct),
+                                        "timestamp": now_str
+                                    }
+                                elif len(close_data) == 1:
+                                    curr = close_data.iloc[-1]
+                                    parsed["tickers"][t] = {
+                                        "price": float(curr),
+                                        "change": 0.0,
+                                        "pct_change": 0.0,
+                                        "timestamp": now_str
+                                    }
+                        except Exception:
+                            pass
+
+            # 3. Fetch other missing tickers using fallbacks in parallel (limit to 3 workers)
             missing_tickers = [t for t in self.all_tickers if t not in parsed["tickers"]]
             if missing_tickers:
                 fetch_tickers = list(missing_tickers)
@@ -819,7 +852,7 @@ class LiveMarketManager:
                         usdchf_prev = usdchf - (usdchf_chg or 0.0)
                         usdsek_prev = usdsek - (usdsek_chg or 0.0)
                         
-                        dxy_prev = 50.14348112 * (eurusd_prev**-0.576) * (usdjpy_prev**0.136) * (gbpusd_prev**-0.119) * (usdcad_prev**0.091) * (usdsek_prev**0.042) * (usdchf_prev**0.036)
+                        dxy_prev = 50.14348112 * (eurusd_prev**-0.576) * (usdjpy_prev**0.136) * (gbpusd_prev**-0.119) * (usdcad_prev**0.091) * (usdsek_prev**0.042) * (usdchf**0.036)
                         
                         dxy_chg = dxy_curr - dxy_prev
                         dxy_pct = (dxy_chg / dxy_prev) * 100 if dxy_prev > 0 else 0.0
@@ -830,7 +863,7 @@ class LiveMarketManager:
                             "pct_change": float(dxy_pct),
                             "timestamp": now_str
                         }
- 
+
              # Calculate and append YTD returns and clean fields
             for t in self.all_tickers:
                 if t in parsed["tickers"]:

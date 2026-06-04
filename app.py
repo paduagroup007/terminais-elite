@@ -9402,7 +9402,7 @@ elif st.session_state.active_terminal == "family_office_br":
                         {"ticker": "BBDC4", "shares": 704726.0, "value": 12466602.94, "weight": 3.72},
                         {"ticker": "EQTL3", "shares": 188251.0, "value": 6955874.45, "weight": 2.07},
                         {"ticker": "ENGI11", "shares": 109451.0, "value": 5566677.86, "weight": 1.66},
-                        {"ticker": "ELET3", "shares": 101511.0, "value": 5331357.72, "weight": 1.59}
+                        {"ticker": "AXIA3", "shares": 101511.0, "value": 5331357.72, "weight": 1.59}
                     ]
                 },
                 "Dynamo Capital": {
