@@ -3347,6 +3347,24 @@ $ 1.28 Trilhão
             lang
         )
         st.subheader("MATRIZ DE CARREGO E TAXA DE JUROS SOBERANAS")
+        
+        with st.expander("📊 O QUE É O SHARPE RATIO CAMBIAL E COMO USAR PARA GANHAR DINHEIRO?"):
+            st.markdown("""
+            ### 💡 O que é o Sharpe Ratio no Carry Trade?
+            O **Sharpe Ratio Cambial** mede o **retorno ajustado ao risco** de uma operação de arbitragem de juros cambiais. 
+            Ele responde à seguinte pergunta fundamental: *O diferencial de juros (spread) que eu vou ganhar compensa a oscilação diária (volatilidade) da moeda no mercado?*
+            
+            A fórmula que nosso cérebro IA calcula é:
+            $$\\text{Sharpe Ratio} = \\frac{\\text{Diferencial de Juros (Spread)}}{\\text{Volatilidade Cambial Implícita}}$$
+            
+            ### 💰 Como usar o Sharpe Ratio para ganhar dinheiro na prática?
+            * **🟢 Sharpe ≥ 1.0 (Oportunidade de Elite - Alta Assimetria):** O diferencial de juros é muito maior do que a oscilação da moeda. São os melhores pares para operar, pois os juros recebidos compensam com folga qualquer pequena flutuação do câmbio no curto prazo.
+            * **🟡 Sharpe entre 0.7 e 0.99 (Risco Moderado):** O retorno é bom, mas o câmbio oscila bastante. Recomendado para posições menores ou com uso de travas de câmbio (hedge cambial).
+            * **⚪ Sharpe < 0.7 (Risco Elevado / Ineficiente):** Fuja dessas operações. O juro pago é muito baixo para o nível de oscilação da moeda. Qualquer movimentação contra você no câmbio destruirá meses de juros acumulados em um único dia.
+            
+            **Regra de Ouro:** Foque sempre nas primeiras posições da lista (maior Sharpe). Elas oferecem o maior ganho possível com a menor volatilidade associada, sendo ideais para alocações robustas.
+            """)
+
         st.write("Operações de Carry Trade envolvem captar fundos em economias de juros baixos (Funding candidate) e investir em títulos públicos de países com juros reais altos (Target candidate). Abaixo estão os pares estruturados recomendados pelo nosso cérebro IA, ordenados por Sharpe Ratio ajustado à volatilidade cambial:")
         
         # Render carry cards in a luxury HTML grid
