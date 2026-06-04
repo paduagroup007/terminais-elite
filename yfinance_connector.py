@@ -280,6 +280,9 @@ class LiveMarketManager:
         # VIX and other helpers
         if "^VIX" not in self.all_tickers:
             self.all_tickers.append("^VIX")
+            
+        self.google_blocked = False
+        self.preloaded_rates = {}
 
     def get_fallback_data(self):
         """Loads data from local JSON cache if exists, otherwise returns high quality mock fallback."""
@@ -337,13 +340,25 @@ class LiveMarketManager:
             except Exception:
                 pass
 
+        # Try to pre-fetch cryptos from Binance even for fallback to ensure they are never fake!
+        binance_crypto_prices = {}
+        for crypto_ticker in ["BTC-USD", "ETH-USD", "SOL-USD", "BNB-USD", "XRP-USD", "ADA-USD"]:
+            try:
+                p, c, pct_val = self._fetch_binance_crypto(crypto_ticker)
+                if p is not None:
+                    binance_crypto_prices[crypto_ticker] = (p, c, pct_val)
+            except Exception:
+                pass
+
         import hashlib
         for t in self.all_tickers:
             val = 100.0  # default fallback price
             diff = 0.0
             pct = 0.0
             
-            if t in mocks:
+            if t in binance_crypto_prices:
+                val, diff, pct = binance_crypto_prices[t]
+            elif t in mocks:
                 val, diff, pct = mocks[t]
             elif t in ys_prices:
                 start_p = ys_prices[t]
@@ -460,12 +475,22 @@ class LiveMarketManager:
             return 0.0
 
     def _scrape_google_finance(self, ticker_symbol):
+        if getattr(self, 'google_blocked', False):
+            return None, 0.0, 0.0
+            
         url = f"https://www.google.com/finance/quote/{ticker_symbol}"
         try:
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
             res = requests.get(url, headers=headers, timeout=5)
+            if res.status_code in [403, 429]:
+                self.google_blocked = True
+                return None, 0.0, 0.0
+                
             html = res.text
-            
+            if "captcha" in html.lower() or "unusual traffic" in html.lower():
+                self.google_blocked = True
+                return None, 0.0, 0.0
+                
             idx = html.find('class="N6SYTe"')
             if idx == -1:
                 return None, 0.0, 0.0
@@ -561,11 +586,30 @@ class LiveMarketManager:
         return None, 0.0, 0.0
 
     def _fetch_single_ticker_fallback(self, ticker):
+        SCRAPABLE_TICKERS = {
+            # Indices
+            "^GSPC", "^NDX", "^DJI", "^RUT", "^BVSP", "^STOXX50E", "^GDAXI", "^FTSE", "^N225", "000001.SS", "^VIX", "^SOX",
+            # Commodities
+            "GC=F", "SI=F", "BZ=F", "CL=F", "NG=F", "HG=F", "ZS=F", "ZC=F",
+            # Yields
+            "^IRX", "^FVX", "^TNX", "^TYX",
+            # Currencies
+            "EURUSD=X", "GBPUSD=X", "JPY=X", "BRL=X", "CAD=X", "AUDUSD=X", "CHF=X", "USDSEK=X",
+            # Sectors
+            "XLK", "XLF", "XLRE", "XLE", "XLV", "XLY",
+            # Top 10 USA
+            "NVDA", "MSFT", "AAPL", "AMZN", "META", "GOOGL", "LLY", "AVGO", "BRK-B", "JPM", "TSLA"
+        }
+        
         # 1. Cryptos
         if ticker in ["BTC-USD", "ETH-USD", "SOL-USD", "BNB-USD", "XRP-USD", "ADA-USD"]:
             p, c, pct = self._fetch_binance_crypto(ticker)
             if p is not None:
                 return ticker, p, c, pct
+                
+        # For non-cryptos, fast fail if not in the scrapable set to avoid Google Finance blocks and RAM overhead
+        if ticker not in SCRAPABLE_TICKERS:
+            return ticker, None, 0.0, 0.0
                 
         # 2. Currencies
         currency_map = {
@@ -710,6 +754,9 @@ class LiveMarketManager:
                 except Exception:
                     pass
 
+            # Reset google_blocked flag at the beginning of each sync run
+            self.google_blocked = False
+
             # Load existing cache to reuse previously fetched prices on failure
             existing_cache = {}
             if os.path.exists(self.cache_file):
@@ -718,6 +765,12 @@ class LiveMarketManager:
                         existing_cache = json.load(f).get("tickers", {})
                 except Exception:
                     pass
+
+            # Preload ExchangeRate API once to avoid hitting it repeatedly in threadpool
+            try:
+                self.preloaded_rates = self._fetch_exchangerate_backup()
+            except Exception:
+                self.preloaded_rates = {}
 
             parsed = {
                 "metadata": {"last_update": now_str, "status": "LIVE REAL-TIME FEED"},
@@ -833,26 +886,34 @@ class LiveMarketManager:
                     usdsek, usdsek_chg = get_rate("USDSEK=X")
                     
                     if not all([eurusd, usdjpy, gbpusd, usdcad, usdchf, usdsek]):
-                        rates = self._fetch_exchangerate_backup()
+                        rates = getattr(self, 'preloaded_rates', {}) or self._fetch_exchangerate_backup()
                         if rates:
-                            eurusd = eurusd or (1.0 / rates.get("EUR", 0.92))
-                            usdjpy = usdjpy or rates.get("JPY", 155.0)
-                            gbpusd = gbpusd or (1.0 / rates.get("GBP", 0.79))
-                            usdcad = usdcad or rates.get("CAD", 1.36)
-                            usdchf = usdchf or rates.get("CHF", 0.90)
-                            usdsek = usdsek or rates.get("SEK", 10.5)
+                            eurusd = eurusd or (1.0 / (rates.get("EUR") or 0.92))
+                            usdjpy = usdjpy or (rates.get("JPY") or 155.0)
+                            gbpusd = gbpusd or (1.0 / (rates.get("GBP") or 0.79))
+                            usdcad = usdcad or (rates.get("CAD") or 1.36)
+                            usdchf = usdchf or (rates.get("CHF") or 0.90)
+                            usdsek = usdsek or (rates.get("SEK") or 10.5)
                             
                     if all([eurusd, usdjpy, gbpusd, usdcad, usdchf, usdsek]):
+                        # Avoid negative/zero bases in exponents by setting a minimum of 0.0001
+                        eurusd = max(0.0001, eurusd)
+                        usdjpy = max(0.0001, usdjpy)
+                        gbpusd = max(0.0001, gbpusd)
+                        usdcad = max(0.0001, usdcad)
+                        usdsek = max(0.0001, usdsek)
+                        usdchf = max(0.0001, usdchf)
+                        
                         dxy_curr = 50.14348112 * (eurusd**-0.576) * (usdjpy**0.136) * (gbpusd**-0.119) * (usdcad**0.091) * (usdsek**0.042) * (usdchf**0.036)
                         
-                        eurusd_prev = eurusd - (eurusd_chg or 0.0)
-                        usdjpy_prev = usdjpy - (usdjpy_chg or 0.0)
-                        gbpusd_prev = gbpusd - (gbpusd_chg or 0.0)
-                        usdcad_prev = usdcad - (usdcad_chg or 0.0)
-                        usdchf_prev = usdchf - (usdchf_chg or 0.0)
-                        usdsek_prev = usdsek - (usdsek_chg or 0.0)
+                        eurusd_prev = max(0.0001, eurusd - (eurusd_chg or 0.0))
+                        usdjpy_prev = max(0.0001, usdjpy - (usdjpy_chg or 0.0))
+                        gbpusd_prev = max(0.0001, gbpusd - (gbpusd_chg or 0.0))
+                        usdcad_prev = max(0.0001, usdcad - (usdcad_chg or 0.0))
+                        usdchf_prev = max(0.0001, usdchf - (usdchf_chg or 0.0))
+                        usdsek_prev = max(0.0001, usdsek - (usdsek_chg or 0.0))
                         
-                        dxy_prev = 50.14348112 * (eurusd_prev**-0.576) * (usdjpy_prev**0.136) * (gbpusd_prev**-0.119) * (usdcad_prev**0.091) * (usdsek_prev**0.042) * (usdchf**0.036)
+                        dxy_prev = 50.14348112 * (eurusd_prev**-0.576) * (usdjpy_prev**0.136) * (gbpusd_prev**-0.119) * (usdcad_prev**0.091) * (usdsek_prev**0.042) * (usdchf_prev**0.036)
                         
                         dxy_chg = dxy_curr - dxy_prev
                         dxy_pct = (dxy_chg / dxy_prev) * 100 if dxy_prev > 0 else 0.0
@@ -893,7 +954,19 @@ class LiveMarketManager:
                 
             return parsed
              
-        except Exception:
+        except Exception as e:
+            import traceback
+            print("CRITICAL ERROR in _fetch_and_save_data_sync:")
+            traceback.print_exc()
+            
+            # Log traceback to error file
+            try:
+                err_log_path = os.path.join(self.cache_dir, "last_sync_error.log")
+                with open(err_log_path, 'w', encoding='utf-8') as f:
+                    traceback.print_exc(file=f)
+            except Exception:
+                pass
+                
             # Fall back to writing standard mock database if everything crashed
             fallback = self.get_fallback_data()
             try:
