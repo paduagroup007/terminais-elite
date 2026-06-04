@@ -31,7 +31,10 @@ st.set_page_config(page_title="PERFECT LIFE | ELITE INVESTORS", layout="wide", i
 # Debug query params check
 if st.query_params.get("show_errors", "false").lower() == "true":
     import json
-    st.title("Debug Error Logs")
+    st.title("Debug Error Logs & Connectivity")
+    
+    # 1. Show last sync error
+    st.subheader("1. Last Sync Error Log")
     err_log = os.path.join(os.path.dirname(__file__), "cache", "last_sync_error.log")
     if os.path.exists(err_log):
         with open(err_log, "r", encoding="utf-8") as f:
@@ -39,6 +42,31 @@ if st.query_params.get("show_errors", "false").lower() == "true":
     else:
         st.write("No sync error log found.")
         
+    # 2. Test active URLs
+    st.subheader("2. Production Connectivity Diagnostics")
+    tests = {
+        "Binance API": "https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT",
+        "ExchangeRate API": "https://open.er-api.com/v6/latest/USD",
+        "Fundamentus": "https://www.fundamentus.com.br/resultado.php",
+        "Google Finance (AAPL)": "https://www.google.com/finance/quote/AAPL:NASDAQ",
+        "Yahoo Finance (BTC-USD)": "https://query1.finance.yahoo.com/v8/finance/chart/BTC-USD"
+    }
+    
+    for name, url in tests.items():
+        try:
+            start_time = time.time()
+            headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+            res = requests.get(url, headers=headers, timeout=5)
+            elapsed = time.time() - start_time
+            st.write(f"**{name}**: Status `{res.status_code}` in {elapsed:.2f}s (Response length: {len(res.text)} characters)")
+            if res.status_code == 200:
+                if name == "Fundamentus":
+                    st.write(f"Fundamentus matches count: {len(re.findall(r'papel=([A-Z0-9]+)', res.text))}")
+        except Exception as e:
+            st.write(f"**{name}**: ❌ FAILED with error: `{e}`")
+            
+    # 3. Check local cache metadata
+    st.subheader("3. Cache Metadata")
     cache_file = os.path.join(os.path.dirname(__file__), "cache", "live_market_cache.json")
     st.write("Cache file path:", cache_file)
     st.write("Cache exists:", os.path.exists(cache_file))
@@ -47,6 +75,7 @@ if st.query_params.get("show_errors", "false").lower() == "true":
             try:
                 data = json.load(f)
                 st.json(data.get("metadata", {}))
+                st.write("Number of cached tickers:", len(data.get("tickers", {})))
             except Exception as e:
                 st.write("Failed to parse cache:", e)
     st.stop()
