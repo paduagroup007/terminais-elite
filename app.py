@@ -12,6 +12,7 @@ from cache_manager import CacheManager, WHALES
 from financials_db import get_financials
 import yfinance_connector
 import usa_fundamentals
+import daytrade_cockpit
 from yfinance_connector import LiveMarketManager
 def render_explanation_card(title, pt_text, en_text, es_text, lang_key):
     desc = pt_text if lang_key == "PT" else (en_text if lang_key == "EN" else es_text)
@@ -1310,10 +1311,6 @@ if st.session_state.active_terminal == "balance_sheets":
             target.success("Arquivo Importado com Sucesso!" if lang == "PT" else ("Spreadsheet Imported Successfully!" if lang == "EN" else "¡Planilla Importada con Éxito!"))
             st.session_state.b3_upload_success = False
         
-        target.write("---")
-        
-        # ENTRADA MANUAL DE DADOS (OVERRIDE)
-        target.subheader("AJUSTE DE MERCADO" if lang == "PT" else ("MARKET ADJUSTMENT" if lang == "EN" else "AJUSTE DE MERCADO"))
         manual_price = target.number_input(
             "Preço da Ação (R$)" if lang == "PT" else ("Stock Price (R$)" if lang == "EN" else "Precio de Acción (R$)"), 
             min_value=0.0, 
@@ -1358,9 +1355,9 @@ if st.session_state.active_terminal == "balance_sheets":
         
         # SELECIONAR MÓDULO B3 (TRADUZIDO)
         b3_modules_list = {
-            "PT": ["Radar de Comando", "Eficiência Operacional", "Análise de Lucratividade", "Solvência Patrimonial", "Valuation Intrínseco", "Tabela de Dados", "Radar de Aluguel (BTC)", "Recompras de Ações (Buybacks)"],
-            "EN": ["Command Radar", "Operational Efficiency", "Profitability Analysis", "Asset Solvency", "Intrinsic Valuation", "Data Table", "Borrowing Radar (BTC)", "Share Buybacks (Buybacks)"],
-            "ES": ["Radar de Comando", "Eficiencia Operacional", "Análisis de Lucratividad", "Solvencia Patrimonial", "Valuación Intrínseca", "Tabla de Datos", "Radar de Alquiler (BTC)", "Recompra de Acciones (Buybacks)"]
+            "PT": ["Radar de Comando", "Eficiência Operacional", "Análise de Lucratividade", "Solvência Patrimonial", "Valuation Intrínseco", "Tabela de Dados", "Radar de Aluguel (BTC)", "Recompras de Ações (Buybacks)", "Cockpit Day-Trade (Mini Contratos)"],
+            "EN": ["Command Radar", "Operational Efficiency", "Profitability Analysis", "Asset Solvency", "Intrinsic Valuation", "Data Table", "Borrowing Radar (BTC)", "Share Buybacks (Buybacks)", "Day-Trade Cockpit (Mini Contracts)"],
+            "ES": ["Radar de Comando", "Eficiencia Operacional", "Análisis de Lucratividad", "Solvencia Patrimonial", "Valuación Intrínseca", "Tabla de Datos", "Radar de Alquiler (BTC)", "Recompra de Acciones (Buybacks)", "Cockpit Day-Trade (Mini Contratos)"]
         }
         
         b3_module_map = {
@@ -1372,6 +1369,7 @@ if st.session_state.active_terminal == "balance_sheets":
             "Tabela de Dados": "Tabela de Dados",
             "Radar de Aluguel (BTC)": "Radar de Aluguel (BTC)",
             "Recompras de Ações (Buybacks)": "Recompras de Ações (Buybacks)",
+            "Cockpit Day-Trade (Mini Contratos)": "Day-Trade & Desvios 111",
             
             "Command Radar": "Radar de Comando",
             "Operational Efficiency": "Eficiência Operacional",
@@ -1381,11 +1379,9 @@ if st.session_state.active_terminal == "balance_sheets":
             "Data Table": "Tabela de Dados",
             "Borrowing Radar (BTC)": "Radar de Aluguel (BTC)",
             "Share Buybacks (Buybacks)": "Recompras de Ações (Buybacks)",
+            "Day-Trade Cockpit (Mini Contracts)": "Day-Trade & Desvios 111",
             
             "Eficiencia Operacional": "Eficiência Operacional",
-            "Análisis de Lucratividad": "Análise de Lucratividade",
-            "Valuación Intrínseca": "Valuation Intrínseco",
-            "Tabla de Datos": "Tabela de Dados",
             "Radar de Alquiler (BTC)": "Radar de Alquiler (BTC)",
             "Recompra de Acciones (Buybacks)": "Recompras de Ações (Buybacks)"
         }
@@ -5202,6 +5198,11 @@ elif st.session_state.active_terminal == "balance_sheets":
             usa_fundamentals.render_us_fundamentals(lang_key, st.session_state.get("usa_ticker", "AAPL"), st.session_state.get("usa_module", "Valuation Intrínseco"), st.session_state.get('usa_risk_free', 4.4))
         except Exception as e:
             st.error(f"Erro Crítico no Módulo USA: {e}")
+    elif b3_module == "Day-Trade & Desvios 111":
+        try:
+            daytrade_cockpit.render_daytrade_cockpit(lang_key)
+        except Exception as e:
+            st.error(f"Erro Crítico no Cockpit Day-Trade: {e}")
     elif selected_file:
         try:
             df = b3_parser.parse_file(selected_file)
