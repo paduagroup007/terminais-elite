@@ -3329,12 +3329,13 @@ $ 1.28 Trilhão
     st.write("")
     
     # Abas do Terminal II
-    t_carry, t_ppa, t_cot, t_hedge, t_arbitrage = st.tabs([
+    t_carry, t_ppa, t_cot, t_hedge, t_arbitrage, t_metals = st.tabs([
         "ARBITRAGEM & CARRY TRADE GLOBAL",
         "PARIDADE DE PODER DE COMPRA (PPA)",
         "SENTIMENTO INSTITUCIONAL (COT INDEX)",
         "SIMULADOR DE BLINDAGEM PATRIMONIAL",
-        "ARBITRAGEM DE CORRELAÇÃO & HEDGE"
+        "ARBITRAGEM DE CORRELAÇÃO & HEDGE",
+        "METAIS PRECIOSOS & PROTEÇÃO MACRO"
     ])
         
     # --- ABA 1: ARBITRAGEM & CARRY TRADE GLOBAL ---
@@ -4867,6 +4868,193 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                     </p>
                 </div>
                 """, unsafe_allow_html=True)
+
+    # --- ABA 6: METAIS PRECIOSOS & PROTEÇÃO MACRO ---
+    with t_metals:
+        render_explanation_card(
+            "Metais Preciosos & Proteção Macro" if lang == "PT" else ("Precious Metals & Macro Protection" if lang == "EN" else "Metales Preciosos y Protección Macro"),
+            "Painel de análise fundamentalista e quantitativa de Ouro e Prata. Rastreie a relação Ouro-Prata (GSR) para arbitragem e monitore a Divergência Soberana entre o Ouro e os títulos de juros dos EUA (^TNX) como proteção contra inflação e debassamento de moeda.",
+            "Precious metals fundamental and quantitative analysis dashboard. Track the Gold-to-Silver Ratio (GSR) for relative value arbitrage and monitor the Sovereign Divergence between Gold and 10-Year US Treasury yields (^TNX) as inflation and debasement defense.",
+            "Panel de análisis fundamental y cuantitativo de metales preciosos. Monitoree el ratio Oro-Plata (GSR) para arbitraje y analice la Divergencia Soberana entre el Oro y los rendimientos de bonos de EE.UU. (^TNX) como protección macro.",
+            lang
+        )
+        
+        # 1. Cached function to download daily history for Gold, Silver, and 10Y yields
+        @st.cache_data(ttl=3600, max_entries=10)
+        def fetch_precious_metals_history():
+            import yfinance as yf
+            try:
+                data = yf.download(["GC=F", "SI=F", "^TNX"], period="1y", interval="1d", progress=False)
+                if not data.empty:
+                    return data['Close'].ffill().bfill()
+            except Exception:
+                pass
+            return None
+
+        with st.spinner("Carregando séries históricas de metais e taxas soberanas (1 ano)..."):
+            df_hist = fetch_precious_metals_history()
+
+        if df_hist is not None and "GC=F" in df_hist.columns and "SI=F" in df_hist.columns and "^TNX" in df_hist.columns:
+            # 2. Extract current values and calculate performance
+            gold_curr = float(df_hist["GC=F"].iloc[-1])
+            gold_start = float(df_hist["GC=F"].iloc[0])
+            gold_chg = ((gold_curr - gold_start) / gold_start) * 100
+
+            silver_curr = float(df_hist["SI=F"].iloc[-1])
+            silver_start = float(df_hist["SI=F"].iloc[0])
+            silver_chg = ((silver_curr - silver_start) / silver_start) * 100
+
+            tnx_curr = float(df_hist["^TNX"].iloc[-1])
+            tnx_start = float(df_hist["^TNX"].iloc[0])
+            tnx_chg = tnx_curr - tnx_start
+
+            gsr_series = df_hist["GC=F"] / df_hist["SI=F"]
+            gsr_curr = float(gsr_series.iloc[-1])
+            gsr_start = float(gsr_series.iloc[0])
+            
+            # 3. Render Metric Scorecards
+            st.markdown(f"""
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; text-align: left; font-family: 'Inter';">
+                <div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;">OURO SPOT (GC=F)</span>
+                    <div style="color: #ffffff; font-weight: 800; font-size: 18px; margin: 5px 0;">$ {gold_curr:,.2f} /oz</div>
+                    <div style="color: {'#00ffa5' if gold_chg >= 0 else '#ff4b4b'}; font-size: 11px; font-weight: 700;">
+                        {'▲' if gold_chg >= 0 else '▼'} {gold_chg:+.2f}% (1 Ano)
+                    </div>
+                </div>
+                <div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;">PRATA SPOT (SI=F)</span>
+                    <div style="color: #ffffff; font-weight: 800; font-size: 18px; margin: 5px 0;">$ {silver_curr:,.2f} /oz</div>
+                    <div style="color: {'#00ffa5' if silver_chg >= 0 else '#ff4b4b'}; font-size: 11px; font-weight: 700;">
+                        {'▲' if silver_chg >= 0 else '▼'} {silver_chg:+.2f}% (1 Ano)
+                    </div>
+                </div>
+                <div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                    <span style="color: #bf953f; font-weight: 700; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px;">JURO EUA 10Y (^TNX)</span>
+                    <div style="color: #ffffff; font-weight: 800; font-size: 18px; margin: 5px 0;">{tnx_curr:.2f}%</div>
+                    <div style="color: {'#00ffa5' if tnx_chg >= 0 else '#ff4b4b'}; font-size: 11px; font-weight: 700;">
+                        {tnx_chg:+.2f}% bps (1 Ano)
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 4. Sinais Táticos e de Divergência Soberana
+            if gsr_curr > 80.0:
+                gsr_sig = "PRATA SUBVALORIZADA (COMPRA RECOMENDADA)" if lang == "PT" else "SILVER UNDERVALUED (BUY SILVER / SHORT GOLD)"
+                gsr_color = "#00ffa5"
+            elif gsr_curr < 50.0:
+                gsr_sig = "OURO SUBVALORIZADO (COMPRA RECOMENDADA)" if lang == "PT" else "GOLD UNDERVALUED (BUY GOLD / SHORT SILVER)"
+                gsr_color = "#ff4b4b"
+            else:
+                gsr_sig = "RELAÇÃO NEUTRA / EQUILÍBRIO" if lang == "PT" else "RATIO IN EQUILIBRIUM"
+                gsr_color = "#aaaaaa"
+
+            if gold_chg > 0.0 and tnx_chg > 0.0:
+                sov_div_status = "DIVERGÊNCIA SOBERANA ATIVA (Alerta de Desconfiança na Dívida)" if lang == "PT" else "SOVEREIGN DIVERGENCE ACTIVE (Debt Debasement Warning)"
+                sov_div_desc = "O Ouro e as Taxas de Juros Soberanas estão subindo simultaneamente nos últimos 12 meses. Historicamente, juros em alta deveriam desvalorizar ativos de yield zero como o Ouro. Esta quebra de correlação indica forte desvalorização do poder de compra fiduciário e acúmulo de ouro físico por Bancos Centrais estrangeiros (desdolarização de reservas)." if lang == "PT" else "Gold and Sovereign Interest Rates are rising together over the last 12 months. This breakdown of their traditional inverse correlation points to strong currency debasement and massive physical accumulation by global Central Banks seeking alternatives to US Treasury debt."
+                sov_div_color = "#ff4b4b"
+            else:
+                sov_div_status = "CORRELAÇÃO MACRO PADRÃO" if lang == "PT" else "STANDARD MACRO CORRELATION"
+                sov_div_desc = "O Ouro e os Juros Soberanos operam sob a correlação inversa clássica de mercado. O custo de oportunidade do capital dita os fluxos normais." if lang == "PT" else "Gold and Sovereign yields are trading under their standard historical inverse correlation. Opportunity cost of capital guides standard flow."
+                sov_div_color = "#aaaaaa"
+
+            st.markdown(f"""
+            <div style="background-color: #161a23; border: 1px solid #bf953f33; border-radius: 8px; padding: 20px; margin-bottom: 25px; font-family: 'Inter'; text-align: left;">
+                <h4 style="margin: 0 0 15px 0; color: #bf953f; font-size: 15px; font-weight: 700; border-bottom: 1px solid #333; padding-bottom: 8px; text-transform: uppercase;">MÉTRICAS TÁTICAS DE COCKPIT</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <span style="font-size: 10px; color: #888; text-transform: uppercase; font-weight: 700;">Relação Ouro-Prata (GSR) Atual</span>
+                        <div style="color: #fff; font-size: 22px; font-weight: 800; margin: 3px 0;">{gsr_curr:.2f}</div>
+                        <span style="color: {gsr_color}; font-size: 12px; font-weight: 700;">{gsr_sig}</span>
+                        <p style="font-size: 11px; color: #aaa; margin-top: 8px; line-height: 1.4;">A proporção histórica média gira em torno de 50 a 60. Valores acima de 80 sinalizam oportunidade estatística de comprar Prata e vender Ouro.</p>
+                    </div>
+                    <div style="border-left: 1px solid #333; padding-left: 20px;">
+                        <span style="font-size: 10px; color: #888; text-transform: uppercase; font-weight: 700;">Termômetro de Proteção Macro</span>
+                        <div style="color: {sov_div_color}; font-size: 15px; font-weight: 800; margin: 5px 0;">{sov_div_status}</div>
+                        <p style="font-size: 11px; color: #ccc; line-height: 1.45; margin: 0;">{sov_div_desc}</p>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 5. Charts rendering using Plotly
+            col_g1, col_g2 = st.columns(2)
+            
+            with col_g1:
+                st.subheader("1. HISTÓRICO DE DESVIO DE RELAÇÃO OURO-PRATA (GSR)" if lang == "PT" else "1. GOLD-TO-SILVER RATIO (GSR) HISTORY")
+                fig_gsr_hist = go.Figure()
+                fig_gsr_hist.add_trace(go.Scatter(
+                    x=df_hist.index,
+                    y=gsr_series.values,
+                    name="GSR Spot",
+                    line=dict(color="#bf953f", width=2.5)
+                ))
+                fig_gsr_hist.add_trace(go.Scatter(
+                    x=[df_hist.index[0], df_hist.index[-1]],
+                    y=[80.0, 80.0],
+                    name="Limite de Compra da Prata (80)",
+                    line=dict(color="#00ffa5", width=1, dash="dash")
+                ))
+                fig_gsr_hist.add_trace(go.Scatter(
+                    x=[df_hist.index[0], df_hist.index[-1]],
+                    y=[50.0, 50.0],
+                    name="Limite de Compra do Ouro (50)",
+                    line=dict(color="#ff4b4b", width=1, dash="dash")
+                ))
+                fig_gsr_hist.update_layout(
+                    template="plotly_dark",
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    margin=dict(t=10, b=10, l=10, r=10),
+                    height=280,
+                    xaxis=dict(showgrid=False, tickfont=dict(color='#dddddd')),
+                    yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)', tickfont=dict(color='#dddddd'))
+                )
+                st.plotly_chart(fig_gsr_hist, use_container_width=True)
+
+            with col_g2:
+                st.subheader("2. DIVERGÊNCIA SOBERANA: OURO VS. JUROS 10Y (^TNX)" if lang == "PT" else "2. SOVEREIGN DIVERGENCE: GOLD VS 10Y INTEREST RATE")
+                
+                from plotly.subplots import make_subplots
+                fig_sov = make_subplots(specs=[[{"secondary_y": True}]])
+                
+                fig_sov.add_trace(go.Scatter(
+                    x=df_hist.index,
+                    y=df_hist["GC=F"].values,
+                    name="Ouro Spot ($)" if lang == "PT" else "Gold Spot ($)",
+                    line=dict(color="#bf953f", width=2.5)
+                ), secondary_y=False)
+                
+                fig_sov.add_trace(go.Scatter(
+                    x=df_hist.index,
+                    y=df_hist["^TNX"].values,
+                    name="Yield 10Y (%)",
+                    line=dict(color="#ff4b4b", width=1.5, dash="dot")
+                ), secondary_y=True)
+                
+                fig_sov.update_layout(
+                    template="plotly_dark",
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    margin=dict(t=10, b=10, l=10, r=10),
+                    height=280,
+                    xaxis=dict(showgrid=False, tickfont=dict(color='#dddddd')),
+                    yaxis=dict(
+                        showgrid=True,
+                        gridcolor='rgba(255,255,255,0.03)',
+                        tickfont=dict(color='#bf953f'),
+                        title="Ouro Spot ($/oz)"
+                    ),
+                    yaxis2=dict(
+                        showgrid=False,
+                        tickfont=dict(color='#ff4b4b'),
+                        title="Yield de 10 Anos (%)"
+                    )
+                )
+                st.plotly_chart(fig_sov, use_container_width=True)
+        else:
+            st.error("Não foi possível carregar as séries históricas do Yahoo Finance no momento. Verifique a conexão do servidor.")
 
     st.write("")
 
