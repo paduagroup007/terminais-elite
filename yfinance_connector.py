@@ -163,7 +163,7 @@ BR_TICKERS = [
     "TASA4.SA", "RANI3.SA", "ETER3.SA"
 ]
 
-UPDATE_PROCESS = None
+UPDATE_THREAD = None
 LAST_SPAWN_TIME = 0.0
 
 class LiveMarketManager:
@@ -336,43 +336,29 @@ class LiveMarketManager:
         return fallback
 
     def _trigger_background_update(self):
-        """Spawns the background subprocess to fetch and update market cache."""
-        global UPDATE_PROCESS, LAST_SPAWN_TIME
+        """Spawns a background thread to fetch and update market cache without blocking or duplicating memory."""
+        global UPDATE_THREAD, LAST_SPAWN_TIME
         import time
-        import subprocess
-        import sys
-        import os
+        import threading
         
         is_running = False
-        if UPDATE_PROCESS is not None:
-            if UPDATE_PROCESS.poll() is None:
-                # Process is running. Kill if hung (older than 180 seconds)
-                if time.time() - LAST_SPAWN_TIME > 180:
-                    try:
-                        UPDATE_PROCESS.terminate()
-                        UPDATE_PROCESS.wait(timeout=5)
-                    except Exception:
-                        pass
-                    UPDATE_PROCESS = None
-                else:
+        if UPDATE_THREAD is not None:
+            if UPDATE_THREAD.is_alive():
+                # Thread is running. Kill if hung (older than 180 seconds) by letting it be and spawning a new one if needed
+                if time.time() - LAST_SPAWN_TIME < 180:
                     is_running = True
+                else:
+                    UPDATE_THREAD = None
             else:
-                UPDATE_PROCESS = None
+                UPDATE_THREAD = None
                 
         if not is_running:
-            project_dir = os.path.dirname(os.path.abspath(__file__))
-            cmd = [
-                sys.executable, "-c",
-                f"import sys; sys.path.insert(0, r'{project_dir}'); import yfinance_connector; yfinance_connector.LiveMarketManager()._fetch_and_save_data_sync()"
-            ]
             try:
-                UPDATE_PROCESS = subprocess.Popen(
-                    cmd,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
-                    close_fds=True,
-                    cwd=project_dir
+                UPDATE_THREAD = threading.Thread(
+                    target=self._fetch_and_save_data_sync,
+                    daemon=True
                 )
+                UPDATE_THREAD.start()
                 LAST_SPAWN_TIME = time.time()
             except Exception:
                 pass
