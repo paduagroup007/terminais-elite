@@ -132,7 +132,7 @@ def render_explanation_card(title, pt_text, en_text, es_text, lang_key):
     """, unsafe_allow_html=True)
 
 # --- LIVE YFINANCE STOCK PARSER ---
-@st.cache_data(ttl=1800)
+@st.cache_data(ttl=1800, max_entries=20)
 def fetch_us_company_financials(ticker_symbol):
     ticker = yf.Ticker(ticker_symbol)
     

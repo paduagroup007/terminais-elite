@@ -942,7 +942,7 @@ def format_val(val):
         return f"R$ {val/1_000_000_000:.1f}B"
     return f"R$ {val/1_000_000:.1f}M"
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=3600, max_entries=50)
 def get_market_data(ticker):
     price, shares = 0.0, 0
     clean_tk = ticker.replace('.SA', '').lower().strip()
@@ -4089,8 +4089,8 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
             "Mecanismo de arbitraje estadístico y correlaciones históricas. La IA cruza la matemática de corto plazo con fundamentos macroeconómicos globales para filtrar falsas distorciones:<br><br><b>1. Correlación con Materias Primas Físicas:</b> Monedas como el Dólar Canadiense (CAD) y el Dólar Australiano (AUD) están estrechamente ligadas al Petróleo y al Oro/Metales. La IA compara estas materias primas para entender si un desvío en el par (ej: USD/CAD vs AUD/USD) es solo ruido temporal o un cambio real en los precios de los productos básicos.<br><b>2. Monitoreo del DXY:</b> El índice del dólar indica la fuerza global de la divisa estadounidense. Como operamos pares contra el USD, el DXY sirve para identificar si hay una fuga de capitales global hacia el dólar o un desequilibrio local.<br><b>3. Rendimientos de Bonos Soberanos (Intereses):</b> El flujo global de capital busca las tasas soberanas más altas (Treasuries). La IA monitorea estos rendimientos para anticipar puntos de giro cambiario estructural.<br><br><i><b>Filtro de Seguridad:</b> Operar solo el desvío matemático (Z-Score) sin esta inteligencia puede ser peligroso si la correlación se rompe por factores estructurales. La IA valida las oportunidades cruzando estas variables.</i>",
             lang
         )
-        # Cache data for 20 minutes (1200 seconds) to avoid API limits and guarantee instant load times
-        @st.cache_data(ttl=1200)
+        # Cache data for 20 minutes (1200 seconds) to avoid API limits and guarantee instant load times and protect memory
+        @st.cache_data(ttl=1200, max_entries=20)
         def fetch_forex_data(ticker_a, ticker_b):
             import yfinance as yf
             try:
@@ -10765,3 +10765,7 @@ if "active_terminal" in st.session_state and st.session_state.active_terminal !=
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+# Force garbage collection to free memory at the end of the script rendering
+import gc
+gc.collect()
