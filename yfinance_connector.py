@@ -831,38 +831,8 @@ class LiveMarketManager:
                 "tickers": {}
             }
 
-            # 1. Preload B3 prices from Fundamentus in a single lightweight request
-            fundamentus_prices = {}
-            try:
-                f_url = "https://www.fundamentus.com.br/resultado.php"
-                f_res = requests.get(f_url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=8)
-                if f_res.status_code == 200:
-                    matches = re.findall(r'papel=([A-Z0-9]+)">[A-Z0-9]+</a></span></td>\s*<td>([\d,\.]+)</td>', f_res.text)
-                    for ticker_sym, price_str in matches:
-                        try:
-                            val = price_str.replace('.', '').replace(',', '.')
-                            fundamentus_prices[f"{ticker_sym}.SA"] = float(val)
-                        except ValueError:
-                            pass
-            except Exception as e:
-                print(f"Fundamentus preload failed: {e}")
-
-            # Populate B3 tickers from preloaded Fundamentus data
-            for t in self.all_tickers:
-                if t.endswith(".SA"):
-                    if t in fundamentus_prices:
-                        parsed["tickers"][t] = {
-                            "price": fundamentus_prices[t],
-                            "change": 0.0,
-                            "pct_change": 0.0,
-                            "timestamp": now_str
-                        }
-
-            # 2. Download non-B3 tickers + B3 tickers that failed to preload from Fundamentus
-            tickers_to_download = [t for t in self.all_tickers if not t.endswith(".SA")]
-            for t in self.all_tickers:
-                if t.endswith(".SA") and t not in parsed["tickers"]:
-                    tickers_to_download.append(t)
+            # 1. Download all tickers (B3 and US) directly from Yahoo Finance in batch
+            tickers_to_download = list(self.all_tickers)
                     
             if tickers_to_download:
                 data = pd.DataFrame()
