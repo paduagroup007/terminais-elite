@@ -28,6 +28,29 @@ def render_explanation_card(title, pt_text, en_text, es_text, lang_key):
 logo_path = os.path.join(os.path.dirname(__file__), "logo.png")
 st.set_page_config(page_title="PERFECT LIFE | ELITE INVESTORS", layout="wide", initial_sidebar_state="expanded", page_icon=logo_path if os.path.exists(logo_path) else "logo.png")
 
+# Debug query params check
+if st.query_params.get("show_errors", "false").lower() == "true":
+    import json
+    st.title("Debug Error Logs")
+    err_log = os.path.join(os.path.dirname(__file__), "cache", "last_sync_error.log")
+    if os.path.exists(err_log):
+        with open(err_log, "r", encoding="utf-8") as f:
+            st.text(f.read())
+    else:
+        st.write("No sync error log found.")
+        
+    cache_file = os.path.join(os.path.dirname(__file__), "cache", "live_market_cache.json")
+    st.write("Cache file path:", cache_file)
+    st.write("Cache exists:", os.path.exists(cache_file))
+    if os.path.exists(cache_file):
+        with open(cache_file, "r", encoding="utf-8") as f:
+            try:
+                data = json.load(f)
+                st.json(data.get("metadata", {}))
+            except Exception as e:
+                st.write("Failed to parse cache:", e)
+    st.stop()
+
 # CSS Avançado para Visual de Terminal de Elite (Black & Gold / Carbon Theme)
 st.markdown("""
     <style>
