@@ -284,6 +284,60 @@ class LiveMarketManager:
         self.google_blocked = False
         self.preloaded_rates = {}
 
+    def _write_diagnostics(self, status_msg):
+        try:
+            import streamlit as st
+            st_path = os.path.dirname(st.__file__)
+            static_path = os.path.join(st_path, "static")
+            if not os.path.exists(static_path):
+                return
+                
+            diag_file = os.path.join(static_path, "diagnostics.txt")
+            
+            # Run connectivity tests
+            diag_output = []
+            diag_output.append(f"Diagnostics Status: {status_msg}")
+            diag_output.append(f"Timestamp: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            
+            # Test links
+            tests = {
+                "Binance API": "https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT",
+                "ExchangeRate API": "https://open.er-api.com/v6/latest/USD",
+                "Fundamentus": "https://www.fundamentus.com.br/resultado.php",
+                "Google Finance": "https://www.google.com/finance/quote/AAPL:NASDAQ"
+            }
+            
+            for name, url in tests.items():
+                try:
+                    res = requests.get(url, headers={'User-Agent': 'Mozilla/5.0'}, timeout=5)
+                    diag_output.append(f"{name}: HTTP {res.status_code} (length: {len(res.text)})")
+                    if name == "Fundamentus" and res.status_code == 200:
+                        matches = re.findall(r'papel=([A-Z0-9]+)', res.text)
+                        diag_output.append(f"Fundamentus parse matches: {len(matches)}")
+                except Exception as ex:
+                    diag_output.append(f"{name}: FAILED with error {ex}")
+                    
+            # Check cache
+            diag_output.append(f"Cache File Path: {self.cache_file}")
+            diag_output.append(f"Cache File Exists: {os.path.exists(self.cache_file)}")
+            if os.path.exists(self.cache_file):
+                try:
+                    with open(self.cache_file, 'r', encoding='utf-8') as f:
+                        cache_data = json.load(f)
+                        diag_output.append(f"Cache Metadata: {cache_data.get('metadata')}")
+                        tickers_list = list(cache_data.get('tickers', {}).keys())
+                        diag_output.append(f"Cache Tickers count: {len(tickers_list)}")
+                        diag_output.append(f"Some Tickers in Cache: {tickers_list[:10]}")
+                except Exception as ex:
+                    diag_output.append(f"Failed to read cache: {ex}")
+                    
+            with open(diag_file, 'w', encoding='utf-8') as f:
+                f.write("\n".join(diag_output))
+                
+            print("Successfully wrote diagnostics to static/diagnostics.txt")
+        except Exception as ex:
+            print(f"Failed to write diagnostics: {ex}")
+
     def get_fallback_data(self):
         """Loads data from local JSON cache if exists, otherwise returns high quality mock fallback."""
         if os.path.exists(self.cache_file):
@@ -928,9 +982,9 @@ class LiveMarketManager:
              # Calculate and append YTD returns and clean fields
             for t in self.all_tickers:
                 if t in parsed["tickers"]:
-                    curr = parsed["tickers"][t]["price"]
+                    curr = parsed["tickers"][t].get("price")
                     ytd_val = 0.0
-                    if t in ys_cache["prices"]:
+                    if curr is not None and t in ys_cache["prices"]:
                         start_price = ys_cache["prices"][t]
                         if start_price > 0.0:
                             ytd_val = ((curr - start_price) / start_price) * 100
@@ -952,6 +1006,7 @@ class LiveMarketManager:
             with open(self.cache_file, 'w', encoding='utf-8') as f:
                 json.dump(parsed, f, ensure_ascii=False, indent=4)
                 
+            self._write_diagnostics("SUCCESS")
             return parsed
              
         except Exception as e:
@@ -967,6 +1022,8 @@ class LiveMarketManager:
             except Exception:
                 pass
                 
+            self._write_diagnostics(f"CRITICAL ERROR: {traceback.format_exc()}")
+            
             # Fall back to writing standard mock database if everything crashed
             fallback = self.get_fallback_data()
             try:
