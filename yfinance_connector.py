@@ -326,11 +326,46 @@ class LiveMarketManager:
             "PETR4.SA": (38.50, 0.18, 0.47), "SAPR11.SA": (26.20, -0.12, -0.46), "ROMI3.SA": (12.10, -0.22, -1.78)
         }
         
-        for t, (val, diff, pct) in mocks.items():
+        # Load year start prices for YTD calculations in fallback mocks if possible
+        ys_cache_path = os.path.join(self.cache_dir, "year_start_prices.json")
+        ys_prices = {}
+        if os.path.exists(ys_cache_path):
+            try:
+                with open(ys_cache_path, 'r', encoding='utf-8') as f:
+                    loaded = json.load(f)
+                    ys_prices = loaded.get("prices", {})
+            except Exception:
+                pass
+
+        import hashlib
+        for t in self.all_tickers:
+            val = 100.0  # default fallback price
+            diff = 0.0
+            pct = 0.0
+            
+            if t in mocks:
+                val, diff, pct = mocks[t]
+            elif t in ys_prices:
+                start_p = ys_prices[t]
+                if start_p > 0:
+                    # Deterministic fallback price change: -20% to +20% YTD
+                    h = int(hashlib.md5(t.encode()).hexdigest(), 16)
+                    change_pct = ((h % 40) - 20) / 100.0
+                    val = start_p * (1.0 + change_pct)
+                    diff = val * 0.01  # dummy daily change
+                    pct = 1.0          # dummy daily percent
+            
+            ytd_val = 0.0
+            if t in ys_prices:
+                start_p = ys_prices[t]
+                if start_p > 0:
+                    ytd_val = ((val - start_p) / start_p) * 100
+                    
             fallback["tickers"][t] = {
-                "price": val,
-                "change": diff,
-                "pct_change": pct,
+                "price": float(val),
+                "change": float(diff),
+                "pct_change": float(pct),
+                "ytd_return": float(ytd_val),
                 "timestamp": now_str
             }
         return fallback
@@ -671,6 +706,15 @@ class LiveMarketManager:
                 except Exception:
                     pass
 
+            # Load existing cache to reuse previously fetched prices on failure
+            existing_cache = {}
+            if os.path.exists(self.cache_file):
+                try:
+                    with open(self.cache_file, 'r', encoding='utf-8') as f:
+                        existing_cache = json.load(f).get("tickers", {})
+                except Exception:
+                    pass
+
             # Try Yahoo Finance first
             data = pd.DataFrame()
             try:
@@ -711,7 +755,7 @@ class LiveMarketManager:
                     except Exception:
                         pass
 
-            # Fetch any missing tickers using fallbacks in parallel
+            # Fetch any missing tickers using fallbacks in parallel (limit concurrency to 3 to prevent memory limits/rate limits)
             missing_tickers = [t for t in self.all_tickers if t not in parsed["tickers"]]
             if missing_tickers:
                 fetch_tickers = list(missing_tickers)
@@ -719,7 +763,7 @@ class LiveMarketManager:
                     fetch_tickers.append("USDSEK=X")
                     
                 fallback_results = {}
-                with concurrent.futures.ThreadPoolExecutor(max_workers=20) as executor:
+                with concurrent.futures.ThreadPoolExecutor(max_workers=3) as executor:
                     future_to_ticker = {executor.submit(self._fetch_single_ticker_fallback, t): t for t in fetch_tickers}
                     for future in concurrent.futures.as_completed(future_to_ticker):
                         t = future_to_ticker[future]
@@ -786,8 +830,8 @@ class LiveMarketManager:
                             "pct_change": float(dxy_pct),
                             "timestamp": now_str
                         }
-
-            # Calculate and append YTD returns and clean fields
+ 
+             # Calculate and append YTD returns and clean fields
             for t in self.all_tickers:
                 if t in parsed["tickers"]:
                     curr = parsed["tickers"][t]["price"]
@@ -798,20 +842,24 @@ class LiveMarketManager:
                             ytd_val = ((curr - start_price) / start_price) * 100
                     parsed["tickers"][t]["ytd_return"] = float(ytd_val)
                 else:
-                    # Ticker completely failed, merge from fallback mocks to avoid crashes
-                    fallback_mocks = self.get_fallback_data()
-                    if t in fallback_mocks["tickers"]:
-                        parsed["tickers"][t] = fallback_mocks["tickers"][t]
+                    # Ticker completely failed, try to reuse from existing cache first
+                    if t in existing_cache:
+                        parsed["tickers"][t] = existing_cache[t]
+                    else:
+                        # Otherwise, fallback to static mock database
+                        fallback_mocks = self.get_fallback_data()
+                        if t in fallback_mocks["tickers"]:
+                            parsed["tickers"][t] = fallback_mocks["tickers"][t]
                     
                 if t in parsed["tickers"] and "ytd_return" not in parsed["tickers"][t]:
                     parsed["tickers"][t]["ytd_return"] = 0.0
-
-            # Save parsed data to cache file
+ 
+             # Save parsed data to cache file
             with open(self.cache_file, 'w', encoding='utf-8') as f:
                 json.dump(parsed, f, ensure_ascii=False, indent=4)
                 
             return parsed
-            
+             
         except Exception:
             # Fall back to writing standard mock database if everything crashed
             fallback = self.get_fallback_data()
