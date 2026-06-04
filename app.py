@@ -7411,8 +7411,8 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
                             **Qual é o risco real?**
                             Risco cambial direcional da flutuação da moeda Solana no mercado e estabilidade operacional da blockchain.
                     
-                            **Capital Mínimo Recomendado**:
-                            Estratégia flexível e imediata, recomendada a partir de qualquer capital de **R$ 50.000,00**.
+                            **Estrutura de Capital**:
+                            Estratégia altamente flexível, sem exigência de aporte mínimo.
                             """)
                         elif lang == "EN":
                             st.markdown("""
@@ -7427,8 +7427,8 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
                             **What is the real risk?**
                             Directional currency risk from Solana price fluctuations in the market and blockchain operational stability.
                     
-                            **Recommended Minimum Capital**:
-                            Flexible and immediate strategy, recommended starting from any capital of **BRL 50,000.00**.
+                            **Capital Structure**:
+                            Highly flexible strategy, with no minimum deposit requirement.
                             """)
                         else:
                             st.markdown("""
@@ -7443,8 +7443,8 @@ Estas telemetrias cruzam o valor de rede (capitalização) com o volume transaci
                             **¿Cuál es el riesgo real?**
                             Riesgo cambiario direccional por la fluctuación de la moneda Solana en el mercado y estabilidad operativa de la blockchain.
                     
-                            **Capital Mínimo Recomendado**:
-                            Estrategia flexible e inmediata, recomendada a partir de cualquier capital de **BRL 50.000,00**.
+                            **Estructura de Capital**:
+                            Estrategia altamente flexible, sin requisito de depósito mínimo.
                             """)
 
 
