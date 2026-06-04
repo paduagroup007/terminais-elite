@@ -1599,3 +1599,120 @@ class LiveMarketManager:
                 "raw_index": idx_val
             })
         return pd.DataFrame(rows)
+
+    def get_cross_sma111_deviations(self, parsed_data, lang="PT"):
+        """Calculates 111-day SMA deviations and combines them with PPA deviations for cross pairs."""
+        # 1. Fetch PPA deviations from get_cross_ppp_valuation
+        df_ppa = self.get_cross_ppp_valuation(parsed_data, lang)
+        
+        # 2. Fetch historical SMA-111 calculations from the cached helper function
+        sma_data = {}
+        try:
+            import streamlit as st
+            if not hasattr(st, "_fetch_cross_sma111_data_cached"):
+                @st.cache_data(ttl=1200)
+                def _fetch_cross_sma111_data():
+                    import yfinance as yf
+                    import pandas as pd
+                    tickers = ["EURUSD=X", "GBPUSD=X", "JPY=X", "BRL=X", "CAD=X", "AUDUSD=X", "CHF=X", "NZDUSD=X"]
+                    try:
+                        data = yf.download(tickers, period="200d", interval="1d", progress=False)
+                        if data.empty:
+                            return {}
+                        closes = data['Close'].ffill().bfill()
+                        usd_series = {
+                            "USD": pd.Series(1.0, index=closes.index),
+                            "EUR": closes["EURUSD=X"],
+                            "GBP": closes["GBPUSD=X"],
+                            "JPY": 1.0 / closes["JPY=X"],
+                            "CAD": 1.0 / closes["CAD=X"],
+                            "AUD": closes["AUDUSD=X"],
+                            "CHF": 1.0 / closes["CHF=X"],
+                            "BRL": 1.0 / closes["BRL=X"],
+                            "NZD": closes["NZDUSD=X"]
+                        }
+                        currencies = ["USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "BRL", "NZD"]
+                        priority = ["EUR", "GBP", "AUD", "NZD", "USD", "CAD", "CHF", "JPY", "BRL"]
+                        
+                        results = {}
+                        for i in range(len(currencies)):
+                            for j in range(i + 1, len(currencies)):
+                                c1, c2 = currencies[i], currencies[j]
+                                base, quote = (c1, c2) if priority.index(c1) < priority.index(c2) else (c2, c1)
+                                base_s, quote_s = usd_series[base], usd_series[quote]
+                                cross_s = base_s / quote_s
+                                current_price = float(cross_s.iloc[-1])
+                                sma_111 = float(cross_s.iloc[-111:].mean()) if len(cross_s) >= 111 else float(cross_s.mean())
+                                dev_111 = float(((current_price - sma_111) / sma_111) * 100)
+                                results[f"{base}/{quote}"] = {
+                                    "price": current_price,
+                                    "sma_111": sma_111,
+                                    "dev_111": dev_111
+                                }
+                        return results
+                    except Exception:
+                        return {}
+                st._fetch_cross_sma111_data_cached = _fetch_cross_sma111_data
+            
+            sma_data = st._fetch_cross_sma111_data_cached()
+        except Exception:
+            pass
+            
+        # 3. Merge SMA-111 deviations into the PPA DataFrame
+        rows = []
+        for _, row in df_ppa.iterrows():
+            pair = row["Par" if lang == "PT" else ("Pair" if lang == "EN" else "Par")]
+            item = sma_data.get(pair, {"price": 0.0, "sma_111": 0.0, "dev_111": 0.0})
+            
+            price_val = item["price"] or float(row["Price" if "Price" in row else ("Preço Mercado" if lang == "PT" else ("Market Price" if lang == "EN" else "Precio de Mercado"))].replace("R$", "").replace("$", "").replace("¥", "").strip())
+            sma_val = item["sma_111"]
+            dev_val = item["dev_111"]
+            
+            # Format outputs
+            decimals = 4 if price_val < 5.0 else 2
+            price_str = f"{price_val:.{decimals}f}"
+            sma_str = f"{sma_val:.{decimals}f}" if sma_val > 0.0 else "N/A"
+            dev_str = f"{dev_val:+.2f}%" if sma_val > 0.0 else "N/A"
+            
+            # Confluence signal
+            ppa_dev_str = row["Desvio PPA" if "Desvio PPA" in row else ("Desvio (PPA)" if "Desvio (PPA)" in row else ("PPP Deviation" if lang == "EN" else "Desviación PPA"))].replace("%", "").strip()
+            try:
+                ppa_dev = float(ppa_dev_str)
+            except ValueError:
+                ppa_dev = 0.0
+                
+            # Aconselhamento de Trade (Confluência)
+            if ppa_dev > 3.0 and dev_val > 1.0:
+                action = "VENDA CONFLUENTE (Forte)" if lang == "PT" else ("CONFLUENT SELL (Strong)" if lang == "EN" else "VENTA CONFLUYENTE (Fuerte)")
+                color = "#ff4b4b"
+            elif ppa_dev < -3.0 and dev_val < -1.0:
+                action = "COMPRA CONFLUENTE (Forte)" if lang == "PT" else ("CONFLUENT BUY (Strong)" if lang == "EN" else "COMPRA CONFLUYENTE (Fuerte)")
+                color = "#00ffa5"
+            elif ppa_dev > 3.0:
+                action = "VENDA APENAS PPA" if lang == "PT" else ("SELL PPA ONLY" if lang == "EN" else "VENTA SOLO PPA")
+                color = "#bf953f"
+            elif ppa_dev < -3.0:
+                action = "COMPRA APENAS PPA" if lang == "PT" else ("BUY PPA ONLY" if lang == "EN" else "COMPRA SOLO PPA")
+                color = "#bf953f"
+            else:
+                action = "Neutro"
+                color = "#aaaaaa"
+                
+            rows.append({
+                "Par": pair,
+                "Preço": price_str,
+                "Média 111 (D1)": sma_str,
+                "Afastamento Média": dev_str,
+                "Desvio PPA": f"{ppa_dev:+.2f}%",
+                "Confluência Tática": action,
+                "raw_dev_111": dev_val,
+                "raw_ppa_dev": ppa_dev,
+                "color": color
+            })
+            
+        df = pd.DataFrame(rows)
+        # Sort by maximum confluence alignment
+        df["score"] = df["raw_dev_111"].abs() + df["raw_ppa_dev"].abs()
+        df = df.sort_values(by="score", ascending=False).drop(columns=["score"])
+        return df
+

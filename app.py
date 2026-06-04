@@ -3698,6 +3698,25 @@ Acesso direto às mesas de estruturação Private de grandes bancos suíços. O 
                 height=450
             )
 
+            st.write("")
+            with st.expander("📈 CONFLUÊNCIA DE DESVIO DE MÉDIA MÓVEL (111 SMA) NO DIÁRIO (D1)"):
+                st.markdown("""
+                Esta tabela exibe a confluência quantitativa entre o **Desvio de PPA (Fundamental)** e o **Afastamento da Média Móvel Simples de 111 dias (Técnico)** calculada no gráfico diário (D1). 
+                
+                * **Compra Confluente (Forte):** O par está subvalorizado pela PPA (desvio < -3%) e o preço atual está abaixo da média de 111 dias (desvio < -1%). Alta probabilidade de reversão de alta.
+                * **Venda Confluente (Forte):** O par está sobrevalorizado pela PPA (desvio > +3%) e o preço atual está acima da média de 111 dias (desvio > +1%). Alta probabilidade de reversão de baixa.
+                """)
+                
+                with st.spinner("Calculando médias de 111 dias no gráfico D1..."):
+                    df_confl = live_market.get_cross_sma111_deviations(market_data, lang)
+                    df_confl_display = df_confl.drop(columns=["raw_dev_111", "raw_ppa_dev", "color"], errors="ignore")
+                
+                st.dataframe(
+                    df_confl_display,
+                    use_container_width=True,
+                    height=450
+                )
+
         # --- PLANEJADOR DE POSIÇÃO E GESTÃO DE RISCO PPA ---
         st.write("")
         st.subheader("📊 PLANEJADOR DE GRADE E RISCO PPA (CONTA EXEMPLO: $10,000)" if lang == "PT" else ("📊 PPP POSITION GRID & RISK PLANNER (EXAMPLE: $10,000 ACCOUNT)" if lang == "EN" else "📊 PLANIFICADOR DE CUADRÍCULA Y RIESGO PPA (EJEMPLO: CUENTA DE $10,000)"))
