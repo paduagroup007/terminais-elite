@@ -132,6 +132,15 @@ def render_daytrade_cockpit(lang):
     st.markdown(f"<h2>{tx['title']}</h2>", unsafe_allow_html=True)
     st.markdown(f"<p style='color:#bf953f; font-weight:600; font-size:13px; margin-top:-10px; margin-bottom:25px;'>{tx['desc'].upper()}</p>", unsafe_allow_html=True)
     
+    # Secret area in the sidebar
+    admin_mode = False
+    with st.sidebar:
+        st.markdown("<h4 style='color:#bf953f; font-size:12px; font-weight:700; margin-bottom:5px; text-transform:uppercase;'>Área do Administrador</h4>", unsafe_allow_html=True)
+        admin_pass = st.text_input("Chave Quant Privada", type="password", key="quant_admin_pass")
+        if admin_pass == "jarvis23" or admin_pass == "elite23":
+            admin_mode = True
+            st.success("Modo Quant Privado Ativo!")
+            
     # Recalculate stats handler
     if st.sidebar.button(tx["recalc_btn"], key="recalc_daytrade_stats_btn", use_container_width=True):
         with st.spinner("Executando backtests históricos..." if lang == "PT" else "Running historical backtests..."):
@@ -143,12 +152,21 @@ def render_daytrade_cockpit(lang):
                 st.error(f"Erro ao recalcular: {e}")
     
     # Asset selection
+    options = ["WIN (Mini Índice)", "WDO (Mini Dólar)"]
+    if admin_mode:
+        options = ["WIN (Mini Índice)", "WDO (Mini Dólar)", "EUR/USD", "GBP/USD", "USD/JPY", "Ouro (XAU/USD)"]
+        
+    # Safeguard session state selection
+    if "daytrade_asset_sel" in st.session_state and st.session_state["daytrade_asset_sel"] not in options:
+        st.session_state["daytrade_asset_sel"] = "WIN (Mini Índice)"
+        
     asset_option = st.segmented_control(
         tx["select_asset"],
-        options=["WIN (Mini Índice)", "WDO (Mini Dólar)", "EUR/USD", "GBP/USD", "USD/JPY", "Ouro (XAU/USD)"],
+        options=options,
         default="WIN (Mini Índice)",
         key="daytrade_asset_sel"
     )
+
     
     # Map parameters based on selection
     if "WIN" in asset_option:
