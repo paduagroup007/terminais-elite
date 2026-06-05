@@ -1150,7 +1150,7 @@ if "active_terminal" not in st.session_state:
     st.session_state.active_terminal = url_terminal
 
 # Seletor de Idiomas na Barra Lateral
-lang_options = {"Portugu" + chr(0xfffd) + "s (PT)": "PT", "English (EN)": "EN", "Espa" + chr(0xfffd) + "ol (ES)": "ES"}
+lang_options = {"Português (PT)": "PT", "English (EN)": "EN", "Español (ES)": "ES"}
 url_lang = st.query_params.get("lang", "PT").strip().upper()
 
 if "prev_url_lang" not in st.session_state or st.session_state.prev_url_lang != url_lang:
@@ -1161,7 +1161,7 @@ if "prev_url_lang" not in st.session_state or st.session_state.prev_url_lang != 
 
 if "selected_lang_key" not in st.session_state:
     inv_map = {v: k for k, v in lang_options.items()}
-    st.session_state.selected_lang_key = inv_map.get(url_lang, "Portugu" + chr(0xfffd) + "s (PT)")
+    st.session_state.selected_lang_key = inv_map.get(url_lang, "Português (PT)")
 
 # Detect viewport param passed from React parent
 is_mobile = st.query_params.get("mobile", "false").lower() == "true"
@@ -5005,7 +5005,8 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                     margin=dict(t=10, b=10, l=10, r=10),
                     height=280,
                     xaxis=dict(showgrid=False, tickfont=dict(color='#dddddd')),
-                    yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)', tickfont=dict(color='#dddddd'))
+                    yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.03)', tickfont=dict(color='#dddddd')),
+                    legend=dict(font=dict(color='#ffffff'))
                 )
                 st.plotly_chart(fig_gsr_hist, use_container_width=True)
 
@@ -5046,7 +5047,8 @@ Son los **Big Players especulativos** (Grandes Hedge Funds globales de arbitraje
                         showgrid=False,
                         tickfont=dict(color='#ff4b4b'),
                         title="Yield de 10 Anos (%)"
-                    )
+                    ),
+                    legend=dict(font=dict(color='#ffffff'))
                 )
                 st.plotly_chart(fig_sov, use_container_width=True)
         else:
