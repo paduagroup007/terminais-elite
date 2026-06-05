@@ -5402,25 +5402,65 @@ elif st.session_state.active_terminal == "balance_sheets":
                 net_margin = last['Margem_Liquida']
                 grow_luc = ((lucro_ttm / lucro_prev_ttm) - 1) * 100 if lucro_prev_ttm > 0 else 0
                 if net_margin > 12:
-                    margin_rating = "EXCELENTE (Altamente Lucrativa)"
+                    if lang == "EN":
+                        margin_rating = "EXCELLENT (Highly Profitable)"
+                    elif lang == "ES":
+                        margin_rating = "EXCELENTE (Altamente Lucrativa)"
+                    else:
+                        margin_rating = "EXCELENTE (Altamente Lucrativa)"
                     margin_color = "#00ffa5"
                 elif net_margin > 5:
-                    margin_rating = "SAUDÁVEL (Moderada)"
+                    if lang == "EN":
+                        margin_rating = "HEALTHY (Moderate)"
+                    elif lang == "ES":
+                        margin_rating = "SALUDABLE (Moderada)"
+                    else:
+                        margin_rating = "SAUDÁVEL (Moderada)"
                     margin_color = "lightgreen"
                 else:
-                    margin_rating = "SOB PRESSÃO (Baixa Rentabilidade)"
+                    if lang == "EN":
+                        margin_rating = "UNDER PRESSURE (Low Profitability)"
+                    elif lang == "ES":
+                        margin_rating = "BAJO PRESIÓN (Baja Rentabilidad)"
+                    else:
+                        margin_rating = "SOB PRESSÃO (Baixa Rentabilidade)"
                     margin_color = "red"
                 
-                luc_desc = (
-                    f"A **Margem Líquida acumulada é de {net_margin:.1f}%**, o que é classificado como **<span style='color:{margin_color}; font-weight:bold;'>{margin_rating}</span>**. "
-                    f"A geração de Lucro Líquido variou **{grow_luc:+.1f}%** em comparação com o período anterior de 12 meses. "
-                    f"Com um **ROE atual de {roe:.1f}%**, a companhia demonstra forte eficiência na alocação de seu capital próprio para gerar retorno para o acionista. Lucros consistentes sustentam dividendos perenes e crescimento de longo prazo."
-                )
+                if lang == "EN":
+                    luc_desc = (
+                        f"The accumulated **Net Margin is {net_margin:.1f}%**, which is classified as **<span style='color:{margin_color}; font-weight:bold;'>{margin_rating}</span>**. "
+                        f"Net Profit generation changed by **{grow_luc:+.1f}%** compared to the previous 12-month period. "
+                    )
+                    if roe > 0:
+                        luc_desc += f"With a current **ROE of {roe:.1f}%**, the company demonstrates efficiency in allocating its equity to generate returns for shareholders. Consistent profits support healthy dividends and corporate growth."
+                    else:
+                        luc_desc += f"With a current **ROE of {roe:.1f}%** (negative), the company is currently destroying shareholder value, operating inefficiently in allocating its own resources. Frequent losses put dividends under extreme risk of cuts or suspension and compromise long-term growth."
+                    header_title = "Elite IA Brain | Profitability and Return"
+                elif lang == "ES":
+                    luc_desc = (
+                        f"El **Margen Neto acumulado es de {net_margin:.1f}%**, lo que se clasifica como **<span style='color:{margin_color}; font-weight:bold;'>{margin_rating}</span>**. "
+                        f"La generación de Utilidad Neta varió **{grow_luc:+.1f}%** en comparación con el período de 12 meses anterior. "
+                    )
+                    if roe > 0:
+                        luc_desc += f"Con un **ROE actual de {roe:.1f}%**, la compañía demuestra eficiencia en la asignación de su capital propio para generar retorno para el accionista. Ganancias consistentes sustentan la posibilidad de dividendos saludables y crecimiento corporativo."
+                    else:
+                        luc_desc += f"Con un **ROE actual de {roe:.1f}%** (negativo), la compañía demuestra que actualmente está destruyendo valor sobre su patrimonio neto, operando de manera ineficiente en la asignación de recursos propios. Pérdidas recurrentes ponen los dividendos bajo riesgo extremo de recorte o suspensión y comprometen el crecimiento a largo plazo."
+                    header_title = "Cerebro Elite IA | Rentabilidad y Retorno"
+                else:
+                    luc_desc = (
+                        f"A **Margem Líquida acumulada é de {net_margin:.1f}%**, o que é classificado como **<span style='color:{margin_color}; font-weight:bold;'>{margin_rating}</span>**. "
+                        f"A geração de Lucro Líquido variou **{grow_luc:+.1f}%** em comparação com o período anterior de 12 meses. "
+                    )
+                    if roe > 0:
+                        luc_desc += f"Com um **ROE atual de {roe:.1f}%**, a companhia demonstra eficiência na alocação de seu capital próprio para gerar retorno para o acionista. Lucros consistentes sustentam a possibilidade de dividendos saudáveis e crescimento corporativo."
+                    else:
+                        luc_desc += f"Com um **ROE atual de {roe:.1f}%** (negativo), a companhia demonstra que está atualmente destruindo valor sobre seu patrimônio líquido, operando de forma ineficiente na alocação de recursos próprios. Prejuízos frequentes colocam dividendos sob risco extremo de corte ou suspensão e comprometem o crescimento de longo prazo."
+                    header_title = "Cérebro Elite IA | Lucratividade e Retorno"
                 
                 st.markdown(f"""
                 <div style="background: linear-gradient(135deg, rgba(191, 149, 63, 0.08) 0%, rgba(7, 7, 10, 0.6) 100%); border: 1px solid rgba(191, 149, 63, 0.25); border-radius: 16px; padding: 20px; margin-top: 15px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);">
                     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-                        <strong style="color: #bf953f; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Cérebro Elite IA | Lucratividade e Retorno</strong>
+                        <strong style="color: #bf953f; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">{header_title}</strong>
                     </div>
                     <p style="color: #e0e0e0; font-size: 12px; line-height: 1.6; margin: 0;">
                         {luc_desc}
