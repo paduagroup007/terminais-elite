@@ -9405,10 +9405,18 @@ elif st.session_state.active_terminal == "family_office_br":
                 st.markdown("<h3>Módulo 2: Barganhas da Bolsa sob Acumulação</h3>" if lang == "PT" else ("<h3>Module 2: Beaten-Down Bargains under Accumulation</h3>" if lang == "EN" else "<h3>Módulo 2: Gangas de la Bolsa bajo Acumulación</h3>"), unsafe_allow_html=True)
                 st.write("Ações fortemente descontadas em relação aos seus balanços históricos e valor intrínseco, mas que começaram a ser silenciosamente adquiridas pelos maiores fundos do país.")
                 
+                lren_price = t_data.get("LREN3.SA", {}).get("price", 16.50)
+                alos_price = t_data.get("ALOS3.SA", {}).get("price", 22.50)
+                cogn_price = t_data.get("COGN3.SA", {}).get("price", 2.40)
+                
+                lren_ytd = t_data.get("LREN3.SA", {}).get("ytd_return", -18.5)
+                alos_ytd = t_data.get("ALOS3.SA", {}).get("ytd_return", -12.4)
+                cogn_ytd = t_data.get("COGN3.SA", {}).get("ytd_return", -24.1)
+                
                 data_contrarian = [
-                    {"Ativo": "LREN3", "Empresa": "Lojas Renner S.A.", "P/L": "10.4x", "P/VP": "1.2x", "Queda YTD": "-18.5%", "Fluxo Mensal": "R$ 145 Milhões", "Compradores": "Verde & Dynamo"},
-                    {"Ativo": "ALOS3", "Empresa": "Allos S.A.", "P/L": "11.2x", "P/VP": "0.8x", "Queda YTD": "-12.4%", "Fluxo Mensal": "R$ 89 Milhões", "Compradores": "Dynamo Capital"},
-                    {"Ativo": "COGN3", "Empresa": "Cogna Educação", "P/L": "N/A (Turnaround)", "P/VP": "0.4x", "Queda YTD": "-24.1%", "Fluxo Mensal": "R$ 42 Milhões", "Compradores": "Bogari Capital"}
+                    {"Ativo": "LREN3", "Empresa": "Lojas Renner S.A.", "Preço Atual": format_brl(lren_price), "P/L": "10.4x", "P/VP": "1.2x", "Queda YTD": f"{lren_ytd:+.2f}%", "Fluxo Mensal": "R$ 145 Milhões", "Compradores": "Verde & Dynamo"},
+                    {"Ativo": "ALOS3", "Empresa": "Allos S.A.", "Preço Atual": format_brl(alos_price), "P/L": "11.2x", "P/VP": "0.8x", "Queda YTD": f"{alos_ytd:+.2f}%", "Fluxo Mensal": "R$ 89 Milhões", "Compradores": "Dynamo Capital"},
+                    {"Ativo": "COGN3", "Empresa": "Cogna Educação", "Preço Atual": format_brl(cogn_price), "P/L": "N/A (Turnaround)", "P/VP": "0.4x", "Queda YTD": f"{cogn_ytd:+.2f}%", "Fluxo Mensal": "R$ 42 Milhões", "Compradores": "Bogari Capital"}
                 ]
                 st.table(data_contrarian)
                 st.info("A presença de múltiplos baixos acoplada ao início do fluxo de compras das top gestoras indica um piso de preço (valuation floor) sólido para estes ativos." if lang == "PT" else "The combination of depressed multiples and emerging top-manager buying flow points to a strong valuation floor for these assets.")
@@ -9418,11 +9426,26 @@ elif st.session_state.active_terminal == "family_office_br":
                 st.markdown("<h3>Módulo 3: Escudo de Dividendos (Foco Previdenciário Luiz Barsi)</h3>" if lang == "PT" else ("<h3>Module 3: Dividend Shield (Luiz Barsi Philosophy)</h3>" if lang == "EN" else "<h3>Módulo 3: Escudo de Dividendos (Enfoque Luiz Barsi)</h3>"), unsafe_allow_html=True)
                 st.write("Mapeamento dos ativos mais resilientes e geradores de fluxo passivo de alta previsibilidade, inspirados na metodologia de Luiz Barsi Filho (ações geradoras de dividendos reais constantes).")
                 
+                taee_price = t_data.get("TAEE11.SA", {}).get("price", 35.10)
+                trpl_price = t_data.get("TRPL4.SA", {}).get("price", 25.00)
+                bbas_price = t_data.get("BBAS3.SA", {}).get("price", 27.50)
+                aure_price = t_data.get("AURE3.SA", {}).get("price", 12.00)
+                
+                taee_dps = 3.44
+                trpl_dps = 2.175
+                bbas_dps = 2.805 if bbas_price >= 23.0 else 1.4025
+                aure_dps = 1.104
+                
+                taee_yield = (taee_dps / taee_price) * 100 if taee_price > 0 else 9.8
+                trpl_yield = (trpl_dps / trpl_price) * 100 if trpl_price > 0 else 8.7
+                bbas_yield = (bbas_dps / bbas_price) * 100 if bbas_price > 0 else 10.2
+                aure_yield = (aure_dps / aure_price) * 100 if aure_price > 0 else 9.2
+                
                 data_dividends = [
-                    {"Ticker": "TAEE11", "Empresa": "Taesa S.A.", "Dividend Yield": "9.8%", "Payout Médio": "88%", "Foco Setorial": "Transmissão Elétrica (Isolado do ciclo de consumo)"},
-                    {"Ticker": "TRPL4", "Empresa": "ISA CTEEP", "Dividend Yield": "8.7%", "Payout Médio": "75%", "Foco Setorial": "Transmissão Elétrica (Receita anual permitida reajustada)"},
-                    {"Ticker": "BBAS3", "Empresa": "Banco do Brasil", "Dividend Yield": "10.2%", "Payout Médio": "40%", "Foco Setorial": "Setor Bancário & Agronegócio (Múltiplos de segurança extrema)"},
-                    {"Ticker": "AURE3", "Empresa": "Auren Energia", "Dividend Yield": "9.2%", "Payout Médio": "100%", "Foco Setorial": "Geração Hidrelétrica & Eólica (Fluxos de caixa indexados)"}
+                    {"Ticker": "TAEE11", "Empresa": "Taesa S.A.", "Preço Atual": format_brl(taee_price), "Dividend Yield": f"{taee_yield:.2f}%", "Payout Médio": "88%", "Foco Setorial": "Transmissão Elétrica (Isolado do ciclo de consumo)"},
+                    {"Ticker": "TRPL4", "Empresa": "ISA CTEEP", "Preço Atual": format_brl(trpl_price), "Dividend Yield": f"{trpl_yield:.2f}%", "Payout Médio": "75%", "Foco Setorial": "Transmissão Elétrica (Receita anual permitida reajustada)"},
+                    {"Ticker": "BBAS3", "Empresa": "Banco do Brasil", "Preço Atual": format_brl(bbas_price), "Dividend Yield": f"{bbas_yield:.2f}%", "Payout Médio": "40%", "Foco Setorial": "Setor Bancário & Agronegócio (Múltiplos de segurança extrema)"},
+                    {"Ticker": "AURE3", "Empresa": "Auren Energia", "Preço Atual": format_brl(aure_price), "Dividend Yield": f"{aure_yield:.2f}%", "Payout Médio": "100%", "Foco Setorial": "Geração Hidrelétrica & Eólica (Fluxos de caixa indexados)"}
                 ]
                 st.table(data_dividends)
                 st.success("Filosofia Barsi: Compre empresas de infraestrutura básica baratas, acumule de forma recorrente e utilize a renda passiva gerada para comprar mais cotas do mesmo ativo até obter autossuficiência de capital." if lang == "PT" else "Barsi Philosophy: Buy cheap utility and infrastructure companies, accumulate regularly, and reinvest dividends to buy more shares until achieving financial freedom.")
@@ -9432,10 +9455,14 @@ elif st.session_state.active_terminal == "family_office_br":
                 st.markdown("<h3>Módulo 4: Compounders de Crescimento Exponencial</h3>" if lang == "PT" else ("<h3>Module 4: Exponential Growth Compounders</h3>" if lang == "EN" else "<h3>Módulo 4: Compuestos de Crecimiento Exponencial</h3>"), unsafe_allow_html=True)
                 st.write("Empresas com elevadíssimo retorno sobre capital investido (ROIC) e capacidade incomparável de reinvestir seus lucros com altas taxas de retorno, gerando crescimento secular de patrimônio.")
                 
+                wege_price = t_data.get("WEGE3.SA", {}).get("price", 39.50)
+                rent_price = t_data.get("RENT3.SA", {}).get("price", 48.50)
+                bpac_price = t_data.get("BPAC11.SA", {}).get("price", 35.00)
+                
                 data_growth = [
-                    {"Ativo": "WEGE3", "Empresa": "Weg S.A.", "ROE": "24.5%", "ROIC": "29.1%", "CAGR Lucro 3y": "+18.2%", "Destaque Operacional": "Liderança de motores industriais e eletrificação global"},
-                    {"Ativo": "RENT3", "Empresa": "Localiza S.A.", "ROE": "14.2%", "ROIC": "12.8%", "CAGR Lucro 3y": "+22.4%", "Destaque Operacional": "Escala logística insuperável e capilaridade de compra de frotas"},
-                    {"Ativo": "BPAC11", "Empresa": "BTG Pactual", "ROE": "21.8%", "ROIC": "18.5%", "CAGR Lucro 3y": "+28.1%", "Destaque Operacional": "Dominância em assessoria de fortunas e investment banking local"}
+                    {"Ativo": "WEGE3", "Empresa": "Weg S.A.", "Preço Atual": format_brl(wege_price), "ROE": "24.5%", "ROIC": "29.1%", "CAGR Lucro 3y": "+18.2%", "Destaque Operacional": "Liderança de motores industriais e eletrificação global"},
+                    {"Ativo": "RENT3", "Empresa": "Localiza S.A.", "Preço Atual": format_brl(rent_price), "ROE": "14.2%", "ROIC": "12.8%", "CAGR Lucro 3y": "+22.4%", "Destaque Operacional": "Escala logística insuperável e capilaridade de compra de frotas"},
+                    {"Ativo": "BPAC11", "Empresa": "BTG Pactual", "Preço Atual": format_brl(bpac_price), "ROE": "21.8%", "ROIC": "18.5%", "CAGR Lucro 3y": "+28.1%", "Destaque Operacional": "Dominância em assessoria de fortunas e investment banking local"}
                 ]
                 st.table(data_growth)
     
@@ -9444,10 +9471,14 @@ elif st.session_state.active_terminal == "family_office_br":
                 st.markdown("<h3>Módulo 5: Fortalezas da Bolsa Brasileira</h3>" if lang == "PT" else ("<h3>Module 5: Fortresses of the Brazilian Stock Exchange</h3>" if lang == "EN" else "<h3>Módulo 5: Fortalezas de la Bolsa Brasileña</h3>"), unsafe_allow_html=True)
                 st.write("As empresas mais lucrativas do país, com endividamento líquido negativo ou extremamente baixo, posições de caixa robustas e lucros consistentes em qualquer cenário macro.")
                 
+                itub_price = t_data.get("ITUB4.SA", {}).get("price", 34.20)
+                wege_price = t_data.get("WEGE3.SA", {}).get("price", 39.50)
+                egie_price = t_data.get("EGIE3.SA", {}).get("price", 42.10)
+                
                 data_fortresses = [
-                    {"Ativo": "ITUB4", "Empresa": "Itaú Unibanco S.A.", "Lucro Líquido TTM": "R$ 35.6 Bilhões", "Índice de Basileia": "15.4%", "ROE": "22.4%", "Alavancagem": "Conservadora"},
-                    {"Ativo": "WEGE3", "Empresa": "Weg S.A.", "Lucro Líquido TTM": "R$ 5.8 Bilhões", "ROIC": "29.1%", "Margem EBITDA": "21.5%", "Dívida Líq/EBITDA": "-0.4x (Caixa Líquido)"},
-                    {"Ativo": "EGIE3", "Empresa": "Engie Brasil Energia", "Lucro Líquido TTM": "R$ 3.2 Bilhões", "Margem Líquida": "24.8%", "ROE": "31.5%", "Dívida Líq/EBITDA": "2.2x (Controlada)"}
+                    {"Ativo": "ITUB4", "Empresa": "Itaú Unibanco S.A.", "Preço Atual": format_brl(itub_price), "Lucro Líquido TTM": "R$ 35.6 Bilhões", "Índice de Basileia": "15.4%", "ROE": "22.4%", "Alavancagem": "Conservadora"},
+                    {"Ativo": "WEGE3", "Empresa": "Weg S.A.", "Preço Atual": format_brl(wege_price), "Lucro Líquido TTM": "R$ 5.8 Bilhões", "ROIC": "29.1%", "Margem EBITDA": "21.5%", "Dívida Líq/EBITDA": "-0.4x (Caixa Líquido)"},
+                    {"Ativo": "EGIE3", "Empresa": "Engie Brasil Energia", "Preço Atual": format_brl(egie_price), "Lucro Líquido TTM": "R$ 3.2 Bilhões", "Margem Líquida": "24.8%", "ROE": "31.5%", "Dívida Líq/EBITDA": "2.2x (Controlada)"}
                 ]
                 st.table(data_fortresses)
     
@@ -9456,10 +9487,14 @@ elif st.session_state.active_terminal == "family_office_br":
                 st.markdown("<h3>Módulo 6: Cruzamento e Consenso de Portfólios Elite</h3>" if lang == "PT" else ("<h3>Module 6: Elite Portfolio Intersection & Consensus</h3>" if lang == "EN" else "<h3>Módulo 6: Intersección y Consenso de Carteras Elite</h3>"), unsafe_allow_html=True)
                 st.write("Identificação de ativos comuns mantidos de forma simultânea por Verde Asset, Dynamo, Atmos e IP Capital. Essa sobreposição indica máxima blindagem analítica e convicção mútua.")
                 
+                rent_price = t_data.get("RENT3.SA", {}).get("price", 48.50)
+                wege_price = t_data.get("WEGE3.SA", {}).get("price", 39.50)
+                itub_price = t_data.get("ITUB4.SA", {}).get("price", 34.20)
+                
                 data_consensus = [
-                    {"Ticker": "RENT3", "Empresa": "Localiza S.A.", "Peso Médio Consolidado": "5.7% da Carteira", "Consenso Gestoras": "Verde, Dynamo, IP Capital & Atmos", "Nível de Consenso": "MÁXIMO"},
-                    {"Ticker": "WEGE3", "Empresa": "Weg S.A.", "Peso Médio Consolidado": "4.6% da Carteira", "Consenso Gestoras": "Verde, IP Capital, Constellation & Dynamo", "Nível de Consenso": "ALTO"},
-                    {"Ticker": "ITUB4", "Empresa": "Itaú Unibanco", "Peso Médio Consolidado": "4.2% da Carteira", "Consenso Gestoras": "Verde, IP Capital & Constellation", "Nível de Consenso": "ALTO"}
+                    {"Ticker": "RENT3", "Empresa": "Localiza S.A.", "Preço Atual": format_brl(rent_price), "Peso Médio Consolidado": "5.7% da Carteira", "Consenso Gestoras": "Verde, Dynamo, IP Capital & Atmos", "Nível de Consenso": "MÁXIMO"},
+                    {"Ticker": "WEGE3", "Empresa": "Weg S.A.", "Preço Atual": format_brl(wege_price), "Peso Médio Consolidado": "4.6% da Carteira", "Consenso Gestoras": "Verde, IP Capital, Constellation & Dynamo", "Nível de Consenso": "ALTO"},
+                    {"Ticker": "ITUB4", "Empresa": "Itaú Unibanco", "Preço Atual": format_brl(itub_price), "Peso Médio Consolidado": "4.2% da Carteira", "Consenso Gestoras": "Verde, IP Capital & Constellation", "Nível de Consenso": "ALTO"}
                 ]
                 st.table(data_consensus)
     
@@ -9468,10 +9503,24 @@ elif st.session_state.active_terminal == "family_office_br":
                 st.markdown("<h3>Módulo 7: Múltiplos de Aço (Deep Value Benjamin Graham)</h3>" if lang == "PT" else ("<h3>Module 7: Deep Value (Benjamin Graham Multiples)</h3>" if lang == "EN" else "<h3>Módulo 7: Deep Value (Múltiplos de Graham)</h3>"), unsafe_allow_html=True)
                 st.write("Mapeamento baseado nos múltiplos clássicos de valor intrínseco. Empresas cotadas abaixo do seu valor patrimonial real e com P/L de um dígito.")
                 
+                vale_price = t_data.get("VALE3.SA", {}).get("price", 62.50)
+                petr_price = t_data.get("PETR4.SA", {}).get("price", 38.20)
+                bbas_price = t_data.get("BBAS3.SA", {}).get("price", 27.50)
+                
+                vale_justo = 98.40
+                petr_justo = 56.20
+                bbas_justo = 42.10
+                if bbas_price < 23.0:
+                    bbas_justo = 21.05
+                    
+                vale_margin = ((vale_justo - vale_price) / vale_price) * 100
+                petr_margin = ((petr_justo - petr_price) / petr_price) * 100
+                bbas_margin = ((bbas_justo - bbas_price) / bbas_price) * 100
+                
                 data_value = [
-                    {"Ticker": "VALE3", "Empresa": "Vale S.A.", "P/L Atual": "5.6x", "P/VP": "1.1x", "EV/EBITDA": "3.8x", "Valor Justo Graham": "R$ 98.40", "Preço Atual": "R$ 62.50", "Margem de Segurança": "+57%"},
-                    {"Ticker": "PETR4", "Empresa": "Petrobras", "P/L Atual": "4.1x", "P/VP": "0.9x", "EV/EBITDA": "2.4x", "Valor Justo Graham": "R$ 56.20", "Preço Atual": "R$ 38.20", "Margem de Segurança": "+47%"},
-                    {"Ticker": "BBAS3", "Empresa": "Banco do Brasil", "P/L Atual": "4.2x", "P/VP": "0.8x", "EV/EBITDA": "N/A", "Valor Justo Graham": "R$ 42.10", "Preço Atual": "R$ 27.50", "Margem de Segurança": "+53%"}
+                    {"Ticker": "VALE3", "Empresa": "Vale S.A.", "P/L Atual": "5.6x", "P/VP": "1.1x", "EV/EBITDA": "3.8x", "Valor Justo Graham": format_brl(vale_justo), "Preço Atual": format_brl(vale_price), "Margem de Segurança": f"{vale_margin:+.1f}%"},
+                    {"Ticker": "PETR4", "Empresa": "Petrobras", "P/L Atual": "4.1x", "P/VP": "0.9x", "EV/EBITDA": "2.4x", "Valor Justo Graham": format_brl(petr_justo), "Preço Atual": format_brl(petr_price), "Margem de Segurança": f"{petr_margin:+.1f}%"},
+                    {"Ticker": "BBAS3", "Empresa": "Banco do Brasil", "P/L Atual": "4.2x", "P/VP": "0.8x", "EV/EBITDA": "N/A", "Valor Justo Graham": format_brl(bbas_justo), "Preço Atual": format_brl(bbas_price), "Margem de Segurança": f"{bbas_margin:+.1f}%"}
                 ]
                 st.table(data_value)
     
@@ -9507,10 +9556,22 @@ elif st.session_state.active_terminal == "family_office_br":
                 st.markdown("<h3>Módulo 9: Joias Ocultas B3 (Small & Mid Caps)</h3>" if lang == "PT" else ("<h3>Module 9: B3 Hidden Gems (Small & Mid Caps)</h3>" if lang == "EN" else "<h3>Módulo 9: Joyas Ocultas B3 (Small & Mid Caps)</h3>"), unsafe_allow_html=True)
                 st.write("Small Caps e Mid Caps de altíssima eficiência corporativa, sem cobertura do grande público de varejo, mas adquiridas massivamente de forma discreta por boutiques de investimento (Atmos e Bogari).")
                 
+                stbp_price = t_data.get("STBP3.SA", {}).get("price", 15.20)
+                kepl_price = t_data.get("KEPL3.SA", {}).get("price", 10.20)
+                tupy_price = t_data.get("TUPY3.SA", {}).get("price", 18.50)
+                
+                stbp_dps = 1.094
+                kepl_dps = 0.663
+                tupy_dps = 0.999
+                
+                stbp_yield = (stbp_dps / stbp_price) * 100 if stbp_price > 0 else 7.2
+                kepl_yield = (kepl_dps / kepl_price) * 100 if kepl_price > 0 else 6.5
+                tupy_yield = (tupy_dps / tupy_price) * 100 if tupy_price > 0 else 5.4
+                
                 data_gems = [
-                    {"Ativo": "STBP3", "Empresa": "Santos Brasil S.A.", "P/L": "12.8x", "Dividend Yield": "7.2%", "Destaque Financeiro": "Caixa líquido de R$ 900M, dominância no porto de Santos, Atmos compradora"},
-                    {"Ativo": "KEPL3", "Empresa": "Kepler Weber S.A.", "P/L": "9.8x", "Dividend Yield": "6.5%", "Destaque Financeiro": "Líder em silos e armazenagem agrícola, alta barreira de entrada, Bogari compradora"},
-                    {"Ativo": "TUPY3", "Empresa": "Tupy S.A.", "P/L": "8.4x", "Dividend Yield": "5.4%", "Destaque Financeiro": "Multinacional de fundidos industriais, diversificada globalmente, Atmos compradora"}
+                    {"Ativo": "STBP3", "Empresa": "Santos Brasil S.A.", "Preço Atual": format_brl(stbp_price), "P/L": "12.8x", "Dividend Yield": f"{stbp_yield:.2f}%", "Destaque Financeiro": "Caixa líquido de R$ 900M, dominância no porto de Santos, Atmos compradora"},
+                    {"Ativo": "KEPL3", "Empresa": "Kepler Weber S.A.", "Preço Atual": format_brl(kepl_price), "P/L": "9.8x", "Dividend Yield": f"{kepl_yield:.2f}%", "Destaque Financeiro": "Líder em silos e armazenagem agrícola, alta barreira de entrada, Bogari compradora"},
+                    {"Ativo": "TUPY3", "Empresa": "Tupy S.A.", "Preço Atual": format_brl(tupy_price), "P/L": "8.4x", "Dividend Yield": f"{tupy_yield:.2f}%", "Destaque Financeiro": "Multinacional de fundidos industriais, diversificada globalmente, Atmos compradora"}
                 ]
                 st.table(data_gems)
     
@@ -9883,6 +9944,34 @@ elif st.session_state.active_terminal == "family_office_br":
                 assets_cnt = len(holdings_list)
                 cda_per = fallback_data["cda_period"]
             
+            # Recalculate portfolio holdings values based on Yahoo Finance live quotes
+            total_live_val = 0.0
+            for h in holdings_list:
+                tk = h["ticker"]
+                shares = h["shares"]
+                yfinance_tk = tk if tk.endswith(".SA") else f"{tk}.SA"
+                
+                live_p = t_data.get(yfinance_tk, {}).get("price")
+                if live_p is None:
+                    live_p = t_data.get(tk, {}).get("price")
+                
+                if live_p is None or live_p == 0.0:
+                    if shares > 0:
+                        live_p = h["value"] / shares
+                    else:
+                        live_p = 0.0
+                
+                h["live_price"] = live_p
+                h["value"] = shares * live_p
+                total_live_val += h["value"]
+                
+            if total_live_val > 0.0:
+                aum_val = total_live_val
+                for h in holdings_list:
+                    h["weight"] = (h["value"] / total_live_val) * 100
+                    
+            holdings_list = sorted(holdings_list, key=lambda x: x["weight"], reverse=True)
+            
             c_m1, c_m2, c_m3, c_m4 = st.columns(4)
             with c_m1:
                 st.metric("CNPJ / IDENTIFIER", cnpj_val)
@@ -10077,13 +10166,20 @@ elif st.session_state.active_terminal == "family_office_br":
                 with c_left:
                     st.markdown("##### CARTEIRA DETALHADA E CONVICÇÕES")
                     import pandas as pd
-                    df = pd.DataFrame(holdings_list)
-                    
-                    df_display = df.copy()
-                    df_display.columns = ["Ticker (B3)", "Quantidade de Ações", "Valor de Mercado (R$)", "Peso na Carteira (%)"]
+                    df_display = pd.DataFrame([
+                        {
+                            "Ticker (B3)": h["ticker"],
+                            "Preço Atual": h.get("live_price", h["value"]/h["shares"] if h["shares"] > 0 else 0.0),
+                            "Quantidade de Ações": h["shares"],
+                            "Valor de Mercado (R$)": h["value"],
+                            "Peso na Carteira (%)": h["weight"]
+                        }
+                        for h in holdings_list
+                    ])
                     
                     st.dataframe(
                         df_display.style.format({
+                            "Preço Atual": lambda x: format_brl(x),
                             "Quantidade de Ações": "{:,.0f}",
                             "Valor de Mercado (R$)": lambda x: format_brl(x),
                             "Peso na Carteira (%)": "{:.2f}%"
@@ -10280,148 +10376,46 @@ elif st.session_state.active_terminal == "family_office_br":
             </div>
             """, unsafe_allow_html=True)
             
-            quant_timing_data = [
-                {
-                    "Ticker": "ROMI3",
-                    "Preço": "R$ 12.10",
-                    "EMA 50 W": "R$ 13.50",
-                    "Desvio EMA 50 (%)": -10.37,
-                    "Tendência EMA 50": "Baixista ↘",
-                    "Mínima 12M": "+3.4%",
-                    "Máxima 12M": "-32.5%",
-                    "Probabilidade": 91.0,
-                    "Evento Esperado": "Reversão Alta (Extrema Assimetria)",
-                    "Margem Graham": "+62%",
-                    "Insiders CVM": "COMPRA FORTE",
-                    "Score Copilot": 9.8
-                },
-                {
-                    "Ticker": "BBAS3",
-                    "Preço": "R$ 27.50",
-                    "EMA 50 W": "R$ 28.80",
-                    "Desvio EMA 50 (%)": -4.51,
-                    "Tendência EMA 50": "Baixista ↘",
-                    "Mínima 12M": "+8.5%",
-                    "Máxima 12M": "-18.2%",
-                    "Probabilidade": 78.0,
-                    "Evento Esperado": "Reversão Alta (Oversold)",
-                    "Margem Graham": "+53%",
-                    "Insiders CVM": "COMPRA FORTE",
-                    "Score Copilot": 9.5
-                },
-                {
-                    "Ticker": "VALE3",
-                    "Preço": "R$ 62.40",
-                    "EMA 50 W": "R$ 66.80",
-                    "Desvio EMA 50 (%)": -6.58,
-                    "Tendência EMA 50": "Lateral →",
-                    "Mínima 12M": "+6.2%",
-                    "Máxima 12M": "-22.1%",
-                    "Probabilidade": 82.0,
-                    "Evento Esperado": "Reversão Alta (Média Reversão)",
-                    "Margem Graham": "+41%",
-                    "Insiders CVM": "COMPRA LEVE",
-                    "Score Copilot": 8.9
-                },
-                {
-                    "Ticker": "RENT3",
-                    "Preço": "R$ 48.50",
-                    "EMA 50 W": "R$ 54.10",
-                    "Desvio EMA 50 (%)": -10.35,
-                    "Tendência EMA 50": "Baixista ↘",
-                    "Mínima 12M": "+2.1%",
-                    "Máxima 12M": "-35.2%",
-                    "Probabilidade": 89.0,
-                    "Evento Esperado": "Reversão Alta (Suporte Histórico)",
-                    "Margem Graham": "+38%",
-                    "Insiders CVM": "VENDA INSIDER",
-                    "Score Copilot": 7.2
-                },
-                {
-                    "Ticker": "KEPL3",
-                    "Preço": "R$ 10.20",
-                    "EMA 50 W": "R$ 9.80",
-                    "Desvio EMA 50 (%)": 4.08,
-                    "Tendência EMA 50": "Altista ↗",
-                    "Mínima 12M": "+22.4%",
-                    "Máxima 12M": "-8.9%",
-                    "Probabilidade": 45.0,
-                    "Evento Esperado": "Consolidação de Alta",
-                    "Margem Graham": "+28%",
-                    "Insiders CVM": "MANUTENÇÃO",
-                    "Score Copilot": 8.5
-                },
-                {
-                    "Ticker": "ITUB4",
-                    "Preço": "R$ 34.20",
-                    "EMA 50 W": "R$ 32.50",
-                    "Desvio EMA 50 (%)": 5.23,
-                    "Tendência EMA 50": "Altista ↗",
-                    "Mínima 12M": "+28.5%",
-                    "Máxima 12M": "-3.5%",
-                    "Probabilidade": 62.0,
-                    "Evento Esperado": "Correção Leve / Consolidação",
-                    "Margem Graham": "+15%",
-                    "Insiders CVM": "COMPRA LEVE",
-                    "Score Copilot": 8.4
-                },
-                {
-                    "Ticker": "TAEE11",
-                    "Preço": "R$ 35.10",
-                    "EMA 50 W": "R$ 34.90",
-                    "Desvio EMA 50 (%)": 0.57,
-                    "Tendência EMA 50": "Lateral →",
-                    "Mínima 12M": "+5.4%",
-                    "Máxima 12M": "-7.2%",
-                    "Probabilidade": 15.0,
-                    "Evento Esperado": "Consolidação Estável",
-                    "Margem Graham": "+12%",
-                    "Insiders CVM": "MANUTENÇÃO",
-                    "Score Copilot": 8.1
-                },
-                {
-                    "Ticker": "WEGE3",
-                    "Preço": "R$ 39.50",
-                    "EMA 50 W": "R$ 36.20",
-                    "Desvio EMA 50 (%)": 9.11,
-                    "Tendência EMA 50": "Altista ↗",
-                    "Mínima 12M": "+48.2%",
-                    "Máxima 12M": "-2.1%",
-                    "Probabilidade": 85.0,
-                    "Evento Esperado": "Correção Baixa (Esticada)",
-                    "Margem Graham": "-12%",
-                    "Insiders CVM": "MANUTENÇÃO",
-                    "Score Copilot": 7.8
-                },
-                {
-                    "Ticker": "PETR4",
-                    "Preço": "R$ 38.50",
-                    "EMA 50 W": "R$ 36.80",
-                    "Desvio EMA 50 (%)": 4.62,
-                    "Tendência EMA 50": "Altista ↗",
-                    "Mínima 12M": "+32.4%",
-                    "Máxima 12M": "-5.3%",
-                    "Probabilidade": 68.0,
-                    "Evento Esperado": "Consolidação de Alta",
-                    "Margem Graham": "+45%",
-                    "Insiders CVM": "COMPRA LEVE",
-                    "Score Copilot": 8.7
-                },
-                {
-                    "Ticker": "SAPR11",
-                    "Preço": "R$ 26.20",
-                    "EMA 50 W": "R$ 28.50",
-                    "Desvio EMA 50 (%)": -8.07,
-                    "Tendência EMA 50": "Baixista ↘",
-                    "Mínima 12M": "+4.2%",
-                    "Máxima 12M": "-18.5%",
-                    "Probabilidade": 88.0,
-                    "Evento Esperado": "Reversão Alta (Média Reversão)",
-                    "Margem Graham": "+58%",
-                    "Insiders CVM": "COMPRA FORTE",
-                    "Score Copilot": 9.3
-                }
+            static_timing = [
+                {"Ticker": "ROMI3", "static_price": 12.10, "static_ema": 13.50, "tendency": "Baixista ↘" if lang == "PT" else ("Bearish ↘" if lang == "EN" else "Bajista ↘"), "min12": "+3.4%", "max12": "-32.5%", "prob": 91.0, "event": "Reversão Alta (Extrema Assimetria)" if lang == "PT" else ("Bullish Reversal (Extreme)" if lang == "EN" else "Reversión Alza (Extrema)"), "margin": "+62%", "insiders": "COMPRA FORTE" if lang == "PT" else ("STRONG BUY" if lang == "EN" else "COMPRA FUERTE"), "score": 9.8},
+                {"Ticker": "BBAS3", "static_price": 27.50, "static_ema": 28.80, "tendency": "Baixista ↘" if lang == "PT" else ("Bearish ↘" if lang == "EN" else "Bajista ↘"), "min12": "+8.5%", "max12": "-18.2%", "prob": 78.0, "event": "Reversão Alta (Oversold)" if lang == "PT" else ("Bullish Reversal (Oversold)" if lang == "EN" else "Reversión Alza (Oversold)"), "margin": "+53%", "insiders": "COMPRA FORTE" if lang == "PT" else ("STRONG BUY" if lang == "EN" else "COMPRA FUERTE"), "score": 9.5},
+                {"Ticker": "VALE3", "static_price": 62.40, "static_ema": 66.80, "tendency": "Lateral →" if lang == "PT" else ("Sideways →" if lang == "EN" else "Lateral →"), "min12": "+6.2%", "max12": "-22.1%", "prob": 82.0, "event": "Reversão Alta (Média Reversão)" if lang == "PT" else ("Bullish Reversal (Mean Rev)" if lang == "EN" else "Reversión Alza (Reversión Media)"), "margin": "+41%", "insiders": "COMPRA LEVE" if lang == "PT" else ("MILD BUY" if lang == "EN" else "COMPRA LEVE"), "score": 8.9},
+                {"Ticker": "RENT3", "static_price": 48.50, "static_ema": 54.10, "tendency": "Baixista ↘" if lang == "PT" else ("Bearish ↘" if lang == "EN" else "Bajista ↘"), "min12": "+2.1%", "max12": "-35.2%", "prob": 89.0, "event": "Reversão Alta (Suporte Histórico)" if lang == "PT" else ("Bullish Reversal (Support)" if lang == "EN" else "Reversión Alza (Soporte Histórico)"), "margin": "+38%", "insiders": "VENDA INSIDER" if lang == "PT" else ("INSIDER SELL" if lang == "EN" else "VENTA INSIDER"), "score": 7.2},
+                {"Ticker": "KEPL3", "static_price": 10.20, "static_ema": 9.80, "tendency": "Altista ↗" if lang == "PT" else ("Bullish ↗" if lang == "EN" else "Alcista ↗"), "min12": "+22.4%", "max12": "-8.9%", "prob": 45.0, "event": "Consolidação de Alta" if lang == "PT" else ("High Consolidation" if lang == "EN" else "Consolidación de Alza"), "margin": "+28%", "insiders": "MANUTENÇÃO" if lang == "PT" else ("HOLD" if lang == "EN" else "MANTENIMIENTO"), "score": 8.5},
+                {"Ticker": "ITUB4", "static_price": 34.20, "static_ema": 32.50, "tendency": "Altista ↗" if lang == "PT" else ("Bullish ↗" if lang == "EN" else "Alcista ↗"), "min12": "+28.5%", "max12": "-3.5%", "prob": 62.0, "event": "Correção Leve / Consolidação" if lang == "PT" else ("Mild Correction / Consolidation" if lang == "EN" else "Corrección Leve / Consolidación"), "margin": "+15%", "insiders": "COMPRA LEVE" if lang == "PT" else ("MILD BUY" if lang == "EN" else "COMPRA LEVE"), "score": 8.4},
+                {"Ticker": "TAEE11", "static_price": 35.10, "static_ema": 34.90, "tendency": "Lateral →" if lang == "PT" else ("Sideways →" if lang == "EN" else "Lateral →"), "min12": "+5.4%", "max12": "-7.2%", "prob": 15.0, "event": "Consolidação Estável" if lang == "PT" else ("Stable Consolidation" if lang == "EN" else "Consolidación Estable"), "margin": "+12%", "insiders": "MANUTENÇÃO" if lang == "PT" else ("HOLD" if lang == "EN" else "MANTENIMIENTO"), "score": 8.1},
+                {"Ticker": "WEGE3", "static_price": 39.50, "static_ema": 36.20, "tendency": "Altista ↗" if lang == "PT" else ("Bullish ↗" if lang == "EN" else "Alcista ↗"), "min12": "+48.2%", "max12": "-2.1%", "prob": 85.0, "event": "Correção Baixa (Esticada)" if lang == "PT" else ("Bearish Correction (Overstretched)" if lang == "EN" else "Corrección Baja (Estirada)"), "margin": "-12%", "insiders": "MANUTENÇÃO" if lang == "PT" else ("HOLD" if lang == "EN" else "MANTENIMIENTO"), "score": 7.8},
+                {"Ticker": "PETR4", "static_price": 38.50, "static_ema": 36.80, "tendency": "Altista ↗" if lang == "PT" else ("Bullish ↗" if lang == "EN" else "Alcista ↗"), "min12": "+32.4%", "max12": "-5.3%", "prob": 68.0, "event": "Consolidação de Alta" if lang == "PT" else ("High Consolidation" if lang == "EN" else "Consolidación de Alza"), "margin": "+45%", "insiders": "COMPRA LEVE" if lang == "PT" else ("MILD BUY" if lang == "EN" else "COMPRA LEVE"), "score": 8.7},
+                {"Ticker": "SAPR11", "static_price": 26.20, "static_ema": 28.50, "tendency": "Baixista ↘" if lang == "PT" else ("Bearish ↘" if lang == "EN" else "Bajista ↘"), "min12": "+4.2%", "max12": "-18.5%", "prob": 88.0, "event": "Reversão Alta (Média Reversão)" if lang == "PT" else ("Bullish Reversal (Mean Rev)" if lang == "EN" else "Reversión Alza (Reversión Media)"), "margin": "+58%", "insiders": "COMPRA FORTE" if lang == "PT" else ("STRONG BUY" if lang == "EN" else "COMPRA FUERTE"), "score": 9.3}
             ]
+            
+            quant_timing_data = []
+            for item in static_timing:
+                tk = item["Ticker"]
+                sa_tk = f"{tk}.SA"
+                live_price = t_data.get(sa_tk, {}).get("price", item["static_price"])
+                
+                ema_50 = item["static_ema"]
+                ratio = live_price / item["static_price"]
+                if 0.4 <= ratio <= 0.6:
+                    ema_50 = ema_50 * 0.5
+                
+                desvio = ((live_price - ema_50) / ema_50) * 100 if ema_50 > 0 else 0.0
+                
+                quant_timing_data.append({
+                    "Ticker": tk,
+                    "Preço": format_brl(live_price),
+                    "EMA 50 W": format_brl(ema_50),
+                    "Desvio EMA 50 (%)": desvio,
+                    "Tendência EMA 50": item["tendency"],
+                    "Mínima 12M": item["min12"],
+                    "Máxima 12M": item["max12"],
+                    "Probabilidade": item["prob"],
+                    "Evento Esperado": item["event"],
+                    "Margem Graham": item["margin"],
+                    "Insiders CVM": item["insiders"],
+                    "Score Copilot": item["score"]
+                })
             
             df_quant = pd.DataFrame(quant_timing_data)
             
