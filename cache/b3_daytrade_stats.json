@@ -1,11 +1,133 @@
 {
     "metadata": {
-        "last_updated": "2026-06-04 20:35:59",
-        "data_period": "2 Years (730 days) - Hourly resolution"
+        "last_updated": "2026-06-05 00:48:18",
+        "data_period": "2 Anos (730 dias) - Resolução Horária"
     },
     "WIN": {
         "total_days": 730,
         "threshold_data": {
+            "300": {
+                "threshold": 300,
+                "trigger_freq": 99.58904109589041,
+                "triggered_days": 727,
+                "avg_max_reversal": 632.054429590784,
+                "avg_close_profit": -397.1934534044016,
+                "tp_probabilities": {
+                    "150": 100.0,
+                    "250": 99.17469050894086,
+                    "350": 55.84594222833562,
+                    "500": 40.990371389270976,
+                    "700": 27.785419532324624,
+                    "1000": 17.33149931224209
+                },
+                "best_configs": [
+                    {
+                        "target": 250,
+                        "stop": 2000,
+                        "trades": 727,
+                        "win_rate": 93.39752407152683,
+                        "expectancy": 112.60451770976616
+                    },
+                    {
+                        "target": 250,
+                        "stop": 1500,
+                        "trades": 727,
+                        "win_rate": 87.20770288858321,
+                        "expectancy": 33.856237104539204
+                    },
+                    {
+                        "target": 150,
+                        "stop": 2000,
+                        "trades": 727,
+                        "win_rate": 94.08528198074278,
+                        "expectancy": 22.80338720770289
+                    },
+                    {
+                        "target": 250,
+                        "stop": 1200,
+                        "trades": 727,
+                        "win_rate": 80.46767537826685,
+                        "expectancy": -27.560544188445668
+                    },
+                    {
+                        "target": 150,
+                        "stop": 1500,
+                        "trades": 727,
+                        "win_rate": 87.89546079779917,
+                        "expectancy": -49.755072214580466
+                    },
+                    {
+                        "target": 250,
+                        "stop": 1000,
+                        "trades": 727,
+                        "win_rate": 74.69050894085282,
+                        "expectancy": -62.08599123108666
+                    },
+                    {
+                        "target": 150,
+                        "stop": 1200,
+                        "trades": 727,
+                        "win_rate": 81.15543328748281,
+                        "expectancy": -104.43182599724896
+                    },
+                    {
+                        "target": 250,
+                        "stop": 700,
+                        "trades": 727,
+                        "win_rate": 61.21045392022009,
+                        "expectancy": -116.281314477304
+                    },
+                    {
+                        "target": 350,
+                        "stop": 350,
+                        "trades": 727,
+                        "win_rate": 32.18707015130674,
+                        "expectancy": -125.93193345942228
+                    },
+                    {
+                        "target": 500,
+                        "stop": 350,
+                        "trades": 727,
+                        "win_rate": 26.27235213204952,
+                        "expectancy": -131.44202415749655
+                    },
+                    {
+                        "target": 150,
+                        "stop": 1000,
+                        "trades": 727,
+                        "win_rate": 75.37826685006877,
+                        "expectancy": -133.18010660247592
+                    },
+                    {
+                        "target": 250,
+                        "stop": 350,
+                        "trades": 727,
+                        "win_rate": 35.35075653370014,
+                        "expectancy": -138.2007393397524
+                    },
+                    {
+                        "target": 250,
+                        "stop": 500,
+                        "trades": 727,
+                        "win_rate": 46.62998624484182,
+                        "expectancy": -149.51906378954607
+                    },
+                    {
+                        "target": 700,
+                        "stop": 350,
+                        "trades": 727,
+                        "win_rate": 20.907840440165064,
+                        "expectancy": -150.00247162998625
+                    },
+                    {
+                        "target": 1000,
+                        "stop": 350,
+                        "trades": 727,
+                        "win_rate": 18.56946354883081,
+                        "expectancy": -154.71094824621733
+                    }
+                ]
+            },
             "400": {
                 "threshold": 400,
                 "trigger_freq": 98.63013698630137,
@@ -43,6 +165,13 @@
                         "expectancy": 131.15889756944443
                     },
                     {
+                        "target": 350,
+                        "stop": 1200,
+                        "trades": 720,
+                        "win_rate": 80.69444444444444,
+                        "expectancy": 74.98987630208333
+                    },
+                    {
                         "target": 250,
                         "stop": 1500,
                         "trades": 720,
@@ -62,6 +191,13 @@
                         "trades": 720,
                         "win_rate": 75.13888888888889,
                         "expectancy": 33.04543185763889
+                    },
+                    {
+                        "target": 250,
+                        "stop": 1200,
+                        "trades": 720,
+                        "win_rate": 82.63888888888889,
+                        "expectancy": 6.020008680555556
                     },
                     {
                         "target": 350,
@@ -85,32 +221,11 @@
                         "expectancy": -32.38276909722222
                     },
                     {
-                        "target": 500,
-                        "stop": 150,
-                        "trades": 720,
-                        "win_rate": 15.277777777777779,
-                        "expectancy": -53.23064236111111
-                    },
-                    {
                         "target": 350,
                         "stop": 500,
                         "trades": 720,
                         "win_rate": 51.24999999999999,
                         "expectancy": -58.84126519097222
-                    },
-                    {
-                        "target": 350,
-                        "stop": 150,
-                        "trades": 720,
-                        "win_rate": 18.194444444444443,
-                        "expectancy": -59.672786458333334
-                    },
-                    {
-                        "target": 700,
-                        "stop": 150,
-                        "trades": 720,
-                        "win_rate": 11.38888888888889,
-                        "expectancy": -64.19900173611111
                     },
                     {
                         "target": 250,
@@ -120,11 +235,140 @@
                         "expectancy": -64.9271267361111
                     },
                     {
-                        "target": 500,
-                        "stop": 250,
+                        "target": 350,
+                        "stop": 350,
                         "trades": 720,
-                        "win_rate": 24.72222222222222,
-                        "expectancy": -68.87274305555556
+                        "win_rate": 39.166666666666664,
+                        "expectancy": -73.70355902777777
+                    },
+                    {
+                        "target": 150,
+                        "stop": 1200,
+                        "trades": 720,
+                        "win_rate": 83.05555555555556,
+                        "expectancy": -75.44485677083334
+                    }
+                ]
+            },
+            "500": {
+                "threshold": 500,
+                "trigger_freq": 96.98630136986301,
+                "triggered_days": 708,
+                "avg_max_reversal": 745.6627493820622,
+                "avg_close_profit": -295.79130252471754,
+                "tp_probabilities": {
+                    "150": 99.15254237288136,
+                    "250": 97.45762711864407,
+                    "350": 94.91525423728814,
+                    "500": 90.81920903954803,
+                    "700": 33.47457627118644,
+                    "1000": 17.937853107344633
+                },
+                "best_configs": [
+                    {
+                        "target": 500,
+                        "stop": 2000,
+                        "trades": 708,
+                        "win_rate": 90.11299435028248,
+                        "expectancy": 323.2425406073446
+                    },
+                    {
+                        "target": 500,
+                        "stop": 1500,
+                        "trades": 708,
+                        "win_rate": 85.16949152542372,
+                        "expectancy": 246.91987773658192
+                    },
+                    {
+                        "target": 350,
+                        "stop": 2000,
+                        "trades": 708,
+                        "win_rate": 91.94915254237289,
+                        "expectancy": 209.72969632768363
+                    },
+                    {
+                        "target": 500,
+                        "stop": 1200,
+                        "trades": 708,
+                        "win_rate": 79.66101694915254,
+                        "expectancy": 182.56786281779662
+                    },
+                    {
+                        "target": 500,
+                        "stop": 1000,
+                        "trades": 708,
+                        "win_rate": 75.28248587570621,
+                        "expectancy": 148.3681254413842
+                    },
+                    {
+                        "target": 350,
+                        "stop": 1500,
+                        "trades": 708,
+                        "win_rate": 87.00564971751412,
+                        "expectancy": 141.0199284957627
+                    },
+                    {
+                        "target": 250,
+                        "stop": 2000,
+                        "trades": 708,
+                        "win_rate": 93.36158192090396,
+                        "expectancy": 128.6748874470339
+                    },
+                    {
+                        "target": 500,
+                        "stop": 700,
+                        "trades": 708,
+                        "win_rate": 65.96045197740112,
+                        "expectancy": 98.66762667725989
+                    },
+                    {
+                        "target": 350,
+                        "stop": 1200,
+                        "trades": 708,
+                        "win_rate": 81.49717514124293,
+                        "expectancy": 84.77258783545197
+                    },
+                    {
+                        "target": 250,
+                        "stop": 1500,
+                        "trades": 708,
+                        "win_rate": 88.4180790960452,
+                        "expectancy": 65.46867275776836
+                    },
+                    {
+                        "target": 350,
+                        "stop": 1000,
+                        "trades": 708,
+                        "win_rate": 76.9774011299435,
+                        "expectancy": 54.66889565677966
+                    },
+                    {
+                        "target": 150,
+                        "stop": 2000,
+                        "trades": 708,
+                        "win_rate": 94.2090395480226,
+                        "expectancy": 44.286645921610166
+                    },
+                    {
+                        "target": 500,
+                        "stop": 500,
+                        "trades": 708,
+                        "win_rate": 53.954802259887,
+                        "expectancy": 37.43714689265537
+                    },
+                    {
+                        "target": 350,
+                        "stop": 700,
+                        "trades": 708,
+                        "win_rate": 67.65536723163842,
+                        "expectancy": 18.52771892655367
+                    },
+                    {
+                        "target": 250,
+                        "stop": 1200,
+                        "trades": 708,
+                        "win_rate": 82.90960451977402,
+                        "expectancy": 14.306077860169491
                     }
                 ]
             },
@@ -165,6 +409,13 @@
                         "expectancy": 202.13239334947838
                     },
                     {
+                        "target": 500,
+                        "stop": 1200,
+                        "trades": 671,
+                        "win_rate": 79.58271236959762,
+                        "expectancy": 187.26295873695977
+                    },
+                    {
                         "target": 350,
                         "stop": 1500,
                         "trades": 671,
@@ -184,6 +435,13 @@
                         "trades": 671,
                         "win_rate": 92.99552906110283,
                         "expectancy": 128.0389809985097
+                    },
+                    {
+                        "target": 350,
+                        "stop": 1200,
+                        "trades": 671,
+                        "win_rate": 82.11624441132638,
+                        "expectancy": 102.77435730253353
                     },
                     {
                         "target": 500,
@@ -221,32 +479,18 @@
                         "expectancy": 49.39515415424739
                     },
                     {
+                        "target": 250,
+                        "stop": 1200,
+                        "trades": 671,
+                        "win_rate": 84.2026825633383,
+                        "expectancy": 36.51703381147541
+                    },
+                    {
                         "target": 350,
                         "stop": 700,
                         "trades": 671,
                         "win_rate": 68.10730253353205,
                         "expectancy": 25.24661186661699
-                    },
-                    {
-                        "target": 500,
-                        "stop": 350,
-                        "trades": 671,
-                        "win_rate": 43.81520119225038,
-                        "expectancy": 15.32874208271237
-                    },
-                    {
-                        "target": 250,
-                        "stop": 1000,
-                        "trades": 671,
-                        "win_rate": 79.88077496274218,
-                        "expectancy": 8.650870901639344
-                    },
-                    {
-                        "target": 150,
-                        "stop": 1500,
-                        "trades": 671,
-                        "win_rate": 90.61102831594636,
-                        "expectancy": 5.356406017138599
                     }
                 ]
             },
@@ -288,6 +532,13 @@
                     },
                     {
                         "target": 700,
+                        "stop": 1200,
+                        "trades": 590,
+                        "win_rate": 74.91525423728814,
+                        "expectancy": 277.7033501059322
+                    },
+                    {
+                        "target": 700,
                         "stop": 1000,
                         "trades": 590,
                         "win_rate": 71.35593220338983,
@@ -306,6 +557,13 @@
                         "trades": 590,
                         "win_rate": 89.83050847457628,
                         "expectancy": 201.83632150423728
+                    },
+                    {
+                        "target": 500,
+                        "stop": 1200,
+                        "trades": 590,
+                        "win_rate": 78.13559322033899,
+                        "expectancy": 191.01514830508475
                     },
                     {
                         "target": 700,
@@ -343,32 +601,18 @@
                         "expectancy": 129.08065413135594
                     },
                     {
+                        "target": 350,
+                        "stop": 1200,
+                        "trades": 590,
+                        "win_rate": 82.20338983050848,
+                        "expectancy": 116.15835540254237
+                    },
+                    {
                         "target": 700,
                         "stop": 350,
                         "trades": 590,
                         "win_rate": 46.779661016949156,
                         "expectancy": 107.92999205508474
-                    },
-                    {
-                        "target": 500,
-                        "stop": 700,
-                        "trades": 590,
-                        "win_rate": 65.93220338983052,
-                        "expectancy": 104.6215969279661
-                    },
-                    {
-                        "target": 250,
-                        "stop": 1500,
-                        "trades": 590,
-                        "win_rate": 88.8135593220339,
-                        "expectancy": 90.09760328389831
-                    },
-                    {
-                        "target": 350,
-                        "stop": 1000,
-                        "trades": 590,
-                        "win_rate": 78.47457627118644,
-                        "expectancy": 88.07866790254238
                     }
                 ]
             },
@@ -402,6 +646,13 @@
                         "expectancy": 411.6147390463918
                     },
                     {
+                        "target": 1000,
+                        "stop": 1200,
+                        "trades": 485,
+                        "win_rate": 69.48453608247422,
+                        "expectancy": 359.0131282216495
+                    },
+                    {
                         "target": 700,
                         "stop": 2000,
                         "trades": 485,
@@ -430,6 +681,13 @@
                         "expectancy": 244.01130798969072
                     },
                     {
+                        "target": 700,
+                        "stop": 1200,
+                        "trades": 485,
+                        "win_rate": 71.75257731958763,
+                        "expectancy": 233.81382087628867
+                    },
+                    {
                         "target": 500,
                         "stop": 1500,
                         "trades": 485,
@@ -451,6 +709,13 @@
                         "expectancy": 186.8188305412371
                     },
                     {
+                        "target": 500,
+                        "stop": 1200,
+                        "trades": 485,
+                        "win_rate": 75.87628865979381,
+                        "expectancy": 165.82097293814434
+                    },
+                    {
                         "target": 350,
                         "stop": 2000,
                         "trades": 485,
@@ -470,27 +735,6 @@
                         "trades": 485,
                         "win_rate": 82.4742268041237,
                         "expectancy": 125.84631121134021
-                    },
-                    {
-                        "target": 500,
-                        "stop": 1000,
-                        "trades": 485,
-                        "win_rate": 71.75257731958763,
-                        "expectancy": 125.44819587628866
-                    },
-                    {
-                        "target": 250,
-                        "stop": 2000,
-                        "trades": 485,
-                        "win_rate": 90.10309278350516,
-                        "expectancy": 118.18178157216495
-                    },
-                    {
-                        "target": 1000,
-                        "stop": 350,
-                        "trades": 485,
-                        "win_rate": 39.79381443298969,
-                        "expectancy": 112.05096649484535
                     }
                 ]
             },
@@ -524,6 +768,13 @@
                         "expectancy": 349.7709480246114
                     },
                     {
+                        "target": 1000,
+                        "stop": 1200,
+                        "trades": 386,
+                        "win_rate": 66.83937823834198,
+                        "expectancy": 317.52606865284974
+                    },
+                    {
                         "target": 700,
                         "stop": 2000,
                         "trades": 386,
@@ -543,6 +794,13 @@
                         "trades": 386,
                         "win_rate": 72.53886010362694,
                         "expectancy": 254.05758176813472
+                    },
+                    {
+                        "target": 700,
+                        "stop": 1200,
+                        "trades": 386,
+                        "win_rate": 69.94818652849742,
+                        "expectancy": 227.9215511658031
                     },
                     {
                         "target": 500,
@@ -573,6 +831,13 @@
                         "expectancy": 174.03511577072538
                     },
                     {
+                        "target": 500,
+                        "stop": 1200,
+                        "trades": 386,
+                        "win_rate": 73.31606217616581,
+                        "expectancy": 153.08043231865284
+                    },
+                    {
                         "target": 350,
                         "stop": 2000,
                         "trades": 386,
@@ -592,27 +857,6 @@
                         "trades": 386,
                         "win_rate": 69.68911917098445,
                         "expectancy": 119.82966321243524
-                    },
-                    {
-                        "target": 350,
-                        "stop": 1500,
-                        "trades": 386,
-                        "win_rate": 81.60621761658031,
-                        "expectancy": 116.65965025906736
-                    },
-                    {
-                        "target": 250,
-                        "stop": 2000,
-                        "trades": 386,
-                        "win_rate": 89.63730569948186,
-                        "expectancy": 112.58622085492227
-                    },
-                    {
-                        "target": 1000,
-                        "stop": 500,
-                        "trades": 386,
-                        "win_rate": 45.854922279792746,
-                        "expectancy": 101.10927380181347
                     }
                 ]
             },
@@ -644,6 +888,13 @@
                         "trades": 289,
                         "win_rate": 66.78200692041523,
                         "expectancy": 324.65589857266434
+                    },
+                    {
+                        "target": 1000,
+                        "stop": 1200,
+                        "trades": 289,
+                        "win_rate": 64.01384083044984,
+                        "expectancy": 281.47642733564015
                     },
                     {
                         "target": 700,
@@ -681,6 +932,13 @@
                         "expectancy": 195.54279303633217
                     },
                     {
+                        "target": 700,
+                        "stop": 1200,
+                        "trades": 289,
+                        "win_rate": 65.7439446366782,
+                        "expectancy": 178.7791955017301
+                    },
+                    {
                         "target": 350,
                         "stop": 2000,
                         "trades": 289,
@@ -702,6 +960,13 @@
                         "expectancy": 163.30355211937717
                     },
                     {
+                        "target": 500,
+                        "stop": 1200,
+                        "trades": 289,
+                        "win_rate": 70.93425605536332,
+                        "expectancy": 137.10748269896195
+                    },
+                    {
                         "target": 1000,
                         "stop": 500,
                         "trades": 289,
@@ -714,27 +979,6 @@
                         "trades": 289,
                         "win_rate": 88.58131487889274,
                         "expectancy": 131.13256920415225
-                    },
-                    {
-                        "target": 500,
-                        "stop": 1000,
-                        "trades": 289,
-                        "win_rate": 68.5121107266436,
-                        "expectancy": 122.92063148788927
-                    },
-                    {
-                        "target": 700,
-                        "stop": 700,
-                        "trades": 289,
-                        "win_rate": 56.747404844290664,
-                        "expectancy": 113.56987997404845
-                    },
-                    {
-                        "target": 350,
-                        "stop": 1500,
-                        "trades": 289,
-                        "win_rate": 78.89273356401384,
-                        "expectancy": 112.10037305363322
                     }
                 ]
             },
@@ -776,6 +1020,13 @@
                     },
                     {
                         "target": 1000,
+                        "stop": 1200,
+                        "trades": 203,
+                        "win_rate": 64.5320197044335,
+                        "expectancy": 249.6677185960591
+                    },
+                    {
+                        "target": 1000,
                         "stop": 1000,
                         "trades": 203,
                         "win_rate": 61.57635467980296,
@@ -801,6 +1052,13 @@
                         "trades": 203,
                         "win_rate": 55.66502463054187,
                         "expectancy": 177.8903171182266
+                    },
+                    {
+                        "target": 700,
+                        "stop": 1200,
+                        "trades": 203,
+                        "win_rate": 66.99507389162561,
+                        "expectancy": 158.02286022167488
                     },
                     {
                         "target": 500,
@@ -843,20 +1101,6 @@
                         "trades": 203,
                         "win_rate": 57.635467980295566,
                         "expectancy": 101.15259390394088
-                    },
-                    {
-                        "target": 350,
-                        "stop": 1500,
-                        "trades": 203,
-                        "win_rate": 78.81773399014779,
-                        "expectancy": 91.85456434729063
-                    },
-                    {
-                        "target": 250,
-                        "stop": 2000,
-                        "trades": 203,
-                        "win_rate": 87.192118226601,
-                        "expectancy": 89.06704125615764
                     }
                 ]
             },
@@ -905,6 +1149,13 @@
                     },
                     {
                         "target": 1000,
+                        "stop": 1200,
+                        "trades": 155,
+                        "win_rate": 63.2258064516129,
+                        "expectancy": 184.4655745967742
+                    },
+                    {
+                        "target": 1000,
                         "stop": 1000,
                         "trades": 155,
                         "win_rate": 60.64516129032258,
@@ -916,6 +1167,13 @@
                         "trades": 155,
                         "win_rate": 77.41935483870968,
                         "expectancy": 164.82777217741935
+                    },
+                    {
+                        "target": 700,
+                        "stop": 1200,
+                        "trades": 155,
+                        "win_rate": 65.80645161290323,
+                        "expectancy": 123.70856854838709
                     },
                     {
                         "target": 250,
@@ -965,20 +1223,6 @@
                         "trades": 155,
                         "win_rate": 40.64516129032258,
                         "expectancy": 72.40367943548387
-                    },
-                    {
-                        "target": 150,
-                        "stop": 2000,
-                        "trades": 155,
-                        "win_rate": 91.61290322580645,
-                        "expectancy": 64.08195564516129
-                    },
-                    {
-                        "target": 250,
-                        "stop": 1500,
-                        "trades": 155,
-                        "win_rate": 83.87096774193549,
-                        "expectancy": 60.43739919354839
                     }
                 ]
             },
@@ -1026,11 +1270,25 @@
                         "expectancy": 276.2890625
                     },
                     {
+                        "target": 700,
+                        "stop": 1200,
+                        "trades": 81,
+                        "win_rate": 72.8395061728395,
+                        "expectancy": 244.62403549382717
+                    },
+                    {
                         "target": 1000,
                         "stop": 1000,
                         "trades": 81,
                         "win_rate": 61.72839506172839,
                         "expectancy": 242.42380401234567
+                    },
+                    {
+                        "target": 1000,
+                        "stop": 1200,
+                        "trades": 81,
+                        "win_rate": 62.96296296296296,
+                        "expectancy": 237.1952160493827
                     },
                     {
                         "target": 500,
@@ -1061,6 +1319,13 @@
                         "expectancy": 191.50221836419752
                     },
                     {
+                        "target": 500,
+                        "stop": 1200,
+                        "trades": 81,
+                        "win_rate": 76.5432098765432,
+                        "expectancy": 165.2674575617284
+                    },
+                    {
                         "target": 350,
                         "stop": 2000,
                         "trades": 81,
@@ -1068,39 +1333,18 @@
                         "expectancy": 160.63802083333334
                     },
                     {
+                        "target": 350,
+                        "stop": 1200,
+                        "trades": 81,
+                        "win_rate": 82.71604938271605,
+                        "expectancy": 133.47752700617283
+                    },
+                    {
                         "target": 500,
                         "stop": 1000,
                         "trades": 81,
                         "win_rate": 72.8395061728395,
                         "expectancy": 131.93412422839506
-                    },
-                    {
-                        "target": 250,
-                        "stop": 1500,
-                        "trades": 81,
-                        "win_rate": 88.88888888888889,
-                        "expectancy": 118.43258101851852
-                    },
-                    {
-                        "target": 1000,
-                        "stop": 700,
-                        "trades": 81,
-                        "win_rate": 50.617283950617285,
-                        "expectancy": 109.54918981481481
-                    },
-                    {
-                        "target": 350,
-                        "stop": 1000,
-                        "trades": 81,
-                        "win_rate": 79.01234567901234,
-                        "expectancy": 105.69974922839506
-                    },
-                    {
-                        "target": 1000,
-                        "stop": 500,
-                        "trades": 81,
-                        "win_rate": 45.67901234567901,
-                        "expectancy": 102.20833333333333
                     }
                 ]
             }
@@ -1114,7 +1358,7 @@
                 "trigger_freq": 94.49793672627234,
                 "triggered_days": 687,
                 "avg_max_reversal": 30.429268410805907,
-                "avg_close_profit": -0.3582238387509435,
+                "avg_close_profit": -0.33216854023305836,
                 "tp_probabilities": {
                     "5": 99.85443959243085,
                     "10": 96.65211062590974,
@@ -1125,6 +1369,13 @@
                     "40": 21.542940320232898
                 },
                 "best_configs": [
+                    {
+                        "target": 15,
+                        "stop": 80,
+                        "trades": 687,
+                        "win_rate": 93.59534206695778,
+                        "expectancy": 12.72794659654819
+                    },
                     {
                         "target": 15,
                         "stop": 50,
@@ -1145,6 +1396,13 @@
                         "trades": 687,
                         "win_rate": 86.60844250363901,
                         "expectancy": 9.596215099573472
+                    },
+                    {
+                        "target": 10,
+                        "stop": 80,
+                        "trades": 687,
+                        "win_rate": 97.5254730713246,
+                        "expectancy": 9.330275784066318
                     },
                     {
                         "target": 15,
@@ -1183,10 +1441,24 @@
                     },
                     {
                         "target": 20,
+                        "stop": 80,
+                        "trades": 687,
+                        "win_rate": 72.19796215429403,
+                        "expectancy": 6.247303364405173
+                    },
+                    {
+                        "target": 20,
                         "stop": 50,
                         "trades": 687,
-                        "win_rate": 71.17903930131004,
-                        "expectancy": 5.798107047268273
+                        "win_rate": 71.32459970887919,
+                        "expectancy": 5.824162345786158
+                    },
+                    {
+                        "target": 20,
+                        "stop": 40,
+                        "trades": 687,
+                        "win_rate": 70.3056768558952,
+                        "expectancy": 5.655019002189691
                     },
                     {
                         "target": 10,
@@ -1196,39 +1468,11 @@
                         "expectancy": 5.645269313406899
                     },
                     {
-                        "target": 20,
-                        "stop": 40,
-                        "trades": 687,
-                        "win_rate": 70.16011644832606,
-                        "expectancy": 5.628963703671807
-                    },
-                    {
                         "target": 15,
                         "stop": 15,
                         "trades": 687,
                         "win_rate": 68.99563318777294,
                         "expectancy": 5.6286745196346475
-                    },
-                    {
-                        "target": 20,
-                        "stop": 30,
-                        "trades": 687,
-                        "win_rate": 67.10334788937409,
-                        "expectancy": 4.954873658337014
-                    },
-                    {
-                        "target": 10,
-                        "stop": 20,
-                        "trades": 687,
-                        "win_rate": 81.95050946142649,
-                        "expectancy": 4.735516766099766
-                    },
-                    {
-                        "target": 20,
-                        "stop": 25,
-                        "trades": 687,
-                        "win_rate": 64.3377001455604,
-                        "expectancy": 4.496940657214406
                     }
                 ]
             },
@@ -1237,7 +1481,7 @@
                 "trigger_freq": 88.44566712517194,
                 "triggered_days": 643,
                 "avg_max_reversal": 31.18585444164085,
-                "avg_close_profit": -0.8219265678255776,
+                "avg_close_profit": -0.7940883250856287,
                 "tp_probabilities": {
                     "5": 99.22239502332815,
                     "10": 94.86780715396579,
@@ -1248,6 +1492,13 @@
                     "40": 20.37325038880249
                 },
                 "best_configs": [
+                    {
+                        "target": 20,
+                        "stop": 80,
+                        "trades": 643,
+                        "win_rate": 86.62519440124416,
+                        "expectancy": 14.056448484097407
+                    },
                     {
                         "target": 20,
                         "stop": 50,
@@ -1261,6 +1512,13 @@
                         "trades": 643,
                         "win_rate": 84.13685847589424,
                         "expectancy": 12.735764190531405
+                    },
+                    {
+                        "target": 15,
+                        "stop": 80,
+                        "trades": 643,
+                        "win_rate": 91.75738724727839,
+                        "expectancy": 11.777447482475383
                     },
                     {
                         "target": 20,
@@ -1312,6 +1570,13 @@
                         "expectancy": 8.651164961083653
                     },
                     {
+                        "target": 10,
+                        "stop": 80,
+                        "trades": 643,
+                        "win_rate": 95.80093312597201,
+                        "expectancy": 8.489736494713943
+                    },
+                    {
                         "target": 20,
                         "stop": 15,
                         "trades": 643,
@@ -1331,27 +1596,6 @@
                         "trades": 643,
                         "win_rate": 78.38258164852256,
                         "expectancy": 7.555365317716909
-                    },
-                    {
-                        "target": 10,
-                        "stop": 40,
-                        "trades": 643,
-                        "win_rate": 93.00155520995335,
-                        "expectancy": 7.2617428781085005
-                    },
-                    {
-                        "target": 25,
-                        "stop": 40,
-                        "trades": 643,
-                        "win_rate": 66.7185069984448,
-                        "expectancy": 6.914304937952812
-                    },
-                    {
-                        "target": 25,
-                        "stop": 50,
-                        "trades": 643,
-                        "win_rate": 67.34059097978226,
-                        "expectancy": 6.843076026643435
                     }
                 ]
             },
@@ -1373,10 +1617,24 @@
                 "best_configs": [
                     {
                         "target": 25,
+                        "stop": 80,
+                        "trades": 574,
+                        "win_rate": 78.22299651567944,
+                        "expectancy": 13.428222277438666
+                    },
+                    {
+                        "target": 25,
                         "stop": 50,
                         "trades": 574,
                         "win_rate": 77.35191637630662,
                         "expectancy": 12.751567322202739
+                    },
+                    {
+                        "target": 20,
+                        "stop": 80,
+                        "trades": 574,
+                        "win_rate": 83.10104529616724,
+                        "expectancy": 12.279270916450365
                     },
                     {
                         "target": 25,
@@ -1405,6 +1663,13 @@
                         "trades": 574,
                         "win_rate": 80.48780487804879,
                         "expectancy": 10.867249957360507
+                    },
+                    {
+                        "target": 15,
+                        "stop": 80,
+                        "trades": 574,
+                        "win_rate": 88.50174216027874,
+                        "expectancy": 10.362195470191914
                     },
                     {
                         "target": 25,
@@ -1449,32 +1714,11 @@
                         "expectancy": 9.002439419151642
                     },
                     {
-                        "target": 15,
-                        "stop": 30,
-                        "trades": 574,
-                        "win_rate": 82.57839721254355,
-                        "expectancy": 8.106969806790815
-                    },
-                    {
-                        "target": 20,
-                        "stop": 20,
-                        "trades": 574,
-                        "win_rate": 70.55749128919861,
-                        "expectancy": 8.026136139128745
-                    },
-                    {
-                        "target": 25,
-                        "stop": 15,
-                        "trades": 574,
-                        "win_rate": 60.10452961672473,
-                        "expectancy": 7.681707820825943
-                    },
-                    {
                         "target": 10,
-                        "stop": 50,
+                        "stop": 80,
                         "trades": 574,
-                        "win_rate": 93.55400696864112,
-                        "expectancy": 7.54651348765306
+                        "win_rate": 94.77351916376307,
+                        "expectancy": 8.190241923315625
                     }
                 ]
             },
@@ -1496,10 +1740,24 @@
                 "best_configs": [
                     {
                         "target": 30,
+                        "stop": 80,
+                        "trades": 504,
+                        "win_rate": 71.82539682539682,
+                        "expectancy": 12.443648633502843
+                    },
+                    {
+                        "target": 30,
                         "stop": 50,
                         "trades": 504,
                         "win_rate": 71.03174603174604,
                         "expectancy": 11.99265608711855
+                    },
+                    {
+                        "target": 25,
+                        "stop": 80,
+                        "trades": 504,
+                        "win_rate": 74.60317460317461,
+                        "expectancy": 11.611309997619205
                     },
                     {
                         "target": 30,
@@ -1514,6 +1772,13 @@
                         "trades": 504,
                         "win_rate": 73.80952380952381,
                         "expectancy": 11.15198381363405
+                    },
+                    {
+                        "target": 20,
+                        "stop": 80,
+                        "trades": 504,
+                        "win_rate": 79.96031746031747,
+                        "expectancy": 10.931741850716774
                     },
                     {
                         "target": 30,
@@ -1551,6 +1816,13 @@
                         "expectancy": 9.8150794846672
                     },
                     {
+                        "target": 15,
+                        "stop": 80,
+                        "trades": 504,
+                        "win_rate": 86.5079365079365,
+                        "expectancy": 9.751779654669424
+                    },
+                    {
                         "target": 20,
                         "stop": 40,
                         "trades": 504,
@@ -1570,34 +1842,6 @@
                         "trades": 504,
                         "win_rate": 85.51587301587301,
                         "expectancy": 9.210112132723424
-                    },
-                    {
-                        "target": 25,
-                        "stop": 25,
-                        "trades": 504,
-                        "win_rate": 67.65873015873017,
-                        "expectancy": 9.018056127760254
-                    },
-                    {
-                        "target": 30,
-                        "stop": 20,
-                        "trades": 504,
-                        "win_rate": 61.70634920634921,
-                        "expectancy": 8.81527760672202
-                    },
-                    {
-                        "target": 15,
-                        "stop": 40,
-                        "trades": 504,
-                        "win_rate": 83.92857142857143,
-                        "expectancy": 8.560509833078592
-                    },
-                    {
-                        "target": 20,
-                        "stop": 25,
-                        "trades": 504,
-                        "win_rate": 72.42063492063492,
-                        "expectancy": 8.263686460162052
                     }
                 ]
             },
@@ -1618,6 +1862,20 @@
                 },
                 "best_configs": [
                     {
+                        "target": 25,
+                        "stop": 80,
+                        "trades": 407,
+                        "win_rate": 71.99017199017199,
+                        "expectancy": 9.943726560700469
+                    },
+                    {
+                        "target": 30,
+                        "stop": 80,
+                        "trades": 407,
+                        "win_rate": 67.32186732186733,
+                        "expectancy": 9.874691553139304
+                    },
+                    {
                         "target": 30,
                         "stop": 50,
                         "trades": 407,
@@ -1625,11 +1883,25 @@
                         "expectancy": 9.565353862190744
                     },
                     {
+                        "target": 15,
+                        "stop": 80,
+                        "trades": 407,
+                        "win_rate": 85.5036855036855,
+                        "expectancy": 9.547900638064835
+                    },
+                    {
                         "target": 25,
                         "stop": 50,
                         "trades": 407,
                         "win_rate": 71.25307125307125,
                         "expectancy": 9.523823759186795
+                    },
+                    {
+                        "target": 20,
+                        "stop": 80,
+                        "trades": 407,
+                        "win_rate": 76.41277641277642,
+                        "expectancy": 9.13413443787973
                     },
                     {
                         "target": 30,
@@ -1674,6 +1946,13 @@
                         "expectancy": 8.39926061231911
                     },
                     {
+                        "target": 10,
+                        "stop": 80,
+                        "trades": 407,
+                        "win_rate": 94.1031941031941,
+                        "expectancy": 8.389429331411606
+                    },
+                    {
                         "target": 30,
                         "stop": 30,
                         "trades": 407,
@@ -1686,41 +1965,6 @@
                         "trades": 407,
                         "win_rate": 74.44717444717445,
                         "expectancy": 8.133397723298712
-                    },
-                    {
-                        "target": 25,
-                        "stop": 25,
-                        "trades": 407,
-                        "win_rate": 65.6019656019656,
-                        "expectancy": 7.986478079156172
-                    },
-                    {
-                        "target": 25,
-                        "stop": 30,
-                        "trades": 407,
-                        "win_rate": 66.83046683046683,
-                        "expectancy": 7.938319588176179
-                    },
-                    {
-                        "target": 10,
-                        "stop": 50,
-                        "trades": 407,
-                        "win_rate": 93.12039312039312,
-                        "expectancy": 7.802697212163008
-                    },
-                    {
-                        "target": 15,
-                        "stop": 30,
-                        "trades": 407,
-                        "win_rate": 80.34398034398035,
-                        "expectancy": 7.631439049648139
-                    },
-                    {
-                        "target": 15,
-                        "stop": 25,
-                        "trades": 407,
-                        "win_rate": 78.86977886977887,
-                        "expectancy": 7.439548155013714
                     }
                 ]
             },
@@ -1742,10 +1986,31 @@
                 "best_configs": [
                     {
                         "target": 15,
+                        "stop": 80,
+                        "trades": 337,
+                        "win_rate": 87.24035608308606,
+                        "expectancy": 10.53322772243964
+                    },
+                    {
+                        "target": 15,
                         "stop": 50,
                         "trades": 337,
                         "win_rate": 86.64688427299704,
                         "expectancy": 10.070617064524123
+                    },
+                    {
+                        "target": 20,
+                        "stop": 80,
+                        "trades": 337,
+                        "win_rate": 77.44807121661721,
+                        "expectancy": 9.616900820406682
+                    },
+                    {
+                        "target": 40,
+                        "stop": 80,
+                        "trades": 337,
+                        "win_rate": 65.28189910979229,
+                        "expectancy": 9.573586291304688
                     },
                     {
                         "target": 15,
@@ -1776,6 +2041,20 @@
                         "expectancy": 9.038562038885736
                     },
                     {
+                        "target": 25,
+                        "stop": 80,
+                        "trades": 337,
+                        "win_rate": 70.91988130563797,
+                        "expectancy": 8.739152676273884
+                    },
+                    {
+                        "target": 30,
+                        "stop": 80,
+                        "trades": 337,
+                        "win_rate": 68.24925816023739,
+                        "expectancy": 8.684858497596995
+                    },
+                    {
                         "target": 20,
                         "stop": 40,
                         "trades": 337,
@@ -1804,46 +2083,11 @@
                         "expectancy": 8.077442497457172
                     },
                     {
-                        "target": 30,
-                        "stop": 40,
-                        "trades": 337,
-                        "win_rate": 66.17210682492582,
-                        "expectancy": 7.891090404385987
-                    },
-                    {
-                        "target": 40,
-                        "stop": 20,
-                        "trades": 337,
-                        "win_rate": 56.676557863501486,
-                        "expectancy": 7.861717575027969
-                    },
-                    {
-                        "target": 40,
-                        "stop": 30,
-                        "trades": 337,
-                        "win_rate": 60.534124629080125,
-                        "expectancy": 7.835899375666501
-                    },
-                    {
-                        "target": 15,
-                        "stop": 25,
-                        "trades": 337,
-                        "win_rate": 79.52522255192879,
-                        "expectancy": 7.7750687641630565
-                    },
-                    {
                         "target": 10,
-                        "stop": 50,
+                        "stop": 80,
                         "trades": 337,
-                        "win_rate": 92.28486646884274,
-                        "expectancy": 7.629371439314031
-                    },
-                    {
-                        "target": 25,
-                        "stop": 40,
-                        "trades": 337,
-                        "win_rate": 68.5459940652819,
-                        "expectancy": 7.611853489182473
+                        "win_rate": 92.87833827893175,
+                        "expectancy": 7.9620118523210035
                     }
                 ]
             },
@@ -1864,11 +2108,25 @@
                 },
                 "best_configs": [
                     {
+                        "target": 15,
+                        "stop": 80,
+                        "trades": 212,
+                        "win_rate": 85.37735849056604,
+                        "expectancy": 8.686322806016411
+                    },
+                    {
                         "target": 25,
                         "stop": 50,
                         "trades": 212,
                         "win_rate": 70.75471698113208,
                         "expectancy": 8.506127573409081
+                    },
+                    {
+                        "target": 25,
+                        "stop": 80,
+                        "trades": 212,
+                        "win_rate": 71.22641509433963,
+                        "expectancy": 8.42027907101604
                     },
                     {
                         "target": 15,
@@ -1885,6 +2143,13 @@
                         "expectancy": 7.731604126264393
                     },
                     {
+                        "target": 20,
+                        "stop": 80,
+                        "trades": 212,
+                        "win_rate": 74.52830188679245,
+                        "expectancy": 7.622170718210973
+                    },
+                    {
                         "target": 15,
                         "stop": 40,
                         "trades": 212,
@@ -1897,6 +2162,13 @@
                         "trades": 212,
                         "win_rate": 69.33962264150944,
                         "expectancy": 7.328297597057332
+                    },
+                    {
+                        "target": 10,
+                        "stop": 80,
+                        "trades": 212,
+                        "win_rate": 93.86792452830188,
+                        "expectancy": 7.029243595195247
                     },
                     {
                         "target": 10,
@@ -1927,46 +2199,18 @@
                         "expectancy": 6.455647720480752
                     },
                     {
+                        "target": 30,
+                        "stop": 80,
+                        "trades": 212,
+                        "win_rate": 64.15094339622641,
+                        "expectancy": 6.356591728498234
+                    },
+                    {
                         "target": 25,
                         "stop": 30,
                         "trades": 212,
                         "win_rate": 66.50943396226415,
                         "expectancy": 6.321223636843047
-                    },
-                    {
-                        "target": 10,
-                        "stop": 40,
-                        "trades": 212,
-                        "win_rate": 91.50943396226415,
-                        "expectancy": 6.302355640339386
-                    },
-                    {
-                        "target": 40,
-                        "stop": 50,
-                        "trades": 212,
-                        "win_rate": 58.9622641509434,
-                        "expectancy": 6.241969612409352
-                    },
-                    {
-                        "target": 15,
-                        "stop": 25,
-                        "trades": 212,
-                        "win_rate": 77.83018867924528,
-                        "expectancy": 6.030660305383041
-                    },
-                    {
-                        "target": 20,
-                        "stop": 30,
-                        "trades": 212,
-                        "win_rate": 69.81132075471697,
-                        "expectancy": 5.8132097856053155
-                    },
-                    {
-                        "target": 30,
-                        "stop": 40,
-                        "trades": 212,
-                        "win_rate": 62.264150943396224,
-                        "expectancy": 5.636306528775092
                     }
                 ]
             },
@@ -1994,11 +2238,25 @@
                         "expectancy": 7.5185091937029025
                     },
                     {
+                        "target": 15,
+                        "stop": 80,
+                        "trades": 135,
+                        "win_rate": 80.74074074074075,
+                        "expectancy": 7.513325726544336
+                    },
+                    {
                         "target": 20,
                         "stop": 50,
                         "trades": 135,
                         "win_rate": 71.85185185185186,
                         "expectancy": 7.393320719400931
+                    },
+                    {
+                        "target": 20,
+                        "stop": 80,
+                        "trades": 135,
+                        "win_rate": 72.5925925925926,
+                        "expectancy": 7.3733242176196
                     },
                     {
                         "target": 25,
@@ -2023,6 +2281,13 @@
                     },
                     {
                         "target": 25,
+                        "stop": 80,
+                        "trades": 135,
+                        "win_rate": 65.92592592592592,
+                        "expectancy": 6.9548112374763305
+                    },
+                    {
+                        "target": 25,
                         "stop": 40,
                         "trades": 135,
                         "win_rate": 64.44444444444444,
@@ -2033,6 +2298,13 @@
                         "stop": 50,
                         "trades": 135,
                         "win_rate": 89.62962962962962,
+                        "expectancy": 6.363700018988678
+                    },
+                    {
+                        "target": 10,
+                        "stop": 80,
+                        "trades": 135,
+                        "win_rate": 90.37037037037037,
                         "expectancy": 6.363700018988678
                     },
                     {
@@ -2062,34 +2334,6 @@
                         "trades": 135,
                         "win_rate": 88.14814814814815,
                         "expectancy": 5.845181500470159
-                    },
-                    {
-                        "target": 15,
-                        "stop": 30,
-                        "trades": 135,
-                        "win_rate": 75.55555555555556,
-                        "expectancy": 5.834809197319811
-                    },
-                    {
-                        "target": 25,
-                        "stop": 30,
-                        "trades": 135,
-                        "win_rate": 61.48148148148148,
-                        "expectancy": 5.6911074320473976
-                    },
-                    {
-                        "target": 25,
-                        "stop": 25,
-                        "trades": 135,
-                        "win_rate": 60.0,
-                        "expectancy": 5.671850557680356
-                    },
-                    {
-                        "target": 30,
-                        "stop": 50,
-                        "trades": 135,
-                        "win_rate": 60.0,
-                        "expectancy": 5.5762802406591625
                     }
                 ]
             },
@@ -2111,6 +2355,13 @@
                 "best_configs": [
                     {
                         "target": 20,
+                        "stop": 80,
+                        "trades": 99,
+                        "win_rate": 76.76767676767676,
+                        "expectancy": 9.86767277573103
+                    },
+                    {
+                        "target": 20,
                         "stop": 50,
                         "trades": 99,
                         "win_rate": 75.75757575757575,
@@ -2122,6 +2373,13 @@
                         "trades": 99,
                         "win_rate": 74.74747474747475,
                         "expectancy": 9.365650909115654
+                    },
+                    {
+                        "target": 15,
+                        "stop": 80,
+                        "trades": 99,
+                        "win_rate": 84.84848484848484,
+                        "expectancy": 9.043433642146613
                     },
                     {
                         "target": 15,
@@ -2187,32 +2445,18 @@
                         "expectancy": 7.415141096018883
                     },
                     {
-                        "target": 30,
-                        "stop": 40,
-                        "trades": 99,
-                        "win_rate": 62.62626262626263,
-                        "expectancy": 7.107064410893744
-                    },
-                    {
                         "target": 25,
-                        "stop": 50,
+                        "stop": 80,
                         "trades": 99,
-                        "win_rate": 67.67676767676768,
-                        "expectancy": 7.094939260771902
+                        "win_rate": 68.68686868686868,
+                        "expectancy": 7.147469376072868
                     },
                     {
-                        "target": 30,
-                        "stop": 30,
+                        "target": 10,
+                        "stop": 80,
                         "trades": 99,
-                        "win_rate": 60.60606060606061,
-                        "expectancy": 7.065652596830253
-                    },
-                    {
-                        "target": 30,
-                        "stop": 25,
-                        "trades": 99,
-                        "win_rate": 59.59595959595959,
-                        "expectancy": 7.002016125303446
+                        "win_rate": 90.9090909090909,
+                        "expectancy": 7.135353859024851
                     }
                 ]
             },
@@ -2238,6 +2482,13 @@
                         "trades": 68,
                         "win_rate": 82.35294117647058,
                         "expectancy": 11.516177233527715
+                    },
+                    {
+                        "target": 20,
+                        "stop": 80,
+                        "trades": 68,
+                        "win_rate": 82.35294117647058,
+                        "expectancy": 11.07500076293948
                     },
                     {
                         "target": 20,
@@ -2282,6 +2533,27 @@
                         "expectancy": 8.880872445948018
                     },
                     {
+                        "target": 30,
+                        "stop": 80,
+                        "trades": 68,
+                        "win_rate": 73.52941176470588,
+                        "expectancy": 8.82939619176532
+                    },
+                    {
+                        "target": 15,
+                        "stop": 80,
+                        "trades": 68,
+                        "win_rate": 83.82352941176471,
+                        "expectancy": 8.486764010261107
+                    },
+                    {
+                        "target": 25,
+                        "stop": 80,
+                        "trades": 68,
+                        "win_rate": 76.47058823529412,
+                        "expectancy": 8.299984370960946
+                    },
+                    {
                         "target": 15,
                         "stop": 40,
                         "trades": 68,
@@ -2308,34 +2580,3200 @@
                         "trades": 68,
                         "win_rate": 75.0,
                         "expectancy": 7.919111251831076
+                    }
+                ]
+            }
+        }
+    },
+    "EURUSD": {
+        "total_days": 809,
+        "threshold_data": {
+            "15": {
+                "threshold": 15,
+                "trigger_freq": 89.61681087762669,
+                "triggered_days": 725,
+                "avg_max_reversal": 32.19772569064493,
+                "avg_close_profit": -1.3536449958532502,
+                "tp_probabilities": {
+                    "5": 96.55172413793103,
+                    "10": 84.41379310344827,
+                    "15": 71.72413793103448,
+                    "20": 55.172413793103445,
+                    "25": 45.793103448275865,
+                    "30": 37.93103448275862
+                },
+                "best_configs": [
+                    {
+                        "target": 5,
+                        "stop": 90,
+                        "trades": 725,
+                        "win_rate": 96.55172413793103,
+                        "expectancy": 3.669344237755102
                     },
                     {
-                        "target": 30,
+                        "target": 5,
+                        "stop": 120,
+                        "trades": 725,
+                        "win_rate": 96.55172413793103,
+                        "expectancy": 3.6682819497996544
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 725,
+                        "win_rate": 84.9655172413793,
+                        "expectancy": 3.6191694983121363
+                    },
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 725,
+                        "win_rate": 84.9655172413793,
+                        "expectancy": 3.5327028734931396
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 725,
+                        "win_rate": 96.0,
+                        "expectancy": 3.3400304070834594
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 725,
+                        "win_rate": 84.41379310344827,
+                        "expectancy": 3.1635435827847767
+                    },
+                    {
+                        "target": 5,
+                        "stop": 45,
+                        "trades": 725,
+                        "win_rate": 95.03448275862068,
+                        "expectancy": 3.0582417192130356
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 725,
+                        "win_rate": 74.34482758620689,
+                        "expectancy": 3.0049195914434343
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 725,
+                        "win_rate": 74.34482758620689,
+                        "expectancy": 2.9279168885331153
+                    },
+                    {
+                        "target": 5,
+                        "stop": 30,
+                        "trades": 725,
+                        "win_rate": 93.51724137931035,
+                        "expectancy": 2.883173962297115
+                    },
+                    {
+                        "target": 10,
                         "stop": 20,
-                        "trades": 68,
-                        "win_rate": 64.70588235294117,
-                        "expectancy": 7.701457808999485
+                        "trades": 725,
+                        "win_rate": 75.44827586206897,
+                        "expectancy": 2.8647201275003487
                     },
                     {
-                        "target": 30,
-                        "stop": 25,
-                        "trades": 68,
-                        "win_rate": 66.17647058823529,
-                        "expectancy": 7.480869573705367
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 725,
+                        "win_rate": 82.89655172413794,
+                        "expectancy": 2.8512158755598853
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 725,
+                        "win_rate": 80.41379310344827,
+                        "expectancy": 2.8241971509210213
+                    },
+                    {
+                        "target": 5,
+                        "stop": 20,
+                        "trades": 725,
+                        "win_rate": 90.48275862068965,
+                        "expectancy": 2.696626992061224
+                    },
+                    {
+                        "target": 10,
+                        "stop": 15,
+                        "trades": 725,
+                        "win_rate": 70.20689655172414,
+                        "expectancy": 2.6295608125884007
+                    }
+                ]
+            },
+            "20": {
+                "threshold": 20,
+                "trigger_freq": 85.90852904820765,
+                "triggered_days": 695,
+                "avg_max_reversal": 31.232948989319304,
+                "avg_close_profit": -2.506206155680908,
+                "tp_probabilities": {
+                    "5": 97.6978417266187,
+                    "10": 85.03597122302158,
+                    "15": 70.07194244604317,
+                    "20": 58.84892086330935,
+                    "25": 44.89208633093525,
+                    "30": 36.83453237410072
+                },
+                "best_configs": [
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 695,
+                        "win_rate": 86.90647482014388,
+                        "expectancy": 4.8928029314219526
+                    },
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 695,
+                        "win_rate": 86.90647482014388,
+                        "expectancy": 4.8176212448010345
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 695,
+                        "win_rate": 86.61870503597122,
+                        "expectancy": 4.701873985125864
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 695,
+                        "win_rate": 85.46762589928058,
+                        "expectancy": 4.429662924018695
+                    },
+                    {
+                        "target": 5,
+                        "stop": 90,
+                        "trades": 695,
+                        "win_rate": 97.84172661870504,
+                        "expectancy": 4.2644684606318854
+                    },
+                    {
+                        "target": 5,
+                        "stop": 120,
+                        "trades": 695,
+                        "win_rate": 97.84172661870504,
+                        "expectancy": 4.251832042666648
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 695,
+                        "win_rate": 82.87769784172662,
+                        "expectancy": 3.988388857395529
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 695,
+                        "win_rate": 97.2661870503597,
+                        "expectancy": 3.96842458436815
+                    },
+                    {
+                        "target": 10,
+                        "stop": 20,
+                        "trades": 695,
+                        "win_rate": 78.12949640287769,
+                        "expectancy": 3.702613075860113
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 695,
+                        "win_rate": 74.53237410071942,
+                        "expectancy": 3.5724230292889714
+                    },
+                    {
+                        "target": 5,
+                        "stop": 45,
+                        "trades": 695,
+                        "win_rate": 96.2589928057554,
+                        "expectancy": 3.545527053393906
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 695,
+                        "win_rate": 74.53237410071942,
+                        "expectancy": 3.4560716478087063
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 695,
+                        "win_rate": 74.24460431654676,
+                        "expectancy": 3.300458743417863
+                    },
+                    {
+                        "target": 10,
+                        "stop": 15,
+                        "trades": 695,
+                        "win_rate": 72.80575539568346,
+                        "expectancy": 3.2707458880307865
+                    },
+                    {
+                        "target": 5,
+                        "stop": 30,
+                        "trades": 695,
+                        "win_rate": 94.24460431654677,
+                        "expectancy": 3.120909725161765
+                    }
+                ]
+            },
+            "25": {
+                "threshold": 25,
+                "trigger_freq": 77.99752781211372,
+                "triggered_days": 631,
+                "avg_max_reversal": 30.14796532088285,
+                "avg_close_profit": -3.6628043783831012,
+                "tp_probabilities": {
+                    "5": 96.67194928684627,
+                    "10": 86.6877971473851,
+                    "15": 70.36450079239303,
+                    "20": 56.57686212361332,
+                    "25": 44.69096671949287,
+                    "30": 35.34072900158478
+                },
+                "best_configs": [
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 631,
+                        "win_rate": 87.79714738510302,
+                        "expectancy": 5.141344312253667
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 631,
+                        "win_rate": 87.63866877971473,
+                        "expectancy": 4.98531541053536
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 631,
+                        "win_rate": 87.16323296354992,
+                        "expectancy": 4.797922533400977
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 631,
+                        "win_rate": 85.89540412044374,
+                        "expectancy": 4.507243508582212
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 631,
+                        "win_rate": 75.91125198098257,
+                        "expectancy": 4.266796837517892
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 631,
+                        "win_rate": 75.59429477020603,
+                        "expectancy": 4.1819304180597445
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 631,
+                        "win_rate": 75.91125198098257,
+                        "expectancy": 4.1104456513126815
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 631,
+                        "win_rate": 74.64342313787638,
+                        "expectancy": 4.051138444105422
+                    },
+                    {
+                        "target": 5,
+                        "stop": 120,
+                        "trades": 631,
+                        "win_rate": 96.83042789223455,
+                        "expectancy": 3.73437358535789
+                    },
+                    {
+                        "target": 5,
+                        "stop": 90,
+                        "trades": 631,
+                        "win_rate": 96.83042789223455,
+                        "expectancy": 3.72521247803313
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 631,
+                        "win_rate": 81.77496038034865,
+                        "expectancy": 3.633708772493017
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 631,
+                        "win_rate": 96.513470681458,
+                        "expectancy": 3.5798981903849847
+                    },
+                    {
+                        "target": 5,
+                        "stop": 45,
+                        "trades": 631,
+                        "win_rate": 95.56259904912837,
+                        "expectancy": 3.2947382345063434
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 631,
+                        "win_rate": 70.36450079239303,
+                        "expectancy": 3.059068852105648
+                    },
+                    {
+                        "target": 10,
+                        "stop": 20,
+                        "trades": 631,
+                        "win_rate": 75.91125198098257,
+                        "expectancy": 2.979471052505306
+                    }
+                ]
+            },
+            "30": {
+                "threshold": 30,
+                "trigger_freq": 71.81705809641534,
+                "triggered_days": 581,
+                "avg_max_reversal": 29.766784773019577,
+                "avg_close_profit": -3.9453458375662542,
+                "tp_probabilities": {
+                    "5": 96.55765920826161,
+                    "10": 86.57487091222032,
+                    "15": 72.28915662650603,
+                    "20": 58.17555938037866,
+                    "25": 45.955249569707405,
+                    "30": 37.005163511187604
+                },
+                "best_configs": [
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 581,
+                        "win_rate": 88.12392426850259,
+                        "expectancy": 4.876429513481381
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 581,
+                        "win_rate": 87.95180722891565,
+                        "expectancy": 4.573202510708859
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 581,
+                        "win_rate": 87.4354561101549,
+                        "expectancy": 4.529012854045814
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 581,
+                        "win_rate": 86.23063683304647,
+                        "expectancy": 4.428526554993942
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 581,
+                        "win_rate": 76.93631669535283,
+                        "expectancy": 4.075699804571653
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 581,
+                        "win_rate": 76.76419965576592,
+                        "expectancy": 3.933921525071826
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 581,
+                        "win_rate": 76.07573149741825,
+                        "expectancy": 3.7454410592370397
+                    },
+                    {
+                        "target": 5,
+                        "stop": 120,
+                        "trades": 581,
+                        "win_rate": 96.90189328743546,
+                        "expectancy": 3.7001474876206446
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 581,
+                        "win_rate": 74.69879518072288,
+                        "expectancy": 3.641376626675987
+                    },
+                    {
+                        "target": 5,
+                        "stop": 90,
+                        "trades": 581,
+                        "win_rate": 96.72977624784855,
+                        "expectancy": 3.496068077940915
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 581,
+                        "win_rate": 81.75559380378658,
+                        "expectancy": 3.4295934325856052
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 581,
+                        "win_rate": 96.04130808950086,
+                        "expectancy": 3.2485956825610596
+                    },
+                    {
+                        "target": 10,
+                        "stop": 20,
+                        "trades": 581,
+                        "win_rate": 76.76419965576592,
+                        "expectancy": 3.2377274065132164
+                    },
+                    {
+                        "target": 20,
+                        "stop": 60,
+                        "trades": 581,
+                        "win_rate": 67.81411359724613,
+                        "expectancy": 3.1041346400613143
+                    },
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 581,
+                        "win_rate": 68.33046471600689,
+                        "expectancy": 3.095028133687337
+                    }
+                ]
+            },
+            "40": {
+                "threshold": 40,
+                "trigger_freq": 58.22002472187886,
+                "triggered_days": 471,
+                "avg_max_reversal": 30.20034846733081,
+                "avg_close_profit": -2.1916932310521133,
+                "tp_probabilities": {
+                    "5": 97.66454352441613,
+                    "10": 86.1995753715499,
+                    "15": 74.73460721868365,
+                    "20": 60.29723991507431,
+                    "25": 49.044585987261144,
+                    "30": 38.6411889596603
+                },
+                "best_configs": [
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 471,
+                        "win_rate": 79.61783439490446,
+                        "expectancy": 5.9790639209139895
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 471,
+                        "win_rate": 79.40552016985139,
+                        "expectancy": 5.820856803035536
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 471,
+                        "win_rate": 78.98089171974523,
+                        "expectancy": 5.789580901970025
+                    },
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 471,
+                        "win_rate": 71.54989384288747,
+                        "expectancy": 5.4444069265053825
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 471,
+                        "win_rate": 77.91932059447984,
+                        "expectancy": 5.373092214013363
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 471,
+                        "win_rate": 75.15923566878982,
+                        "expectancy": 5.354567890207733
+                    },
+                    {
+                        "target": 20,
+                        "stop": 90,
+                        "trades": 471,
+                        "win_rate": 71.3375796178344,
+                        "expectancy": 5.231463802847896
+                    },
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 471,
+                        "win_rate": 88.1104033970276,
+                        "expectancy": 5.069488173077821
+                    },
+                    {
+                        "target": 20,
+                        "stop": 60,
+                        "trades": 471,
+                        "win_rate": 70.70063694267516,
+                        "expectancy": 5.0007994463489345
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 471,
+                        "win_rate": 87.89808917197452,
+                        "expectancy": 4.891010940454569
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 471,
+                        "win_rate": 87.26114649681529,
+                        "expectancy": 4.845682840691505
+                    },
+                    {
+                        "target": 20,
+                        "stop": 45,
+                        "trades": 471,
+                        "win_rate": 69.85138004246284,
+                        "expectancy": 4.813770245594587
+                    },
+                    {
+                        "target": 20,
+                        "stop": 30,
+                        "trades": 471,
+                        "win_rate": 66.87898089171973,
+                        "expectancy": 4.669774150645912
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 471,
+                        "win_rate": 83.43949044585987,
+                        "expectancy": 4.364370398713779
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 471,
+                        "win_rate": 85.98726114649682,
+                        "expectancy": 4.335470908260144
+                    }
+                ]
+            },
+            "50": {
+                "threshold": 50,
+                "trigger_freq": 40.66749072929542,
+                "triggered_days": 329,
+                "avg_max_reversal": 32.13719814381594,
+                "avg_close_profit": -3.1245763541003293,
+                "tp_probabilities": {
+                    "5": 97.26443768996961,
+                    "10": 86.93009118541033,
+                    "15": 76.59574468085107,
+                    "20": 62.61398176291794,
+                    "25": 53.49544072948328,
+                    "30": 43.161094224924014
+                },
+                "best_configs": [
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 329,
+                        "win_rate": 81.15501519756839,
+                        "expectancy": 7.90436591058492
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 329,
+                        "win_rate": 81.15501519756839,
+                        "expectancy": 7.700554085357341
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 329,
+                        "win_rate": 79.93920972644378,
+                        "expectancy": 7.05438897964779
+                    },
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 329,
+                        "win_rate": 88.44984802431611,
+                        "expectancy": 6.853119116785894
                     },
                     {
                         "target": 25,
-                        "stop": 20,
-                        "trades": 68,
-                        "win_rate": 67.64705882352942,
-                        "expectancy": 7.4235170027789215
+                        "stop": 120,
+                        "trades": 329,
+                        "win_rate": 68.08510638297872,
+                        "expectancy": 6.757178581956189
                     },
                     {
                         "target": 25,
-                        "stop": 25,
-                        "trades": 68,
-                        "win_rate": 69.11764705882352,
-                        "expectancy": 7.202928767484802
+                        "stop": 90,
+                        "trades": 329,
+                        "win_rate": 68.08510638297872,
+                        "expectancy": 6.65317573083524
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 329,
+                        "win_rate": 88.44984802431611,
+                        "expectancy": 6.632734026227539
+                    },
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 329,
+                        "win_rate": 72.64437689969606,
+                        "expectancy": 6.597770673525342
+                    },
+                    {
+                        "target": 20,
+                        "stop": 90,
+                        "trades": 329,
+                        "win_rate": 72.64437689969606,
+                        "expectancy": 6.479946472724147
+                    },
+                    {
+                        "target": 30,
+                        "stop": 120,
+                        "trades": 329,
+                        "win_rate": 63.829787234042556,
+                        "expectancy": 6.3175103149871665
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 329,
+                        "win_rate": 78.419452887538,
+                        "expectancy": 6.261028446324845
+                    },
+                    {
+                        "target": 30,
+                        "stop": 90,
+                        "trades": 329,
+                        "win_rate": 63.829787234042556,
+                        "expectancy": 6.213507463866214
+                    },
+                    {
+                        "target": 25,
+                        "stop": 60,
+                        "trades": 329,
+                        "win_rate": 67.17325227963525,
+                        "expectancy": 6.18378276882881
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 329,
+                        "win_rate": 86.93009118541033,
+                        "expectancy": 5.677367561131492
+                    },
+                    {
+                        "target": 25,
+                        "stop": 45,
+                        "trades": 329,
+                        "win_rate": 65.65349544072949,
+                        "expectancy": 5.636177961586786
+                    }
+                ]
+            }
+        }
+    },
+    "GBPUSD": {
+        "total_days": 809,
+        "threshold_data": {
+            "15": {
+                "threshold": 15,
+                "trigger_freq": 90.11124845488257,
+                "triggered_days": 729,
+                "avg_max_reversal": 40.392142833506206,
+                "avg_close_profit": -1.4668010586077498,
+                "tp_probabilities": {
+                    "5": 95.61042524005488,
+                    "10": 86.14540466392319,
+                    "15": 77.50342935528121,
+                    "20": 64.74622770919068,
+                    "25": 57.475994513031544,
+                    "30": 50.75445816186557
+                },
+                "best_configs": [
+                    {
+                        "target": 15,
+                        "stop": 20,
+                        "trades": 729,
+                        "win_rate": 65.4320987654321,
+                        "expectancy": 2.872789916678225
+                    },
+                    {
+                        "target": 10,
+                        "stop": 20,
+                        "trades": 729,
+                        "win_rate": 75.99451303155007,
+                        "expectancy": 2.7928672340508207
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 729,
+                        "win_rate": 81.48148148148148,
+                        "expectancy": 2.7471129491986623
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 729,
+                        "win_rate": 71.87928669410151,
+                        "expectancy": 2.7040316996424134
+                    },
+                    {
+                        "target": 10,
+                        "stop": 15,
+                        "trades": 729,
+                        "win_rate": 70.78189300411523,
+                        "expectancy": 2.6831278650521924
+                    },
+                    {
+                        "target": 5,
+                        "stop": 20,
+                        "trades": 729,
+                        "win_rate": 90.39780521262003,
+                        "expectancy": 2.5989568184432676
+                    },
+                    {
+                        "target": 15,
+                        "stop": 15,
+                        "trades": 729,
+                        "win_rate": 58.71056241426612,
+                        "expectancy": 2.5775986084068125
+                    },
+                    {
+                        "target": 5,
+                        "stop": 15,
+                        "trades": 729,
+                        "win_rate": 87.24279835390946,
+                        "expectancy": 2.4480651860701537
+                    },
+                    {
+                        "target": 5,
+                        "stop": 45,
+                        "trades": 729,
+                        "win_rate": 94.51303155006858,
+                        "expectancy": 2.4155681123458836
+                    },
+                    {
+                        "target": 5,
+                        "stop": 30,
+                        "trades": 729,
+                        "win_rate": 92.31824417009602,
+                        "expectancy": 2.344318201512468
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 729,
+                        "win_rate": 95.33607681755831,
+                        "expectancy": 2.3275463931027494
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 729,
+                        "win_rate": 86.0082304526749,
+                        "expectancy": 2.080881631586974
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 729,
+                        "win_rate": 84.36213991769547,
+                        "expectancy": 2.067696148803058
+                    },
+                    {
+                        "target": 5,
+                        "stop": 90,
+                        "trades": 729,
+                        "win_rate": 95.61042524005488,
+                        "expectancy": 2.0244027884735973
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 729,
+                        "win_rate": 77.77777777777779,
+                        "expectancy": 2.011967437911657
+                    }
+                ]
+            },
+            "20": {
+                "threshold": 20,
+                "trigger_freq": 88.99876390605687,
+                "triggered_days": 720,
+                "avg_max_reversal": 38.934294581413276,
+                "avg_close_profit": -2.3305920759836676,
+                "tp_probabilities": {
+                    "5": 97.5,
+                    "10": 88.05555555555556,
+                    "15": 76.80555555555556,
+                    "20": 67.63888888888889,
+                    "25": 56.388888888888886,
+                    "30": 49.44444444444444
+                },
+                "best_configs": [
+                    {
+                        "target": 5,
+                        "stop": 120,
+                        "trades": 720,
+                        "win_rate": 97.63888888888889,
+                        "expectancy": 3.7227087285783558
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 720,
+                        "win_rate": 97.36111111111111,
+                        "expectancy": 3.6588288280698986
+                    },
+                    {
+                        "target": 5,
+                        "stop": 45,
+                        "trades": 720,
+                        "win_rate": 96.80555555555556,
+                        "expectancy": 3.6241553492016263
+                    },
+                    {
+                        "target": 5,
+                        "stop": 90,
+                        "trades": 720,
+                        "win_rate": 97.5,
+                        "expectancy": 3.590578450096978
+                    },
+                    {
+                        "target": 10,
+                        "stop": 15,
+                        "trades": 720,
+                        "win_rate": 73.19444444444444,
+                        "expectancy": 3.342093335257636
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 720,
+                        "win_rate": 87.91666666666667,
+                        "expectancy": 3.303204205301073
+                    },
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 720,
+                        "win_rate": 88.33333333333333,
+                        "expectancy": 3.223481297492981
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 720,
+                        "win_rate": 86.11111111111111,
+                        "expectancy": 3.212057007683648
+                    },
+                    {
+                        "target": 5,
+                        "stop": 30,
+                        "trades": 720,
+                        "win_rate": 94.58333333333333,
+                        "expectancy": 3.1348929272757635
+                    },
+                    {
+                        "target": 10,
+                        "stop": 20,
+                        "trades": 720,
+                        "win_rate": 76.11111111111111,
+                        "expectancy": 2.924549513392978
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 720,
+                        "win_rate": 81.66666666666667,
+                        "expectancy": 2.891370084550646
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 720,
+                        "win_rate": 88.33333333333333,
+                        "expectancy": 2.822503818405999
+                    },
+                    {
+                        "target": 15,
+                        "stop": 15,
+                        "trades": 720,
+                        "win_rate": 59.166666666666664,
+                        "expectancy": 2.76475457350413
+                    },
+                    {
+                        "target": 15,
+                        "stop": 20,
+                        "trades": 720,
+                        "win_rate": 64.30555555555556,
+                        "expectancy": 2.603895174132453
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 720,
+                        "win_rate": 78.05555555555556,
+                        "expectancy": 2.5656239721510143
+                    }
+                ]
+            },
+            "25": {
+                "threshold": 25,
+                "trigger_freq": 86.27935723114956,
+                "triggered_days": 698,
+                "avg_max_reversal": 37.37565945076002,
+                "avg_close_profit": -2.85516844096415,
+                "tp_probabilities": {
+                    "5": 98.13753581661892,
+                    "10": 90.68767908309455,
+                    "15": 76.64756446991404,
+                    "20": 65.0429799426934,
+                    "25": 56.16045845272206,
+                    "30": 47.70773638968481
+                },
+                "best_configs": [
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 698,
+                        "win_rate": 90.83094555873924,
+                        "expectancy": 5.28624175271193
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 698,
+                        "win_rate": 89.68481375358166,
+                        "expectancy": 5.09999895505712
+                    },
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 698,
+                        "win_rate": 91.11747851002865,
+                        "expectancy": 5.038156044858875
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 698,
+                        "win_rate": 90.97421203438395,
+                        "expectancy": 4.937384791223878
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 698,
+                        "win_rate": 86.38968481375359,
+                        "expectancy": 4.801393238384597
+                    },
+                    {
+                        "target": 10,
+                        "stop": 20,
+                        "trades": 698,
+                        "win_rate": 80.51575931232091,
+                        "expectancy": 4.213612728610757
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 698,
+                        "win_rate": 97.85100286532952,
+                        "expectancy": 3.8686427140987303
+                    },
+                    {
+                        "target": 5,
+                        "stop": 90,
+                        "trades": 698,
+                        "win_rate": 98.13753581661892,
+                        "expectancy": 3.8359460448125637
+                    },
+                    {
+                        "target": 5,
+                        "stop": 120,
+                        "trades": 698,
+                        "win_rate": 98.13753581661892,
+                        "expectancy": 3.805743247526755
+                    },
+                    {
+                        "target": 5,
+                        "stop": 45,
+                        "trades": 698,
+                        "win_rate": 97.134670487106,
+                        "expectancy": 3.660811066285924
+                    },
+                    {
+                        "target": 10,
+                        "stop": 15,
+                        "trades": 698,
+                        "win_rate": 73.92550143266476,
+                        "expectancy": 3.4885065876651926
+                    },
+                    {
+                        "target": 5,
+                        "stop": 30,
+                        "trades": 698,
+                        "win_rate": 94.84240687679083,
+                        "expectancy": 3.214640016200547
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 698,
+                        "win_rate": 77.65042979942693,
+                        "expectancy": 3.154342126709635
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 698,
+                        "win_rate": 79.22636103151862,
+                        "expectancy": 2.905156113698286
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 698,
+                        "win_rate": 72.06303724928367,
+                        "expectancy": 2.8106941261400533
+                    }
+                ]
+            },
+            "30": {
+                "threshold": 30,
+                "trigger_freq": 81.33498145859085,
+                "triggered_days": 658,
+                "avg_max_reversal": 36.10562262201636,
+                "avg_close_profit": -4.119215055078352,
+                "tp_probabilities": {
+                    "5": 97.72036474164135,
+                    "10": 89.8176291793313,
+                    "15": 77.81155015197568,
+                    "20": 65.04559270516718,
+                    "25": 53.799392097264445,
+                    "30": 46.048632218844986
+                },
+                "best_configs": [
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 658,
+                        "win_rate": 90.42553191489363,
+                        "expectancy": 5.0136567466526145
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 658,
+                        "win_rate": 90.27355623100304,
+                        "expectancy": 4.928306098404538
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 658,
+                        "win_rate": 89.209726443769,
+                        "expectancy": 4.695045969768791
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 658,
+                        "win_rate": 87.2340425531915,
+                        "expectancy": 4.353828154798638
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 658,
+                        "win_rate": 83.73860182370821,
+                        "expectancy": 3.93895508670514
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 658,
+                        "win_rate": 76.89969604863222,
+                        "expectancy": 3.79489521849831
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 658,
+                        "win_rate": 79.0273556231003,
+                        "expectancy": 3.779849687245684
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 658,
+                        "win_rate": 80.09118541033435,
+                        "expectancy": 3.720396847710196
+                    },
+                    {
+                        "target": 10,
+                        "stop": 20,
+                        "trades": 658,
+                        "win_rate": 78.419452887538,
+                        "expectancy": 3.6868929645572943
+                    },
+                    {
+                        "target": 5,
+                        "stop": 120,
+                        "trades": 658,
+                        "win_rate": 97.41641337386018,
+                        "expectancy": 3.681708527191042
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 658,
+                        "win_rate": 79.7872340425532,
+                        "expectancy": 3.5222877195176503
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 658,
+                        "win_rate": 72.3404255319149,
+                        "expectancy": 3.4313498876739006
+                    },
+                    {
+                        "target": 5,
+                        "stop": 90,
+                        "trades": 658,
+                        "win_rate": 97.11246200607903,
+                        "expectancy": 3.40247345550442
+                    },
+                    {
+                        "target": 15,
+                        "stop": 20,
+                        "trades": 658,
+                        "win_rate": 65.95744680851064,
+                        "expectancy": 3.2994604545523276
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 658,
+                        "win_rate": 96.20060790273556,
+                        "expectancy": 3.0593443206740574
+                    }
+                ]
+            },
+            "40": {
+                "threshold": 40,
+                "trigger_freq": 70.21013597033374,
+                "triggered_days": 568,
+                "avg_max_reversal": 34.99965511577234,
+                "avg_close_profit": -3.817718683833775,
+                "tp_probabilities": {
+                    "5": 97.7112676056338,
+                    "10": 92.0774647887324,
+                    "15": 80.45774647887323,
+                    "20": 69.01408450704226,
+                    "25": 56.16197183098591,
+                    "30": 44.71830985915493
+                },
+                "best_configs": [
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 568,
+                        "win_rate": 92.6056338028169,
+                        "expectancy": 6.539504276195044
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 568,
+                        "win_rate": 83.45070422535211,
+                        "expectancy": 6.461395545744561
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 568,
+                        "win_rate": 83.27464788732394,
+                        "expectancy": 6.376709535088338
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 568,
+                        "win_rate": 92.25352112676056,
+                        "expectancy": 6.324389602096987
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 568,
+                        "win_rate": 91.19718309859155,
+                        "expectancy": 5.86380295350518
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 568,
+                        "win_rate": 82.04225352112677,
+                        "expectancy": 5.741159462592972
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 568,
+                        "win_rate": 80.63380281690141,
+                        "expectancy": 5.3895882485618065
+                    },
+                    {
+                        "target": 20,
+                        "stop": 90,
+                        "trades": 568,
+                        "win_rate": 74.47183098591549,
+                        "expectancy": 5.354502973422199
+                    },
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 568,
+                        "win_rate": 74.64788732394366,
+                        "expectancy": 5.349900118062195
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 568,
+                        "win_rate": 89.7887323943662,
+                        "expectancy": 5.34867781988332
+                    },
+                    {
+                        "target": 20,
+                        "stop": 60,
+                        "trades": 568,
+                        "win_rate": 73.59154929577466,
+                        "expectancy": 5.112748414697783
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 568,
+                        "win_rate": 75.88028169014085,
+                        "expectancy": 4.879186707483211
+                    },
+                    {
+                        "target": 20,
+                        "stop": 45,
+                        "trades": 568,
+                        "win_rate": 71.83098591549296,
+                        "expectancy": 4.704696628409372
+                    },
+                    {
+                        "target": 20,
+                        "stop": 30,
+                        "trades": 568,
+                        "win_rate": 67.0774647887324,
+                        "expectancy": 4.4798785028323325
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 568,
+                        "win_rate": 84.6830985915493,
+                        "expectancy": 4.258667163445916
+                    }
+                ]
+            },
+            "50": {
+                "threshold": 50,
+                "trigger_freq": 55.74783683559951,
+                "triggered_days": 451,
+                "avg_max_reversal": 35.52673143187963,
+                "avg_close_profit": -4.266767332665947,
+                "tp_probabilities": {
+                    "5": 97.5609756097561,
+                    "10": 92.6829268292683,
+                    "15": 82.039911308204,
+                    "20": 71.61862527716187,
+                    "25": 57.42793791574279,
+                    "30": 48.33702882483371
+                },
+                "best_configs": [
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 451,
+                        "win_rate": 93.12638580931264,
+                        "expectancy": 7.14898724777992
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 451,
+                        "win_rate": 84.92239467849224,
+                        "expectancy": 6.875667064522777
+                    },
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 451,
+                        "win_rate": 76.27494456762749,
+                        "expectancy": 6.542645558020741
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 451,
+                        "win_rate": 92.46119733924611,
+                        "expectancy": 6.474429847395792
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 451,
+                        "win_rate": 84.4789356984479,
+                        "expectancy": 6.28886216495607
+                    },
+                    {
+                        "target": 20,
+                        "stop": 90,
+                        "trades": 451,
+                        "win_rate": 75.83148558758315,
+                        "expectancy": 6.066705403465117
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 451,
+                        "win_rate": 83.14855875831486,
+                        "expectancy": 5.9594182693243205
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 451,
+                        "win_rate": 81.59645232815964,
+                        "expectancy": 5.8555239742979905
+                    },
+                    {
+                        "target": 20,
+                        "stop": 60,
+                        "trades": 451,
+                        "win_rate": 74.50110864745011,
+                        "expectancy": 5.809698358607419
+                    },
+                    {
+                        "target": 20,
+                        "stop": 45,
+                        "trades": 451,
+                        "win_rate": 73.17073170731707,
+                        "expectancy": 5.702503737218957
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 451,
+                        "win_rate": 90.9090909090909,
+                        "expectancy": 5.623381418029311
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 451,
+                        "win_rate": 90.02217294900223,
+                        "expectancy": 5.557310290452857
+                    },
+                    {
+                        "target": 20,
+                        "stop": 30,
+                        "trades": 451,
+                        "win_rate": 68.51441241685144,
+                        "expectancy": 4.979707988561253
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 451,
+                        "win_rate": 75.83148558758315,
+                        "expectancy": 4.695154050501295
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 451,
+                        "win_rate": 85.58758314855875,
+                        "expectancy": 4.560155762801379
+                    }
+                ]
+            }
+        }
+    },
+    "USDJPY": {
+        "total_days": 809,
+        "threshold_data": {
+            "20": {
+                "threshold": 20,
+                "trigger_freq": 89.36959208899876,
+                "triggered_days": 723,
+                "avg_max_reversal": 64.53565457714596,
+                "avg_close_profit": -0.7827028562100753,
+                "tp_probabilities": {
+                    "10": 97.5103734439834,
+                    "15": 93.08437067773167,
+                    "20": 87.82849239280775,
+                    "30": 64.73029045643153,
+                    "40": 49.37759336099585
+                },
+                "best_configs": [
+                    {
+                        "target": 20,
+                        "stop": 90,
+                        "trades": 723,
+                        "win_rate": 89.34993084370679,
+                        "expectancy": 12.150071013517792
+                    },
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 723,
+                        "win_rate": 89.48824343015215,
+                        "expectancy": 11.93042718193496
+                    },
+                    {
+                        "target": 20,
+                        "stop": 45,
+                        "trades": 723,
+                        "win_rate": 85.75380359612724,
+                        "expectancy": 11.55463887448127
+                    },
+                    {
+                        "target": 20,
+                        "stop": 60,
+                        "trades": 723,
+                        "win_rate": 87.27524204702628,
+                        "expectancy": 11.501246619851026
+                    },
+                    {
+                        "target": 20,
+                        "stop": 30,
+                        "trades": 723,
+                        "win_rate": 80.35961272475795,
+                        "expectancy": 10.387830298965858
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 723,
+                        "win_rate": 92.80774550484094,
+                        "expectancy": 10.07593094230847
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 723,
+                        "win_rate": 92.9460580912863,
+                        "expectancy": 9.942871769104359
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 723,
+                        "win_rate": 91.28630705394191,
+                        "expectancy": 9.713689400447315
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 723,
+                        "win_rate": 89.90318118948825,
+                        "expectancy": 9.56666516400304
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 723,
+                        "win_rate": 84.64730290456431,
+                        "expectancy": 8.331117326622987
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 723,
+                        "win_rate": 96.81881051175657,
+                        "expectancy": 8.018532485223222
+                    },
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 723,
+                        "win_rate": 96.95712309820193,
+                        "expectancy": 8.006084436862437
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 723,
+                        "win_rate": 95.57399723374827,
+                        "expectancy": 7.516457121072119
+                    },
+                    {
+                        "target": 10,
+                        "stop": 45,
+                        "trades": 723,
+                        "win_rate": 94.1908713692946,
+                        "expectancy": 7.11977756864301
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 723,
+                        "win_rate": 89.76486860304288,
+                        "expectancy": 6.039279710867251
+                    }
+                ]
+            },
+            "30": {
+                "threshold": 30,
+                "trigger_freq": 85.66131025957972,
+                "triggered_days": 693,
+                "avg_max_reversal": 62.85181174890761,
+                "avg_close_profit": -3.513860441044363,
+                "tp_probabilities": {
+                    "10": 97.40259740259741,
+                    "15": 93.5064935064935,
+                    "20": 86.002886002886,
+                    "30": 70.85137085137086,
+                    "40": 53.102453102453104
+                },
+                "best_configs": [
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 693,
+                        "win_rate": 93.65079365079364,
+                        "expectancy": 10.443428336799983
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 693,
+                        "win_rate": 93.21789321789322,
+                        "expectancy": 10.260604263900214
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 693,
+                        "win_rate": 92.20779220779221,
+                        "expectancy": 9.842856491110913
+                    },
+                    {
+                        "target": 20,
+                        "stop": 60,
+                        "trades": 693,
+                        "win_rate": 84.84848484848484,
+                        "expectancy": 9.692639988050205
+                    },
+                    {
+                        "target": 20,
+                        "stop": 45,
+                        "trades": 693,
+                        "win_rate": 82.68398268398268,
+                        "expectancy": 9.670128760399805
+                    },
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 693,
+                        "win_rate": 86.43578643578643,
+                        "expectancy": 9.53188237001726
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 693,
+                        "win_rate": 90.18759018759019,
+                        "expectancy": 9.470707176395678
+                    },
+                    {
+                        "target": 20,
+                        "stop": 90,
+                        "trades": 693,
+                        "win_rate": 86.002886002886,
+                        "expectancy": 9.46204863929483
+                    },
+                    {
+                        "target": 20,
+                        "stop": 30,
+                        "trades": 693,
+                        "win_rate": 76.76767676767676,
+                        "expectancy": 8.697548518105188
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 693,
+                        "win_rate": 84.55988455988455,
+                        "expectancy": 8.173160965824554
+                    },
+                    {
+                        "target": 30,
+                        "stop": 45,
+                        "trades": 693,
+                        "win_rate": 69.26406926406926,
+                        "expectancy": 7.985000059890303
+                    },
+                    {
+                        "target": 30,
+                        "stop": 120,
+                        "trades": 693,
+                        "win_rate": 75.03607503607503,
+                        "expectancy": 7.9535202752978815
+                    },
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 693,
+                        "win_rate": 96.96969696969697,
+                        "expectancy": 7.841265349505121
+                    },
+                    {
+                        "target": 30,
+                        "stop": 90,
+                        "trades": 693,
+                        "win_rate": 74.31457431457432,
+                        "expectancy": 7.776043163921798
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 693,
+                        "win_rate": 96.68109668109668,
+                        "expectancy": 7.7714258939845084
+                    }
+                ]
+            },
+            "40": {
+                "threshold": 40,
+                "trigger_freq": 80.09888751545118,
+                "triggered_days": 648,
+                "avg_max_reversal": 62.57592942979657,
+                "avg_close_profit": -2.4537164193606875,
+                "tp_probabilities": {
+                    "10": 97.99382716049382,
+                    "15": 92.28395061728395,
+                    "20": 85.18518518518519,
+                    "30": 70.37037037037037,
+                    "40": 56.94444444444444
+                },
+                "best_configs": [
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 648,
+                        "win_rate": 86.11111111111111,
+                        "expectancy": 9.334399847336842
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 648,
+                        "win_rate": 91.9753086419753,
+                        "expectancy": 9.064648475176071
+                    },
+                    {
+                        "target": 20,
+                        "stop": 90,
+                        "trades": 648,
+                        "win_rate": 85.3395061728395,
+                        "expectancy": 9.008012936439115
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 648,
+                        "win_rate": 91.35802469135803,
+                        "expectancy": 8.869741934317172
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 648,
+                        "win_rate": 89.50617283950618,
+                        "expectancy": 8.413571958188687
+                    },
+                    {
+                        "target": 20,
+                        "stop": 60,
+                        "trades": 648,
+                        "win_rate": 82.87037037037037,
+                        "expectancy": 8.176691502700663
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 648,
+                        "win_rate": 87.19135802469135,
+                        "expectancy": 7.85956064860028
+                    },
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 648,
+                        "win_rate": 96.91358024691358,
+                        "expectancy": 7.76804888689961
+                    },
+                    {
+                        "target": 20,
+                        "stop": 45,
+                        "trades": 648,
+                        "win_rate": 79.78395061728395,
+                        "expectancy": 7.750917128574732
+                    },
+                    {
+                        "target": 10,
+                        "stop": 90,
+                        "trades": 648,
+                        "win_rate": 96.29629629629629,
+                        "expectancy": 7.390888355396426
+                    },
+                    {
+                        "target": 30,
+                        "stop": 60,
+                        "trades": 648,
+                        "win_rate": 71.75925925925925,
+                        "expectancy": 7.293822677047247
+                    },
+                    {
+                        "target": 30,
+                        "stop": 45,
+                        "trades": 648,
+                        "win_rate": 68.20987654320987,
+                        "expectancy": 7.141040283956707
+                    },
+                    {
+                        "target": 30,
+                        "stop": 120,
+                        "trades": 648,
+                        "win_rate": 74.69135802469135,
+                        "expectancy": 7.09534539116767
+                    },
+                    {
+                        "target": 20,
+                        "stop": 30,
+                        "trades": 648,
+                        "win_rate": 73.4567901234568,
+                        "expectancy": 6.993976640112631
+                    },
+                    {
+                        "target": 30,
+                        "stop": 90,
+                        "trades": 648,
+                        "win_rate": 73.91975308641975,
+                        "expectancy": 6.937947685336004
+                    }
+                ]
+            },
+            "50": {
+                "threshold": 50,
+                "trigger_freq": 71.69344870210136,
+                "triggered_days": 580,
+                "avg_max_reversal": 63.310528459220095,
+                "avg_close_profit": -2.567588543069774,
+                "tp_probabilities": {
+                    "10": 97.41379310344827,
+                    "15": 93.96551724137932,
+                    "20": 88.27586206896552,
+                    "30": 72.24137931034483,
+                    "40": 58.9655172413793
+                },
+                "best_configs": [
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 580,
+                        "win_rate": 88.27586206896552,
+                        "expectancy": 11.479294875572467
+                    },
+                    {
+                        "target": 20,
+                        "stop": 90,
+                        "trades": 580,
+                        "win_rate": 87.24137931034483,
+                        "expectancy": 10.501542716190732
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 580,
+                        "win_rate": 93.44827586206897,
+                        "expectancy": 9.826718560580549
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 580,
+                        "win_rate": 92.75862068965517,
+                        "expectancy": 9.456551387392242
+                    },
+                    {
+                        "target": 20,
+                        "stop": 60,
+                        "trades": 580,
+                        "win_rate": 84.48275862068965,
+                        "expectancy": 9.435166983768857
+                    },
+                    {
+                        "target": 30,
+                        "stop": 120,
+                        "trades": 580,
+                        "win_rate": 76.20689655172413,
+                        "expectancy": 9.045845820985992
+                    },
+                    {
+                        "target": 20,
+                        "stop": 45,
+                        "trades": 580,
+                        "win_rate": 81.72413793103448,
+                        "expectancy": 8.947240369073276
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 580,
+                        "win_rate": 90.51724137931035,
+                        "expectancy": 8.721207717369342
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 580,
+                        "win_rate": 88.27586206896552,
+                        "expectancy": 8.388449833310883
+                    },
+                    {
+                        "target": 30,
+                        "stop": 90,
+                        "trades": 580,
+                        "win_rate": 75.17241379310344,
+                        "expectancy": 8.31085047228583
+                    },
+                    {
+                        "target": 20,
+                        "stop": 30,
+                        "trades": 580,
+                        "win_rate": 74.48275862068967,
+                        "expectancy": 7.3603405130320585
+                    },
+                    {
+                        "target": 30,
+                        "stop": 60,
+                        "trades": 580,
+                        "win_rate": 71.55172413793103,
+                        "expectancy": 7.2027477395945585
+                    },
+                    {
+                        "target": 30,
+                        "stop": 45,
+                        "trades": 580,
+                        "win_rate": 68.10344827586206,
+                        "expectancy": 6.918618563948007
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 580,
+                        "win_rate": 81.72413793103448,
+                        "expectancy": 6.863965264682112
+                    },
+                    {
+                        "target": 40,
+                        "stop": 120,
+                        "trades": 580,
+                        "win_rate": 66.55172413793103,
+                        "expectancy": 6.809107813341864
+                    }
+                ]
+            },
+            "60": {
+                "threshold": 60,
+                "trigger_freq": 64.6477132262052,
+                "triggered_days": 523,
+                "avg_max_reversal": 60.73385147473952,
+                "avg_close_profit": -4.984892340053449,
+                "tp_probabilities": {
+                    "10": 97.89674952198853,
+                    "15": 94.45506692160612,
+                    "20": 87.18929254302104,
+                    "30": 72.08413001912047,
+                    "40": 58.12619502868069
+                },
+                "best_configs": [
+                    {
+                        "target": 30,
+                        "stop": 120,
+                        "trades": 523,
+                        "win_rate": 76.09942638623328,
+                        "expectancy": 9.52330025842479
+                    },
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 523,
+                        "win_rate": 86.80688336520076,
+                        "expectancy": 9.487939546486544
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 523,
+                        "win_rate": 92.92543021032505,
+                        "expectancy": 9.436519469631302
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 523,
+                        "win_rate": 92.16061185468452,
+                        "expectancy": 9.169214660761204
+                    },
+                    {
+                        "target": 20,
+                        "stop": 90,
+                        "trades": 523,
+                        "win_rate": 85.65965583173997,
+                        "expectancy": 8.877806800273301
+                    },
+                    {
+                        "target": 30,
+                        "stop": 90,
+                        "trades": 523,
+                        "win_rate": 74.76099426386233,
+                        "expectancy": 8.790793774460592
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 523,
+                        "win_rate": 90.43977055449331,
+                        "expectancy": 8.763285941421167
+                    },
+                    {
+                        "target": 15,
+                        "stop": 45,
+                        "trades": 523,
+                        "win_rate": 87.76290630975143,
+                        "expectancy": 8.122369536478233
+                    },
+                    {
+                        "target": 20,
+                        "stop": 60,
+                        "trades": 523,
+                        "win_rate": 82.79158699808795,
+                        "expectancy": 8.058311214410518
+                    },
+                    {
+                        "target": 20,
+                        "stop": 45,
+                        "trades": 523,
+                        "win_rate": 79.54110898661568,
+                        "expectancy": 7.616055490409864
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 523,
+                        "win_rate": 83.36520076481835,
+                        "expectancy": 7.589673831859456
+                    },
+                    {
+                        "target": 30,
+                        "stop": 60,
+                        "trades": 523,
+                        "win_rate": 71.31931166347992,
+                        "expectancy": 7.479521713110873
+                    },
+                    {
+                        "target": 30,
+                        "stop": 45,
+                        "trades": 523,
+                        "win_rate": 68.06883365200764,
+                        "expectancy": 7.351228265415801
+                    },
+                    {
+                        "target": 20,
+                        "stop": 30,
+                        "trades": 523,
+                        "win_rate": 74.18738049713193,
+                        "expectancy": 7.304582468182343
+                    },
+                    {
+                        "target": 10,
+                        "stop": 120,
+                        "trades": 523,
+                        "win_rate": 95.98470363288719,
+                        "expectancy": 6.54282812406637
+                    }
+                ]
+            },
+            "80": {
+                "threshold": 80,
+                "trigger_freq": 50.06180469715699,
+                "triggered_days": 405,
+                "avg_max_reversal": 67.69804401162344,
+                "avg_close_profit": -0.2540531864861317,
+                "tp_probabilities": {
+                    "10": 98.51851851851852,
+                    "15": 94.5679012345679,
+                    "20": 90.8641975308642,
+                    "30": 74.81481481481481,
+                    "40": 61.48148148148148
+                },
+                "best_configs": [
+                    {
+                        "target": 20,
+                        "stop": 90,
+                        "trades": 405,
+                        "win_rate": 89.87654320987654,
+                        "expectancy": 11.626398533950699
+                    },
+                    {
+                        "target": 20,
+                        "stop": 120,
+                        "trades": 405,
+                        "win_rate": 90.61728395061729,
+                        "expectancy": 11.457261827257037
+                    },
+                    {
+                        "target": 20,
+                        "stop": 60,
+                        "trades": 405,
+                        "win_rate": 87.1604938271605,
+                        "expectancy": 10.914301365981942
+                    },
+                    {
+                        "target": 30,
+                        "stop": 60,
+                        "trades": 405,
+                        "win_rate": 75.80246913580247,
+                        "expectancy": 9.91900258005419
+                    },
+                    {
+                        "target": 20,
+                        "stop": 45,
+                        "trades": 405,
+                        "win_rate": 83.7037037037037,
+                        "expectancy": 9.829611695843036
+                    },
+                    {
+                        "target": 30,
+                        "stop": 120,
+                        "trades": 405,
+                        "win_rate": 79.50617283950618,
+                        "expectancy": 9.778498896846305
+                    },
+                    {
+                        "target": 30,
+                        "stop": 90,
+                        "trades": 405,
+                        "win_rate": 78.2716049382716,
+                        "expectancy": 9.73998646677298
+                    },
+                    {
+                        "target": 30,
+                        "stop": 45,
+                        "trades": 405,
+                        "win_rate": 72.5925925925926,
+                        "expectancy": 9.501225977768277
+                    },
+                    {
+                        "target": 15,
+                        "stop": 90,
+                        "trades": 405,
+                        "win_rate": 92.34567901234568,
+                        "expectancy": 9.079985441985015
+                    },
+                    {
+                        "target": 15,
+                        "stop": 120,
+                        "trades": 405,
+                        "win_rate": 93.08641975308643,
+                        "expectancy": 8.90220811631951
+                    },
+                    {
+                        "target": 40,
+                        "stop": 120,
+                        "trades": 405,
+                        "win_rate": 71.35802469135803,
+                        "expectancy": 8.8130681544178
+                    },
+                    {
+                        "target": 40,
+                        "stop": 90,
+                        "trades": 405,
+                        "win_rate": 69.87654320987654,
+                        "expectancy": 8.690356596016919
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 405,
+                        "win_rate": 89.87654320987654,
+                        "expectancy": 8.500973548418271
+                    },
+                    {
+                        "target": 20,
+                        "stop": 30,
+                        "trades": 405,
+                        "win_rate": 76.79012345679013,
+                        "expectancy": 8.44887439115553
+                    },
+                    {
+                        "target": 40,
+                        "stop": 60,
+                        "trades": 405,
+                        "win_rate": 66.41975308641975,
+                        "expectancy": 8.266411675347483
+                    }
+                ]
+            }
+        }
+    },
+    "XAUUSD": {
+        "total_days": 736,
+        "threshold_data": {
+            "5": {
+                "threshold": 5,
+                "trigger_freq": 91.30434782608695,
+                "triggered_days": 672,
+                "avg_max_reversal": 31.936754135858443,
+                "avg_close_profit": -0.9587752932593936,
+                "tp_probabilities": {
+                    "2": 98.95833333333334,
+                    "3": 98.21428571428571,
+                    "5": 93.15476190476191,
+                    "8": 72.47023809523809,
+                    "10": 65.47619047619048,
+                    "12": 60.26785714285714,
+                    "15": 55.05952380952381
+                },
+                "best_configs": [
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 672,
+                        "win_rate": 92.85714285714286,
+                        "expectancy": 2.805803753080822
+                    },
+                    {
+                        "target": 5,
+                        "stop": 50,
+                        "trades": 672,
+                        "win_rate": 92.55952380952381,
+                        "expectancy": 2.7401786077590216
+                    },
+                    {
+                        "target": 5,
+                        "stop": 40,
+                        "trades": 672,
+                        "win_rate": 91.96428571428571,
+                        "expectancy": 2.560267675490606
+                    },
+                    {
+                        "target": 5,
+                        "stop": 30,
+                        "trades": 672,
+                        "win_rate": 90.77380952380952,
+                        "expectancy": 2.4562496003650485
+                    },
+                    {
+                        "target": 3,
+                        "stop": 60,
+                        "trades": 672,
+                        "win_rate": 97.47023809523809,
+                        "expectancy": 2.1290179661342075
+                    },
+                    {
+                        "target": 3,
+                        "stop": 50,
+                        "trades": 672,
+                        "win_rate": 97.17261904761905,
+                        "expectancy": 2.0456846328008744
+                    },
+                    {
+                        "target": 3,
+                        "stop": 40,
+                        "trades": 672,
+                        "win_rate": 96.72619047619048,
+                        "expectancy": 1.956845419747489
+                    },
+                    {
+                        "target": 5,
+                        "stop": 20,
+                        "trades": 672,
+                        "win_rate": 86.16071428571429,
+                        "expectancy": 1.8257437206449962
+                    },
+                    {
+                        "target": 3,
+                        "stop": 30,
+                        "trades": 672,
+                        "win_rate": 95.53571428571429,
+                        "expectancy": 1.717112768264044
+                    },
+                    {
+                        "target": 2,
+                        "stop": 60,
+                        "trades": 672,
+                        "win_rate": 98.21428571428571,
+                        "expectancy": 1.3546133495512462
+                    },
+                    {
+                        "target": 5,
+                        "stop": 15,
+                        "trades": 672,
+                        "win_rate": 80.95238095238095,
+                        "expectancy": 1.3398806254069011
+                    },
+                    {
+                        "target": 2,
+                        "stop": 50,
+                        "trades": 672,
+                        "win_rate": 97.91666666666666,
+                        "expectancy": 1.2742562066941034
+                    },
+                    {
+                        "target": 2,
+                        "stop": 40,
+                        "trades": 672,
+                        "win_rate": 97.61904761904762,
+                        "expectancy": 1.2534228733607702
+                    },
+                    {
+                        "target": 5,
+                        "stop": 10,
+                        "trades": 672,
+                        "win_rate": 74.70238095238095,
+                        "expectancy": 1.2424105689639138
+                    },
+                    {
+                        "target": 3,
+                        "stop": 20,
+                        "trades": 672,
+                        "win_rate": 91.51785714285714,
+                        "expectancy": 1.1498509361630393
+                    }
+                ]
+            },
+            "8": {
+                "threshold": 8,
+                "trigger_freq": 88.99456521739131,
+                "triggered_days": 655,
+                "avg_max_reversal": 32.81968854365458,
+                "avg_close_profit": 0.9474842333611642,
+                "tp_probabilities": {
+                    "2": 99.54198473282443,
+                    "3": 98.47328244274809,
+                    "5": 92.36641221374046,
+                    "8": 82.59541984732824,
+                    "10": 71.7557251908397,
+                    "12": 63.358778625954194,
+                    "15": 53.58778625954198
+                },
+                "best_configs": [
+                    {
+                        "target": 8,
+                        "stop": 60,
+                        "trades": 655,
+                        "win_rate": 83.66412213740459,
+                        "expectancy": 3.000913943225191
+                    },
+                    {
+                        "target": 8,
+                        "stop": 50,
+                        "trades": 655,
+                        "win_rate": 83.20610687022901,
+                        "expectancy": 2.898776315004771
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 655,
+                        "win_rate": 92.21374045801527,
+                        "expectancy": 2.7433573249642174
+                    },
+                    {
+                        "target": 8,
+                        "stop": 40,
+                        "trades": 655,
+                        "win_rate": 82.44274809160305,
+                        "expectancy": 2.71740182192271
+                    },
+                    {
+                        "target": 8,
+                        "stop": 30,
+                        "trades": 655,
+                        "win_rate": 80.76335877862594,
+                        "expectancy": 2.518012732585878
+                    },
+                    {
+                        "target": 5,
+                        "stop": 50,
+                        "trades": 655,
+                        "win_rate": 91.6030534351145,
+                        "expectancy": 2.5143496913764314
+                    },
+                    {
+                        "target": 5,
+                        "stop": 40,
+                        "trades": 655,
+                        "win_rate": 91.14503816793894,
+                        "expectancy": 2.4664105364384543
+                    },
+                    {
+                        "target": 5,
+                        "stop": 30,
+                        "trades": 655,
+                        "win_rate": 89.61832061068702,
+                        "expectancy": 2.222441368976622
+                    },
+                    {
+                        "target": 3,
+                        "stop": 60,
+                        "trades": 655,
+                        "win_rate": 97.25190839694656,
+                        "expectancy": 2.1041220628578245
+                    },
+                    {
+                        "target": 8,
+                        "stop": 20,
+                        "trades": 655,
+                        "win_rate": 76.4885496183206,
+                        "expectancy": 2.081219435830153
+                    },
+                    {
+                        "target": 3,
+                        "stop": 40,
+                        "trades": 655,
+                        "win_rate": 96.33587786259542,
+                        "expectancy": 1.868091379413168
+                    },
+                    {
+                        "target": 5,
+                        "stop": 20,
+                        "trades": 655,
+                        "win_rate": 86.10687022900764,
+                        "expectancy": 1.8648845643487595
+                    },
+                    {
+                        "target": 3,
+                        "stop": 50,
+                        "trades": 655,
+                        "win_rate": 96.6412213740458,
+                        "expectancy": 1.8567938185830153
+                    },
+                    {
+                        "target": 3,
+                        "stop": 30,
+                        "trades": 655,
+                        "win_rate": 94.9618320610687,
+                        "expectancy": 1.6071754979723283
+                    },
+                    {
+                        "target": 8,
+                        "stop": 15,
+                        "trades": 655,
+                        "win_rate": 70.68702290076337,
+                        "expectancy": 1.51435006411021
+                    }
+                ]
+            },
+            "10": {
+                "threshold": 10,
+                "trigger_freq": 87.22826086956522,
+                "triggered_days": 642,
+                "avg_max_reversal": 32.96977257654303,
+                "avg_close_profit": 1.3521796966267523,
+                "tp_probabilities": {
+                    "2": 99.37694704049844,
+                    "3": 98.13084112149532,
+                    "5": 93.92523364485982,
+                    "8": 84.57943925233646,
+                    "10": 76.4797507788162,
+                    "12": 65.88785046728972,
+                    "15": 56.54205607476636
+                },
+                "best_configs": [
+                    {
+                        "target": 8,
+                        "stop": 60,
+                        "trades": 642,
+                        "win_rate": 85.202492211838,
+                        "expectancy": 3.7677560966705608
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 642,
+                        "win_rate": 78.97196261682244,
+                        "expectancy": 3.5732058706313277
+                    },
+                    {
+                        "target": 8,
+                        "stop": 50,
+                        "trades": 642,
+                        "win_rate": 84.42367601246106,
+                        "expectancy": 3.4439240928008177
+                    },
+                    {
+                        "target": 8,
+                        "stop": 30,
+                        "trades": 642,
+                        "win_rate": 82.86604361370716,
+                        "expectancy": 3.3285037602219627
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 642,
+                        "win_rate": 93.30218068535827,
+                        "expectancy": 3.2819316543151285
+                    },
+                    {
+                        "target": 8,
+                        "stop": 40,
+                        "trades": 642,
+                        "win_rate": 83.64485981308411,
+                        "expectancy": 3.280372690931659
+                    },
+                    {
+                        "target": 10,
+                        "stop": 50,
+                        "trades": 642,
+                        "win_rate": 78.19314641744548,
+                        "expectancy": 3.1580964560820677
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 642,
+                        "win_rate": 76.32398753894081,
+                        "expectancy": 3.0682211427302377
+                    },
+                    {
+                        "target": 10,
+                        "stop": 40,
+                        "trades": 642,
+                        "win_rate": 77.41433021806854,
+                        "expectancy": 3.016040457371982
+                    },
+                    {
+                        "target": 5,
+                        "stop": 50,
+                        "trades": 642,
+                        "win_rate": 92.5233644859813,
+                        "expectancy": 2.924610553872177
+                    },
+                    {
+                        "target": 5,
+                        "stop": 30,
+                        "trades": 642,
+                        "win_rate": 91.1214953271028,
+                        "expectancy": 2.817757199486468
+                    },
+                    {
+                        "target": 5,
+                        "stop": 40,
+                        "trades": 642,
+                        "win_rate": 91.90031152647975,
+                        "expectancy": 2.8082554897415304
+                    },
+                    {
+                        "target": 8,
+                        "stop": 20,
+                        "trades": 642,
+                        "win_rate": 78.03738317757009,
+                        "expectancy": 2.557943088614681
+                    },
+                    {
+                        "target": 10,
+                        "stop": 20,
+                        "trades": 642,
+                        "win_rate": 71.33956386292834,
+                        "expectancy": 2.3646390445507204
+                    },
+                    {
+                        "target": 5,
+                        "stop": 20,
+                        "trades": 642,
+                        "win_rate": 87.07165109034268,
+                        "expectancy": 2.1412773726513823
+                    }
+                ]
+            },
+            "12": {
+                "threshold": 12,
+                "trigger_freq": 84.78260869565217,
+                "triggered_days": 624,
+                "avg_max_reversal": 33.046783447265625,
+                "avg_close_profit": 0.8528817983774039,
+                "tp_probabilities": {
+                    "2": 99.19871794871796,
+                    "3": 98.87820512820514,
+                    "5": 93.91025641025641,
+                    "8": 83.97435897435898,
+                    "10": 78.52564102564102,
+                    "12": 73.07692307692307,
+                    "15": 59.455128205128204
+                },
+                "best_configs": [
+                    {
+                        "target": 12,
+                        "stop": 60,
+                        "trades": 624,
+                        "win_rate": 77.08333333333334,
+                        "expectancy": 3.9141002557216544
+                    },
+                    {
+                        "target": 12,
+                        "stop": 50,
+                        "trades": 624,
+                        "win_rate": 76.76282051282051,
+                        "expectancy": 3.7879781478490586
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 624,
+                        "win_rate": 81.57051282051282,
+                        "expectancy": 3.7371790959284854
+                    },
+                    {
+                        "target": 10,
+                        "stop": 50,
+                        "trades": 624,
+                        "win_rate": 81.25,
+                        "expectancy": 3.6466338328826122
+                    },
+                    {
+                        "target": 12,
+                        "stop": 40,
+                        "trades": 624,
+                        "win_rate": 75.48076923076923,
+                        "expectancy": 3.460895049266326
+                    },
+                    {
+                        "target": 8,
+                        "stop": 60,
+                        "trades": 624,
+                        "win_rate": 85.8974358974359,
+                        "expectancy": 3.398557418431991
+                    },
+                    {
+                        "target": 10,
+                        "stop": 40,
+                        "trades": 624,
+                        "win_rate": 80.12820512820514,
+                        "expectancy": 3.395031268780048
+                    },
+                    {
+                        "target": 8,
+                        "stop": 50,
+                        "trades": 624,
+                        "win_rate": 85.57692307692307,
+                        "expectancy": 3.2947107950846353
+                    },
+                    {
+                        "target": 12,
+                        "stop": 30,
+                        "trades": 624,
+                        "win_rate": 73.5576923076923,
+                        "expectancy": 3.162657713278746
+                    },
+                    {
+                        "target": 8,
+                        "stop": 40,
+                        "trades": 624,
+                        "win_rate": 84.61538461538461,
+                        "expectancy": 3.1317301041040664
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 624,
+                        "win_rate": 93.91025641025641,
+                        "expectancy": 2.983655098157051
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 624,
+                        "win_rate": 78.0448717948718,
+                        "expectancy": 2.9639415251903043
+                    },
+                    {
+                        "target": 5,
+                        "stop": 50,
+                        "trades": 624,
+                        "win_rate": 93.58974358974359,
+                        "expectancy": 2.87964845315004
+                    },
+                    {
+                        "target": 8,
+                        "stop": 30,
+                        "trades": 624,
+                        "win_rate": 82.8525641025641,
+                        "expectancy": 2.8291659232897635
+                    },
+                    {
+                        "target": 5,
+                        "stop": 40,
+                        "trades": 624,
+                        "win_rate": 92.46794871794873,
+                        "expectancy": 2.5671480618990383
+                    }
+                ]
+            },
+            "15": {
+                "threshold": 15,
+                "trigger_freq": 80.29891304347827,
+                "triggered_days": 591,
+                "avg_max_reversal": 32.28391716403606,
+                "avg_close_profit": -1.7082926432291667,
+                "tp_probabilities": {
+                    "2": 99.32318104906938,
+                    "3": 98.81556683587141,
+                    "5": 95.60067681895093,
+                    "8": 85.6175972927242,
+                    "10": 80.20304568527918,
+                    "12": 75.29610829103216,
+                    "15": 65.65143824027074
+                },
+                "best_configs": [
+                    {
+                        "target": 12,
+                        "stop": 60,
+                        "trades": 591,
+                        "win_rate": 79.35702199661591,
+                        "expectancy": 4.39881445147261
+                    },
+                    {
+                        "target": 12,
+                        "stop": 50,
+                        "trades": 591,
+                        "win_rate": 79.01861252115059,
+                        "expectancy": 4.3903533883909684
+                    },
+                    {
+                        "target": 12,
+                        "stop": 40,
+                        "trades": 591,
+                        "win_rate": 78.00338409475465,
+                        "expectancy": 4.167341874537331
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 591,
+                        "win_rate": 82.91032148900169,
+                        "expectancy": 4.0802022608000215
+                    },
+                    {
+                        "target": 10,
+                        "stop": 50,
+                        "trades": 591,
+                        "win_rate": 82.57191201353638,
+                        "expectancy": 4.026055918530562
+                    },
+                    {
+                        "target": 15,
+                        "stop": 50,
+                        "trades": 591,
+                        "win_rate": 72.08121827411168,
+                        "expectancy": 3.899826746906726
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 591,
+                        "win_rate": 72.41962774957699,
+                        "expectancy": 3.8306230006080795
+                    },
+                    {
+                        "target": 8,
+                        "stop": 60,
+                        "trades": 591,
+                        "win_rate": 86.97123519458545,
+                        "expectancy": 3.8155664227739003
+                    },
+                    {
+                        "target": 8,
+                        "stop": 50,
+                        "trades": 591,
+                        "win_rate": 86.63282571912013,
+                        "expectancy": 3.7678503562552876
+                    },
+                    {
+                        "target": 10,
+                        "stop": 40,
+                        "trades": 591,
+                        "win_rate": 81.38747884940778,
+                        "expectancy": 3.6879851830187182
+                    },
+                    {
+                        "target": 15,
+                        "stop": 40,
+                        "trades": 591,
+                        "win_rate": 70.89678510998309,
+                        "expectancy": 3.656849404478638
+                    },
+                    {
+                        "target": 12,
+                        "stop": 30,
+                        "trades": 591,
+                        "win_rate": 75.63451776649747,
+                        "expectancy": 3.6367160648662225
+                    },
+                    {
+                        "target": 5,
+                        "stop": 60,
+                        "trades": 591,
+                        "win_rate": 95.26226734348562,
+                        "expectancy": 3.4500850154663705
+                    },
+                    {
+                        "target": 8,
+                        "stop": 40,
+                        "trades": 591,
+                        "win_rate": 85.44839255499154,
+                        "expectancy": 3.407951961717428
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 591,
+                        "win_rate": 79.35702199661591,
+                        "expectancy": 3.313873755750317
+                    }
+                ]
+            },
+            "20": {
+                "threshold": 20,
+                "trigger_freq": 73.2336956521739,
+                "triggered_days": 539,
+                "avg_max_reversal": 34.88997433579256,
+                "avg_close_profit": 0.5523183394451531,
+                "tp_probabilities": {
+                    "2": 100.0,
+                    "3": 99.44341372912801,
+                    "5": 96.84601113172542,
+                    "8": 89.23933209647495,
+                    "10": 83.48794063079778,
+                    "12": 76.62337662337663,
+                    "15": 68.08905380333951
+                },
+                "best_configs": [
+                    {
+                        "target": 10,
+                        "stop": 50,
+                        "trades": 539,
+                        "win_rate": 85.52875695732838,
+                        "expectancy": 5.078107108432862
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 539,
+                        "win_rate": 85.89981447124305,
+                        "expectancy": 5.036177428180078
+                    },
+                    {
+                        "target": 15,
+                        "stop": 50,
+                        "trades": 539,
+                        "win_rate": 75.32467532467533,
+                        "expectancy": 5.027269918976113
+                    },
+                    {
+                        "target": 12,
+                        "stop": 50,
+                        "trades": 539,
+                        "win_rate": 80.51948051948052,
+                        "expectancy": 4.86363477830763
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 539,
+                        "win_rate": 75.69573283858998,
+                        "expectancy": 4.838957777713358
+                    },
+                    {
+                        "target": 12,
+                        "stop": 60,
+                        "trades": 539,
+                        "win_rate": 80.89053803339517,
+                        "expectancy": 4.738402414410366
+                    },
+                    {
+                        "target": 8,
+                        "stop": 60,
+                        "trades": 539,
+                        "win_rate": 89.98144712430427,
+                        "expectancy": 4.709646815935181
+                    },
+                    {
+                        "target": 8,
+                        "stop": 50,
+                        "trades": 539,
+                        "win_rate": 89.6103896103896,
+                        "expectancy": 4.698515090517741
+                    },
+                    {
+                        "target": 15,
+                        "stop": 40,
+                        "trades": 539,
+                        "win_rate": 73.8404452690167,
+                        "expectancy": 4.582370963300093
+                    },
+                    {
+                        "target": 10,
+                        "stop": 40,
+                        "trades": 539,
+                        "win_rate": 83.85899814471243,
+                        "expectancy": 4.496288745434253
+                    },
+                    {
+                        "target": 12,
+                        "stop": 40,
+                        "trades": 539,
+                        "win_rate": 79.0352504638219,
+                        "expectancy": 4.401667720532815
+                    },
+                    {
+                        "target": 8,
+                        "stop": 40,
+                        "trades": 539,
+                        "win_rate": 88.31168831168831,
+                        "expectancy": 4.232095976707444
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 539,
+                        "win_rate": 71.05751391465677,
+                        "expectancy": 4.051758718402134
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 539,
+                        "win_rate": 81.44712430426716,
+                        "expectancy": 4.045824832951647
+                    },
+                    {
+                        "target": 12,
+                        "stop": 30,
+                        "trades": 539,
+                        "win_rate": 76.43784786641929,
+                        "expectancy": 3.932465222417092
+                    }
+                ]
+            },
+            "25": {
+                "threshold": 25,
+                "trigger_freq": 65.35326086956522,
+                "triggered_days": 481,
+                "avg_max_reversal": 37.219745850116944,
+                "avg_close_profit": 1.9977184779430872,
+                "tp_probabilities": {
+                    "2": 100.0,
+                    "3": 99.58419958419958,
+                    "5": 97.92099792099792,
+                    "8": 91.8918918918919,
+                    "10": 85.44698544698545,
+                    "12": 79.002079002079,
+                    "15": 71.51767151767152
+                },
+                "best_configs": [
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 481,
+                        "win_rate": 79.002079002079,
+                        "expectancy": 5.88814781014488
+                    },
+                    {
+                        "target": 15,
+                        "stop": 50,
+                        "trades": 481,
+                        "win_rate": 78.37837837837837,
+                        "expectancy": 5.870060593571336
+                    },
+                    {
+                        "target": 12,
+                        "stop": 50,
+                        "trades": 481,
+                        "win_rate": 82.74428274428274,
+                        "expectancy": 5.766733784189839
+                    },
+                    {
+                        "target": 10,
+                        "stop": 50,
+                        "trades": 481,
+                        "win_rate": 87.11018711018711,
+                        "expectancy": 5.739498907711798
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 481,
+                        "win_rate": 87.52598752598753,
+                        "expectancy": 5.739498907711798
+                    },
+                    {
+                        "target": 12,
+                        "stop": 60,
+                        "trades": 481,
+                        "win_rate": 83.16008316008316,
+                        "expectancy": 5.6823260967548075
+                    },
+                    {
+                        "target": 12,
+                        "stop": 40,
+                        "trades": 481,
+                        "win_rate": 81.4968814968815,
+                        "expectancy": 5.541993456422167
+                    },
+                    {
+                        "target": 10,
+                        "stop": 40,
+                        "trades": 481,
+                        "win_rate": 86.07068607068608,
+                        "expectancy": 5.539706604892152
+                    },
+                    {
+                        "target": 15,
+                        "stop": 40,
+                        "trades": 481,
+                        "win_rate": 76.71517671517671,
+                        "expectancy": 5.504155720098103
+                    },
+                    {
+                        "target": 8,
+                        "stop": 60,
+                        "trades": 481,
+                        "win_rate": 92.3076923076923,
+                        "expectancy": 5.485861161642411
+                    },
+                    {
+                        "target": 8,
+                        "stop": 50,
+                        "trades": 481,
+                        "win_rate": 91.8918918918919,
+                        "expectancy": 5.452597128378378
+                    },
+                    {
+                        "target": 8,
+                        "stop": 40,
+                        "trades": 481,
+                        "win_rate": 90.85239085239085,
+                        "expectancy": 5.203116878898129
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 481,
+                        "win_rate": 82.12058212058211,
+                        "expectancy": 4.317045279203482
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 481,
+                        "win_rate": 72.55717255717255,
+                        "expectancy": 4.253635969578353
+                    },
+                    {
+                        "target": 12,
+                        "stop": 30,
+                        "trades": 481,
+                        "win_rate": 77.33887733887734,
+                        "expectancy": 4.181494698950754
+                    }
+                ]
+            },
+            "30": {
+                "threshold": 30,
+                "trigger_freq": 54.483695652173914,
+                "triggered_days": 401,
+                "avg_max_reversal": 39.44738282467659,
+                "avg_close_profit": 0.4583591071150249,
+                "tp_probabilities": {
+                    "2": 99.75062344139651,
+                    "3": 99.25187032418953,
+                    "5": 96.25935162094763,
+                    "8": 92.76807980049875,
+                    "10": 89.02743142144638,
+                    "12": 83.54114713216958,
+                    "15": 75.56109725685786
+                },
+                "best_configs": [
+                    {
+                        "target": 12,
+                        "stop": 60,
+                        "trades": 401,
+                        "win_rate": 85.785536159601,
+                        "expectancy": 6.798004987531172
+                    },
+                    {
+                        "target": 15,
+                        "stop": 60,
+                        "trades": 401,
+                        "win_rate": 79.80049875311721,
+                        "expectancy": 6.551369988115648
+                    },
+                    {
+                        "target": 12,
+                        "stop": 50,
+                        "trades": 401,
+                        "win_rate": 84.78802992518703,
+                        "expectancy": 6.492268474322008
+                    },
+                    {
+                        "target": 10,
+                        "stop": 60,
+                        "trades": 401,
+                        "win_rate": 89.27680798004988,
+                        "expectancy": 6.467579829722569
+                    },
+                    {
+                        "target": 12,
+                        "stop": 40,
+                        "trades": 401,
+                        "win_rate": 83.79052369077307,
+                        "expectancy": 6.376308374571384
+                    },
+                    {
+                        "target": 10,
+                        "stop": 50,
+                        "trades": 401,
+                        "win_rate": 88.5286783042394,
+                        "expectancy": 6.261095308603491
+                    },
+                    {
+                        "target": 15,
+                        "stop": 50,
+                        "trades": 401,
+                        "win_rate": 78.80299251870323,
+                        "expectancy": 6.2593504032886536
+                    },
+                    {
+                        "target": 15,
+                        "stop": 40,
+                        "trades": 401,
+                        "win_rate": 77.55610972568579,
+                        "expectancy": 6.119200899119389
+                    },
+                    {
+                        "target": 10,
+                        "stop": 40,
+                        "trades": 401,
+                        "win_rate": 87.53117206982543,
+                        "expectancy": 6.0431404399158355
+                    },
+                    {
+                        "target": 12,
+                        "stop": 30,
+                        "trades": 401,
+                        "win_rate": 80.79800498753117,
+                        "expectancy": 5.528427466490025
+                    },
+                    {
+                        "target": 15,
+                        "stop": 30,
+                        "trades": 401,
+                        "win_rate": 74.56359102244389,
+                        "expectancy": 5.353613646547693
+                    },
+                    {
+                        "target": 8,
+                        "stop": 60,
+                        "trades": 401,
+                        "win_rate": 92.01995012468828,
+                        "expectancy": 5.3206978890663965
+                    },
+                    {
+                        "target": 10,
+                        "stop": 30,
+                        "trades": 401,
+                        "win_rate": 84.78802992518703,
+                        "expectancy": 5.272067633650249
+                    },
+                    {
+                        "target": 8,
+                        "stop": 50,
+                        "trades": 401,
+                        "win_rate": 91.52119700748129,
+                        "expectancy": 5.2498739722958225
+                    },
+                    {
+                        "target": 8,
+                        "stop": 40,
+                        "trades": 401,
+                        "win_rate": 90.52369077306733,
+                        "expectancy": 5.026931572436097
                     }
                 ]
             }

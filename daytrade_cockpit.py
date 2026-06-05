@@ -14,7 +14,7 @@ DT_TRANS = {
         "title": "COCKPIT QUANT: DAY-TRADE & DESVIOS 111",
         "desc": "Análise estatística intraday de reversão à média e monitoramento de desvios da média móvel simples de 111 períodos.",
         "select_asset": "SELECIONE O ATIVO",
-        "live_telemetry": "TELEMETRIA EM TEMPO REAL (B3 PROXY)",
+        "live_telemetry": "TELEMETRIA EM TEMPO REAL (B3 & GLOBAL PROXY)",
         "current_price": "Preço Atual",
         "day_open": "Abertura do Dia",
         "day_range": "Amplitude Média (H-L)",
@@ -27,15 +27,15 @@ DT_TRANS = {
         "dev_val": "Desvio",
         "reversal_prob": "ESTATÍSTICAS DE REVERSÃO INTRADAY",
         "reversal_title": "Matriz de Pullback Estatístico (Day-Trade)",
-        "reversal_desc": "Mede a probabilidade de o preço corrigir X pontos a partir da abertura após atingir o desvio, liquidando a posição no encerramento do dia.",
+        "reversal_desc": "Mede a probabilidade de o preço corrigir X pontos/pips a partir da abertura após atingir o desvio, liquidando a posição no encerramento do dia.",
         "raw_pullback": "Probabilidade de Pullback (Sem Stop Loss)",
         "target": "Alvo (TP)",
         "prob": "Probabilidade",
         "best_configs": "Configurações Otimizadas (Com Stop Loss)",
         "recalc_btn": "🔄 Recalcular Base Estatística (2 Anos de Histórico)",
         "active_alert": "🚨 DETECTOR DE DESVIO INTRADAY EM CURSO",
-        "active_signal": "O ativo **{asset}** está com um desvio de **{dev:+.0f}** pontos em relação à abertura! Historicamente, desvios de **{th}** pontos corrigem pelo menos **{tp}** pontos em **{prob:.1f}%** das vezes (Expectativa: {exp:+.1f} pts).",
-        "alert_no_trigger": "Sem desvios atípicos ativos no momento (< {th_min} pts da abertura).",
+        "active_signal": "O ativo **{asset}** está com um desvio de **{dev:+.0f}** em relação à abertura! Historicamente, desvios de **{th}** corrigem pelo menos **{tp}** em **{prob:.1f}%** das vezes (Expectativa: {exp:+.1f}).",
+        "alert_no_trigger": "Sem desvios atípicos ativos no momento (< {th_min} pts/pips da abertura).",
         "chart_title": "Gráfico Histórico de Preço & Média 111",
         "select_tf": "Selecionar Tempo Gráfico para o Gráfico",
         "run_points": "Desvio da Abertura",
@@ -45,7 +45,7 @@ DT_TRANS = {
         "title": "QUANT COCKPIT: DAY-TRADE & 111 DEVIATIONS",
         "desc": "Intraday statistical mean reversion analysis and tracking of deviations from the 111-period simple moving average.",
         "select_asset": "SELECT ACTIVE ASSET",
-        "live_telemetry": "REAL-TIME TELEMETRY (B3 PROXY)",
+        "live_telemetry": "REAL-TIME TELEMETRY (B3 & GLOBAL PROXY)",
         "current_price": "Current Price",
         "day_open": "Day Open",
         "day_range": "Average Range (H-L)",
@@ -58,15 +58,15 @@ DT_TRANS = {
         "dev_val": "Deviation",
         "reversal_prob": "INTRADAY REVERSAL STATISTICS",
         "reversal_title": "Statistical Pullback Matrix (Day-Trade)",
-        "reversal_desc": "Measures the probability of price correcting X points from the open after hitting the deviation, force-closing at market end.",
+        "reversal_desc": "Measures the probability of price correcting X points/pips from the open after hitting the deviation, force-closing at market end.",
         "raw_pullback": "Pullback Probability (No Stop Loss)",
         "target": "Target (TP)",
         "prob": "Probability",
         "best_configs": "Optimized Configurations (With Stop Loss)",
         "recalc_btn": "🔄 Recalculate Stats Database (2-Year History)",
         "active_alert": "🚨 ACTIVE INTRADAY DEVIATION DETECTED",
-        "active_signal": "The asset **{asset}** has a deviation of **{dev:+.0f}** points from the open! Historically, deviations of **{th}** points pull back by at least **{tp}** points in **{prob:.1f}%** of cases (Expectancy: {exp:+.1f} pts).",
-        "alert_no_trigger": "No active abnormal deviations at this moment (< {th_min} pts from open).",
+        "active_signal": "The asset **{asset}** has a deviation of **{dev:+.0f}** from the open! Historically, deviations of **{th}** pull back by at least **{tp}** in **{prob:.1f}% of cases (Expectancy: {exp:+.1f}).",
+        "alert_no_trigger": "No active abnormal deviations at this moment (< {th_min} pts/pips from open).",
         "chart_title": "Historical Price & 111 SMA Chart",
         "select_tf": "Select Chart Timeframe",
         "run_points": "Deviation from Open",
@@ -76,7 +76,7 @@ DT_TRANS = {
         "title": "COCKPIT QUANT: DAY-TRADE & DESVÍOS 111",
         "desc": "Análisis estadístico intradía de reversión a la media y monitoreo de desvíos de la media móvil simple de 111 períodos.",
         "select_asset": "SELECCIONE EL ACTIVO",
-        "live_telemetry": "TELEMETRÍA EN TIEMPO REAL (B3 PROXY)",
+        "live_telemetry": "TELEMETRÍA EN TIEMPO REAL (B3 & GLOBAL PROXY)",
         "current_price": "Precio Actual",
         "day_open": "Apertura del Día",
         "day_range": "Rango Promedio (H-L)",
@@ -89,15 +89,15 @@ DT_TRANS = {
         "dev_val": "Desvío",
         "reversal_prob": "ESTADÍSTICAS DE REVERSIÓN INTRADÍA",
         "reversal_title": "Matriz de Pullback Estadístico (Day-Trade)",
-        "reversal_desc": "Mide la probabilidad de que el precio corrija X puntos a partir de la apertura tras alcanzar el desvío, liquidando al cierre.",
+        "reversal_desc": "Mide la probabilidad de que el precio corrija X puntos/pips a partir de la apertura tras alcanzar el desvío, liquidando al cierre.",
         "raw_pullback": "Probabilidad de Pullback (Sin Stop Loss)",
         "target": "Objetivo (TP)",
         "prob": "Probabilidad",
         "best_configs": "Configuraciones Optimizadas (Con Stop Loss)",
         "recalc_btn": "🔄 Recalcular Base Estadística (Historial 2 Años)",
         "active_alert": "🚨 DETECTOR DE DESVÍO INTRADÍA EN CURSO",
-        "active_signal": "¡El activo **{asset}** tiene un desvío de **{dev:+.0f}** puntos de la apertura! Históricamente, desvíos de **{th}** puntos corrigen al menos **{tp}** puntos el **{prob:.1f}%** de las veces (Expectativa: {exp:+.1f} pts).",
-        "alert_no_trigger": "Sin desvíos atípicos activos en este momento (< {th_min} pts de la apertura).",
+        "active_signal": "¡El activo **{asset}** tiene un desvío de **{dev:+.0f}** de la apertura! Históricamente, desvíos de **{th}** corrigen al menos **{tp}** el **{prob:.1f}%** de las veces (Expectativa: {exp:+.1f}).",
+        "alert_no_trigger": "Sin desvíos atípicos activos en este momento (< {th_min} pts/pips de la apertura).",
         "chart_title": "Gráfico Histórico de Precio & Media 111",
         "select_tf": "Seleccionar Temporalidad para el Gráfico",
         "run_points": "Desvío de la Apertura",
@@ -110,10 +110,9 @@ def fetch_live_b3_daytrade_data(ticker):
     t = yf.Ticker(ticker)
     df_d1 = t.history(period="250d", interval="1d")
     df_w1 = t.history(period="3y", interval="1wk")
-    # Fetch 150d of hourly data to resample into H4 (needs 111 bars)
     df_h1 = t.history(period="150d", interval="1h")
     
-    # Convert indexes to America/Sao_Paulo local time
+    # Convert indexes to America/Sao_Paulo local time for UI display
     if not df_d1.empty and df_d1.index.tz is not None:
         df_d1.index = df_d1.index.tz_convert('America/Sao_Paulo')
     if not df_w1.empty and df_w1.index.tz is not None:
@@ -121,7 +120,7 @@ def fetch_live_b3_daytrade_data(ticker):
     if not df_h1.empty:
         if df_h1.index.tz is not None:
             df_h1.index = df_h1.index.tz_convert('America/Sao_Paulo')
-        # Filter standard B3 hours (09:00 to 18:00) for BRL=X
+        # Filter standard B3 hours (09:00 to 18:00) only for BRL=X
         if ticker == "BRL=X":
             df_h1 = df_h1[(df_h1.index.hour >= 9) & (df_h1.index.hour <= 17)]
             
@@ -135,7 +134,7 @@ def render_daytrade_cockpit(lang):
     
     # Recalculate stats handler
     if st.sidebar.button(tx["recalc_btn"], key="recalc_daytrade_stats_btn", use_container_width=True):
-        with st.spinner("Executando backtests históricos..."):
+        with st.spinner("Executando backtests históricos..." if lang == "PT" else "Running historical backtests..."):
             try:
                 optimized_simulation.run_optimized_simulation()
                 st.success("Estatísticas recalculadas com sucesso!" if lang == "PT" else "Stats recalculated successfully!")
@@ -146,13 +145,48 @@ def render_daytrade_cockpit(lang):
     # Asset selection
     asset_option = st.segmented_control(
         tx["select_asset"],
-        options=["WIN (Mini Índice)", "WDO (Mini Dólar)"],
+        options=["WIN (Mini Índice)", "WDO (Mini Dólar)", "EUR/USD", "GBP/USD", "USD/JPY", "Ouro (XAU/USD)"],
         default="WIN (Mini Índice)",
         key="daytrade_asset_sel"
     )
     
-    ticker = "^BVSP" if "WIN" in asset_option else "BRL=X"
-    asset_code = "WIN" if "WIN" in asset_option else "WDO"
+    # Map parameters based on selection
+    if "WIN" in asset_option:
+        ticker = "^BVSP"
+        asset_code = "WIN"
+        val_suffix = "pts"
+        multiplier = 1.0
+        price_format = "{:,.2f}"
+    elif "WDO" in asset_option:
+        ticker = "BRL=X"
+        asset_code = "WDO"
+        val_suffix = "pts"
+        multiplier = 1000.0
+        price_format = "{:.4f}"
+    elif "EUR/USD" in asset_option:
+        ticker = "EURUSD=X"
+        asset_code = "EURUSD"
+        val_suffix = "pips"
+        multiplier = 10000.0
+        price_format = "{:.5f}"
+    elif "GBP/USD" in asset_option:
+        ticker = "GBPUSD=X"
+        asset_code = "GBPUSD"
+        val_suffix = "pips"
+        multiplier = 10000.0
+        price_format = "{:.5f}"
+    elif "USD/JPY" in asset_option:
+        ticker = "USDJPY=X"
+        asset_code = "USDJPY"
+        val_suffix = "pips"
+        multiplier = 100.0
+        price_format = "{:.3f}"
+    else: # Ouro (XAU/USD)
+        ticker = "GC=F"
+        asset_code = "XAUUSD"
+        val_suffix = "USD"
+        multiplier = 1.0
+        price_format = "{:,.2f}"
     
     with st.spinner("Carregando cotações e calculando desvios..." if lang == "PT" else "Loading quotes and calculating deviations..."):
         try:
@@ -183,39 +217,61 @@ def render_daytrade_cockpit(lang):
     # Get current price
     current_price = df_h1['Close'].iloc[-1]
     
-    # Extract today's open/high/low
-    last_date = df_h1.index[-1].date()
-    today_bars = df_h1[df_h1.index.date == last_date]
-    
-    if not today_bars.empty:
-        today_open = today_bars['Open'].iloc[0]
-        today_high = today_bars['High'].max()
-        today_low = today_bars['Low'].min()
+    # Extract today's open/high/low in correct timezone
+    if asset_code in ["WIN", "WDO"]:
+        last_date = df_h1.index[-1].date()
+        today_bars = df_h1[df_h1.index.date == last_date]
+        if not today_bars.empty:
+            today_open = today_bars['Open'].iloc[0]
+            today_high = today_bars['High'].max()
+            today_low = today_bars['Low'].min()
+        else:
+            today_open = df_d1['Open'].iloc[-1]
+            today_high = df_d1['High'].iloc[-1]
+            today_low = df_d1['Low'].iloc[-1]
     else:
-        today_open = df_d1['Open'].iloc[-1]
-        today_high = df_d1['High'].iloc[-1]
-        today_low = df_d1['Low'].iloc[-1]
+        # International assets: use UTC daily grouping (rollover at 21:00 BRT / 00:00 UTC)
+        df_h1_utc = df_h1.tz_convert('UTC')
+        last_date_utc = df_h1_utc.index[-1].date()
+        today_bars_utc = df_h1_utc[df_h1_utc.index.date == last_date_utc]
+        if not today_bars_utc.empty:
+            today_open = today_bars_utc['Open'].iloc[0]
+            today_high = today_bars_utc['High'].max()
+            today_low = today_bars_utc['Low'].min()
+        else:
+            df_d1_utc = df_d1.tz_convert('UTC') if df_d1.index.tz is not None else df_d1
+            today_open = df_d1_utc['Open'].iloc[-1]
+            today_high = df_d1_utc['High'].iloc[-1]
+            today_low = df_d1_utc['Low'].iloc[-1]
         
     # Deviations from open
-    if asset_code == "WIN":
-        deviation_pts = current_price - today_open
-        deviation_pct = (current_price / today_open - 1) * 100
-        val_suffix = "pts"
-        multiplier = 1.0
-    else:
-        deviation_pts = (current_price - today_open) * 1000
-        deviation_pct = (current_price / today_open - 1) * 100
-        val_suffix = "pts"
-        multiplier = 1000.0
+    deviation_pts = (current_price - today_open) * multiplier
+    deviation_pct = (current_price / today_open - 1) * 100
 
     # 1. LIVE TELEMETRY
     st.markdown(f"<h3>{tx['live_telemetry']}</h3>", unsafe_allow_html=True)
     
+    # Formatting values for live telemetry
+    current_price_str = price_format.format(current_price)
+    today_open_str = price_format.format(today_open)
+    if asset_code == "WDO":
+        current_price_str = f"R$ {current_price_str}"
+        today_open_str = f"R$ {today_open_str}"
+    elif asset_code in ["EURUSD", "GBPUSD"]:
+        current_price_str = f"$ {current_price_str}"
+        today_open_str = f"$ {today_open_str}"
+    elif asset_code == "USDJPY":
+        current_price_str = f"¥ {current_price_str}"
+        today_open_str = f"¥ {today_open_str}"
+    elif asset_code == "XAUUSD":
+        current_price_str = f"$ {current_price_str} /oz"
+        today_open_str = f"$ {today_open_str} /oz"
+        
     col_t1, col_t2, col_t3, col_t4 = st.columns(4)
     with col_t1:
-        st.metric(tx["current_price"], f"{current_price:,.2f}" if asset_code == "WIN" else f"R$ {current_price:.4f}")
+        st.metric(tx["current_price"], current_price_str)
     with col_t2:
-        st.metric(tx["day_open"], f"{today_open:,.2f}" if asset_code == "WIN" else f"R$ {today_open:.4f}")
+        st.metric(tx["day_open"], today_open_str)
     with col_t3:
         color_style = "color:#00ffa5;" if deviation_pts >= 0 else "color:#ff4a4a;"
         sign = "+" if deviation_pts >= 0 else ""
@@ -262,11 +318,11 @@ def render_daytrade_cockpit(lang):
             <div style="color:#bf953f; font-weight:700; font-size:11px; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">{tf_name}</div>
             <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:12px;">
                 <span style="color:#888888;">{tx['curr_val']}:</span>
-                <span style="color:#ffffff; font-weight:700;">{price:,.2f if price>1000 else price:.4f}</span>
+                <span style="color:#ffffff; font-weight:700;">{price_format.format(price)}</span>
             </div>
             <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:12px;">
                 <span style="color:#888888;">{tx['sma_val']}:</span>
-                <span style="color:#ffffff; font-weight:700;">{sma:,.2f if sma>1000 else sma:.4f}</span>
+                <span style="color:#ffffff; font-weight:700;">{price_format.format(sma)}</span>
             </div>
             <div style="border-top:1px solid #ffffff10; padding-top:10px; display:flex; justify-content:space-between; align-items:center;">
                 <span style="color:#888888; font-size:11px;">{tx['dev_val']}:</span>
