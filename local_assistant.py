@@ -35,6 +35,9 @@ CPU_THRESHOLD = 90.0  # %
 RAM_THRESHOLD = 90.0  # %
 SYSTEM_CHECK_INTERVAL = 60  # 1 minuto
 
+# Configuração de Voz do Jarvis (Mark II)
+VOICE_REPLIES_ACTIVE = False
+
 # =====================================================================
 # BANCO DE DADOS LOCAL E MEMÓRIA DO USUÁRIO
 # =====================================================================
@@ -191,7 +194,7 @@ def get_morning_briefing():
 # =====================================================================
 # INTEGRAÇÃO GEMINI: PERSONALIDADE JARVIS DO HOMEM DE FERRO
 # =====================================================================
-def ask_gemini(user_message, chat_id):
+def ask_gemini(user_message, chat_id, audio_b64=None):
     """Conversa com a API do Gemini simulando o personagem Jarvis do Homem de Ferro."""
     api_key = os.environ.get("GEMINI_API_KEY", "")
     
@@ -239,7 +242,22 @@ def ask_gemini(user_message, chat_id):
     )
 
     history = load_chat_history(chat_id)
-    history.append({"role": "user", "parts": [{"text": user_message}]})
+    
+    if audio_b64:
+        history.append({
+            "role": "user",
+            "parts": [
+                {"text": "O Senhor enviou uma mensagem de voz. Ouça, transcreva, execute a instrução e responda em português com o seu personagem Jarvis:"},
+                {
+                    "inlineData": {
+                        "mimeType": "audio/ogg",
+                        "data": audio_b64
+                    }
+                }
+            ]
+        })
+    else:
+        history.append({"role": "user", "parts": [{"text": user_message}]})
 
     # Limita o histórico de chat para não exceder limites
     if len(history) > 16:
@@ -260,13 +278,18 @@ def ask_gemini(user_message, chat_id):
             candidates = res_json.get("candidates", [])
             if candidates:
                 bot_reply = candidates[0]["content"]["parts"][0]["text"]
+                
+                # Se foi enviado áudio, simplificamos o histórico para fins de consumo de tokens futuro
+                if audio_b64:
+                    history[-1] = {"role": "user", "parts": [{"text": "[Mensagem de Voz do Senhor]"}]}
+                
                 history.append({"role": "model", "parts": [{"text": bot_reply}]})
                 save_chat_history(chat_id, history)
                 
                 # Se o Jarvis disse que memorizou/salvou algo, tentamos capturar a frase e arquivar
                 if "memória" in bot_reply.lower() or "guardei" in bot_reply.lower() or "salvei" in bot_reply.lower():
                     # Salva a mensagem do usuário como um fato aprendido
-                    save_user_memory(user_message)
+                    save_user_memory(user_message if not audio_b64 else "[Instrução de voz guardada pelo Jarvis]")
                     
                 return bot_reply
             return "⚠️ Senhor, o servidor central respondeu sem dados."
@@ -280,7 +303,7 @@ def ask_gemini(user_message, chat_id):
 # =====================================================================
 def handle_command(text, chat_id):
     """Processa e executa comandos recebidos do usuário via Telegram."""
-    global ALARM_ACTIVE, WAKE_UP_TIME, MONITOR_TICKER, PRICE_UPPER_LIMIT, PRICE_LOWER_LIMIT
+    global ALARM_ACTIVE, WAKE_UP_TIME, MONITOR_TICKER, PRICE_UPPER_LIMIT, PRICE_LOWER_LIMIT, VOICE_REPLIES_ACTIVE
     
     text_lower = text.lower().strip()
     profile = load_user_profile()
@@ -300,8 +323,9 @@ def handle_command(text, chat_id):
             "⏰ `/alarme HH:MM` - Configura o horário do alarme despertador\n"
             "🔔 `/despertar on/off` - Liga ou desliga o alarme sonoro\n"
             "🔍 `/monitorar TICKER` - Define o ativo para monitorar preço\n"
-            "📊 `/alvos TETO PISO` - Define limites superior e inferior de alerta\n\n"
-            "💬 *Dica:* Você também pode simplesmente conversar comigo normalmente digitando mensagens livres, e eu responderei como o Jarvis do Homem de Ferro!"
+            "📊 `/alvos TETO PISO` - Define limites superior e inferior de alerta\n"
+            "🎙️ `/voz` - Alterna respostas automáticas de voz ativas/inativas\n\n"
+            "💬 *Dica:* Você também pode simplesmente conversar comigo normalmente digitando mensagens livres (ou enviando áudios pelo Telegram), e eu responderei como o Jarvis do Homem de Ferro!"
         )
         send_notification(menu)
         
@@ -611,10 +635,94 @@ def handle_command(text, chat_id):
         else:
             send_notification("⚠️ Use: `/alvos TETO PISO` (Ex: `/alvos 980 900`)")
             
+    elif text_lower == "/voz":
+        VOICE_REPLIES_ACTIVE = not VOICE_REPLIES_ACTIVE
+        status = "ATIVADO" if VOICE_REPLIES_ACTIVE else "DESATIVADO"
+        send_notification(f"🎙️ *Respostas de voz automáticas:* `{status}`")
+             
     else:
         # Não é um comando barra: trata como chat de conversação do Jarvis
         reply = ask_gemini(text, chat_id)
         send_notification(reply)
+        if VOICE_REPLIES_ACTIVE:
+            send_voice_reply(reply, chat_id)
+
+def send_voice_reply(reply, chat_id):
+    """Gera um áudio local via SAPI e envia para o Telegram como mensagem de voz."""
+    if not TELEGRAM_BOT_TOKEN:
+        return False
+    
+    import re
+    clean_text = re.sub(r'[\*\_`#]', '', reply)
+    clean_text = clean_text.replace("🤖", "").replace("⚠️", "").replace("✅", "").replace("🔔", "").strip()
+    
+    path = os.path.join(os.path.dirname(__file__), "jarvis_voice_reply.wav")
+    try:
+        import win32com.client
+        filestream = win32com.client.Dispatch("SAPI.SpFileStream")
+        filestream.Open(path, 3, False)
+        speaker = win32com.client.Dispatch("SAPI.SpVoice")
+        
+        # Tenta selecionar a voz padrão do Windows em Português
+        voices = speaker.GetVoices()
+        for i in range(voices.Count):
+            voice = voices.Item(i)
+            desc = voice.GetDescription().lower()
+            if "1046" in voice.Id or "brazil" in desc or "portuguese" in desc:
+                speaker.Voice = voice
+                break
+                
+        speaker.AudioOutputStream = filestream
+        speaker.Speak(clean_text)
+        filestream.Close()
+        
+        # Envia como arquivo de voz para o Telegram
+        url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendVoice"
+        with open(path, "rb") as f:
+            files = {"voice": f}
+            payload = {"chat_id": chat_id}
+            response = requests.post(url, data=payload, files=files, timeout=25)
+        
+        if os.path.exists(path):
+            try:
+                os.remove(path)
+            except Exception:
+                pass
+        return response.status_code == 200
+    except Exception as e:
+        print(f"[Erro de Voz]: Não foi possível gerar/enviar áudio: {e}")
+        return False
+
+def handle_voice_message(voice_obj, chat_id):
+    """Processa áudios enviados pelo Telegram e responde com voz sintetizada."""
+    if not TELEGRAM_BOT_TOKEN:
+        return
+    
+    file_id = voice_obj["file_id"]
+    get_file_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/getFile?file_id={file_id}"
+    try:
+        res = requests.get(get_file_url, timeout=15)
+        if res.status_code == 200:
+            file_path = res.json().get("result", {}).get("file_path")
+            if file_path:
+                download_url = f"https://api.telegram.org/file/bot{TELEGRAM_BOT_TOKEN}/{file_path}"
+                audio_res = requests.get(download_url, timeout=25)
+                if audio_res.status_code == 200:
+                    import base64
+                    audio_b64 = base64.b64encode(audio_res.content).decode("utf-8")
+                    
+                    # Envia áudio para o Gemini
+                    reply = ask_gemini("", chat_id, audio_b64=audio_b64)
+                    
+                    # Envia a resposta em texto
+                    send_notification(reply)
+                    
+                    # Envia a resposta em áudio (voz)
+                    send_voice_reply(reply, chat_id)
+        else:
+            send_notification("⚠️ Senhor, falha ao obter o arquivo de áudio dos servidores do Telegram.")
+    except Exception as e:
+        send_notification(f"⚠️ Senhor, erro ao processar o seu comando de voz: {e}")
 
 def telegram_listener_worker():
     """Roda em segundo plano ouvindo mensagens enviadas pelo usuário ao Bot."""
@@ -646,6 +754,8 @@ def telegram_listener_worker():
                             
                             if text:
                                 handle_command(text, chat_id)
+                            elif "voice" in msg:
+                                handle_voice_message(msg["voice"], chat_id)
         except Exception as e:
             print(f"[Erro no Ouvinte Telegram]: {e}")
         time.sleep(1)

@@ -11104,96 +11104,144 @@ elif st.session_state.active_terminal == "jarvis_copilot":
                 {"role": "assistant", "content": "Olá, Senhor. Sou o Jarvis. Como posso ajudá-lo hoje com as suas operações, mercados ou rotina?"}
             ]
             
-        # Exibe mensagens existentes
-        for msg in st.session_state.streamlit_messages:
-            with st.chat_message(msg["role"]):
-                st.write(msg["content"])
+        tab_chat, tab_media = st.tabs(["💬 CHAT COPILOT", "🎬 STARK MEDIA DIRECTOR"])
+        
+        with tab_chat:
+            # Exibe mensagens existentes
+            for msg in st.session_state.streamlit_messages:
+                with st.chat_message(msg["role"]):
+                    st.write(msg["content"])
+                    
+            # Recebe entrada do usuário
+            user_input = st.chat_input("Digite sua mensagem para o Jarvis...")
+            if user_input:
+                # Mostra mensagem do usuário
+                with st.chat_message("user"):
+                    st.write(user_input)
+                st.session_state.streamlit_messages.append({"role": "user", "content": user_input})
                 
-        # Recebe entrada do usuário
-        user_input = st.chat_input("Digite sua mensagem para o Jarvis...")
-        if user_input:
-            # Mostra mensagem do usuário
-            with st.chat_message("user"):
-                st.write(user_input)
-            st.session_state.streamlit_messages.append({"role": "user", "content": user_input})
-            
-            # Chama o Gemini
-            with st.spinner("Pensando..."):
-                try:
-                    # Carrega memórias
-                    mem_path = "user_memory.json"
-                    memories = []
-                    if os.path.exists(mem_path):
-                        with open(mem_path, "r", encoding="utf-8") as f:
-                            memories = json.load(f)
-                            
-                    # Tenta ler estado do hardware se existir
-                    hardware_path = "jarvis_brain_state.json"
-                    cpu, ram = "N/A", "N/A"
-                    if os.path.exists(hardware_path):
-                        with open(hardware_path, "r", encoding="utf-8") as f:
-                            hw_data = json.load(f)
-                            cpu = hw_data.get("system", {}).get("cpu_percent", "N/A")
-                            ram = hw_data.get("system", {}).get("ram_percent", "N/A")
-                            
-                    # Carrega dados adicionais de mercado para contexto
-                    m_data = live_market.fetch_all_data()
-                    t_data = m_data.get("tickers", {})
-                    eurusd = t_data.get("EURUSD=X", {}).get("price", "N/A")
-                    gbpjpy = t_data.get("GBPJPY=X", {}).get("price", "N/A")
-                    gold = t_data.get("GC=F", {}).get("price", "N/A")
-                    btc = t_data.get("BTC-USD", {}).get("price", "N/A")
-                    
-                    system_prompt = (
-                        "Você é o JARVIS, o assistente pessoal de inteligência artificial de Padua.\n"
-                        "Seu estilo de falar é IDÊNTICO ao Jarvis do Homem de Ferro (sofisticado, prestativo, educado, sempre chamando o usuário de 'Senhor' (e NUNCA de 'Sir'), e demonstrando extremo respeito por sua inteligência, histórico e patrimônio).\n\n"
-                        f"INFORMAÇÕES DO SENHOR:\n"
-                        f"- Nome: Padua\n"
-                        f"- Localização: São Paulo, SP (Capital)\n"
-                        f"- Desejo de Retorno: Chile e Curitiba\n"
-                        f"- Histórico: Quebrou em 2008 na crise do subprime operando Forex. Opera na ZeroMarkets com limite de 50 lotes. ATENÇÃO: O Senhor NÃO quer saber e NÃO opera mais pares de moedas do Chile. Não fale nem mencione CLP ou Chile.\n\n"
-                        f"MEMÓRIAS SALVAS DIÁRIAS:\n"
-                        f"{json.dumps(memories, indent=2, ensure_ascii=False)}\n\n"
-                        f"MERCADOS EM TEMPO REAL:\n"
-                        f"- EURUSD: {eurusd} | GBPJPY: {gbpjpy} | Gold: {gold} | BTC: {btc}\n"
-                        f"STATUS DO LAPTOP:\n"
-                        f"- CPU: {cpu}% | RAM: {ram}%\n\n"
-                        "Responda no personagem Jarvis em português."
-                    )
-                    
-                    # Converte formato para a chamada do Gemini
-                    contents = [{"role": "user", "parts": [{"text": f"[CONTEXTO: {system_prompt}]"}]}]
-                    for msg in st.session_state.streamlit_messages[-10:]:  # últimas 10 msgs
-                        role_mapped = "user" if msg["role"] == "user" else "model"
-                        contents.append({"role": role_mapped, "parts": [{"text": msg["content"]}]})
+                # Chama o Gemini
+                with st.spinner("Pensando..."):
+                    try:
+                        # Carrega memórias
+                        mem_path = "user_memory.json"
+                        memories = []
+                        if os.path.exists(mem_path):
+                            with open(mem_path, "r", encoding="utf-8") as f:
+                                memories = json.load(f)
+                                
+                        # Tenta ler estado do hardware se existir
+                        hardware_path = "jarvis_brain_state.json"
+                        cpu, ram = "N/A", "N/A"
+                        if os.path.exists(hardware_path):
+                            with open(hardware_path, "r", encoding="utf-8") as f:
+                                hw_data = json.load(f)
+                                cpu = hw_data.get("system", {}).get("cpu_percent", "N/A")
+                                ram = hw_data.get("system", {}).get("ram_percent", "N/A")
+                                
+                        # Carrega dados adicionais de mercado para contexto
+                        m_data = live_market.fetch_all_data()
+                        t_data = m_data.get("tickers", {})
+                        eurusd = t_data.get("EURUSD=X", {}).get("price", "N/A")
+                        gbpjpy = t_data.get("GBPJPY=X", {}).get("price", "N/A")
+                        gold = t_data.get("GC=F", {}).get("price", "N/A")
+                        btc = t_data.get("BTC-USD", {}).get("price", "N/A")
                         
-                    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
-                    headers = {"Content-Type": "application/json"}
-                    payload = {"contents": contents}
-                    
-                    response = requests.post(url, headers=headers, json=payload, timeout=20)
-                    if response.status_code == 200:
-                        res_json = response.json()
-                        candidates = res_json.get("candidates", [])
-                        if candidates:
-                            bot_reply = candidates[0]["content"]["parts"][0]["text"]
+                        system_prompt = (
+                            "Você é o JARVIS, o assistente pessoal de inteligência artificial de Padua.\n"
+                            "Seu estilo de falar é IDÊNTICO ao Jarvis do Homem de Ferro (sofisticado, prestativo, educado, sempre chamando o usuário de 'Senhor' (e NUNCA de 'Sir'), e demonstrando extremo respeito por sua inteligência, histórico e patrimônio).\n\n"
+                            f"INFORMAÇÕES DO SENHOR:\n"
+                            f"- Nome: Padua\n"
+                            f"- Localização: São Paulo, SP (Capital)\n"
+                            f"- Desejo de Retorno: Chile e Curitiba\n"
+                            f"- Histórico: Quebrou em 2008 na crise do subprime operando Forex. Opera na ZeroMarkets com limite de 50 lotes. ATENÇÃO: O Senhor NÃO quer saber e NÃO opera mais pares de moedas do Chile. Não fale nem mencione CLP ou Chile.\n\n"
+                            f"MEMÓRIAS SALVAS DIÁRIAS:\n"
+                            f"{json.dumps(memories, indent=2, ensure_ascii=False)}\n\n"
+                            f"MERCADOS EM TEMPO REAL:\n"
+                            f"- EURUSD: {eurusd} | GBPJPY: {gbpjpy} | Gold: {gold} | BTC: {btc}\n"
+                            f"STATUS DO LAPTOP:\n"
+                            f"- CPU: {cpu}% | RAM: {ram}%\n\n"
+                            "Responda no personagem Jarvis em português."
+                        )
+                        
+                        # Converte formato para a chamada do Gemini
+                        contents = [{"role": "user", "parts": [{"text": f"[CONTEXTO: {system_prompt}]"}]}]
+                        for msg in st.session_state.streamlit_messages[-10:]:  # últimas 10 msgs
+                            role_mapped = "user" if msg["role"] == "user" else "model"
+                            contents.append({"role": role_mapped, "parts": [{"text": msg["content"]}]})
                             
-                            # Se Jarvis disser que salvou algo na memória, salva no arquivo local!
-                            if any(word in bot_reply.lower() for word in ["memória", "guardei", "salvei"]):
-                                # Salva na memória do Padua
-                                if user_input not in memories:
-                                    memories.append(user_input)
-                                    with open(mem_path, "w", encoding="utf-8") as f:
-                                        json.dump(memories, f, indent=2, ensure_ascii=False)
-                            
-                            with st.chat_message("assistant"):
-                                st.write(bot_reply)
-                            st.session_state.streamlit_messages.append({"role": "assistant", "content": bot_reply})
-                            st.rerun()
-                    else:
-                        st.error(f"Erro na API do Gemini: {response.text}")
-                except Exception as e:
-                    st.error(f"Falha ao chamar o Jarvis: {e}")
+                        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
+                        headers = {"Content-Type": "application/json"}
+                        payload = {"contents": contents}
+                        
+                        response = requests.post(url, headers=headers, json=payload, timeout=20)
+                        if response.status_code == 200:
+                            res_json = response.json()
+                            candidates = res_json.get("candidates", [])
+                            if candidates:
+                                bot_reply = candidates[0]["content"]["parts"][0]["text"]
+                                
+                                # Se Jarvis disser que salvou algo na memória, salva no arquivo local!
+                                if any(word in bot_reply.lower() for word in ["memória", "guardei", "salvei"]):
+                                    # Salva na memória do Padua
+                                    if user_input not in memories:
+                                        memories.append(user_input)
+                                        with open(mem_path, "w", encoding="utf-8") as f:
+                                            json.dump(memories, f, indent=2, ensure_ascii=False)
+                                
+                                with st.chat_message("assistant"):
+                                    st.write(bot_reply)
+                                st.session_state.streamlit_messages.append({"role": "assistant", "content": bot_reply})
+                                st.rerun()
+                        else:
+                            st.error(f"Erro na API do Gemini: {response.text}")
+                    except Exception as e:
+                        st.error(f"Falha ao chamar o Jarvis: {e}")
+        
+        with tab_media:
+            st.markdown("<h3 style='color:#0088cc;'>🎬 STARK MEDIA DIRECTOR</h3>", unsafe_allow_html=True)
+            st.write("Planeje roteiros de alta retenção e pautas quantitativas para o seu canal do YouTube e Instagram.")
+            
+            c1, c2 = st.columns(2)
+            with c1:
+                theme = st.text_input("Tema ou Pauta do Vídeo", placeholder="Ex: A matemática por trás do desvio padrão do WIN")
+                platform = st.selectbox("Formato / Plataforma", ["YouTube Long Form", "YouTube Shorts / Reels", "Carrossel de Conteúdo"])
+            with c2:
+                tone = st.selectbox("Tom do Roteiro", ["Sarcástico Stark (Humor Inteligente & Ácido)", "Educativo Quant (Explicação Didática & Fórmulas)", "Direct & Objective (Relatório Direto)"])
+                duration = st.slider("Duração Projetada", min_value=30, max_value=600, value=60, step=30, format="%d segundos")
+                
+            if st.button("🤖 Gerar Roteiro Cinematográfico", use_container_width=True):
+                if not theme:
+                    st.warning("⚠️ Senhor, por favor digite um tema para o roteiro.")
+                else:
+                    with st.spinner("Compilando dados de mercado e roteirizando..."):
+                        media_prompt = (
+                            f"Você é o Jarvis. Crie um roteiro cinematográfico para o canal do seu criador, o Padua/Tony Stark.\n"
+                            f"Tema do Vídeo: {theme}\n"
+                            f"Formato/Plataforma: {platform}\n"
+                            f"Tom do Roteiro: {tone}\n"
+                            f"Duração estimada: {duration} segundos.\n\n"
+                            f"Estruture o roteiro com:\n"
+                            f"1. GANCHO (Hook) de alto impacto nos primeiros 5 segundos.\n"
+                            f"2. ROTEIRO DETALHADO contendo colunas ou marcações claras para [VISUAL/IMAGEM] (ex: 'Corte rápido para gráfico do dólar com velas vermelhas') e [ÁUDIO/FALA] correspondente.\n"
+                            f"3. CALL TO ACTION (CTA) chamando para se inscrever e acompanhar o radar de big players.\n\n"
+                            f"Fale em português e adote rigorosamente o estilo Jarvis (sofisticado, chamando o Padua de Senhor)."
+                        )
+                        
+                        try:
+                            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
+                            headers = {"Content-Type": "application/json"}
+                            payload = {"contents": [{"role": "user", "parts": [{"text": media_prompt}]}]}
+                            response = requests.post(url, headers=headers, json=payload, timeout=30)
+                            if response.status_code == 200:
+                                script_text = response.json()["candidates"][0]["content"]["parts"][0]["text"]
+                                st.success("✅ Roteiro gerado com sucesso, Senhor!")
+                                st.markdown("---")
+                                st.markdown(script_text)
+                            else:
+                                st.error(f"Erro na API do Gemini: {response.text}")
+                        except Exception as e:
+                            st.error(f"Erro ao gerar roteiro: {e}")
 
 # --- GLOBAL VIP SUPPORT & CHANNEL SIDEBAR SECTION ---
 if "active_terminal" in st.session_state and st.session_state.active_terminal != "hub":
