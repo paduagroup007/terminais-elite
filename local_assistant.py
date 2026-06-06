@@ -332,6 +332,76 @@ def market_monitor_worker():
         time.sleep(MARKET_CHECK_INTERVAL)
 
 # =====================================================================
+# TAREFA 4: SINCRONIZAÇÃO DE CÉREBRO (Brain-to-Brain Sync)
+# =====================================================================
+def brain_sync_worker():
+    """Roda em segundo plano sincronizando informações com a IA principal via arquivos locais."""
+    global MONITOR_TICKER, PRICE_UPPER_LIMIT, PRICE_LOWER_LIMIT, WAKE_UP_TIME, ALARM_ACTIVE
+    print("[Módulo Cérebro Sync]: Iniciado e aguardando canal de sincronização...")
+    base_dir = os.path.dirname(__file__)
+    state_file = os.path.join(base_dir, "jarvis_brain_state.json")
+    instruction_file = os.path.join(base_dir, "ai_instructions.json")
+    
+    while True:
+        # 1. Escrever o estado atual do Jarvis Local para a IA Principal
+        try:
+            state_data = {
+                "last_sync": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "system": {
+                    "cpu_percent": psutil.cpu_percent(),
+                    "ram_percent": psutil.virtual_memory().percent
+                },
+                "market": {
+                    "ticker": MONITOR_TICKER,
+                    "upper_limit": PRICE_UPPER_LIMIT,
+                    "lower_limit": PRICE_LOWER_LIMIT
+                },
+                "alarm": {
+                    "active": ALARM_ACTIVE,
+                    "time": WAKE_UP_TIME
+                }
+            }
+            with open(state_file, "w", encoding="utf-8") as f:
+                json.dump(state_data, f, indent=2, ensure_ascii=False)
+        except Exception as e:
+            print(f"[Erro Brain Sync - Envio]: Falha ao registrar estado local: {e}")
+            
+        # 2. Ler e executar as instruções vindas da IA Principal
+        if os.path.exists(instruction_file):
+            try:
+                with open(instruction_file, "r", encoding="utf-8") as f:
+                    instructions = json.load(f)
+                
+                processed = False
+                if "send_telegram_msg" in instructions:
+                    msg = instructions["send_telegram_msg"]
+                    send_notification(f"🔮 **IA Central enviou uma mensagem:**\n\n{msg}")
+                    processed = True
+                
+                if "update_monitored_ticker" in instructions:
+                    MONITOR_TICKER = instructions["update_monitored_ticker"].upper()
+                    send_notification(f"🔮 **IA Central alterou o monitoramento para:** {MONITOR_TICKER}")
+                    processed = True
+                    
+                if "update_alarm" in instructions:
+                    alarm_info = instructions["update_alarm"]
+                    if "time" in alarm_info:
+                        WAKE_UP_TIME = alarm_info["time"]
+                    if "active" in alarm_info:
+                        ALARM_ACTIVE = alarm_info["active"]
+                    send_notification(f"🔮 **IA Central ajustou seu alarme para às:** {WAKE_UP_TIME} (Ativo: {ALARM_ACTIVE})")
+                    processed = True
+                
+                # Remove o arquivo de instrução após executar para não rodar novamente
+                if processed:
+                    os.remove(instruction_file)
+                    print("[Módulo Cérebro Sync]: Instruções recebidas da IA executadas com sucesso.")
+            except Exception as e:
+                print(f"[Erro Brain Sync - Recebimento]: Falha ao processar comandos da IA: {e}")
+                
+        time.sleep(15)  # Checa a cada 15 segundos
+
+# =====================================================================
 # INICIALIZADOR DE SERVIÇO
 # =====================================================================
 def start_jarvis():
@@ -352,13 +422,15 @@ def start_jarvis():
     t_system = threading.Thread(target=system_monitor_worker, daemon=True)
     t_market = threading.Thread(target=market_monitor_worker, daemon=True)
     t_listener = threading.Thread(target=telegram_listener_worker, daemon=True)
+    t_sync = threading.Thread(target=brain_sync_worker, daemon=True)
     
     t_alarm.start()
     t_system.start()
     t_market.start()
     t_listener.start()
+    t_sync.start()
     
-    send_notification("✅ Jarvis Local inicializado! Pronto para receber comandos e monitorar.")
+    send_notification("✅ Jarvis Local inicializado! Conexão de cérebro (Sync) estabelecida.")
     
     try:
         while True:
