@@ -11188,7 +11188,8 @@ elif st.session_state.active_terminal == "jarvis_copilot":
                         if os.path.exists(profile_path):
                             with open(profile_path, "r", encoding="utf-8") as f:
                                 profile_data = json.load(f)
-                        details_str = json.dumps(profile_data.get("personal_details", {}), indent=2, ensure_ascii=False)
+                        profile_clean = {k: v for k, v in profile_data.items() if k != "gemini_api_key"}
+                        profile_str = json.dumps(profile_clean, indent=2, ensure_ascii=False)
                                 
                         # Tenta ler estado do hardware se existir
                         hardware_path = "jarvis_brain_state.json"
@@ -11210,12 +11211,7 @@ elif st.session_state.active_terminal == "jarvis_copilot":
                         system_prompt = (
                             "Você é o JARVIS, o assistente pessoal de inteligência artificial de Padua.\n"
                             "Seu estilo de falar é IDÊNTICO ao Jarvis do Homem de Ferro (sofisticado, prestativo, educado, sempre chamando o usuário de 'Senhor' (e NUNCA de 'Sir'), e demonstrando extremo respeito por sua inteligência, histórico e patrimônio).\n\n"
-                            f"INFORMAÇÕES DO SENHOR:\n"
-                            f"- Nome: Padua\n"
-                            f"- Localização: São Paulo, SP (Capital)\n"
-                            f"- Desejo de Retorno: Chile e Curitiba\n"
-                            f"- Histórico: Quebrou em 2008 na crise do subprime operando Forex. Opera na ZeroMarkets com limite de 50 lotes. ATENÇÃO: O Senhor NÃO quer saber e NÃO opera mais pares de moedas do Chile. Não fale nem mencione CLP ou Chile.\n"
-                            f"- METAS DE VIDA E DIRETRIZES DE SAÚDE/FINANÇAS:\n{details_str}\n\n"
+                            f"INFORMAÇÕES DE CONFIGURAÇÃO E DIRETRIZES DE ELITE (PERFIL DO SENHOR):\n{profile_str}\n\n"
                             f"MEMÓRIAS SALVAS DIÁRIAS:\n"
                             f"{json.dumps(memories, indent=2, ensure_ascii=False)}\n\n"
                             f"MERCADOS EM TEMPO REAL:\n"
