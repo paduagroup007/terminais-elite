@@ -789,6 +789,58 @@ st.markdown("""
         margin: 0 !important;
         padding: 0 !important;
     }
+
+    /* FORÇAR LEGIBILIDADE MÁXIMA DAS MENSAGENS DO CHAT (SEM TEXTO ESCURO EM FUNDO ESCURO) */
+    div[data-testid="stChatMessage"] {
+        background-color: #161a23 !important;
+        border: 1px solid #bf953f33 !important;
+        border-radius: 8px !important;
+        margin-bottom: 15px !important;
+    }
+    
+    /* Forçar todo e qualquer texto dentro das caixas de mensagem a ser branco sólido */
+    div[data-testid="stChatMessage"] *,
+    div[data-testid="stChatMessageContent"] *,
+    .stChatMessage * {
+        color: #ffffff !important;
+    }
+
+    /* Links dentro do chat estilizados em Dourado */
+    div[data-testid="stChatMessage"] a,
+    div[data-testid="stChatMessage"] a * {
+        color: #bf953f !important;
+        text-decoration: underline !important;
+    }
+
+    /* Mudar background do balão do usuário para diferenciar do Jarvis */
+    div[data-testid="stChatMessage"][data-testid="stChatMessage-user"] {
+        background-color: #1c2331 !important;
+        border: 1px solid #0088ccaa !important;
+    }
+
+    /* Mudar background do balão do Jarvis (assistant) */
+    div[data-testid="stChatMessage"][data-testid="stChatMessage-assistant"] {
+        background-color: #0b0e14 !important;
+        border: 1px solid #bf953f88 !important;
+    }
+
+    /* Estilização da caixa de texto do input do chat */
+    div[data-testid="stChatInput"] {
+        background-color: transparent !important;
+    }
+    div[data-testid="stChatInput"] textarea {
+        background-color: #161a23 !important;
+        color: #ffffff !important;
+        border: 1px solid #bf953f66 !important;
+    }
+    div[data-testid="stChatInput"] textarea::placeholder {
+        color: #888888 !important;
+    }
+    div[data-testid="stChatInput"] button {
+        background-color: #bf953f !important;
+        color: #000000 !important;
+        border: none !important;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -11130,6 +11182,14 @@ elif st.session_state.active_terminal == "jarvis_copilot":
                             with open(mem_path, "r", encoding="utf-8") as f:
                                 memories = json.load(f)
                                 
+                        # Carrega perfil para dados pessoais e metas
+                        profile_path = "user_profile.json"
+                        profile_data = {}
+                        if os.path.exists(profile_path):
+                            with open(profile_path, "r", encoding="utf-8") as f:
+                                profile_data = json.load(f)
+                        details_str = json.dumps(profile_data.get("personal_details", {}), indent=2, ensure_ascii=False)
+                                
                         # Tenta ler estado do hardware se existir
                         hardware_path = "jarvis_brain_state.json"
                         cpu, ram = "N/A", "N/A"
@@ -11155,7 +11215,7 @@ elif st.session_state.active_terminal == "jarvis_copilot":
                             f"- Localização: São Paulo, SP (Capital)\n"
                             f"- Desejo de Retorno: Chile e Curitiba\n"
                             f"- Histórico: Quebrou em 2008 na crise do subprime operando Forex. Opera na ZeroMarkets com limite de 50 lotes. ATENÇÃO: O Senhor NÃO quer saber e NÃO opera mais pares de moedas do Chile. Não fale nem mencione CLP ou Chile.\n"
-                            f"- METAS DE VIDA: Ficar extremamente rico (acumulando patrimônio através de ações, forex, cripto, índices e hedges), ficar mais magro, saudável e em forma, e evoluir diariamente em todos os aspectos da vida (mental, técnico, financeiro). Você deve sempre incentivá-lo e ajudá-lo ativamente a atingir essas metas em suas conversas e lembretes.\n\n"
+                            f"- METAS DE VIDA E DIRETRIZES DE SAÚDE/FINANÇAS:\n{details_str}\n\n"
                             f"MEMÓRIAS SALVAS DIÁRIAS:\n"
                             f"{json.dumps(memories, indent=2, ensure_ascii=False)}\n\n"
                             f"MERCADOS EM TEMPO REAL:\n"
