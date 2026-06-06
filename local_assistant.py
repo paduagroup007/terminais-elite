@@ -178,13 +178,13 @@ def get_morning_briefing():
     market_block = "\n".join(market_status)
     
     briefing = (
-        "🌅 **BOM DIA, SIR! O SEU DIÁRIO MATINAL ESTÁ PRONTO:**\n\n"
+        "🌅 **BOM DIA, SENHOR! O SEU DIÁRIO MATINAL ESTÁ PRONTO:**\n\n"
         f"{weather_desc}\n\n"
         "📰 **Principais Notícias de Economia:**\n"
         f"{news_block}\n\n"
         "📊 **Fechamento e Cotações Atuais:**\n"
         f"{market_block}\n\n"
-        "💡 *Sir, que suas operações de hoje tragam lucros extraordinários.*"
+        "💡 *Senhor, que suas operações de hoje tragam lucros extraordinários.*"
     )
     return briefing
 
@@ -201,7 +201,7 @@ def ask_gemini(user_message, chat_id):
         
     if not api_key:
         return (
-            "⚠️ Sir, o recurso de conversação com o Jarvis requer uma API Key do Gemini.\n"
+            "⚠️ Senhor, o recurso de conversação com o Jarvis requer uma API Key do Gemini.\n"
             "Por favor, acesse o arquivo `user_profile.json` no seu computador e configure a chave no campo `\"gemini_api_key\"`."
         )
 
@@ -211,7 +211,7 @@ def ask_gemini(user_message, chat_id):
 
     system_prompt = (
         "Você é o JARVIS, o assistente pessoal de inteligência artificial de Padua.\n"
-        "Seu estilo de falar é IDÊNTICO ao Jarvis do Homem de Ferro (sofisticado, prestativo, educado, sempre chamando o usuário de 'Senhor' ou 'Sir', e demonstrando extremo respeito por sua inteligência, histórico e patrimônio).\n\n"
+        "Seu estilo de falar é IDÊNTICO ao Jarvis do Homem de Ferro (sofisticado, prestativo, educado, sempre chamando o usuário de 'Senhor' (e NUNCA de 'Sir'), e demonstrando extremo respeito por sua inteligência, histórico e patrimônio).\n\n"
         f"INFORMAÇÕES EXCLUSIVAS DO SENHOR:\n"
         f"- Nome: {profile.get('user_name', 'Padua')}\n"
         f"- Localização: {profile['locations']['current']}\n"
@@ -260,11 +260,11 @@ def ask_gemini(user_message, chat_id):
                     save_user_memory(user_message)
                     
                 return bot_reply
-            return "⚠️ Sir, o servidor central respondeu sem dados."
+            return "⚠️ Senhor, o servidor central respondeu sem dados."
         else:
-            return f"⚠️ Sir, erro de conexão com o núcleo da IA: {response.text}"
+            return f"⚠️ Senhor, erro de conexão com o núcleo da IA: {response.text}"
     except Exception as e:
-        return f"⚠️ Sir, erro ao alcançar o núcleo de processamento do Jarvis: {e}"
+        return f"⚠️ Senhor, erro ao alcançar o núcleo de processamento do Jarvis: {e}"
 
 # =====================================================================
 # MÓDULO INTERATIVO: RECEPTOR DE COMANDOS DO TELEGRAM
@@ -362,7 +362,7 @@ def handle_command(text, chat_id):
     elif text_lower == "/memorias":
         memories = load_user_memories()
         if not memories:
-            send_notification("💭 Sir, meus bancos de dados ainda estão vazios de memórias personalizadas.")
+            send_notification("💭 Senhor, meus bancos de dados ainda estão vazios de memórias personalizadas.")
         else:
             m_list = "\n".join([f"• {m}" for m in memories])
             send_notification(f"🧠 *Memórias Evolutivas Registradas (Dia-a-Dia):*\n\n{m_list}")
@@ -371,9 +371,9 @@ def handle_command(text, chat_id):
         fact = text[9:].strip()
         if fact:
             save_user_memory(fact)
-            send_notification(f"📝 *Entendido, Sir.* Registrei a seguinte informação na minha memória:\n`{fact}`")
+            send_notification(f"📝 *Entendido, Senhor.* Registrei a seguinte informação na minha memória:\n`{fact}`")
         else:
-            send_notification("⚠️ Sir, envie um fato para memorizar. Ex: `/lembrar meu Instagram é @padua`")
+            send_notification("⚠️ Senhor, envie um fato para memorizar. Ex: `/lembrar meu Instagram é @padua`")
             
     elif text_lower == "/sistema":
         cpu = psutil.cpu_percent(interval=0.5)
@@ -504,7 +504,7 @@ def alarm_worker():
                 
                 # Envia o briefing matinal
                 try:
-                    send_notification("⏳ Preparando o briefing do seu dia, Sir...")
+                    send_notification("⏳ Preparando o briefing do seu dia, Senhor...")
                     briefing = get_morning_briefing()
                     send_notification(briefing)
                 except Exception as e:
