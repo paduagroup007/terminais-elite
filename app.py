@@ -11233,7 +11233,10 @@ elif st.session_state.active_terminal == "jarvis_copilot":
                             
                         url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
                         headers = {"Content-Type": "application/json"}
-                        payload = {"contents": contents}
+                        payload = {
+                            "contents": contents,
+                            "tools": [{"google_search": {}}]
+                        }
                         
                         response = requests.post(url, headers=headers, json=payload, timeout=20)
                         if response.status_code == 200:
@@ -11292,7 +11295,10 @@ elif st.session_state.active_terminal == "jarvis_copilot":
                         try:
                             url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
                             headers = {"Content-Type": "application/json"}
-                            payload = {"contents": [{"role": "user", "parts": [{"text": media_prompt}]}]}
+                            payload = {
+                                "contents": [{"role": "user", "parts": [{"text": media_prompt}]}],
+                                "tools": [{"google_search": {}}]
+                            }
                             response = requests.post(url, headers=headers, json=payload, timeout=30)
                             if response.status_code == 200:
                                 script_text = response.json()["candidates"][0]["content"]["parts"][0]["text"]

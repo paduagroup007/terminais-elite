@@ -272,7 +272,8 @@ def ask_gemini(user_message, chat_id, audio_b64=None):
     payload = {
         "contents": [
             {"role": "user", "parts": [{"text": f"[CONTEXTO DO SISTEMA: {system_prompt}]"}]}
-        ] + history
+        ] + history,
+        "tools": [{"google_search": {}}]
     }
 
     try:
