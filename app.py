@@ -1675,20 +1675,22 @@ if st.session_state.active_terminal == "hub":
             st.session_state.active_terminal = "family_office_br"
             st.rerun()
             
-    # Linha 3: Jarvis Copilot Chat
-    row3_col1, row3_col2, row3_col3 = st.columns(3)
-    with row3_col1:
-        st.markdown(f"""
-        <div class="hub-card" style="height: 245px !important; margin-bottom: 12px !important;">
-            <div>
-                <h4 style="color: #0088cc;">🤖 JARVIS WEALTH COPILOT</h4>
-                <p>Converse diretamente com o seu Jarvis. Ele possui acesso completo ao seu perfil, ao histórico de operações B3/EUA/Cripto, e monitora o status do seu laptop em tempo real.</p>
+    # Linha 3: Jarvis Copilot Chat (Apenas visível se o perfil do usuário existir localmente)
+    import os
+    if os.path.exists("user_profile.json"):
+        row3_col1, row3_col2, row3_col3 = st.columns(3)
+        with row3_col1:
+            st.markdown(f"""
+            <div class="hub-card" style="height: 245px !important; margin-bottom: 12px !important;">
+                <div>
+                    <h4 style="color: #0088cc;">🤖 JARVIS WEALTH COPILOT</h4>
+                    <p>Converse diretamente com o seu Jarvis. Ele possui acesso completo ao seu perfil, ao histórico de operações B3/EUA/Cripto, e monitora o status do seu laptop em tempo real.</p>
+                </div>
             </div>
-        </div>
-        """, unsafe_allow_html=True)
-        if st.button(t['btn_access'], key="btn_jarvis_copilot", use_container_width=True):
-            st.session_state.active_terminal = "jarvis_copilot"
-            st.rerun()
+            """, unsafe_allow_html=True)
+            if st.button(t['btn_access'], key="btn_jarvis_copilot", use_container_width=True):
+                st.session_state.active_terminal = "jarvis_copilot"
+                st.rerun()
             
     target.caption(t["user_level"])
     target.caption(t["data_source"])
@@ -11063,6 +11065,11 @@ elif st.session_state.active_terminal == "family_office_br":
 
 # --- TERMINAL VII: JARVIS COPILOT CHAT ---
 elif st.session_state.active_terminal == "jarvis_copilot":
+    import os
+    if not os.path.exists("user_profile.json"):
+        st.session_state.active_terminal = "hub"
+        st.rerun()
+        
     st.markdown("<h1 style='text-align:center; color:#0088cc;'>🤖 JARVIS WEALTH COPILOT</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align:center; color:#0088cc; font-weight:600; letter-spacing:1px; font-size:13px; margin-bottom:30px;'>INTERACTIVE CHAT INTERFACE</p>", unsafe_allow_html=True)
     
@@ -11132,8 +11139,8 @@ elif st.session_state.active_terminal == "jarvis_copilot":
                     # Carrega dados adicionais de mercado para contexto
                     m_data = live_market.fetch_all_data()
                     t_data = m_data.get("tickers", {})
-                    eurclp = t_data.get("EURCLP=X", {}).get("price", "N/A")
-                    usdclp = t_data.get("CLP=X", {}).get("price", "N/A")
+                    eurusd = t_data.get("EURUSD=X", {}).get("price", "N/A")
+                    gbpjpy = t_data.get("GBPJPY=X", {}).get("price", "N/A")
                     gold = t_data.get("GC=F", {}).get("price", "N/A")
                     btc = t_data.get("BTC-USD", {}).get("price", "N/A")
                     
@@ -11144,11 +11151,11 @@ elif st.session_state.active_terminal == "jarvis_copilot":
                         f"- Nome: Padua\n"
                         f"- Localização: São Paulo, SP (Capital)\n"
                         f"- Desejo de Retorno: Chile e Curitiba\n"
-                        f"- Histórico: Quebrou em 2008 na crise do subprime operando EURCLP no Chile com R$ 240.000. Opera na ZeroMarkets com limite de 50 lotes.\n\n"
+                        f"- Histórico: Quebrou em 2008 na crise do subprime operando Forex. Opera na ZeroMarkets com limite de 50 lotes. ATENÇÃO: O Senhor NÃO quer saber e NÃO opera mais pares de moedas do Chile. Não fale nem mencione CLP ou Chile.\n\n"
                         f"MEMÓRIAS SALVAS DIÁRIAS:\n"
                         f"{json.dumps(memories, indent=2, ensure_ascii=False)}\n\n"
                         f"MERCADOS EM TEMPO REAL:\n"
-                        f"- EURCLP: {eurclp} | USDCLP: {usdclp} | Gold: {gold} | BTC: {btc}\n"
+                        f"- EURUSD: {eurusd} | GBPJPY: {gbpjpy} | Gold: {gold} | BTC: {btc}\n"
                         f"STATUS DO LAPTOP:\n"
                         f"- CPU: {cpu}% | RAM: {ram}%\n\n"
                         "Responda no personagem Jarvis em português."

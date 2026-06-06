@@ -25,9 +25,9 @@ WAKE_UP_TIME = "07:00"
 ALARM_ACTIVE = False
 
 # Monitoramento de Mercado (B3 Ticker e Alvos de Preço)
-MONITOR_TICKER = "EURCLP=X"
-PRICE_UPPER_LIMIT = 980.00
-PRICE_LOWER_LIMIT = 900.00
+MONITOR_TICKER = "GBPJPY=X"
+PRICE_UPPER_LIMIT = 205.00
+PRICE_LOWER_LIMIT = 185.00
 MARKET_CHECK_INTERVAL = 300  # 5 minutos
 
 # Monitoramento de Sistema (Limites de CPU/Memória)
@@ -150,13 +150,13 @@ def get_morning_briefing():
     # 3. Mercados Globais (Cotações com Variação Percentual Diária)
     market_status = []
     tickers = {
-        "EURCLP": "EURCLP=X",
-        "USDCLP": "CLP=X",
+        "EURUSD": "EURUSD=X",
         "GBPJPY": "GBPJPY=X",
         "CHFJPY": "CHFJPY=X",
         "Ouro (XAUUSD)": "GC=F",
         "Bitcoin": "BTC-USD",
-        "Ibovespa (WIN)": "^BVSP"
+        "Ibovespa (WIN)": "^BVSP",
+        "S&P 500 (SPY)": "SPY"
     }
     for name, tick in tickers.items():
         try:
@@ -226,7 +226,7 @@ def ask_gemini(user_message, chat_id):
         f"- Localização: {profile['locations']['current']}\n"
         f"- Cidades Favoritas: {', '.join(profile['locations']['favorites'])}\n"
         f"- Desejo de Retorno: {', '.join(profile['locations']['dream_return'])}\n"
-        f"- Histórico Marcante: Morou no Chile e Curitiba. Quebrou em 2008 na crise do subprime operando EURCLP com R$ 240.000. Hoje opera na ZeroMarkets com limite de 50 lotes.\n"
+        f"- Histórico Marcante: Quebrou em 2008 na crise do subprime operando Forex. Hoje opera na ZeroMarkets com limite de 50 lotes. ATENÇÃO: O Senhor NÃO quer saber e NÃO opera mais pares de moedas do Chile. Não fale nem mencione CLP ou Chile.\n"
         f"- Regra Gráficos: Nunca usar cores escuras de texto em fundos escuros.\n\n"
         f"MEMÓRIAS SALVAS DE INTERAÇÕES ANTERIORES:\n"
         f"{json.dumps(memories, indent=2, ensure_ascii=False)}\n\n"
@@ -319,7 +319,7 @@ def handle_command(text, chat_id):
             f"• Volume Máximo: `{profile['trading_profile']['max_broker_lots']} lotes`\n"
             f"• Capital Alvo: `USD {profile['trading_profile']['target_capital_usd']}`\n\n"
             f"⚠️ *Histórico de Mercado (Subprime 2008):*\n"
-            f"• Morando no Chile, operava capital de `R$ {profile['trading_profile']['historical_events'][0]['capital_brl']:,}` e quebrou na crise do subprime operando `{profile['trading_profile']['historical_events'][0]['asset']}`.\n\n"
+            f"• Em 2008, operava capital de `R$ {profile['trading_profile']['historical_events'][0]['capital_brl']:,}` e quebrou na crise do subprime operando `{profile['trading_profile']['historical_events'][0]['asset']}`.\n\n"
             f"🎨 *Diretriz de Design (Inviolável):*\n"
             f"• Nunca usar textos escuros sobre fundo escuro em legendas de gráficos."
         )
@@ -340,8 +340,6 @@ def handle_command(text, chat_id):
     elif text_lower == "/cotacoes":
         send_notification("⏳ Coletando cotações com Yahoo Finance...")
         tickers = {
-            "EURCLP": "EURCLP=X",
-            "USDCLP": "CLP=X",
             "GBPJPY": "GBPJPY=X",
             "CHFJPY": "CHFJPY=X",
             "Gold (XAUUSD)": "GC=F",
@@ -595,7 +593,7 @@ def handle_command(text, chat_id):
             MONITOR_TICKER = parts[1].upper()
             send_notification(f"🔍 Ticker alterado para: *{MONITOR_TICKER}*.")
         else:
-            send_notification("⚠️ Use: `/monitorar TICKER` (Ex: `/monitorar EURCLP=X`)")
+            send_notification("⚠️ Use: `/monitorar TICKER` (Ex: `/monitorar PETR4.SA`)")
             
     elif text_lower.startswith("/alvos "):
         parts = text.split()

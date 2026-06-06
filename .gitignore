@@ -15,5 +15,6 @@ cache/live_market_cache.json
 !cache/morgan_stanley_holdings.json
 !cache/vanguard_holdings.json
 
-# Ignorar chaves locais
+# Ignorar chaves e perfis locais
 gemini.key
+user_profile.json
