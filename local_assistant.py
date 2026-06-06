@@ -37,6 +37,7 @@ SYSTEM_CHECK_INTERVAL = 60  # 1 minuto
 
 # Configuração de Voz do Jarvis (Mark II)
 VOICE_REPLIES_ACTIVE = False
+PROACTIVE_REPLIES_ACTIVE = True
 
 # =====================================================================
 # BANCO DE DADOS LOCAL E MEMÓRIA DO USUÁRIO
@@ -230,6 +231,7 @@ def ask_gemini(user_message, chat_id, audio_b64=None):
         f"- Cidades Favoritas: {', '.join(profile['locations']['favorites'])}\n"
         f"- Desejo de Retorno: {', '.join(profile['locations']['dream_return'])}\n"
         f"- Histórico Marcante: Quebrou em 2008 na crise do subprime operando Forex. Hoje opera na ZeroMarkets com limite de 50 lotes. ATENÇÃO: O Senhor NÃO quer saber e NÃO opera mais pares de moedas do Chile. Não fale nem mencione CLP ou Chile.\n"
+        f"- METAS DE VIDA: Ficar extremamente rico (acumulando patrimônio através de ações, forex, cripto, índices e hedges), ficar mais magro, saudável e em forma, e evoluir diariamente em todos os aspectos da vida (mental, técnico, financeiro). Você deve sempre incentivá-lo e ajudá-lo ativamente a atingir essas metas em suas conversas e lembretes.\n"
         f"- Regra Gráficos: Nunca usar cores escuras de texto em fundos escuros.\n\n"
         f"MEMÓRIAS SALVAS DE INTERAÇÕES ANTERIORES:\n"
         f"{json.dumps(memories, indent=2, ensure_ascii=False)}\n\n"
@@ -303,7 +305,7 @@ def ask_gemini(user_message, chat_id, audio_b64=None):
 # =====================================================================
 def handle_command(text, chat_id):
     """Processa e executa comandos recebidos do usuário via Telegram."""
-    global ALARM_ACTIVE, WAKE_UP_TIME, MONITOR_TICKER, PRICE_UPPER_LIMIT, PRICE_LOWER_LIMIT, VOICE_REPLIES_ACTIVE
+    global ALARM_ACTIVE, WAKE_UP_TIME, MONITOR_TICKER, PRICE_UPPER_LIMIT, PRICE_LOWER_LIMIT, VOICE_REPLIES_ACTIVE, PROACTIVE_REPLIES_ACTIVE
     
     text_lower = text.lower().strip()
     profile = load_user_profile()
@@ -324,7 +326,9 @@ def handle_command(text, chat_id):
             "🔔 `/despertar on/off` - Liga ou desliga o alarme sonoro\n"
             "🔍 `/monitorar TICKER` - Define o ativo para monitorar preço\n"
             "📊 `/alvos TETO PISO` - Define limites superior e inferior de alerta\n"
-            "🎙️ `/voz` - Alterna respostas automáticas de voz ativas/inativas\n\n"
+            "🎙️ `/voz` - Alterna respostas de voz automáticas ativas/inativas\n"
+            "🔮 `/proativo` - Alterna alertas proativos das metas de vida\n"
+            "🤖 `/interagir` - Força uma conversa proativa de metas agora\n\n"
             "💬 *Dica:* Você também pode simplesmente conversar comigo normalmente digitando mensagens livres (ou enviando áudios pelo Telegram), e eu responderei como o Jarvis do Homem de Ferro!"
         )
         send_notification(menu)
@@ -640,6 +644,25 @@ def handle_command(text, chat_id):
         status = "ATIVADO" if VOICE_REPLIES_ACTIVE else "DESATIVADO"
         send_notification(f"🎙️ *Respostas de voz automáticas:* `{status}`")
              
+    elif text_lower == "/proativo":
+        PROACTIVE_REPLIES_ACTIVE = not PROACTIVE_REPLIES_ACTIVE
+        status = "ATIVADO" if PROACTIVE_REPLIES_ACTIVE else "DESATIVADO"
+        send_notification(f"🔮 *Mensagens proativas de metas:* `{status}`")
+        
+    elif text_lower == "/interagir":
+        send_notification("⏳ Jarvis está analisando suas metas de evolução, riqueza e saúde...")
+        prompt = (
+            "Inicie uma conversa proativa e espontânea com o Senhor Padua. "
+            "Diga que acabou de analisar o status do notebook, os mercados globais e as metas dele. "
+            "Traga um insight inteligente sobre investimentos (como controle de risco/hedges) "
+            "ou sobre saúde física (como perder peso e se manter ativo), sempre o motivando a evoluir em todos os aspectos da vida. "
+            "Fale com o tom clássico e refinado do Jarvis do Homem de Ferro."
+        )
+        reply = ask_gemini(prompt, chat_id)
+        send_notification(reply)
+        if VOICE_REPLIES_ACTIVE:
+            send_voice_reply(reply, chat_id)
+             
     else:
         # Não é um comando barra: trata como chat de conversação do Jarvis
         reply = ask_gemini(text, chat_id)
@@ -917,6 +940,53 @@ def brain_sync_worker():
         time.sleep(15)  # Checa a cada 15 segundos
 
 # =====================================================================
+# TAREFA 5: INTERAÇÃO PROATIVA COM O SENHOR (Life Goals Reminder)
+# =====================================================================
+def proactive_interaction_worker():
+    """Roda em segundo plano e envia mensagens proativas ao Senhor em horários chave."""
+    global PROACTIVE_REPLIES_ACTIVE, VOICE_REPLIES_ACTIVE
+    print("[Módulo Proativo]: Ativado e aguardando horários agendados.")
+    last_sent_key = ""
+    
+    while True:
+        try:
+            if PROACTIVE_REPLIES_ACTIVE and TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID:
+                now = datetime.datetime.now()
+                hour_minute = now.strftime("%H:%M")
+                date_key = now.strftime("%Y-%m-%d")
+                
+                # Horários agendados para interagir proativamente: 10:30 (manhã), 15:30 (tarde) e 20:30 (noite)
+                target_times = ["10:30", "15:30", "20:30"]
+                
+                for t_time in target_times:
+                    if hour_minute == t_time:
+                        current_key = f"{date_key}_{t_time}"
+                        if last_sent_key != current_key:
+                            last_sent_key = current_key
+                            
+                            period = "manhã" if t_time == "10:30" else ("tarde" if t_time == "15:30" else "noite")
+                            prompt = (
+                                f"Inicie uma conversa proativa com o Senhor Padua neste período da {period}. "
+                                "Diga que estava analisando o status e os mercados e pensou em novas formas de ajudá-lo. "
+                                "Pergunte sobre o andamento das operações ou do dia. "
+                                "Lembre-o e incentive-o de forma inteligente e sofisticada (Stark style) a focar em suas metas de vida:\n"
+                                "1. Acumular riqueza (investimentos, B3, forex, cripto, hedges).\n"
+                                "2. Ficar mais magro, saudável e ativo.\n"
+                                "3. Evoluir mental e financeiramente hoje.\n"
+                                "Mantenha a mensagem curta, instigante e educada. Não mencione CLP ou Chile."
+                            )
+                            
+                            reply = ask_gemini(prompt, TELEGRAM_CHAT_ID)
+                            send_notification(reply)
+                            
+                            if VOICE_REPLIES_ACTIVE:
+                                send_voice_reply(reply, TELEGRAM_CHAT_ID)
+        except Exception as e:
+            print(f"[Erro Módulo Proativo]: {e}")
+            
+        time.sleep(30)  # Verifica a cada 30 segundos
+
+# =====================================================================
 # INICIALIZADOR DE SERVIÇO
 # =====================================================================
 def start_jarvis():
@@ -938,12 +1008,14 @@ def start_jarvis():
     t_market = threading.Thread(target=market_monitor_worker, daemon=True)
     t_listener = threading.Thread(target=telegram_listener_worker, daemon=True)
     t_sync = threading.Thread(target=brain_sync_worker, daemon=True)
+    t_proactive = threading.Thread(target=proactive_interaction_worker, daemon=True)
     
     t_alarm.start()
     t_system.start()
     t_market.start()
     t_listener.start()
     t_sync.start()
+    t_proactive.start()
     
     send_notification("✅ Jarvis Local inicializado! Conexão de cérebro (Sync) estabelecida.")
     
