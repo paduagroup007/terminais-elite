@@ -1,5 +1,6 @@
 {
   "user_name": "Padua",
+  "gemini_api_key": "",
   "locations": {
     "current": "São Paulo, SP (Capital)",
     "favorites": ["Chile", "Curitiba, PR (onde morou por 8 anos)"],

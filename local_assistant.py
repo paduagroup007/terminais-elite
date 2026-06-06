@@ -6,6 +6,7 @@ import requests
 import psutil
 import yfinance as yf
 import json
+import xml.etree.ElementTree as ET
 
 # Importação condicional do winsound para evitar quebras em outros SOs
 try:
@@ -35,7 +36,7 @@ RAM_THRESHOLD = 90.0  # %
 SYSTEM_CHECK_INTERVAL = 60  # 1 minuto
 
 # =====================================================================
-# SISTEMA DE LEITURA DE PERFIL DO USUÁRIO
+# BANCO DE DADOS LOCAL E MEMÓRIA DO USUÁRIO
 # =====================================================================
 def load_user_profile():
     """Carrega as informações de perfil e preferências do usuário."""
@@ -47,6 +48,51 @@ def load_user_profile():
         except Exception as e:
             print(f"[Erro de Perfil]: Não foi possível ler user_profile.json: {e}")
     return None
+
+def load_user_memories():
+    """Carrega as memórias evolutivas aprendidas no dia a dia."""
+    path = os.path.join(os.path.dirname(__file__), "user_memory.json")
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return []
+
+def save_user_memory(fact):
+    """Guarda um fato novo aprendido sobre o usuário."""
+    memories = load_user_memories()
+    if fact not in memories:
+        memories.append(fact)
+        path = os.path.join(os.path.dirname(__file__), "user_memory.json")
+        try:
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(memories, f, indent=2, ensure_ascii=False)
+            return True
+        except Exception as e:
+            print(f"[Erro de Memória]: Falha ao salvar user_memory.json: {e}")
+    return False
+
+def load_chat_history(chat_id):
+    """Carrega o histórico de conversa com o Bot do Telegram."""
+    path = os.path.join(os.path.dirname(__file__), f"chat_history_{chat_id}.json")
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return []
+
+def save_chat_history(chat_id, history):
+    """Salva o histórico de conversa atualizado."""
+    path = os.path.join(os.path.dirname(__file__), f"chat_history_{chat_id}.json")
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(history, f, indent=2, ensure_ascii=False)
+    except Exception as e:
+        print(f"[Erro de Histórico]: Falha ao salvar chat_history_{chat_id}.json: {e}")
 
 # =====================================================================
 # SISTEMA DE NOTIFICAÇÕES (Telegram Seguro)
@@ -71,6 +117,156 @@ def send_notification(message):
         return False
 
 # =====================================================================
+# GERAÇÃO DE BRIEFING MATINAL (Notícias, Clima e Mercados)
+# =====================================================================
+def get_morning_briefing():
+    """Compila clima, cotações e notícias de economia matinais."""
+    # 1. Clima (Open-Meteo - São Paulo capital)
+    weather_desc = "Sem dados climáticos."
+    try:
+        url = "https://api.open-meteo.com/v1/forecast?latitude=-23.5489&longitude=-46.6388&current_weather=true"
+        res = requests.get(url, timeout=10)
+        if res.status_code == 200:
+            w_data = res.json().get("current_weather", {})
+            temp = w_data.get("temperature")
+            wind = w_data.get("windspeed")
+            weather_desc = f"🌡️ **São Paulo:** {temp}°C | 💨 **Ventos:** {wind} km/h"
+    except Exception as e:
+        weather_desc = f"⚠️ Falha no clima: {e}"
+
+    # 2. Notícias Econômicas (RSS G1 Economia)
+    headlines = []
+    try:
+        url = "https://g1.globo.com/rss/g1/economia/"
+        res = requests.get(url, timeout=10)
+        if res.status_code == 200:
+            root = ET.fromstring(res.content)
+            for item in root.findall(".//item")[:4]:
+                title = item.find("title").text
+                headlines.append(f"• {title}")
+    except Exception as e:
+        headlines = [f"⚠️ Erro ao buscar notícias: {e}"]
+
+    # 3. Mercados Globais (Cotações com Variação Percentual Diária)
+    market_status = []
+    tickers = {
+        "EURCLP": "EURCLP=X",
+        "USDCLP": "CLP=X",
+        "GBPJPY": "GBPJPY=X",
+        "CHFJPY": "CHFJPY=X",
+        "Ouro (XAUUSD)": "GC=F",
+        "Bitcoin": "BTC-USD",
+        "Ibovespa (WIN)": "^BVSP"
+    }
+    for name, tick in tickers.items():
+        try:
+            t_obj = yf.Ticker(tick)
+            hist = t_obj.history(period="2d")
+            if len(hist) >= 2:
+                close_today = hist["Close"].iloc[-1]
+                close_yesterday = hist["Close"].iloc[-2]
+                pct_change = ((close_today - close_yesterday) / close_yesterday) * 100
+                color = "🟢" if pct_change >= 0 else "🔴"
+                market_status.append(f"• {color} **{name}**: `{close_today:.4f}` ({pct_change:+.2f}%)")
+            elif not hist.empty:
+                val = hist["Close"].iloc[-1]
+                market_status.append(f"• ⚪ **{name}**: `{val:.4f}`")
+        except Exception:
+            market_status.append(f"• ⚠️ **{name}**: Erro de cotação")
+
+    news_block = "\n".join(headlines)
+    market_block = "\n".join(market_status)
+    
+    briefing = (
+        "🌅 **BOM DIA, SIR! O SEU DIÁRIO MATINAL ESTÁ PRONTO:**\n\n"
+        f"{weather_desc}\n\n"
+        "📰 **Principais Notícias de Economia:**\n"
+        f"{news_block}\n\n"
+        "📊 **Fechamento e Cotações Atuais:**\n"
+        f"{market_block}\n\n"
+        "💡 *Sir, que suas operações de hoje tragam lucros extraordinários.*"
+    )
+    return briefing
+
+# =====================================================================
+# INTEGRAÇÃO GEMINI: PERSONALIDADE JARVIS DO HOMEM DE FERRO
+# =====================================================================
+def ask_gemini(user_message, chat_id):
+    """Conversa com a API do Gemini simulando o personagem Jarvis do Homem de Ferro."""
+    api_key = os.environ.get("GEMINI_API_KEY", "")
+    profile = load_user_profile()
+    
+    if not api_key and profile:
+        api_key = profile.get("gemini_api_key", "")
+        
+    if not api_key:
+        return (
+            "⚠️ Sir, o recurso de conversação com o Jarvis requer uma API Key do Gemini.\n"
+            "Por favor, acesse o arquivo `user_profile.json` no seu computador e configure a chave no campo `\"gemini_api_key\"`."
+        )
+
+    memories = load_user_memories()
+    cpu = psutil.cpu_percent()
+    ram = psutil.virtual_memory().percent
+
+    system_prompt = (
+        "Você é o JARVIS, o assistente pessoal de inteligência artificial de Padua.\n"
+        "Seu estilo de falar é IDÊNTICO ao Jarvis do Homem de Ferro (sofisticado, prestativo, educado, sempre chamando o usuário de 'Senhor' ou 'Sir', e demonstrando extremo respeito por sua inteligência, histórico e patrimônio).\n\n"
+        f"INFORMAÇÕES EXCLUSIVAS DO SENHOR:\n"
+        f"- Nome: {profile.get('user_name', 'Padua')}\n"
+        f"- Localização: {profile['locations']['current']}\n"
+        f"- Cidades Favoritas: {', '.join(profile['locations']['favorites'])}\n"
+        f"- Desejo de Retorno: {', '.join(profile['locations']['dream_return'])}\n"
+        f"- Histórico Marcante: Morou no Chile e Curitiba. Quebrou em 2008 na crise do subprime operando EURCLP com R$ 240.000. Hoje opera na ZeroMarkets com limite de 50 lotes.\n"
+        f"- Regra Gráficos: Nunca usar cores escuras de texto em fundos escuros.\n\n"
+        f"MEMÓRIAS SALVAS DE INTERAÇÕES ANTERIORES:\n"
+        f"{json.dumps(memories, indent=2, ensure_ascii=False)}\n\n"
+        f"ESTADO DO HARDWARE EM TEMPO REAL:\n"
+        f"- Uso de CPU: {cpu}%\n"
+        f"- Uso de RAM: {ram}%\n"
+        f"- Monitorando: {MONITOR_TICKER} (Alvos: >= {PRICE_UPPER_LIMIT} ou <= {PRICE_LOWER_LIMIT})\n\n"
+        "RESPONDA NO PERSONAGEM JARVIS. Se o Senhor te disser alguma preferência, novos canais de YouTube, Instagram ou tarefas diárias dele, "
+        "diga que gravou na memória evolutiva dele. Responda em português."
+    )
+
+    history = load_chat_history(chat_id)
+    history.append({"role": "user", "parts": [{"text": user_message}]})
+
+    # Limita o histórico de chat para não exceder limites
+    if len(history) > 16:
+        history = history[-16:]
+
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
+    headers = {"Content-Type": "application/json"}
+    payload = {
+        "contents": [
+            {"role": "user", "parts": [{"text": f"[CONTEXTO DO SISTEMA: {system_prompt}]"}]}
+        ] + history
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=payload, timeout=20)
+        if response.status_code == 200:
+            res_json = response.json()
+            candidates = res_json.get("candidates", [])
+            if candidates:
+                bot_reply = candidates[0]["content"]["parts"][0]["text"]
+                history.append({"role": "model", "parts": [{"text": bot_reply}]})
+                save_chat_history(chat_id, history)
+                
+                # Se o Jarvis disse que memorizou/salvou algo, tentamos capturar a frase e arquivar
+                if "memória" in bot_reply.lower() or "guardei" in bot_reply.lower() or "salvei" in bot_reply.lower():
+                    # Salva a mensagem do usuário como um fato aprendido
+                    save_user_memory(user_message)
+                    
+                return bot_reply
+            return "⚠️ Sir, o servidor central respondeu sem dados."
+        else:
+            return f"⚠️ Sir, erro de conexão com o núcleo da IA: {response.text}"
+    except Exception as e:
+        return f"⚠️ Sir, erro ao alcançar o núcleo de processamento do Jarvis: {e}"
+
+# =====================================================================
 # MÓDULO INTERATIVO: RECEPTOR DE COMANDOS DO TELEGRAM
 # =====================================================================
 def handle_command(text, chat_id):
@@ -83,14 +279,18 @@ def handle_command(text, chat_id):
     if text_lower.startswith("/start") or text_lower.startswith("/help") or text_lower.startswith("/ajuda"):
         menu = (
             "🤖 *Jarvis Local - Painel de Controle:*\n\n"
-            "👤 `/perfil` - Exibe o seu perfil de trader e histórico gravado\n"
-            "📈 `/estrategias` - Mostra estratégias quantitativas e lotes da ZeroMarkets\n"
+            "👤 `/perfil` - Exibe seu perfil de trader e histórico gravado\n"
+            "📈 `/estrategias` - Mostra estratégias e lotes da ZeroMarkets\n"
             "💰 `/cotacoes` - Cotações atuais de seus ativos de interesse\n"
+            "🌅 `/briefing` - Compila clima, mercados e principais notícias econômicas\n"
+            "🧠 `/memorias` - Lista todas as memórias que o Jarvis guardou de você\n"
+            "✍️ `/lembrar FATO` - Salva um fato importante na memória permanente\n"
             "🖥️ `/sistema` - Status do hardware do laptop\n"
             "⏰ `/alarme HH:MM` - Configura o horário do alarme despertador\n"
             "🔔 `/despertar on/off` - Liga ou desliga o alarme sonoro\n"
             "🔍 `/monitorar TICKER` - Define o ativo para monitorar preço\n"
-            "📊 `/alvos TETO PISO` - Define limites superior e inferior de alerta"
+            "📊 `/alvos TETO PISO` - Define limites superior e inferior de alerta\n\n"
+            "💬 *Dica:* Você também pode simplesmente conversar comigo normalmente digitando mensagens livres, e eu responderei como o Jarvis do Homem de Ferro!"
         )
         send_notification(menu)
         
@@ -154,6 +354,27 @@ def handle_command(text, chat_id):
                 res_msg += f"• *{name}*: `Erro: {e}`\n"
         send_notification(res_msg)
         
+    elif text_lower == "/briefing":
+        send_notification("⏳ Compilando notícias, clima e mercados...")
+        briefing = get_morning_briefing()
+        send_notification(briefing)
+        
+    elif text_lower == "/memorias":
+        memories = load_user_memories()
+        if not memories:
+            send_notification("💭 Sir, meus bancos de dados ainda estão vazios de memórias personalizadas.")
+        else:
+            m_list = "\n".join([f"• {m}" for m in memories])
+            send_notification(f"🧠 *Memórias Evolutivas Registradas (Dia-a-Dia):*\n\n{m_list}")
+            
+    elif text_lower.startswith("/lembrar "):
+        fact = text[9:].strip()
+        if fact:
+            save_user_memory(fact)
+            send_notification(f"📝 *Entendido, Sir.* Registrei a seguinte informação na minha memória:\n`{fact}`")
+        else:
+            send_notification("⚠️ Sir, envie um fato para memorizar. Ex: `/lembrar meu Instagram é @padua`")
+            
     elif text_lower == "/sistema":
         cpu = psutil.cpu_percent(interval=0.5)
         ram = psutil.virtual_memory().percent
@@ -217,7 +438,9 @@ def handle_command(text, chat_id):
             send_notification("⚠️ Use: `/alvos TETO PISO` (Ex: `/alvos 980 900`)")
             
     else:
-        send_notification("❓ Comando desconhecido. Digite `/help` para listar os comandos.")
+        # Não é um comando barra: trata como chat de conversação do Jarvis
+        reply = ask_gemini(text, chat_id)
+        send_notification(reply)
 
 def telegram_listener_worker():
     """Roda em segundo plano ouvindo mensagens enviadas pelo usuário ao Bot."""
@@ -279,6 +502,14 @@ def alarm_worker():
                 else:
                     print("[Som]: Winsound indisponível neste SO. Apenas notificação enviada.")
                 
+                # Envia o briefing matinal
+                try:
+                    send_notification("⏳ Preparando o briefing do seu dia, Sir...")
+                    briefing = get_morning_briefing()
+                    send_notification(briefing)
+                except Exception as e:
+                    print(f"[Erro Alarme Briefing]: {e}")
+
                 # Evita disparar repetidamente no mesmo minuto
                 time.sleep(65)
         time.sleep(10)
