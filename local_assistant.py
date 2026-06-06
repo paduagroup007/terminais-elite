@@ -194,8 +194,17 @@ def get_morning_briefing():
 def ask_gemini(user_message, chat_id):
     """Conversa com a API do Gemini simulando o personagem Jarvis do Homem de Ferro."""
     api_key = os.environ.get("GEMINI_API_KEY", "")
-    profile = load_user_profile()
     
+    # Tenta carregar do arquivo gemini.key local
+    key_path = os.path.join(os.path.dirname(__file__), "gemini.key")
+    if not api_key and os.path.exists(key_path):
+        try:
+            with open(key_path, "r", encoding="utf-8") as f:
+                api_key = f.read().strip()
+        except Exception:
+            pass
+            
+    profile = load_user_profile()
     if not api_key and profile:
         api_key = profile.get("gemini_api_key", "")
         

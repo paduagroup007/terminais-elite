@@ -1675,6 +1675,21 @@ if st.session_state.active_terminal == "hub":
             st.session_state.active_terminal = "family_office_br"
             st.rerun()
             
+    # Linha 3: Jarvis Copilot Chat
+    row3_col1, row3_col2, row3_col3 = st.columns(3)
+    with row3_col1:
+        st.markdown(f"""
+        <div class="hub-card" style="height: 245px !important; margin-bottom: 12px !important;">
+            <div>
+                <h4 style="color: #0088cc;">🤖 JARVIS WEALTH COPILOT</h4>
+                <p>Converse diretamente com o seu Jarvis. Ele possui acesso completo ao seu perfil, ao histórico de operações B3/EUA/Cripto, e monitora o status do seu laptop em tempo real.</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button(t['btn_access'], key="btn_jarvis_copilot", use_container_width=True):
+            st.session_state.active_terminal = "jarvis_copilot"
+            st.rerun()
+            
     target.caption(t["user_level"])
     target.caption(t["data_source"])
     target.caption(t["last_update"])
@@ -11045,6 +11060,133 @@ elif st.session_state.active_terminal == "family_office_br":
     target.caption(t["user_level"])
     target.caption(t["data_source"])
     target.caption(t["last_update"])
+
+# --- TERMINAL VII: JARVIS COPILOT CHAT ---
+elif st.session_state.active_terminal == "jarvis_copilot":
+    st.markdown("<h1 style='text-align:center; color:#0088cc;'>🤖 JARVIS WEALTH COPILOT</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align:center; color:#0088cc; font-weight:600; letter-spacing:1px; font-size:13px; margin-bottom:30px;'>INTERACTIVE CHAT INTERFACE</p>", unsafe_allow_html=True)
+    
+    # Carrega perfil para verificar a chave de API
+    gemini_key = os.environ.get("GEMINI_API_KEY", "")
+    
+    # Tenta carregar do arquivo gemini.key local
+    key_path = "gemini.key"
+    if not gemini_key and os.path.exists(key_path):
+        try:
+            with open(key_path, "r", encoding="utf-8") as f:
+                gemini_key = f.read().strip()
+        except Exception:
+            pass
+            
+    if not gemini_key:
+        profile_path = "user_profile.json"
+        if os.path.exists(profile_path):
+            try:
+                with open(profile_path, "r", encoding="utf-8") as f:
+                    prof_data = json.load(f)
+                    gemini_key = prof_data.get("gemini_api_key", "")
+            except Exception:
+                pass
+            
+    if not gemini_key:
+        st.warning("⚠️ Chave de API do Gemini não configurada. Por favor, adicione a chave no arquivo `gemini.key` ou `user_profile.json` no seu computador.")
+    else:
+        # Chat interface usando os recursos nativos do Streamlit
+        if "streamlit_messages" not in st.session_state:
+            st.session_state.streamlit_messages = [
+                {"role": "assistant", "content": "Olá, Senhor. Sou o Jarvis. Como posso ajudá-lo hoje com as suas operações, mercados ou rotina?"}
+            ]
+            
+        # Exibe mensagens existentes
+        for msg in st.session_state.streamlit_messages:
+            with st.chat_message(msg["role"]):
+                st.write(msg["content"])
+                
+        # Recebe entrada do usuário
+        user_input = st.chat_input("Digite sua mensagem para o Jarvis...")
+        if user_input:
+            # Mostra mensagem do usuário
+            with st.chat_message("user"):
+                st.write(user_input)
+            st.session_state.streamlit_messages.append({"role": "user", "content": user_input})
+            
+            # Chama o Gemini
+            with st.spinner("Pensando..."):
+                try:
+                    # Carrega memórias
+                    mem_path = "user_memory.json"
+                    memories = []
+                    if os.path.exists(mem_path):
+                        with open(mem_path, "r", encoding="utf-8") as f:
+                            memories = json.load(f)
+                            
+                    # Tenta ler estado do hardware se existir
+                    hardware_path = "jarvis_brain_state.json"
+                    cpu, ram = "N/A", "N/A"
+                    if os.path.exists(hardware_path):
+                        with open(hardware_path, "r", encoding="utf-8") as f:
+                            hw_data = json.load(f)
+                            cpu = hw_data.get("system", {}).get("cpu_percent", "N/A")
+                            ram = hw_data.get("system", {}).get("ram_percent", "N/A")
+                            
+                    # Carrega dados adicionais de mercado para contexto
+                    m_data = live_market.fetch_all_data()
+                    t_data = m_data.get("tickers", {})
+                    eurclp = t_data.get("EURCLP=X", {}).get("price", "N/A")
+                    usdclp = t_data.get("CLP=X", {}).get("price", "N/A")
+                    gold = t_data.get("GC=F", {}).get("price", "N/A")
+                    btc = t_data.get("BTC-USD", {}).get("price", "N/A")
+                    
+                    system_prompt = (
+                        "Você é o JARVIS, o assistente pessoal de inteligência artificial de Padua.\n"
+                        "Seu estilo de falar é IDÊNTICO ao Jarvis do Homem de Ferro (sofisticado, prestativo, educado, sempre chamando o usuário de 'Senhor' (e NUNCA de 'Sir'), e demonstrando extremo respeito por sua inteligência, histórico e patrimônio).\n\n"
+                        f"INFORMAÇÕES DO SENHOR:\n"
+                        f"- Nome: Padua\n"
+                        f"- Localização: São Paulo, SP (Capital)\n"
+                        f"- Desejo de Retorno: Chile e Curitiba\n"
+                        f"- Histórico: Quebrou em 2008 na crise do subprime operando EURCLP no Chile com R$ 240.000. Opera na ZeroMarkets com limite de 50 lotes.\n\n"
+                        f"MEMÓRIAS SALVAS DIÁRIAS:\n"
+                        f"{json.dumps(memories, indent=2, ensure_ascii=False)}\n\n"
+                        f"MERCADOS EM TEMPO REAL:\n"
+                        f"- EURCLP: {eurclp} | USDCLP: {usdclp} | Gold: {gold} | BTC: {btc}\n"
+                        f"STATUS DO LAPTOP:\n"
+                        f"- CPU: {cpu}% | RAM: {ram}%\n\n"
+                        "Responda no personagem Jarvis em português."
+                    )
+                    
+                    # Converte formato para a chamada do Gemini
+                    contents = [{"role": "user", "parts": [{"text": f"[CONTEXTO: {system_prompt}]"}]}]
+                    for msg in st.session_state.streamlit_messages[-10:]:  # últimas 10 msgs
+                        role_mapped = "user" if msg["role"] == "user" else "model"
+                        contents.append({"role": role_mapped, "parts": [{"text": msg["content"]}]})
+                        
+                    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={gemini_key}"
+                    headers = {"Content-Type": "application/json"}
+                    payload = {"contents": contents}
+                    
+                    response = requests.post(url, headers=headers, json=payload, timeout=20)
+                    if response.status_code == 200:
+                        res_json = response.json()
+                        candidates = res_json.get("candidates", [])
+                        if candidates:
+                            bot_reply = candidates[0]["content"]["parts"][0]["text"]
+                            
+                            # Se Jarvis disser que salvou algo na memória, salva no arquivo local!
+                            if any(word in bot_reply.lower() for word in ["memória", "guardei", "salvei"]):
+                                # Salva na memória do Padua
+                                if user_input not in memories:
+                                    memories.append(user_input)
+                                    with open(mem_path, "w", encoding="utf-8") as f:
+                                        json.dump(memories, f, indent=2, ensure_ascii=False)
+                            
+                            with st.chat_message("assistant"):
+                                st.write(bot_reply)
+                            st.session_state.streamlit_messages.append({"role": "assistant", "content": bot_reply})
+                            st.rerun()
+                    else:
+                        st.error(f"Erro na API do Gemini: {response.text}")
+                except Exception as e:
+                    st.error(f"Falha ao chamar o Jarvis: {e}")
 
 # --- GLOBAL VIP SUPPORT & CHANNEL SIDEBAR SECTION ---
 if "active_terminal" in st.session_state and st.session_state.active_terminal != "hub":
