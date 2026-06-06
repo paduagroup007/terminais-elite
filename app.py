@@ -11049,6 +11049,34 @@ elif st.session_state.active_terminal == "family_office_br":
 # --- GLOBAL VIP SUPPORT & CHANNEL SIDEBAR SECTION ---
 if "active_terminal" in st.session_state and st.session_state.active_terminal != "hub":
     target.write("---")
+    # --- WIDGET DO JARVIS LOCAL ASSISTENTE ---
+    import os
+    import json
+    profile_path = "user_profile.json"
+    if os.path.exists(profile_path):
+        try:
+            with open(profile_path, "r", encoding="utf-8") as f:
+                prof_data = json.load(f)
+            
+            target.markdown(f"""
+            <div style="background-color: #0d1117; border: 1px solid #0088ccaa; border-radius: 8px; padding: 15px; margin-top: 10px; font-family: 'Inter', sans-serif; box-shadow: 0 4px 12px rgba(0, 136, 204, 0.15);">
+                <h4 style="margin: 0 0 10px 0; color: #0088cc; font-size: 13px; text-transform: uppercase; font-weight: 800; border: none; padding: 0; letter-spacing: 1.5px; display: flex; align-items: center; gap: 8px;">
+                    🤖 Jarvis Local Integrado
+                </h4>
+                <div style="font-size: 11px; color: #cccccc; line-height: 1.5;">
+                    👤 <b>Usuário:</b> {prof_data.get('user_name', 'Padua')}<br>
+                    📍 <b>Local:</b> {prof_data['locations']['current']}<br>
+                    💼 <b>Conta:</b> {prof_data['trading_profile']['broker']} (Máx {prof_data['trading_profile']['max_broker_lots']} Lotes)<br>
+                    ⚠️ <b>Fato Crítico:</b> Subprime 2008 ({prof_data['trading_profile']['historical_events'][0]['asset']})<br>
+                </div>
+                <div style="margin-top: 10px; padding: 6px; background-color: #161b22; border-radius: 4px; font-size: 10px; color: #888888; border: 1px dashed #30363d; line-height: 1.4;">
+                    💡 <b>Como Rodar no seu Laptop:</b><br>
+                    <code>python local_assistant.py</code>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        except Exception as e:
+            pass
     target.markdown(f"""
     <div style="background-color: #11151c; border: 1px solid #bf953f66; border-radius: 8px; padding: 15px; margin-top: 15px; font-family: 'Inter', sans-serif;">
         <h4 style="margin: 0 0 10px 0; color: #bf953f; font-size: 13px; text-transform: uppercase; font-weight: 800; border: none; padding: 0; letter-spacing: 1px;">

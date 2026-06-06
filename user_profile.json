@@ -1,0 +1,68 @@
+{
+  "user_name": "Padua",
+  "locations": {
+    "current": "São Paulo, SP (Capital)",
+    "favorites": ["Chile", "Curitiba, PR (onde morou por 8 anos)"],
+    "dream_return": ["Chile", "Curitiba"]
+  },
+  "trading_profile": {
+    "broker": "ZeroMarkets",
+    "max_broker_lots": 50,
+    "historical_events": [
+      {
+        "year": 2008,
+        "event": "Quebrou na crise do subprime operando no Chile",
+        "asset": "EURCLP",
+        "capital_brl": 240000
+      }
+    ],
+    "target_capital_usd": 500
+  },
+  "monitored_assets": {
+    "forex": ["GBPJPY", "CHFJPY", "AUDJPY", "EURUSD", "GBPUSD", "USDJPY"],
+    "chile_clp": ["EURCLP", "USDCLP"],
+    "commodities": ["Gold (XAUUSD)", "Crude Oil (WTI)"],
+    "crypto": [
+      {
+        "ticker": "BTC-USD",
+        "strategy": "Desvio de 1200 pontos das 21:00 (horário de Brasília)"
+      },
+      {
+        "ticker": "ETH-USD",
+        "strategy": "Estratégia quantitativa baseada em desvio"
+      }
+    ],
+    "indices_us": ["S&P500", "NASDAQ100", "Dow Jones 30"],
+    "indices_br": ["WIN (Mini-Índice)", "WDO (Mini-Dólar)"]
+  },
+  "preferences": {
+    "ui": {
+      "charts_legend_font_color": "#ffffff",
+      "avoid_dark_text_on_dark_bg": true,
+      "encoding": "UTF-8"
+    },
+    "language": "Português (PT)"
+  },
+  "strategies_reference": {
+    "GBPJPY": {
+      "capital_initial": 500,
+      "leverage_lots": 50,
+      "desc": "Operações baseadas no desvio do EMA semanal."
+    },
+    "CHFJPY": {
+      "capital_initial": 500,
+      "leverage_lots": 50,
+      "desc": "Par de refúgio correlacionado com o risco JPY."
+    },
+    "Gold": {
+      "desc": "Aproveita a correlação e desvio médio móvel, alavancado na ZeroMarkets."
+    },
+    "Crude_Oil": {
+      "desc": "Estratégia de reversão de média rápida."
+    },
+    "BTC": {
+      "timeframe": "21:00 BR",
+      "deviation_points": 1200
+    }
+  }
+}
