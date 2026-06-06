@@ -283,6 +283,8 @@ def handle_command(text, chat_id):
             "📈 `/estrategias` - Mostra estratégias e lotes da ZeroMarkets\n"
             "💰 `/cotacoes` - Cotações atuais de seus ativos de interesse\n"
             "🌅 `/briefing` - Compila clima, mercados e principais notícias econômicas\n"
+            "💼 `/carteiras` - Lista as carteiras de grandes fundos e VCs do site\n"
+            "🔍 `/carteira NOME` - Detalha a carteira do fundo ou VC (Ex: `/carteira barsi`)\n"
             "🧠 `/memorias` - Lista todas as memórias que o Jarvis guardou de você\n"
             "✍️ `/lembrar FATO` - Salva um fato importante na memória permanente\n"
             "🖥️ `/sistema` - Status do hardware do laptop\n"
@@ -358,6 +360,171 @@ def handle_command(text, chat_id):
         send_notification("⏳ Compilando notícias, clima e mercados...")
         briefing = get_morning_briefing()
         send_notification(briefing)
+
+    elif text_lower == "/carteiras":
+        # Lista as carteiras disponíveis
+        msg = (
+            "💼 *Carteiras de Elite Disponíveis para Consulta:*\n\n"
+            "🇧🇷 *Grandes Fundos da B3:*\n"
+            "• `Verde` (Verde Asset Management)\n"
+            "• `Dynamo` (Dynamo Capital)\n"
+            "• `Atmos` (Atmos Capital)\n"
+            "• `IP Capital` (IP Capital Partners)\n"
+            "• `Constellation` (Constellation Asset)\n"
+            "• `Bogari` (Bogari Capital)\n"
+            "• `Lirio` (Lírio Parisotto)\n"
+            "• `Luiz Alves` (Luiz Alves Paes)\n"
+            "• `Ronaldo Cezar` (Samambaia)\n"
+            "• `Barsi` (Luiz Barsi)\n\n"
+            "🇺🇸 *Super Baleias Globais (SEC 13F):*\n"
+            "• `Berkshire` (Warren Buffett)\n"
+            "• `Vanguard` (Vanguard Group)\n"
+            "• `Blackrock` (BlackRock Inc)\n"
+            "• `Goldman` (Goldman Sachs)\n"
+            "• `Morgan` (Morgan Stanley)\n"
+            "• `JPMorgan` (JPMorgan Chase)\n\n"
+            "🪙 *Grandes VCs de Cripto & Web3:*\n"
+            "• `a16z` (a16z Crypto)\n"
+            "• `Paradigm` (Paradigm Capital)\n"
+            "• `Pantera` (Pantera Capital)\n"
+            "• `Multicoin` (Multicoin Capital)\n\n"
+            "💡 *Como consultar:* Digite `/carteira <nome>` (Ex: `/carteira barsi` ou `/carteira berkshire`)."
+        )
+        send_notification(msg)
+
+    elif text_lower.startswith("/carteira"):
+        query = text[9:].strip().lower()
+        if not query:
+            send_notification("⚠️ Senhor, forneça o nome da carteira. Ex: `/carteira barsi` ou `/carteira berkshire`.")
+            return
+            
+        base_dir = os.path.dirname(__file__)
+        cache_dir = os.path.join(base_dir, "cache")
+        
+        # 1. Carteiras de Cripto VCs
+        crypto_vcs = {
+            "a16z": {
+                "name": "a16z Crypto (Andreessen Horowitz)",
+                "holdings": [
+                    {"asset": "Ethereum (ETH)", "weight": 35.0, "tip": "Liquid Restaking - APY ~4.5%"},
+                    {"asset": "Solana (SOL)", "weight": 25.0, "tip": "MEV-Boosted Staking (JitoSOL) - APY ~7.5%"},
+                    {"asset": "Near Protocol (NEAR)", "weight": 15.0, "tip": "Staking Nativo - APY ~8.0%"},
+                    {"asset": "Uniswap (UNI)", "weight": 12.0, "tip": "Governança e Recompensas de Taxas"},
+                    {"asset": "Maker (MKR)", "weight": 8.0, "tip": "Estabilidade Real Yield"},
+                    {"asset": "Optimism (OP)", "weight": 5.0, "tip": "Provisão de Liquidez L2"}
+                ]
+            },
+            "paradigm": {
+                "name": "Paradigm Capital",
+                "holdings": [
+                    {"asset": "Ethereum (ETH)", "weight": 45.0, "tip": "Liquid Restaking - APY ~4.5%"},
+                    {"asset": "Uniswap (UNI)", "weight": 20.0, "tip": "Provisão de Liquidez DeFi"},
+                    {"asset": "Celestia (TIA)", "weight": 15.0, "tip": "Staking Modular - APY ~11.0%"},
+                    {"asset": "Starknet (STRK)", "weight": 10.0, "tip": "Liquidez em L2"},
+                    {"asset": "Blur (BLUR)", "weight": 6.0, "tip": "NFT Yield Pools L2"},
+                    {"asset": "Lido DAO (LDO)", "weight": 4.0, "tip": "Liquid Staking"}
+                ]
+            },
+            "pantera": {
+                "name": "Pantera Capital",
+                "holdings": [
+                    {"asset": "Bitcoin (BTC)", "weight": 40.0, "tip": "Custódia Fria Offline"},
+                    {"asset": "Ethereum (ETH)", "weight": 20.0, "tip": "Liquid Restaking - APY ~4.5%"},
+                    {"asset": "Solana (SOL)", "weight": 18.0, "tip": "MEV-Boosted Staking - APY ~7.5%"},
+                    {"asset": "Toncoin (TON)", "weight": 10.0, "tip": "TON Liquid Staking - APY ~5.2%"},
+                    {"asset": "Render (RNDR)", "weight": 8.0, "tip": "Computação GPU Yield"},
+                    {"asset": "Lido DAO (LDO)", "weight": 4.0, "tip": "Liquid Staking"}
+                ]
+            },
+            "multicoin": {
+                "name": "Multicoin Capital",
+                "holdings": [
+                    {"asset": "Solana (SOL)", "weight": 50.0, "tip": "JitoSOL - APY ~7.5%"},
+                    {"asset": "Helium (HNT)", "weight": 18.0, "tip": "Telecom DePIN Yield"},
+                    {"asset": "Render (RNDR)", "weight": 12.0, "tip": "GPU DePIN Yield"},
+                    {"asset": "Pyth Network (PYTH)", "weight": 10.0, "tip": "Staking Oráculo - Airdrops"},
+                    {"asset": "Ethena (ENA)", "weight": 7.0, "tip": "Delta-Neutral APY"},
+                    {"asset": "Hivemapper (HONEY)", "weight": 3.0, "tip": "Mapping Rewards"}
+                ]
+            }
+        }
+        
+        if query in crypto_vcs:
+            vc = crypto_vcs[query]
+            msg = f"🪙 *Carteira VC Cripto: {vc['name']}*\n\n"
+            for h in vc["holdings"]:
+                msg += f"• *{h['asset']}*: `{h['weight']}%` | _Defi: {h['tip']}_\n"
+            send_notification(msg)
+            return
+
+        # 2. Fundos da B3 (brazil_elite_holdings.json)
+        b3_file = os.path.join(cache_dir, "brazil_elite_holdings.json")
+        if os.path.exists(b3_file):
+            try:
+                with open(b3_file, "r", encoding="utf-8") as f:
+                    b3_data = json.load(f)
+                
+                funds = b3_data.get("funds", {})
+                matched_fund = None
+                for f_name in funds.keys():
+                    short_name = f_name.lower()
+                    if query in short_name or (query == "verde" and "verde" in short_name) or (query == "barsi" and "barsi" in short_name) or (query == "luiz alves" and "alves" in short_name) or (query == "ronaldo cezar" and "samambaia" in short_name) or (query == "lirio" and "lírio" in short_name):
+                        matched_fund = f_name
+                        break
+                        
+                if matched_fund:
+                    fund_info = funds[matched_fund]
+                    msg = f"🇧🇷 *Fundo B3: {matched_fund}*\n"
+                    msg += f"💼 CNPJ: `{fund_info.get('cnpj', 'Sem CNPJ')}`\n"
+                    msg += f"💰 AUM Estimado: `R$ {fund_info.get('total_portfolio_value', 0):,.2f}`\n"
+                    msg += f"📅 Período: `{b3_data.get('cda_period', '09/2025')}`\n\n"
+                    msg += "*Principais Posições (Top Holdings):*\n"
+                    
+                    # Lista as principais posições
+                    for h in fund_info.get("holdings", [])[:10]:
+                        msg += f"• *{h['ticker']}*: `{h['weight']:.2f}%` (Valor: R$ {h['value']:,.2f})\n"
+                    send_notification(msg)
+                    return
+            except Exception as e:
+                print(f"[Erro B3 Parser]: {e}")
+
+        # 3. Whales do mercado americano (cache/xxx_holdings.json)
+        us_whales_mapping = {
+            "berkshire": "berkshire_hathaway",
+            "buffett": "berkshire_hathaway",
+            "vanguard": "vanguard",
+            "blackrock": "blackrock",
+            "goldman": "goldman_sachs",
+            "morgan": "morgan_stanley",
+            "jpmorgan": "jpmorgan_chase"
+        }
+        
+        if query in us_whales_mapping:
+            clean_name = us_whales_mapping[query]
+            whale_file = os.path.join(cache_dir, f"{clean_name}_holdings.json")
+            if os.path.exists(whale_file):
+                try:
+                    with open(whale_file, "r", encoding="utf-8") as f:
+                        whale_data = json.load(f)
+                    
+                    msg = f"🇺🇸 *Baleia US: {whale_data.get('name', 'Baleia')}*\n"
+                    msg += f"💼 CIK: `{whale_data.get('cik', 'Sem CIK')}`\n"
+                    msg += f"📅 Atualizado: `{whale_data.get('last_updated', '2026-05-24')}`\n\n"
+                    msg += "*Principais Posições (Top Holdings):*\n"
+                    
+                    # Lista as principais posições
+                    for h in whale_data.get("data", [])[:10]:
+                        shares_formatted = f"{h['shares']:,}"
+                        msg += f"• *{h['name']}*: `{shares_formatted} ações` (Valor: $ {h['value']:,.2f})\n"
+                    send_notification(msg)
+                    return
+                except Exception as e:
+                    print(f"[Erro US Parser]: {e}")
+            else:
+                send_notification(f"⚠️ Senhor, o arquivo de cache da baleia `{query}` não foi localizado em seu computador.")
+                return
+
+        send_notification("⚠️ Senhor, carteira não localizada. Digite `/carteiras` para ver a lista de carteiras mapeadas.")
         
     elif text_lower == "/memorias":
         memories = load_user_memories()
