@@ -8895,6 +8895,289 @@ Aloque a moeda estável captada diretamente nas estratégias reguladas de **Delt
         st.plotly_chart(fig_vc_shadow, use_container_width=True, theme=None)
 
 
+    # =====================================================================
+    # ETF FLOW MONITOR - Bitcoin & Ethereum Spot ETF Institutional Flows
+    # =====================================================================
+    st.markdown("---")
+    etf_titles = {
+        "PT": {
+            "main": "MONITOR DE FLUXO DE ETFs SPOT (BTC & ETH)",
+            "sub": "Rastreamento institucional de entrada e saída de capital nos principais ETFs Spot de Bitcoin e Ethereum dos EUA",
+            "btc_section": "ETFs SPOT DE BITCOIN",
+            "eth_section": "ETFs SPOT DE ETHEREUM",
+            "daily_flow": "Fluxo Diário Estimado (Volume × Variação de Preço)",
+            "cumulative": "Fluxo Acumulado (30 dias)",
+            "table_title": "Detalhamento Individual dos ETFs",
+            "ticker_col": "Ticker",
+            "name_col": "Nome do Fundo",
+            "price_col": "Preço",
+            "change_col": "Variação (%)",
+            "volume_col": "Volume",
+            "flow_col": "Fluxo Estimado (USD)",
+            "sentiment": "SENTIMENTO INSTITUCIONAL ETF",
+            "bullish": "ACUMULAÇÃO INSTITUCIONAL",
+            "bearish": "DISTRIBUIÇÃO INSTITUCIONAL",
+            "neutral": "NEUTRO / INDEFINIDO",
+            "loading": "Carregando dados de ETFs Spot...",
+            "error": "Não foi possível carregar dados de ETFs. Tente novamente.",
+            "inflow": "ENTRADA",
+            "outflow": "SAÍDA",
+        },
+        "EN": {
+            "main": "SPOT ETF FLOW MONITOR (BTC & ETH)",
+            "sub": "Institutional capital inflow and outflow tracking for major US Bitcoin and Ethereum Spot ETFs",
+            "btc_section": "BITCOIN SPOT ETFs",
+            "eth_section": "ETHEREUM SPOT ETFs",
+            "daily_flow": "Estimated Daily Flow (Volume × Price Change)",
+            "cumulative": "Cumulative Flow (30 days)",
+            "table_title": "Individual ETF Breakdown",
+            "ticker_col": "Ticker",
+            "name_col": "Fund Name",
+            "price_col": "Price",
+            "change_col": "Change (%)",
+            "volume_col": "Volume",
+            "flow_col": "Estimated Flow (USD)",
+            "sentiment": "ETF INSTITUTIONAL SENTIMENT",
+            "bullish": "INSTITUTIONAL ACCUMULATION",
+            "bearish": "INSTITUTIONAL DISTRIBUTION",
+            "neutral": "NEUTRAL / UNDEFINED",
+            "loading": "Loading Spot ETF data...",
+            "error": "Could not load ETF data. Please try again.",
+            "inflow": "INFLOW",
+            "outflow": "OUTFLOW",
+        },
+        "ES": {
+            "main": "MONITOR DE FLUJO DE ETFs SPOT (BTC & ETH)",
+            "sub": "Rastreo institucional de entrada y salida de capital en los principales ETFs Spot de Bitcoin y Ethereum de EE.UU.",
+            "btc_section": "ETFs SPOT DE BITCOIN",
+            "eth_section": "ETFs SPOT DE ETHEREUM",
+            "daily_flow": "Flujo Diario Estimado (Volumen × Variación de Precio)",
+            "cumulative": "Flujo Acumulado (30 días)",
+            "table_title": "Desglose Individual de ETFs",
+            "ticker_col": "Ticker",
+            "name_col": "Nombre del Fondo",
+            "price_col": "Precio",
+            "change_col": "Variación (%)",
+            "volume_col": "Volumen",
+            "flow_col": "Flujo Estimado (USD)",
+            "sentiment": "SENTIMIENTO INSTITUCIONAL ETF",
+            "bullish": "ACUMULACIÓN INSTITUCIONAL",
+            "bearish": "DISTRIBUCIÓN INSTITUCIONAL",
+            "neutral": "NEUTRO / INDEFINIDO",
+            "loading": "Cargando datos de ETFs Spot...",
+            "error": "No se pudieron cargar los datos de ETFs. Intente nuevamente.",
+            "inflow": "ENTRADA",
+            "outflow": "SALIDA",
+        }
+    }
+    et = etf_titles.get(lang, etf_titles["PT"])
+
+    st.markdown(f"""<div style="text-align:center; margin: 30px 0 10px 0;">
+    <h2 style="color:#bf953f; font-size:22px; letter-spacing:2px; margin:0;">{et['main']}</h2>
+    <p style="color:#888; font-size:12px; margin-top:5px;">{et['sub']}</p>
+    </div>""", unsafe_allow_html=True)
+
+    # Define ETFs
+    btc_etfs = {
+        "IBIT": "iShares Bitcoin Trust (BlackRock)",
+        "FBTC": "Fidelity Wise Origin Bitcoin Fund",
+        "ARKB": "ARK 21Shares Bitcoin ETF",
+        "BITB": "Bitwise Bitcoin ETF",
+        "GBTC": "Grayscale Bitcoin Trust",
+    }
+    eth_etfs = {
+        "ETHA": "iShares Ethereum Trust (BlackRock)",
+        "FETH": "Fidelity Ethereum Fund",
+        "ETHE": "Grayscale Ethereum Trust",
+    }
+
+    import yfinance as yf
+    from datetime import datetime, timedelta
+
+    @st.cache_data(ttl=1200)
+    def fetch_etf_data(tickers, period="1mo"):
+        results = {}
+        for ticker in tickers:
+            try:
+                tk = yf.Ticker(ticker)
+                hist = tk.history(period=period)
+                if not hist.empty:
+                    results[ticker] = hist
+            except Exception:
+                pass
+        return results
+
+    def calc_etf_flows(data_dict, etf_names):
+        rows = []
+        for ticker, df in data_dict.items():
+            if df.empty or len(df) < 2:
+                continue
+            latest = df.iloc[-1]
+            prev = df.iloc[-2]
+            price = latest['Close']
+            pct_change = ((price - prev['Close']) / prev['Close']) * 100
+            volume = latest['Volume']
+            # Estimated flow: volume * price change direction * average price
+            flow_estimate = volume * (price - prev['Close'])
+            rows.append({
+                "Ticker": ticker,
+                "Name": etf_names.get(ticker, ticker),
+                "Price": price,
+                "Change": pct_change,
+                "Volume": volume,
+                "Flow": flow_estimate,
+            })
+        return rows
+
+    def build_daily_flow_chart(data_dict, title, color_pos, color_neg):
+        """Build a daily bar chart of estimated flows over the period."""
+        import plotly.graph_objects as go
+        all_flows = {}
+        for ticker, df in data_dict.items():
+            if df.empty or len(df) < 2:
+                continue
+            for i in range(1, len(df)):
+                date = df.index[i].strftime('%Y-%m-%d')
+                price_diff = df.iloc[i]['Close'] - df.iloc[i-1]['Close']
+                vol = df.iloc[i]['Volume']
+                flow = vol * price_diff
+                if date not in all_flows:
+                    all_flows[date] = 0
+                all_flows[date] += flow
+
+        if not all_flows:
+            return None
+
+        dates = sorted(all_flows.keys())
+        flows = [all_flows[d] for d in dates]
+        colors = [color_pos if f >= 0 else color_neg for f in flows]
+
+        fig = go.Figure()
+        fig.add_trace(go.Bar(
+            x=dates, y=flows,
+            marker_color=colors,
+            name=title,
+            hovertemplate='%{x}<br>Flow: $%{y:,.0f}<extra></extra>'
+        ))
+        # Cumulative line
+        cum = []
+        s = 0
+        for f in flows:
+            s += f
+            cum.append(s)
+        fig.add_trace(go.Scatter(
+            x=dates, y=cum,
+            mode='lines',
+            line=dict(color='#bf953f', width=2),
+            name='Cumulative',
+            yaxis='y2',
+            hovertemplate='%{x}<br>Cumulative: $%{y:,.0f}<extra></extra>'
+        ))
+        fig.update_layout(
+            template='plotly_dark',
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            height=320,
+            margin=dict(t=30, b=40, l=60, r=60),
+            font=dict(color='#ffffff', size=11),
+            xaxis=dict(gridcolor='rgba(255,255,255,0.03)'),
+            yaxis=dict(gridcolor='rgba(255,255,255,0.03)', title='Daily Flow (USD)', tickformat='$,.0s'),
+            yaxis2=dict(title='Cumulative (USD)', overlaying='y', side='right', tickformat='$,.0s', gridcolor='rgba(255,255,255,0)'),
+            legend=dict(font=dict(size=10), bgcolor='rgba(0,0,0,0)'),
+            showlegend=True,
+            bargap=0.15,
+        )
+        return fig
+
+    with st.spinner(et['loading']):
+        btc_data = fetch_etf_data(list(btc_etfs.keys()), "1mo")
+        eth_data = fetch_etf_data(list(eth_etfs.keys()), "1mo")
+
+    if btc_data or eth_data:
+        # --- BTC ETFs Section ---
+        st.markdown(f"<h3 style='color:#f7931a; margin-top:25px; font-size:16px; letter-spacing:1px;'>{et['btc_section']}</h3>", unsafe_allow_html=True)
+
+        btc_rows = calc_etf_flows(btc_data, btc_etfs)
+        if btc_rows:
+            total_btc_flow = sum(r['Flow'] for r in btc_rows)
+
+            # Table
+            btc_df = pd.DataFrame(btc_rows)
+            btc_df.columns = [et['ticker_col'], et['name_col'], et['price_col'], et['change_col'], et['volume_col'], et['flow_col']]
+            btc_df[et['price_col']] = btc_df[et['price_col']].apply(lambda x: f"${x:,.2f}")
+            btc_df[et['change_col']] = btc_df[et['change_col']].apply(lambda x: f"{x:+.2f}%")
+            btc_df[et['volume_col']] = btc_df[et['volume_col']].apply(lambda x: f"{x:,.0f}")
+            btc_df[et['flow_col']] = btc_df[et['flow_col']].apply(lambda x: f"${x:+,.0f}")
+            st.dataframe(btc_df, use_container_width=True, hide_index=True)
+
+            # Net flow badge
+            flow_color = "#00ffa5" if total_btc_flow >= 0 else "#ff4b4b"
+            flow_label = et['inflow'] if total_btc_flow >= 0 else et['outflow']
+            flow_arrow = "▲" if total_btc_flow >= 0 else "▼"
+            st.markdown(f"""<div style="background: linear-gradient(135deg, rgba(11,14,20,0.95), rgba(20,20,30,0.95)); border: 1px solid {flow_color}40; border-radius:12px; padding:12px 20px; margin:10px 0; display:inline-block;">
+            <span style="color:{flow_color}; font-size:18px; font-weight:900;">{flow_arrow} ${abs(total_btc_flow):,.0f}</span>
+            <span style="color:#888; font-size:11px; margin-left:8px;">{flow_label} NET (BTC ETFs)</span>
+            </div>""", unsafe_allow_html=True)
+
+            # Daily flow chart
+            fig_btc = build_daily_flow_chart(btc_data, "BTC ETF Flow", "#00ffa5", "#ff4b4b")
+            if fig_btc:
+                st.plotly_chart(fig_btc, use_container_width=True, theme=None)
+
+        # --- ETH ETFs Section ---
+        st.markdown(f"<h3 style='color:#627eea; margin-top:30px; font-size:16px; letter-spacing:1px;'>{et['eth_section']}</h3>", unsafe_allow_html=True)
+
+        eth_rows = calc_etf_flows(eth_data, eth_etfs)
+        if eth_rows:
+            total_eth_flow = sum(r['Flow'] for r in eth_rows)
+
+            # Table
+            eth_df = pd.DataFrame(eth_rows)
+            eth_df.columns = [et['ticker_col'], et['name_col'], et['price_col'], et['change_col'], et['volume_col'], et['flow_col']]
+            eth_df[et['price_col']] = eth_df[et['price_col']].apply(lambda x: f"${x:,.2f}")
+            eth_df[et['change_col']] = eth_df[et['change_col']].apply(lambda x: f"{x:+.2f}%")
+            eth_df[et['volume_col']] = eth_df[et['volume_col']].apply(lambda x: f"{x:,.0f}")
+            eth_df[et['flow_col']] = eth_df[et['flow_col']].apply(lambda x: f"${x:+,.0f}")
+            st.dataframe(eth_df, use_container_width=True, hide_index=True)
+
+            # Net flow badge
+            flow_color_eth = "#00ffa5" if total_eth_flow >= 0 else "#ff4b4b"
+            flow_label_eth = et['inflow'] if total_eth_flow >= 0 else et['outflow']
+            flow_arrow_eth = "▲" if total_eth_flow >= 0 else "▼"
+            st.markdown(f"""<div style="background: linear-gradient(135deg, rgba(11,14,20,0.95), rgba(20,20,30,0.95)); border: 1px solid {flow_color_eth}40; border-radius:12px; padding:12px 20px; margin:10px 0; display:inline-block;">
+            <span style="color:{flow_color_eth}; font-size:18px; font-weight:900;">{flow_arrow_eth} ${abs(total_eth_flow):,.0f}</span>
+            <span style="color:#888; font-size:11px; margin-left:8px;">{flow_label_eth} NET (ETH ETFs)</span>
+            </div>""", unsafe_allow_html=True)
+
+            # Daily flow chart
+            fig_eth = build_daily_flow_chart(eth_data, "ETH ETF Flow", "#627eea", "#ff4b4b")
+            if fig_eth:
+                st.plotly_chart(fig_eth, use_container_width=True, theme=None)
+
+        # --- INSTITUTIONAL SENTIMENT INDICATOR ---
+        total_combined = sum(r['Flow'] for r in btc_rows) + sum(r['Flow'] for r in eth_rows) if (btc_rows and eth_rows) else (sum(r['Flow'] for r in btc_rows) if btc_rows else 0)
+        if total_combined > 0:
+            sent_color = "#00ffa5"
+            sent_label = et['bullish']
+            sent_icon = "▲"
+        elif total_combined < 0:
+            sent_color = "#ff4b4b"
+            sent_label = et['bearish']
+            sent_icon = "▼"
+        else:
+            sent_color = "#bf953f"
+            sent_label = et['neutral']
+            sent_icon = "◆"
+
+        st.markdown(f"""<div style="background: linear-gradient(135deg, #0b0e14 0%, #161a23 100%); border: 1.5px solid {sent_color}50; border-radius:16px; padding:20px; margin:25px 0; text-align:center; box-shadow: 0 0 25px {sent_color}15;">
+        <p style="color:#bf953f; font-size:10px; letter-spacing:3px; text-transform:uppercase; margin:0 0 8px 0; font-weight:900;">{et['sentiment']}</p>
+        <p style="color:{sent_color}; font-size:28px; font-weight:900; margin:0; letter-spacing:1px;">{sent_icon} {sent_label}</p>
+        <p style="color:#666; font-size:11px; margin:8px 0 0 0;">Net Combined Flow: <span style="color:{sent_color}; font-weight:700;">${total_combined:+,.0f}</span></p>
+        </div>""", unsafe_allow_html=True)
+
+    else:
+        st.warning(et['error'])
+
     # 3. AI CO-PILOT DIAGNOSTICS CARD
     st.markdown(f"""<div class="conviction-card" style="border-left-color: #00ffa5; margin-top:25px; text-align: left;">
 <h4 style="margin:0 0 5px 0; border:none; padding:0; color:#fff; font-size:16px;">{cl['copilot_title']}</h4>
