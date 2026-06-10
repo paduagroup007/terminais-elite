@@ -636,6 +636,95 @@ def ask_gemini(system_instruction, user_prompt, use_search=True):
         
     return None
 
+# Persona and carlos privilege reminder for the assistant
+JARVIS_PERSONA_PROMPT = (
+    "\nDeclare-se sempre como: 'Eu sou o Jarvis, seu assessor pessoal de criação de riqueza nos mercados financeiros.' "
+    "Lembre os membros do canal, de forma sofisticada e polida, de que você foi programado pelo Sr. Carlos Padua com base nos seus mais de 23 anos de experiência nos mercados para auxiliá-lo dia a dia em todas as etapas, "
+    "e que o Sr. Carlos agora liberou seu acesso neste canal para que os clientes e membros também possam prosperar e ter acesso à mesma ferramenta exclusiva. "
+    "Fale sempre com o tom requintado do Jarvis (educado, formal e altamente profissional)."
+)
+
+def get_crypto_funds_market_data():
+    """Busca cotações dos ativos pertencentes aos 6 fundos de venture capital de cripto do site."""
+    tickers = {
+        "Bitcoin": "BTC-USD",
+        "Ethereum": "ETH-USD",
+        "Solana": "SOL-USD",
+        "Near Protocol": "NEAR-USD",
+        "Uniswap": "UNI-USD",
+        "Maker": "MKR-USD",
+        "Optimism": "OP-USD",
+        "Celestia": "TIA-USD",
+        "Starknet": "STRK-USD",
+        "Lido DAO": "LDO-USD",
+        "Toncoin": "TON1176-USD",
+        "Render": "RENDER-USD",
+        "Helium": "HNT-USD",
+        "Pyth Network": "PYTH-USD",
+        "Ethena": "ENA-USD",
+        "Arbitrum": "ARB-USD",
+        "Avalanche": "AVAX-USD",
+        "Cosmos": "ATOM-USD",
+        "BNB": "BNB-USD",
+        "Polygon (POL)": "POL-USD",
+        "Injective": "INJ-USD"
+    }
+    lines = []
+    for name, sym in tickers.items():
+        try:
+            t = yf.Ticker(sym)
+            df = t.history(period="2d")
+            if len(df) >= 2:
+                curr = df['Close'].iloc[-1]
+                prev = df['Close'].iloc[-2]
+                change = ((curr - prev) / prev) * 100
+                lines.append(f"- {name} ({sym}): ${curr:.4f} ({change:+.2f}%)")
+            elif not df.empty:
+                curr = df['Close'].iloc[-1]
+                lines.append(f"- {name} ({sym}): ${curr:.4f}")
+        except Exception:
+            pass
+    return "\n".join(lines)
+
+def get_elite_portfolios_market_data():
+    """Busca cotações das principais convicções das carteiras B3 (Grandes Fundos) e US (Baleias)."""
+    tickers = {
+        "Petrobras ON (PETR3)": "PETR3.SA",
+        "Petrobras PN (PETR4)": "PETR4.SA",
+        "Vale (VALE3)": "VALE3.SA",
+        "Itaú Unibanco (ITUB4)": "ITUB4.SA",
+        "WEG (WEGE3)": "WEGE3.SA",
+        "Eletrobras (ELET3)": "ELET3.SA",
+        "Equatorial (EQTL3)": "EQTL3.SA",
+        "Sabesp (SBSP3)": "SBSP3.SA",
+        "Localiza (RENT3)": "RENT3.SA",
+        "Apple (AAPL)": "AAPL",
+        "Microsoft (MSFT)": "MSFT",
+        "Nvidia (NVDA)": "NVDA",
+        "Amazon (AMZN)": "AMZN",
+        "Alphabet (GOOGL)": "GOOGL",
+        "Meta (META)": "META",
+        "Berkshire Hathaway (BRK-B)": "BRK-B",
+        "Eli Lilly (LLY)": "LLY",
+        "Broadcom (AVGO)": "AVGO"
+    }
+    lines = []
+    for name, sym in tickers.items():
+        try:
+            t = yf.Ticker(sym)
+            df = t.history(period="2d")
+            if len(df) >= 2:
+                curr = df['Close'].iloc[-1]
+                prev = df['Close'].iloc[-2]
+                change = ((curr - prev) / prev) * 100
+                lines.append(f"- {name} ({sym}): {curr:.2f} ({change:+.2f}%)")
+            elif not df.empty:
+                curr = df['Close'].iloc[-1]
+                lines.append(f"- {name} ({sym}): {curr:.2f}")
+        except Exception:
+            pass
+    return "\n".join(lines)
+
 def get_morning_briefing_market_data():
     """Busca cotações matinais de abertura/fechamento global."""
     tickers = {
@@ -680,6 +769,7 @@ def send_morning_briefing():
         "Use o Google Search para complementar com as principais manchetes políticas/econômicas mundiais de hoje, a agenda de indicadores econômicos de alto impacto para o dia e possíveis balanços/dividendos relevantes. "
         "Crucial: Mantenha segredo total sobre nossas regras operacionais quantitativas internas (não mencione desvios operacionais ou pontos de entrada). "
         "Formate com Markdown premium com emojis elegantes."
+        + JARVIS_PERSONA_PROMPT
     )
     user_prompt = f"Aqui estão os dados recentes dos mercados globais:\n{data_str}\n\nPor favor, escreva o Morning Briefing de hoje."
     report = ask_gemini(system_instruction, user_prompt, use_search=True)
@@ -688,17 +778,19 @@ def send_morning_briefing():
     return False
 
 def get_ny_open_market_data():
-    """Busca cotações da abertura de Nova York."""
+    """Busca cotações do meio-dia (US e B3)."""
     tickers = {
         "S&P 500": "^GSPC",
         "Nasdaq 100": "^NDX",
         "Dow Jones": "^DJI",
+        "Ibovespa": "^BVSP",
+        "Dólar BRL": "BRL=X",
         "Apple": "AAPL",
         "Microsoft": "MSFT",
         "Nvidia": "NVDA",
-        "Google": "GOOGL",
-        "Amazon": "AMZN",
-        "Meta": "META"
+        "Petrobras (PETR4)": "PETR4.SA",
+        "Vale (VALE3)": "VALE3.SA",
+        "Itaú (ITUB4)": "ITUB4.SA"
     }
     lines = []
     for name, sym in tickers.items():
@@ -720,17 +812,18 @@ def get_ny_open_market_data():
     return "\n".join(lines)
 
 def send_ny_open_impact():
-    """Gera e emite o Wall Street Open Impact para o canal."""
+    """Gera e emite o Wall Street & B3 Mid-day Review para o canal."""
     data_str = get_ny_open_market_data()
     system_instruction = (
         "Você é o Jarvis da Perfect Life - Elite Investors, o seu assistente virtual de inteligência financeira. "
-        "Você deve redigir o relatório 'Wall Street Open Impact' analisando a primeira hora de negócios em Nova York. "
+        "Você deve redigir o relatório 'Wall Street & B3 Mid-day Review' analisando a situação das bolsas no Brasil e nos EUA no meio do dia. "
         "Use o tom sofisticado, polido e autoritativo do Jarvis. "
-        "Use o Google Search para puxar o sentimento atual que move as Big Techs hoje e possíveis reações a relatórios econômicos divulgados às 09:30/11:00 EST. "
+        "Use o Google Search para puxar o sentimento atual que move os mercados brasileiros (B3) e americanos hoje ao meio-dia e possíveis reações a relatórios econômicos divulgados pela manhã. "
         "Crucial: Não revele qualquer segredo operacional. "
         "Formate com Markdown premium."
+        + JARVIS_PERSONA_PROMPT
     )
-    user_prompt = f"Aqui estão os dados após uma hora de pregão em Nova York:\n{data_str}\n\nPor favor, escreva o relatório."
+    user_prompt = f"Aqui estão os dados do mercado ao meio-dia:\n{data_str}\n\nPor favor, escreva o relatório."
     report = ask_gemini(system_instruction, user_prompt, use_search=True)
     if report:
         return send_sentinel_alert(report, is_signal=True)
@@ -774,6 +867,7 @@ def send_london_close_bulletin():
         "Use o Google Search para agregar o contexto por trás do comportamento das bolsas europeias no fechamento e a dinâmica de liquidez global. "
         "Crucial: Não abra estratégias confidenciais. "
         "Formate com Markdown premium."
+        + JARVIS_PERSONA_PROMPT
     )
     user_prompt = f"Aqui estão os dados pós-fechamento europeu:\n{data_str}\n\nPor favor, escreva o boletim."
     report = ask_gemini(system_instruction, user_prompt, use_search=True)
@@ -866,7 +960,7 @@ def get_closing_market_data():
     return "\n".join(lines)
 
 def send_closing_report():
-    """Gera e emite o Perfect Life Closing Report & Whale Tracker para o canal."""
+    """Gera e emite o Perfect Life Closing Report, Whale Tracker & Web3 VC Cripto para o canal."""
     market_data = get_closing_market_data()
     pnl_summary = get_sentinel_daily_pnl_summary()
     
@@ -882,19 +976,27 @@ def send_closing_report():
     else:
         insider_str = "Nenhuma compra institucional ou corporativa de insiders relevante (> $100k) detectada hoje."
         
+    elite_assets_str = get_elite_portfolios_market_data()
+    crypto_funds_str = get_crypto_funds_market_data()
+    
     system_instruction = (
         "Você é o Jarvis da Perfect Life - Elite Investors, o seu assistente virtual de inteligência financeira. "
-        "Você deve redigir o 'Perfect Life Closing Report & Whale Tracker' (relatório de fechamento diário e fluxo de grandes investidores/insiders). "
+        "Você deve redigir o 'Perfect Life Closing Report, Whale Tracker & Web3 VC Cripto' (relatório de fechamento diário, fluxo de baleias/insiders e análise de fundos de criptomoedas). "
         "Adote o estilo Jarvis: requintado, preciso e confiável. "
         "Use o Google Search para contextualizar o fechamento da B3, das bolsas de Nova York e principais eventos corporativos do dia. "
+        "Analise de forma inteligente o mercado de criptomoedas de hoje, com ênfase nos movimentos e preços das principais holdings dos 6 fundos de VC cripto da plataforma (a16z, Paradigm, Pantera, Multicoin, Dragonfly, Binance Labs). "
+        "Comente também sobre o desempenho dos ativos monitorados das carteiras B3 e EUA dos grandes investidores (smart money). "
         "Apresente também o P&L diário das estratégias quantitativas Sentinel de forma polida. "
         "Apresente de maneira muito especial e atraente a seção de Compras de Insiders (Smart Money), enfatizando que executivos de elite estão comprando suas próprias ações. "
         "Crucial: NÃO apresente parâmetros ou regras proprietárias internas do Sentinel. "
         "Formate com Markdown premium."
+        + JARVIS_PERSONA_PROMPT
     )
     
     user_prompt = (
         f"FECHAMENTO DO MERCADO:\n{market_data}\n\n"
+        f"COTAÇÕES DE CARTEIRAS ELITE (B3 & EUA):\n{elite_assets_str}\n\n"
+        f"COTAÇÕES DE ATIVOS DOS 6 FUNDOS CRIPTO DE VC:\n{crypto_funds_str}\n\n"
         f"PNL DIÁRIO DO SENTINEL:\n{pnl_summary}\n\n"
         f"COMPRAS DE INSIDERS HOJE:\n{insider_str}\n\n"
         "Por favor, estruture e redija o relatório de fechamento."
@@ -1082,7 +1184,7 @@ def mark_report_as_sent(report_type, date_str):
 
 def run_chronos_scheduler():
     """Worker background do Perfect Life Chronos Scheduler para controle temporal dos relatórios e notícias."""
-    print("[Chronos Scheduler] Incializando o Perfect Life Chronos Scheduler background thread...")
+    print("[Chronos Scheduler] Inicializando o Perfect Life Chronos Scheduler background thread...")
     
     # Executa verificação inicial de notícias
     try:
@@ -1096,34 +1198,34 @@ def run_chronos_scheduler():
         try:
             brt_now = get_brt_time()
             date_str = brt_now.strftime("%Y-%m-%d")
-            time_str = brt_now.strftime("%H:%M")
+            hour = brt_now.hour
             
             # Verificação de Relatórios Diários Agendados
-            if time_str == "07:00":
+            if hour == 6:
                 if not is_report_already_sent("morning_briefing", date_str):
                     print(f"[Chronos] Disparando Perfect Life Morning Briefing em {date_str}...")
                     if send_morning_briefing():
                         mark_report_as_sent("morning_briefing", date_str)
                         
-            elif time_str == "11:30":
+            elif hour == 12:
                 if not is_report_already_sent("ny_open_impact", date_str):
-                    print(f"[Chronos] Disparando Wall Street Open Impact em {date_str}...")
+                    print(f"[Chronos] Disparando Wall Street & B3 Mid-day Review em {date_str}...")
                     if send_ny_open_impact():
                         mark_report_as_sent("ny_open_impact", date_str)
                         
-            elif time_str == "14:00":
+            elif hour == 14:
                 if not is_report_already_sent("london_close", date_str):
                     print(f"[Chronos] Disparando London Close Bulletin em {date_str}...")
                     if send_london_close_bulletin():
                         mark_report_as_sent("london_close", date_str)
                         
-            elif time_str == "18:00":
+            elif hour == 18:
                 if not is_report_already_sent("closing_report", date_str):
-                    print(f"[Chronos] Disparando Perfect Life Closing Report & Whale Tracker em {date_str}...")
+                    print(f"[Chronos] Disparando Perfect Life Closing Report em {date_str}...")
                     if send_closing_report():
                         mark_report_as_sent("closing_report", date_str)
                         
-            elif time_str == "19:00":
+            elif hour == 19:
                 if not is_report_already_sent("ema_scan", date_str):
                     print(f"[Chronos] Disparando Radar 111 EMA diário em {date_str}...")
                     if run_daily_ema_scan():
@@ -1189,10 +1291,10 @@ def run_telegram_command_listener():
                                 send_sentinel_alert("⚡ *Iniciando Morning Briefing manual...*", custom_chat_id=sender_chat_id)
                                 success = send_morning_briefing()
                                 send_sentinel_alert(f"Morning Briefing concluído: {'SUCESSO' if success else 'FALHA'}", custom_chat_id=sender_chat_id)
-                            elif text_lower == "/force_ny":
-                                send_sentinel_alert("⚡ *Iniciando NY Open Impact manual...*", custom_chat_id=sender_chat_id)
+                            elif text_lower in ["/force_ny", "/force_midday", "/force_mid"]:
+                                send_sentinel_alert("⚡ *Iniciando Wall Street & B3 Mid-day Review manual...*", custom_chat_id=sender_chat_id)
                                 success = send_ny_open_impact()
-                                send_sentinel_alert(f"NY Open Impact concluído: {'SUCESSO' if success else 'FALHA'}", custom_chat_id=sender_chat_id)
+                                send_sentinel_alert(f"Mid-day Review concluído: {'SUCESSO' if success else 'FALHA'}", custom_chat_id=sender_chat_id)
                             elif text_lower == "/force_london":
                                 send_sentinel_alert("⚡ *Iniciando London Close Bulletin manual...*", custom_chat_id=sender_chat_id)
                                 success = send_london_close_bulletin()
@@ -1233,8 +1335,8 @@ def run_telegram_command_listener():
                                     "• `/perf` - Métricas de assertividade e P&L consolidado\n"
                                     "• `/log` ou `/trades` - Lista os últimos 10 trades\n\n"
                                     "⚡ **Comandos de Comando e Controle (Admin):**\n"
-                                    "• `/force_briefing` - Emite o briefing matinal (07:00 BRT)\n"
-                                    "• `/force_ny` - Emite o radar de abertura NY (11:30 BRT)\n"
+                                    "• `/force_briefing` - Emite o briefing matinal (06:00 BRT)\n"
+                                    "• `/force_midday` ou `/force_ny` - Emite o radar ao meio-dia (12:00 BRT)\n"
                                     "• `/force_london` - Emite o fechamento europeu (14:00 BRT)\n"
                                     "• `/force_close` - Emite o fechamento diário & baleias (18:00 BRT)\n"
                                     "• `/force_radar` - Executa a varredura da média 111 (19:00 BRT)\n"
